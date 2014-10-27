@@ -3,8 +3,12 @@
 namespace Dizda\Bundle\BlockchainBundle\Blockchain;
 
 use Dizda\Bundle\BlockchainBundle\Client\HttpClient;
+use Dizda\Bundle\BlockchainBundle\Model\AddressAbstract;
 use JMS\Serializer\SerializerInterface;
 
+/**
+ * Class InsightWatcher
+ */
 class InsightWatcher extends BlockchainBase implements BlockchainWatcherInterface
 {
     /**
@@ -12,17 +16,31 @@ class InsightWatcher extends BlockchainBase implements BlockchainWatcherInterfac
      */
     private $client;
 
+    /**
+     * @param HttpClient          $http
+     * @param SerializerInterface $serializer
+     */
     public function __construct(HttpClient $http, SerializerInterface $serializer)
     {
         $this->client = $http->getClient();
         $this->serializer = $serializer;
     }
 
-    public function getAddress($address, $withTransactions)
+    /**
+     * @param $address
+     * @param bool $withTransactions
+     *
+     * @return AddressAbstract
+     */
+    public function getAddress($address, $withTransactions = false)
     {
-        $response = $this->client->get('addr/3C2E7n7QsoaogcqynCumfJrpotKFYNwgR4');
+        $response = $this->client->get(sprintf('addr/%s', $address));
 
-        return $this->serializer->deserialize($response->getBody(), 'Dizda\Bundle\BlockchainBundle\Model\Insight\Address', 'json');
+        return $this->serializer->deserialize(
+            $response->getBody(),
+            'Dizda\Bundle\BlockchainBundle\Model\Insight\Address',
+            'json'
+        );
     }
 
     public function getAddresses(array $addresses, $withTransactions)

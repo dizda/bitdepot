@@ -43,7 +43,10 @@ EOF
     {
         $address = $input->getArgument('address');
 
-        $address = $this->getContainer()->get('dizda_blockchain.blockchain.provider')->getBlockchain()->getAddress('dsfsdf', true);
+        $address = $this->getContainer()->get('dizda_blockchain.blockchain.provider')
+            ->getBlockchain()
+            ->getAddress($address, true)
+        ;
 
         var_dump($address->getAddress());
         var_dump($address);
