@@ -12,44 +12,59 @@ abstract class AddressAbstract
 
     /**
      * @var string
+     *
+     * @Serializer\Type("string")
      */
-    private $address;
+    protected $address;
 
     /**
      * @var string
+     *
+     * @Serializer\Type("string")
      */
-    private $balance;
+    protected $balance;
 
     /**
      * @var string
+     *
+     * @Serializer\Type("string")
      */
-    private $totalReceived;
+    protected $totalReceived;
 
     /**
      * @var string
+     *
+     * @Serializer\Type("string")
      */
-    private $totalSent;
+    protected $totalSent;
 
     /**
      * @var string
+     *
+     * @Serializer\Type("string")
      */
-    private $unconfirmedBalance;
+    protected $unconfirmedBalance;
 
     /**
      * @var integer
+     *
+     * @Serializer\Type("integer")
      */
-    private $unconfirmedTxApperances;
+    protected $unconfirmedTxApperances;
 
     /**
      * @var integer
+     *
+     * @Serializer\Type("integer")
      */
-    private $txApperances;
+    protected $txApperances;
 
     /**
      * @var array
      *
+     * @Serializer\Type("array")
      */
-    private $transactions;
+    protected $transactions;
 
 
 
