@@ -1,3 +1,5 @@
+'use strict';
+
 var mysql = require('mysql')
   , Q     = require('q');
 
