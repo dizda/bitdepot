@@ -169,7 +169,7 @@ function process()
         keychain = keychainId;
 
         for (var i=0; i < seeds.length; i++) {
-            var walletTemp = wallet.create(seeds[i]);
+            var walletTemp = wallet.create(seeds[i], network);
             wallets.push(walletTemp);
 
             promises.push(

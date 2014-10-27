@@ -11,7 +11,7 @@ function Wallet()
 
 Wallet.prototype.create = function(seed, network)
 {
-    return new bitcoin.Wallet(crypto.sha256(seed), bitcoin.networks.bitcoin);
+    return new bitcoin.Wallet(crypto.sha256(seed), bitcoin.networks[network]);
 };
 
 Wallet.prototype.getMultisigAddress = function(requiredSignatures, pubkeys)
