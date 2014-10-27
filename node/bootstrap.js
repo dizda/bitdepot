@@ -1,24 +1,19 @@
-var mysql      = require('mysql');
+var Database = require('./database.js');
 
 
 function Bootstrap()
 {
-    this.mysql = mysql.createConnection({
-        host     : 'localhost',
-        user     : 'root',
-        password : '',
-        database : 'bitwallet'
-    });
+    this.database = new Database();
 }
 
 Bootstrap.prototype.start = function()
 {
-    this.mysql.connect();
+    this.database.client.connect();
 };
 
 Bootstrap.prototype.end = function()
 {
-    this.mysql.end();
+    this.database.client.end();
 };
 
 module.exports = Bootstrap;
