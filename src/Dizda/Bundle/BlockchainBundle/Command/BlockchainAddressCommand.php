@@ -46,6 +46,7 @@ EOF
         $address = $this->getContainer()->get('dizda_blockchain.blockchain.provider')->getBlockchain()->getAddress('dsfsdf', true);
 
         var_dump($address);
+
     }
 
 }

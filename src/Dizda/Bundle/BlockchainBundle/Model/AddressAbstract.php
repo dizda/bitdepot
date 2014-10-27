@@ -1,73 +1,57 @@
 <?php
 
-namespace Dizda\Bundle\BlockchainBundle\Model\Insight;
+namespace Dizda\Bundle\BlockchainBundle\Model;
 
-use Dizda\Bundle\BlockchainBundle\Model\AddressAbstract;
 use JMS\Serializer\Annotation as Serializer;
 
-class Address
+/**
+ * Class AddressAbstract
+ */
+abstract class AddressAbstract
 {
+
     /**
      * @var string
-     *
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("addrStr")
      */
     private $address;
 
     /**
      * @var string
-     *
-     * @Serializer\Type("string")
      */
     private $balance;
 
     /**
      * @var string
-     *
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("totalReceived")
      */
     private $totalReceived;
 
     /**
      * @var string
-     *
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("totalSent")
      */
     private $totalSent;
 
     /**
      * @var string
-     *
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("unconfirmedBalance")
      */
     private $unconfirmedBalance;
 
     /**
-     * @var string
-     *
-     * @Serializer\Type("integer")
-     * @Serializer\SerializedName("unconfirmedTxApperances")
+     * @var integer
      */
     private $unconfirmedTxApperances;
 
     /**
-     * @var string
-     *
-     * @Serializer\Type("integer")
-     * @Serializer\SerializedName("txApperances")
+     * @var integer
      */
     private $txApperances;
 
     /**
-     * @var string
+     * @var array
      *
-     * @Serializer\Type("array")
      */
     private $transactions;
+
+
 
     /**
      * @param string $address
@@ -86,7 +70,7 @@ class Address
     }
 
     /**
-     * @param string $balance
+     * @param mixed $balance
      */
     public function setBalance($balance)
     {
@@ -94,7 +78,7 @@ class Address
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getBalance()
     {
@@ -102,7 +86,7 @@ class Address
     }
 
     /**
-     * @param string $totalReceived
+     * @param mixed $totalReceived
      */
     public function setTotalReceived($totalReceived)
     {
@@ -110,7 +94,7 @@ class Address
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getTotalReceived()
     {
@@ -118,7 +102,7 @@ class Address
     }
 
     /**
-     * @param string $totalSent
+     * @param mixed $totalSent
      */
     public function setTotalSent($totalSent)
     {
@@ -126,7 +110,7 @@ class Address
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getTotalSent()
     {
@@ -134,7 +118,7 @@ class Address
     }
 
     /**
-     * @param string $transactions
+     * @param array $transactions
      */
     public function setTransactions($transactions)
     {
@@ -142,7 +126,7 @@ class Address
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getTransactions()
     {
@@ -150,7 +134,7 @@ class Address
     }
 
     /**
-     * @param string $txApperances
+     * @param mixed $txApperances
      */
     public function setTxApperances($txApperances)
     {
@@ -158,7 +142,7 @@ class Address
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getTxApperances()
     {
@@ -166,7 +150,7 @@ class Address
     }
 
     /**
-     * @param string $unconfirmedBalance
+     * @param mixed $unconfirmedBalance
      */
     public function setUnconfirmedBalance($unconfirmedBalance)
     {
@@ -174,7 +158,7 @@ class Address
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getUnconfirmedBalance()
     {
@@ -182,7 +166,7 @@ class Address
     }
 
     /**
-     * @param string $unconfirmedTxApperances
+     * @param mixed $unconfirmedTxApperances
      */
     public function setUnconfirmedTxApperances($unconfirmedTxApperances)
     {
@@ -190,12 +174,11 @@ class Address
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getUnconfirmedTxApperances()
     {
         return $this->unconfirmedTxApperances;
     }
-
 
 }
