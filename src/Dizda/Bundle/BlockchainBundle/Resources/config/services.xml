@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="dizda_blockchain.client.http" class="Dizda\Bundle\BlockchainBundle\Client\HttpClient">
+            <argument type="collection">
+                <argument key="base_url">%dizda_blockchain.endpoint%</argument>
+            </argument>
+        </service>
+
+        <service id="dizda_blockchain.blockchain.insight" class="Dizda\Bundle\BlockchainBundle\Blockchain\InsightWatcher">
+            <argument type="service" id="dizda_blockchain.client.http" />
+            <argument type="service" id="jms_serializer" />
+        </service>
+
+        <service id="dizda_blockchain.blockchain.provider" class="Dizda\Bundle\BlockchainBundle\Blockchain\BlockchainProvider">
+            <argument type="service" id="dizda_blockchain.blockchain.insight" />
+        </service>
+    </services>
+</container>

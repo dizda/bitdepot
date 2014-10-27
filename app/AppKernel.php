@@ -16,7 +16,11 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+
             new Dizda\Bundle\AppBundle\DizdaAppBundle(),
+            new Dizda\Bundle\BlockchainBundle\DizdaBlockchainBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

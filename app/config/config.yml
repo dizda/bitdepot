@@ -70,3 +70,11 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+jms_serializer:
+    metadata:
+        auto_detection: true
+
+dizda_blockchain:
+    provider: insight
+    endpoint: %api_endpoint%
