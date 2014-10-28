@@ -58,6 +58,16 @@ class Keychain
     private $addresses;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity    = "Application",
+     *      mappedBy        = "keychain"
+     * )
+     */
+    private $applications;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -185,5 +195,38 @@ class Keychain
     public function getAddresses()
     {
         return $this->addresses;
+    }
+
+    /**
+     * Add applications
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Application $applications
+     * @return Keychain
+     */
+    public function addApplication(\Dizda\Bundle\AppBundle\Entity\Application $applications)
+    {
+        $this->applications[] = $applications;
+
+        return $this;
+    }
+
+    /**
+     * Remove applications
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Application $applications
+     */
+    public function removeApplication(\Dizda\Bundle\AppBundle\Entity\Application $applications)
+    {
+        $this->applications->removeElement($applications);
+    }
+
+    /**
+     * Get applications
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getApplications()
+    {
+        return $this->applications;
     }
 }

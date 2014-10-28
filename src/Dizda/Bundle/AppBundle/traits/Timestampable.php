@@ -14,7 +14,7 @@ trait Timestampable
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * Add creation date when the object is created

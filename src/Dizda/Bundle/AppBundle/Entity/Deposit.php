@@ -58,21 +58,21 @@ class Deposit
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="expires_at", type="datetime")
+     * @ORM\Column(name="expires_at", type="datetime", nullable=true)
      */
     private $expiresAt;
 
-//    /**
-//     * @var \Dizda\Bundle\AppBundle\Entity\Application
-//     *
-//     * @ORM\ManyToOne(targetEntity="Dizda\Bundle\AppBundle\Entity\Application", inversedBy="deposits")
-//     * @ORM\JoinColumn(name="application_id", referencedColumnName="id", nullable=false)
-//     */
-//    private $application;
+    /**
+     * @var \Dizda\Bundle\AppBundle\Entity\Application
+     *
+     * @ORM\ManyToOne(targetEntity="Application", inversedBy="deposits")
+     * @ORM\JoinColumn(name="application_id", referencedColumnName="id", nullable=false)
+     */
+    private $application;
 
     /**
      * @ORM\OneToOne(targetEntity="Address", inversedBy="deposit")
-     * @ORM\JoinColumn(name="address_external_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="address_external_id", referencedColumnName="id", nullable=false)
      **/
     private $addressExternal;
 
@@ -217,10 +217,33 @@ class Deposit
     /**
      * Get addressExternal
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Address 
+     * @return \Dizda\Bundle\AppBundle\Entity\Address
      */
     public function getAddressExternal()
     {
         return $this->addressExternal;
+    }
+
+    /**
+     * Set application
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Application $application
+     * @return Deposit
+     */
+    public function setApplication(\Dizda\Bundle\AppBundle\Entity\Application $application)
+    {
+        $this->application = $application;
+
+        return $this;
+    }
+
+    /**
+     * Get application
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\Application 
+     */
+    public function getApplication()
+    {
+        return $this->application;
     }
 }
