@@ -60,6 +60,11 @@ class Address
     private $keychain;
 
     /**
+     * @ORM\OneToOne(targetEntity="Deposit", mappedBy="addressExternal")
+     **/
+    private $deposit;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -182,5 +187,28 @@ class Address
     public function getKeychain()
     {
         return $this->keychain;
+    }
+
+    /**
+     * Set deposit
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Deposit $deposit
+     * @return Address
+     */
+    public function setDeposit(\Dizda\Bundle\AppBundle\Entity\Deposit $deposit = null)
+    {
+        $this->deposit = $deposit;
+
+        return $this;
+    }
+
+    /**
+     * Get deposit
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\Deposit 
+     */
+    public function getDeposit()
+    {
+        return $this->deposit;
     }
 }
