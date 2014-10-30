@@ -39,7 +39,8 @@ EOF
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
+        $blockchain = $this->getContainer()->get('dizda_blockchain.blockchain.manager');
+        $blockchain->update();
     }
 
 }

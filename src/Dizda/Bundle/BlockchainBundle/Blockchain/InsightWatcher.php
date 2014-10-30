@@ -3,7 +3,6 @@
 namespace Dizda\Bundle\BlockchainBundle\Blockchain;
 
 use Dizda\Bundle\BlockchainBundle\Client\HttpClient;
-use Dizda\Bundle\BlockchainBundle\Model\AddressAbstract;
 use JMS\Serializer\SerializerInterface;
 
 /**
@@ -26,15 +25,9 @@ class InsightWatcher extends BlockchainBase implements BlockchainWatcherInterfac
         $this->serializer = $serializer;
     }
 
-    /**
-     * @param $address
-     * @param bool $withTransactions
-     *
-     * @return AddressAbstract
-     */
     public function getAddress($address, $withTransactions = false)
     {
-        $response = $this->client->get(sprintf('addr/%s', $address));
+        $response = $this->client->get(sprintf('addr/%s?noTxList=1', $address));
 
         return $this->serializer->deserialize(
             $response->getBody(),
@@ -70,7 +63,13 @@ class InsightWatcher extends BlockchainBase implements BlockchainWatcherInterfac
 
     public function getTransactionsByAddress($address)
     {
-        throw new \Exception('Not implemented.');
+        $response = $this->client->get(sprintf('txs/?address=%s', $address));
+
+        return $this->serializer->deserialize(
+            $response->getBody(),
+            'Dizda\Bundle\BlockchainBundle\Model\Insight\Transaction',
+            'json'
+        );
     }
 
 }

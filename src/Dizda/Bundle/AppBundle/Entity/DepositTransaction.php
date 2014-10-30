@@ -45,6 +45,14 @@ class DepositTransaction
     private $txId;
 
     /**
+     * @var \Dizda\Bundle\AppBundle\Entity\Deposit
+     *
+     * @ORM\ManyToOne(targetEntity="Deposit", inversedBy="transactions")
+     * @ORM\JoinColumn(name="deposit_id", referencedColumnName="id", nullable=false)
+     */
+    private $deposit;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -121,5 +129,28 @@ class DepositTransaction
     public function getTxId()
     {
         return $this->txId;
+    }
+
+    /**
+     * Set deposit
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Deposit $deposit
+     * @return DepositTransaction
+     */
+    public function setDeposit(\Dizda\Bundle\AppBundle\Entity\Deposit $deposit)
+    {
+        $this->deposit = $deposit;
+
+        return $this;
+    }
+
+    /**
+     * Get deposit
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\Deposit 
+     */
+    public function getDeposit()
+    {
+        return $this->deposit;
     }
 }

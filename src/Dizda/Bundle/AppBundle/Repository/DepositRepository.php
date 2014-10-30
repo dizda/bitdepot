@@ -2,6 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,4 +13,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class DepositRepository extends EntityRepository
 {
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getOpenDeposits()
+    {
+        $qb = $this->createQueryBuilder('d')
+            ->addSelect('dt')
+            ->addSelect('a')
+            ->leftJoin('d.transactions', 'dt')
+            ->leftJoin('d.addressExternal', 'a')
+            ->andWhere('d.isFulfilled = 0')
+        ;
+
+        return $qb->getQuery()->execute();
+    }
+
 }

@@ -77,6 +77,24 @@ class Deposit
     private $addressExternal;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity    = "DepositTransaction",
+     *      mappedBy        = "deposit"
+     * )
+     */
+    private $transactions;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->transactions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -245,5 +263,39 @@ class Deposit
     public function getApplication()
     {
         return $this->application;
+    }
+
+
+    /**
+     * Add transactions
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\DepositTransaction $transactions
+     * @return Deposit
+     */
+    public function addTransaction(\Dizda\Bundle\AppBundle\Entity\DepositTransaction $transactions)
+    {
+        $this->transactions[] = $transactions;
+
+        return $this;
+    }
+
+    /**
+     * Remove transactions
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\DepositTransaction $transactions
+     */
+    public function removeTransaction(\Dizda\Bundle\AppBundle\Entity\DepositTransaction $transactions)
+    {
+        $this->transactions->removeElement($transactions);
+    }
+
+    /**
+     * Get transactions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTransactions()
+    {
+        return $this->transactions;
     }
 }

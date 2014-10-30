@@ -19,5 +19,12 @@
         <service id="dizda_blockchain.blockchain.provider" class="Dizda\Bundle\BlockchainBundle\Blockchain\BlockchainProvider">
             <argument type="service" id="dizda_blockchain.blockchain.insight" />
         </service>
+
+        <service id="dizda_blockchain.blockchain.manager" class="Dizda\Bundle\BlockchainBundle\Manager\BlockchainManager">
+            <argument type="service" id="dizda_blockchain.blockchain.provider" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+        </service>
+
+
     </services>
 </container>
