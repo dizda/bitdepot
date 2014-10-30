@@ -1,7 +1,7 @@
 <?php
 
 namespace Dizda\Bundle\BlockchainBundle\Blockchain;
-use Dizda\Bundle\AppBundle\Entity\Deposit;
+use Dizda\Bundle\AppBundle\Entity\Address;
 
 /**
  * Class BlockchainProvider
@@ -29,11 +29,11 @@ class BlockchainProvider
         return $this->watcher;
     }
 
-    public function isDepositChanged(Deposit $deposit)
+    public function isAddressChanged(Address $address)
     {
-        $addressFromBlockchain = $this->watcher->getAddress($deposit->getAddressExternal()->getValue(), false);
+        $addressFromBlockchain = $this->watcher->getAddress($address->getValue(), false);
 
-        if ($deposit->getTransactions()->count() === $addressFromBlockchain->getTxApperances()) {
+        if ($address->getTransactions()->count() === $addressFromBlockchain->getTxApperances()) {
             return false;
         }
 

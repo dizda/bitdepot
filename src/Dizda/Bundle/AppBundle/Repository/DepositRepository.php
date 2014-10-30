@@ -20,10 +20,10 @@ class DepositRepository extends EntityRepository
     public function getOpenDeposits()
     {
         $qb = $this->createQueryBuilder('d')
-            ->addSelect('dt')
             ->addSelect('a')
-            ->leftJoin('d.transactions', 'dt')
-            ->leftJoin('d.addressExternal', 'a')
+            ->addSelect('t')
+            ->innerJoin('d.addressExternal', 'a')
+            ->leftJoin('a.transactions', 't')
             ->andWhere('d.isFulfilled = 0')
         ;
 

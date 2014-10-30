@@ -21,12 +21,13 @@ class BlockchainManager
         $deposits = $this->em->getRepository('DizdaAppBundle:Deposit')->getOpenDeposits();
 
         foreach ($deposits as $deposit) {
-            if (!$this->provider->isDepositChanged($deposit)) {
+            if (!$this->provider->isAddressChanged($deposit->getAddressExternal())) {
                 continue;
             }
 
+            var_dump($deposit->getAddressExternal()->getValue());
             //dispatch
-            $this->provider->getBlockchain()->getTransactionsByAddress()
+//            $this->provider->getBlockchain()->getTransactionsByAddress()
         }
 
 
