@@ -26,9 +26,19 @@ class InsightWatcher extends BlockchainBase implements BlockchainWatcherInterfac
         $this->serializer = $serializer;
     }
 
+    /**
+     * @param string $address
+     * @param bool   $withTransactions
+     *
+     * @return \Dizda\Bundle\BlockchainBundle\Model\AddressAbstract
+     */
     public function getAddress($address, $withTransactions = false)
     {
-        $response = $this->client->get(sprintf('addr/%s?noTxList=1', $address));
+        if ($withTransactions) {
+            $response = $this->client->get(sprintf('addr/%s', $address));
+        } else {
+            $response = $this->client->get(sprintf('addr/%s?noTxList=1', $address));
+        }
 
         return $this->serializer->deserialize(
             $response->getBody(),
