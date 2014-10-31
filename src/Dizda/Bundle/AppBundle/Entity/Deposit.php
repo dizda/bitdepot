@@ -56,6 +56,13 @@ class Deposit
     private $isFulfilled;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_overfilled", type="boolean")
+     */
+    private $isOverfilled;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="expires_at", type="datetime", nullable=true)
@@ -246,5 +253,28 @@ class Deposit
     public function getApplication()
     {
         return $this->application;
+    }
+
+    /**
+     * Set isOverfilled
+     *
+     * @param boolean $isOverfilled
+     * @return Deposit
+     */
+    public function setIsOverfilled($isOverfilled)
+    {
+        $this->isOverfilled = $isOverfilled;
+
+        return $this;
+    }
+
+    /**
+     * Get isOverfilled
+     *
+     * @return boolean 
+     */
+    public function getIsOverfilled()
+    {
+        return $this->isOverfilled;
     }
 }

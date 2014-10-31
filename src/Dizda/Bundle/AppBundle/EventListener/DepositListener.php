@@ -32,6 +32,7 @@ class DepositListener
             $deposit->setIsFulfilled(true);
 
             if ($address->getBalance() > $deposit->getAmountExpected()) {
+                $deposit->setIsOverfilled(true);
                 $this->logger->warning('Address balance is higher than the expected deposit amount.', [ $deposit->getId() ]);
             }
         }

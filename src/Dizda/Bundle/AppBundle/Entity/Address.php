@@ -49,7 +49,7 @@ class Address
     /**
      * @var string
      *
-     * @ORM\Column(name="balance", type="decimal")
+     * @ORM\Column(name="balance", type="decimal", precision=16, scale=8, nullable=false)
      */
     private $balance;
 
