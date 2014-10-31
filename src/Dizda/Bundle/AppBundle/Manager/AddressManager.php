@@ -2,10 +2,13 @@
 
 namespace Dizda\Bundle\AppBundle\Manager;
 
+use Dizda\Bundle\AppBundle\AppEvents;
 use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
+use Dizda\Bundle\AppBundle\Event\AddressTransactionEvent;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class AddressManager
@@ -23,13 +26,20 @@ class AddressManager
     private $logger;
 
     /**
-     * @param EntityManager   $em
-     * @param LoggerInterface $logger
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
-    public function __construct(EntityManager $em, LoggerInterface $logger)
+    private $dispatcher;
+
+    /**
+     * @param EntityManager            $em
+     * @param LoggerInterface          $logger
+     * @param EventDispatcherInterface $dispatcher
+     */
+    public function __construct(EntityManager $em, LoggerInterface $logger, EventDispatcherInterface $dispatcher)
     {
         $this->em     = $em;
         $this->logger = $logger;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -63,6 +73,8 @@ class AddressManager
                 ;
 
                 $this->em->persist($addressTransaction);
+
+                $this->dispatcher->dispatch(AppEvents::ADDRESS_TRANSACTION_CREATE, new AddressTransactionEvent($addressTransaction));
             }
 
             // if not, we scan the outputs to see if our address is the receiver
@@ -80,6 +92,8 @@ class AddressManager
                 ;
 
                 $this->em->persist($addressTransaction);
+
+                $this->dispatcher->dispatch(AppEvents::ADDRESS_TRANSACTION_CREATE, new AddressTransactionEvent($addressTransaction));
             }
         }
     }

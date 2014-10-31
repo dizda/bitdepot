@@ -8,6 +8,15 @@
         <service id="dizda_app.manager.address" class="Dizda\Bundle\AppBundle\Manager\AddressManager">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument type="service" id="logger" />
+            <argument type="service" id="event_dispatcher" />
+        </service>
+
+        <service id="dizda_app.listener.address_transaction" class="Dizda\Bundle\AppBundle\EventListener\AddressTransactionListener">
+            <tag name="kernel.event_listener" event="app.address_transaction_create" method="onCreate" />
+        </service>
+
+        <service id="dizda_app.listener.deposit" class="Dizda\Bundle\AppBundle\EventListener\DepositListener">
+            <tag name="kernel.event_listener" event="app.deposit_updated" method="onUpdate" />
         </service>
     </services>
 </container>
