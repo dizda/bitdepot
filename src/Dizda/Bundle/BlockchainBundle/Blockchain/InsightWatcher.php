@@ -65,11 +65,12 @@ class InsightWatcher extends BlockchainBase implements BlockchainWatcherInterfac
     {
         $response = $this->client->get(sprintf('txs/?address=%s', $address));
 
-        return $this->serializer->deserialize(
+        $transactions = $this->serializer->deserialize(
             $response->getBody(),
-            'Dizda\Bundle\BlockchainBundle\Model\Insight\Transaction',
+            'Dizda\Bundle\BlockchainBundle\Model\Insight\TransactionList',
             'json'
         );
-    }
 
+        return $transactions->getTxs();
+    }
 }

@@ -26,6 +26,21 @@ class BlockchainManager
             }
 
             var_dump($deposit->getAddressExternal()->getValue());
+
+            $transactions = $this->provider->getBlockchain()
+                ->getTransactionsByAddress($deposit->getAddressExternal()->getValue())
+            ;
+
+            foreach ($transactions as $transaction) {
+                var_dump($transaction->getTxid());
+                if ($deposit->getAddressExternal()->hasTransaction($transaction->getTxid())) {
+                    continue;
+                }
+
+                var_dump('not exist, need to be persisted there');
+                // add the transaction there
+            }
+//            var_dump($this->provider->getBlockchain()->getTransactionsByAddress($deposit->getAddressExternal()->getValue())->getTxs()[0]->getOutputs());
             //dispatch
 //            $this->provider->getBlockchain()->getTransactionsByAddress()
         }

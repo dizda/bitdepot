@@ -262,4 +262,20 @@ class Address
     {
         return $this->transactions;
     }
+
+    /**
+     * @param string $txid
+     *
+     * @return bool
+     */
+    public function hasTransaction($txid)
+    {
+        foreach ($this->transactions as $transaction) {
+            if ($transaction->getId() === $txid) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

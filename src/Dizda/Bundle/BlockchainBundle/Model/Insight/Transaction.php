@@ -2,71 +2,58 @@
 
 namespace Dizda\Bundle\BlockchainBundle\Model\Insight;
 
-use Dizda\Bundle\BlockchainBundle\Model\AddressAbstract;
+use Dizda\Bundle\BlockchainBundle\Model\TransactionAbstract;
 use JMS\Serializer\Annotation as Serializer;
 
-class Address extends AddressAbstract
+class Transaction extends TransactionAbstract
 {
-    /**
-     * @var string
-     *
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("addrStr")
-     */
-    protected $address;
 
     /**
      * @var string
      *
      * @Serializer\Type("string")
+     * @Serializer\SerializedName("txid")
      */
-    protected $balance;
+    protected $txid;
 
     /**
-     * @var string
-     *
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("totalReceived")
-     */
-    protected $totalReceived;
-
-    /**
-     * @var string
-     *
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("totalSent")
-     */
-    protected $totalSent;
-
-    /**
-     * @var string
-     *
-     * @Serializer\Type("string")
-     * @Serializer\SerializedName("unconfirmedBalance")
-     */
-    protected $unconfirmedBalance;
-
-    /**
-     * @var string
+     * @var integer
      *
      * @Serializer\Type("integer")
-     * @Serializer\SerializedName("unconfirmedTxApperances")
+     * @Serializer\SerializedName("confirmations")
      */
-    protected $unconfirmedTxApperances;
+    protected $confirmations;
+
+    /**
+     * @var array<\Dizda\Bundle\BlockchainBundle\Model\TransactionInputAbstract>
+     *
+     * @Serializer\Type("array<Dizda\Bundle\BlockchainBundle\Model\Insight\TransactionInput>")
+     * @Serializer\SerializedName("vin")
+     */
+    protected $inputs;
+
+    /**
+     * @var array<\Dizda\Bundle\BlockchainBundle\Model\TransactionOutputAbstract>
+     *
+     * @Serializer\Type("array<Dizda\Bundle\BlockchainBundle\Model\Insight\TransactionOutput>")
+     * @Serializer\SerializedName("vout")
+     */
+    protected $outputs;
 
     /**
      * @var string
      *
-     * @Serializer\Type("integer")
-     * @Serializer\SerializedName("txApperances")
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("fees")
      */
-    protected $txApperances;
+    protected $fees;
 
     /**
      * @var string
      *
-     * @Serializer\Type("array")
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("valueOut")
      */
-    protected $transactions;
+    protected $amount;
 
 }
