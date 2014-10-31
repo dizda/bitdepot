@@ -23,6 +23,7 @@
         <service id="dizda_blockchain.blockchain.manager" class="Dizda\Bundle\BlockchainBundle\Manager\BlockchainManager">
             <argument type="service" id="dizda_blockchain.blockchain.provider" />
             <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="dizda_app.manager.address" />
         </service>
 
 

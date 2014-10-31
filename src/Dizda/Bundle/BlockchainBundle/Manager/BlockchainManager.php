@@ -2,6 +2,8 @@
 
 namespace Dizda\Bundle\BlockchainBundle\Manager;
 
+use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
+use Dizda\Bundle\AppBundle\Manager\AddressManager;
 use Dizda\Bundle\BlockchainBundle\Blockchain\BlockchainProvider;
 use Doctrine\ORM\EntityManager;
 
@@ -9,11 +11,13 @@ class BlockchainManager
 {
     private $provider;
     private $em;
+    private $addressManager;
 
-    public function __construct(BlockchainProvider $provider, EntityManager $em)
+    public function __construct(BlockchainProvider $provider, EntityManager $em, AddressManager $addressManager)
     {
-        $this->provider = $provider;
-        $this->em       = $em;
+        $this->provider       = $provider;
+        $this->em             = $em;
+        $this->addressManager = $addressManager;
     }
 
     public function update()
@@ -25,27 +29,18 @@ class BlockchainManager
                 continue;
             }
 
-            var_dump($deposit->getAddressExternal()->getValue());
-
+            // Get transactions
             $transactions = $this->provider->getBlockchain()
                 ->getTransactionsByAddress($deposit->getAddressExternal()->getValue())
             ;
 
-            foreach ($transactions as $transaction) {
-                var_dump($transaction->getTxid());
-                if ($deposit->getAddressExternal()->hasTransaction($transaction->getTxid())) {
-                    continue;
-                }
+            // Save them
+            $this->addressManager->saveTransactions($deposit->getAddressExternal(), $transactions);
 
-                var_dump('not exist, need to be persisted there');
-                // add the transaction there
-            }
-//            var_dump($this->provider->getBlockchain()->getTransactionsByAddress($deposit->getAddressExternal()->getValue())->getTxs()[0]->getOutputs());
             //dispatch
-//            $this->provider->getBlockchain()->getTransactionsByAddress()
         }
 
-
+        $this->em->flush();
     }
 
 }

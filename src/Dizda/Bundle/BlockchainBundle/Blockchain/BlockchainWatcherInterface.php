@@ -27,6 +27,12 @@ interface BlockchainWatcherInterface
     public function getAddressesUnspentOutputs(array $address);
 
     public function getTransactionsByBlock($address);
+
+    /**
+     * @param string $address
+     *
+     * @return array[]
+     */
     public function getTransactionsByAddress($address);
 
 }

@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="address_transaction")
  * @ORM\Entity
+ *
+ * @ORM\HasLifecycleCallbacks()
  */
 class AddressTransaction
 {
