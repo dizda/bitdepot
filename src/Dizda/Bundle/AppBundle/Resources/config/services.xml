@@ -17,6 +17,7 @@
 
         <service id="dizda_app.listener.deposit" class="Dizda\Bundle\AppBundle\EventListener\DepositListener">
             <tag name="kernel.event_listener" event="app.deposit_updated" method="onUpdate" />
+            <argument type="service" id="logger" />
         </service>
     </services>
 </container>

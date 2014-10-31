@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\BlockchainBundle\Blockchain;
 
 use Dizda\Bundle\AppBundle\Entity\Address;
+use Dizda\Bundle\BlockchainBundle\Model\AddressAbstract;
 
 /**
  * Class BlockchainProvider
@@ -35,7 +36,7 @@ class BlockchainProvider
      *
      * @param Address $address
      *
-     * @return bool
+     * @return bool|AddressAbstract
      */
     public function isAddressChanged(Address $address)
     {
@@ -45,7 +46,7 @@ class BlockchainProvider
             return false;
         }
 
-        return true;
+        return $addressFromBlockchain;
     }
 
 }

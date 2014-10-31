@@ -56,7 +56,7 @@ class BlockchainManager
         $deposits = $this->em->getRepository('DizdaAppBundle:Deposit')->getOpenDeposits();
 
         foreach ($deposits as $deposit) {
-            if (!$this->provider->isAddressChanged($deposit->getAddressExternal())) {
+            if (!$address = $this->provider->isAddressChanged($deposit->getAddressExternal())) {
                 continue;
             }
 
@@ -67,6 +67,9 @@ class BlockchainManager
 
             // Save them
             $this->addressManager->saveTransactions($deposit->getAddressExternal(), $transactions);
+
+            // Update balance
+            $deposit->getAddressExternal()->setBalance($address->getBalance());
 
             $this->dispatcher->dispatch(AppEvents::DEPOSIT_UPDATED, new DepositEvent($deposit));
         }

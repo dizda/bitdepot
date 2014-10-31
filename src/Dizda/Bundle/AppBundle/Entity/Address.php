@@ -24,6 +24,8 @@ class Address
     private $id;
 
     /**
+     * The address
+     *
      * @var string
      *
      * @ORM\Column(name="value", type="string", length=255)
