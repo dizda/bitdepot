@@ -46,6 +46,13 @@ class Application
     private $appSecret;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="confirmations_required", type="smallint")
+     */
+    private $confirmationsRequired;
+
+    /**
      * @var \Dizda\Bundle\AppBundle\Entity\Application
      *
      * @ORM\ManyToOne(targetEntity="Keychain", inversedBy="applications")
@@ -204,5 +211,28 @@ class Application
     public function getKeychain()
     {
         return $this->keychain;
+    }
+
+    /**
+     * Set confirmationsRequired
+     *
+     * @param integer $confirmationsRequired
+     * @return Application
+     */
+    public function setConfirmationsRequired($confirmationsRequired)
+    {
+        $this->confirmationsRequired = $confirmationsRequired;
+
+        return $this;
+    }
+
+    /**
+     * Get confirmationsRequired
+     *
+     * @return integer 
+     */
+    public function getConfirmationsRequired()
+    {
+        return $this->confirmationsRequired;
     }
 }

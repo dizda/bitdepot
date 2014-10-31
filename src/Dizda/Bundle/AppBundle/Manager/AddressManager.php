@@ -37,8 +37,8 @@ class AddressManager
      */
     public function __construct(EntityManager $em, LoggerInterface $logger, EventDispatcherInterface $dispatcher)
     {
-        $this->em     = $em;
-        $this->logger = $logger;
+        $this->em         = $em;
+        $this->logger     = $logger;
         $this->dispatcher = $dispatcher;
     }
 
@@ -53,6 +53,11 @@ class AddressManager
         // for each transactions, check if we got each in our db
         foreach ($transactions as $transaction) {
             if ($address->hasTransaction($transaction->getTxid())) {
+                continue;
+            }
+
+            // check number of required confirmations
+            if ($transaction->getConfirmations() < $address->getDeposit()->getApplication()->getConfirmationsRequired()) {
                 continue;
             }
 
