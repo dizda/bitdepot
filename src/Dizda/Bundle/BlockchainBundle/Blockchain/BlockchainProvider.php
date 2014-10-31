@@ -1,6 +1,7 @@
 <?php
 
 namespace Dizda\Bundle\BlockchainBundle\Blockchain;
+
 use Dizda\Bundle\AppBundle\Entity\Address;
 
 /**
@@ -29,6 +30,13 @@ class BlockchainProvider
         return $this->watcher;
     }
 
+    /**
+     * Check if transactions count is different from the db
+     *
+     * @param Address $address
+     *
+     * @return bool
+     */
     public function isAddressChanged(Address $address)
     {
         $addressFromBlockchain = $this->watcher->getAddress($address->getValue(), false);

@@ -7,6 +7,9 @@ use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class AddressManager
+ */
 class AddressManager
 {
     /**
