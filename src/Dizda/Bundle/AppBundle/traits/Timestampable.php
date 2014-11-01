@@ -17,6 +17,13 @@ trait Timestampable
     protected $createdAt;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     */
+    protected $updatedAt;
+
+    /**
      * Add creation date when the object is created
      *
      * @ORM\PrePersist
@@ -24,6 +31,16 @@ trait Timestampable
     public function prePersist()
     {
         $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * Add creation date when the object is created
+     *
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->updatedAt = new \DateTime();
     }
 
     /**
@@ -50,5 +67,31 @@ trait Timestampable
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     * @codeCoverageIgnore
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return $this
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     * @codeCoverageIgnore
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }
