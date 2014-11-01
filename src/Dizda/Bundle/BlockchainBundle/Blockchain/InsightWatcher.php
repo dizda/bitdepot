@@ -76,6 +76,8 @@ class InsightWatcher extends BlockchainBase implements BlockchainWatcherInterfac
     {
         $response = $this->client->get(sprintf('txs/?address=%s', $address));
 
+        // TODO: handle response error here
+
         /**
          * @var TransactionList
          */

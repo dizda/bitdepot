@@ -16,6 +16,11 @@ class HttpClient
      */
     public function __construct(array $config)
     {
+        $config = array_merge($config, [
+            'connect_timeout' => 5,
+            'timeout'         => 5
+        ]);
+
         $this->client = new Client($config);
     }
 
