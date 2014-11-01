@@ -2,6 +2,7 @@
 
 namespace Dizda\Bundle\BlockchainBundle\Model\Insight;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as Serializer;
 
 class TransactionList
@@ -18,12 +19,12 @@ class TransactionList
     /**
      * @var integer
      *
-     * @Serializer\Type("array<Dizda\Bundle\BlockchainBundle\Model\Insight\Transaction>")
+     * @Serializer\Type("ArrayCollection<Dizda\Bundle\BlockchainBundle\Model\Insight\Transaction>")
      */
     protected $txs;
 
     /**
-     * @return string
+     * @return integer
      */
     public function getPagesTotal()
     {
@@ -31,7 +32,7 @@ class TransactionList
     }
 
     /**
-     * @return int
+     * @return ArrayCollection
      */
     public function getTxs()
     {

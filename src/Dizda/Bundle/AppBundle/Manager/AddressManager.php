@@ -6,6 +6,7 @@ use Dizda\Bundle\AppBundle\AppEvents;
 use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
 use Dizda\Bundle\AppBundle\Event\AddressTransactionEvent;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -45,19 +46,14 @@ class AddressManager
     /**
      * Save transactions if needed
      *
-     * @param Address $address
-     * @param array   $transactions
+     * @param Address         $address
+     * @param ArrayCollection $transactions
      */
-    public function saveTransactions(Address $address, array $transactions)
+    public function saveTransactions(Address $address, ArrayCollection $transactions)
     {
         // for each transactions, check if we got each in our db
         foreach ($transactions as $transaction) {
             if ($address->hasTransaction($transaction->getTxid())) {
-                continue;
-            }
-
-            // check number of required confirmations
-            if ($transaction->getConfirmations() < $address->getDeposit()->getApplication()->getConfirmationsRequired()) {
                 continue;
             }
 

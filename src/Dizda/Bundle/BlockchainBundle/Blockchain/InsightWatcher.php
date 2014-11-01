@@ -72,12 +72,7 @@ class InsightWatcher extends BlockchainBase implements BlockchainWatcherInterfac
         throw new \Exception('Not implemented.');
     }
 
-    /**
-     * @param string $address
-     *
-     * @return array[]
-     */
-    public function getTransactionsByAddress($address)
+    public function getTransactionsByAddress($address, $confirmationsRequired)
     {
         $response = $this->client->get(sprintf('txs/?address=%s', $address));
 
@@ -90,6 +85,9 @@ class InsightWatcher extends BlockchainBase implements BlockchainWatcherInterfac
             'json'
         );
 
-        return $transactions->getTxs();
+        return $transactions->getTxs()->filter(function ($item) use ($confirmationsRequired) {
+            // check number of required confirmations
+            return $item->getConfirmations() >= $confirmationsRequired;
+        });
     }
 }

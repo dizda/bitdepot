@@ -29,10 +29,11 @@ interface BlockchainWatcherInterface
     public function getTransactionsByBlock($address);
 
     /**
-     * @param string $address
+     * @param string  $address
+     * @param integer $confirmationsRequired
      *
      * @return array[]
      */
-    public function getTransactionsByAddress($address);
+    public function getTransactionsByAddress($address, $confirmationsRequired);
 
 }

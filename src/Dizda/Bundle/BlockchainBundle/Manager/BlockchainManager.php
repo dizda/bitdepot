@@ -61,9 +61,15 @@ class BlockchainManager
             }
 
             // Get transactions
-            $transactions = $this->provider->getBlockchain()
-                ->getTransactionsByAddress($deposit->getAddressExternal()->getValue())
-            ;
+            $transactions = $this->provider->getBlockchain()->getTransactionsByAddress(
+                $deposit->getAddressExternal()->getValue(),
+                $deposit->getApplication()->getConfirmationsRequired()
+            );
+
+            // We reduce transactions along required confirmations, so we have to check again before continue
+            if (!count($transactions)) {
+                continue;
+            }
 
             // Save them
             $this->addressManager->saveTransactions($deposit->getAddressExternal(), $transactions);
