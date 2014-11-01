@@ -83,6 +83,23 @@ class Deposit
      **/
     private $addressExternal;
 
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity    = "DepositTopup",
+     *      mappedBy        = "deposit"
+     * )
+     */
+    private $topups;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->topups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -276,5 +293,38 @@ class Deposit
     public function getIsOverfilled()
     {
         return $this->isOverfilled;
+    }
+
+    /**
+     * Add topups
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\DepositTopup $topups
+     * @return Deposit
+     */
+    public function addTopup(\Dizda\Bundle\AppBundle\Entity\DepositTopup $topups)
+    {
+        $this->topups[] = $topups;
+
+        return $this;
+    }
+
+    /**
+     * Remove topups
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\DepositTopup $topups
+     */
+    public function removeTopup(\Dizda\Bundle\AppBundle\Entity\DepositTopup $topups)
+    {
+        $this->topups->removeElement($topups);
+    }
+
+    /**
+     * Get topups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTopups()
+    {
+        return $this->topups;
     }
 }
