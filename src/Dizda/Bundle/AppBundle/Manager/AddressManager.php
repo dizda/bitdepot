@@ -51,6 +51,8 @@ class AddressManager
      */
     public function saveTransactions(Address $address, ArrayCollection $transactions)
     {
+        $transactionsInAdded = [];
+
         // for each transactions, check if we got each in our db
         foreach ($transactions as $transaction) {
             if ($address->hasTransaction($transaction->getTxid())) {
@@ -68,7 +70,7 @@ class AddressManager
                 $addressTransaction = new AddressTransaction();
                 $addressTransaction->setAddress($address)
                     ->setId($transaction->getTxid())
-                    ->setType(AddressTransaction::TYPE_IN)
+                    ->setType(AddressTransaction::TYPE_OUT)
                     ->setAmount($input->getValue())
                     ->setAddresses([ $input->getAddress() ])
                 ;
@@ -87,7 +89,7 @@ class AddressManager
                 $addressTransaction = new AddressTransaction();
                 $addressTransaction->setAddress($address)
                     ->setId($transaction->getTxid())
-                    ->setType(AddressTransaction::TYPE_OUT)
+                    ->setType(AddressTransaction::TYPE_IN)
                     ->setAmount($output->getValue())
                     ->setAddresses($output->getAddresses())
                 ;
@@ -95,8 +97,12 @@ class AddressManager
                 $this->em->persist($addressTransaction);
 
                 $this->dispatcher->dispatch(AppEvents::ADDRESS_TRANSACTION_CREATE, new AddressTransactionEvent($addressTransaction));
+
+                $transactionsInAdded[] = $addressTransaction;
             }
         }
+
+        return $transactionsInAdded;
     }
 
 }

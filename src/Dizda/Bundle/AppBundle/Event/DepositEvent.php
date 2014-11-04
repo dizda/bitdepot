@@ -16,11 +16,18 @@ class DepositEvent extends Event
     private $deposit;
 
     /**
-     * @param Deposit $deposit
+     * @var array
      */
-    public function __construct(Deposit $deposit)
+    private $transactionsInAdded;
+
+    /**
+     * @param Deposit $deposit
+     * @param array   $transactionsInAdded
+     */
+    public function __construct(Deposit $deposit, array $transactionsInAdded)
     {
         $this->deposit = $deposit;
+        $this->transactionsInAdded = $transactionsInAdded;
     }
 
     /**
@@ -31,4 +38,11 @@ class DepositEvent extends Event
         return $this->deposit;
     }
 
+    /**
+     * @return array
+     */
+    public function getTransactionsInAdded()
+    {
+        return $this->transactionsInAdded;
+    }
 }

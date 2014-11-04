@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Deposit
 {
     const TYPE_AMOUNT_EXPECTED = 1;
-    const TYPE_AMOUNT_UNKNOWN  = 2;
+    const TYPE_AMOUNT_TOPUP    = 2;
 
     use Timestampable;
 

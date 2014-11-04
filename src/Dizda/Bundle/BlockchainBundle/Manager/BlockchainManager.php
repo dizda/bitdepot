@@ -72,12 +72,12 @@ class BlockchainManager
             }
 
             // Save them
-            $this->addressManager->saveTransactions($deposit->getAddressExternal(), $transactions);
+            $transactionsInAdded = $this->addressManager->saveTransactions($deposit->getAddressExternal(), $transactions);
 
             // Update balance
             $deposit->getAddressExternal()->setBalance($address->getBalance());
 
-            $this->dispatcher->dispatch(AppEvents::DEPOSIT_UPDATED, new DepositEvent($deposit));
+            $this->dispatcher->dispatch(AppEvents::DEPOSIT_UPDATED, new DepositEvent($deposit, $transactionsInAdded));
         }
 
         $this->em->flush();

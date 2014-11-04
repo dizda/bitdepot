@@ -31,32 +31,19 @@ class DepositTopup
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="balance_before", type="decimal")
-     */
-    private $balanceBefore;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="balance_after", type="decimal")
-     */
-    private $balanceAfter;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="amount", type="decimal")
-     */
-    private $amount;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="status", type="smallint")
      */
     private $status;
+
+    /**
+     * @var \Dizda\Bundle\AppBundle\Entity\AddressTransaction
+     *
+     * @ORM\OneToOne(targetEntity="AddressTransaction", inversedBy="topup")
+     * @ORM\JoinColumn(name="address_transaction_id", referencedColumnName="id", nullable=false)
+     **/
+    private $transaction;
 
     /**
      * @var \Dizda\Bundle\AppBundle\Entity\Deposit
@@ -74,29 +61,6 @@ class DepositTopup
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set amount
-     *
-     * @param string $amount
-     * @return DepositTopup
-     */
-    public function setAmount($amount)
-    {
-        $this->amount = $amount;
-
-        return $this;
-    }
-
-    /**
-     * Get amount
-     *
-     * @return string 
-     */
-    public function getAmount()
-    {
-        return $this->amount;
     }
 
     /**
@@ -123,52 +87,6 @@ class DepositTopup
     }
 
     /**
-     * Set balanceBefore
-     *
-     * @param string $balanceBefore
-     * @return DepositTopup
-     */
-    public function setBalanceBefore($balanceBefore)
-    {
-        $this->balanceBefore = $balanceBefore;
-
-        return $this;
-    }
-
-    /**
-     * Get balanceBefore
-     *
-     * @return string 
-     */
-    public function getBalanceBefore()
-    {
-        return $this->balanceBefore;
-    }
-
-    /**
-     * Set balanceAfter
-     *
-     * @param string $balanceAfter
-     * @return DepositTopup
-     */
-    public function setBalanceAfter($balanceAfter)
-    {
-        $this->balanceAfter = $balanceAfter;
-
-        return $this;
-    }
-
-    /**
-     * Get balanceAfter
-     *
-     * @return string 
-     */
-    public function getBalanceAfter()
-    {
-        return $this->balanceAfter;
-    }
-
-    /**
      * Set deposit
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Deposit $deposit
@@ -189,5 +107,28 @@ class DepositTopup
     public function getDeposit()
     {
         return $this->deposit;
+    }
+
+    /**
+     * Set transaction
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\AddressTransaction $transaction
+     * @return DepositTopup
+     */
+    public function setTransaction(\Dizda\Bundle\AppBundle\Entity\AddressTransaction $transaction)
+    {
+        $this->transaction = $transaction;
+
+        return $this;
+    }
+
+    /**
+     * Get transaction
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\AddressTransaction 
+     */
+    public function getTransaction()
+    {
+        return $this->transaction;
     }
 }

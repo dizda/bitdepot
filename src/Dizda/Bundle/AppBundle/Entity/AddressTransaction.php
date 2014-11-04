@@ -58,6 +58,11 @@ class AddressTransaction
     private $address;
 
     /**
+     * @ORM\OneToOne(targetEntity="DepositTopup", mappedBy="transaction")
+     **/
+    private $topup;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -170,5 +175,28 @@ class AddressTransaction
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * Set topup
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\DepositTopup $topup
+     * @return AddressTransaction
+     */
+    public function setTopup(\Dizda\Bundle\AppBundle\Entity\DepositTopup $topup = null)
+    {
+        $this->topup = $topup;
+
+        return $this;
+    }
+
+    /**
+     * Get topup
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\DepositTopup 
+     */
+    public function getTopup()
+    {
+        return $this->topup;
     }
 }
