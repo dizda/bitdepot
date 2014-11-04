@@ -19,6 +19,16 @@
             <tag name="kernel.event_listener" event="app.deposit_updated" method="onUpdate" />
             <argument type="service" id="logger" />
             <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="old_sound_rabbit_mq.deposit_topup_producer" />
+        </service>
+
+        <service id="dizda_app.listener.deposit_topup" class="Dizda\Bundle\AppBundle\EventListener\DepositTopupListener">
+            <tag name="doctrine.event_listener" event="postPersist" />
+            <argument type="service" id="old_sound_rabbit_mq.deposit_topup_producer" />
+        </service>
+
+        <service id="dizda_app.consumer.deposit_topup" class="Dizda\Bundle\AppBundle\Consumer\DepositTopupConsumer">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
         </service>
     </services>
 </container>

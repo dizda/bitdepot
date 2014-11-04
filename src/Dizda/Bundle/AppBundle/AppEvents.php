@@ -11,5 +11,6 @@ class AppEvents
      */
     const ADDRESS_TRANSACTION_CREATE   = 'app.address_transaction_create';
 
-    const DEPOSIT_UPDATED = 'app.deposit_updated';
+    const DEPOSIT_UPDATED     = 'app.deposit_updated';
+
 }

@@ -16,10 +16,10 @@ class DepositTopup
 {
     use Timestampable;
 
-    const STATUS_QUEUED     = 1;
-    const STATUS_PROCESSING = 2;
-    const STATUS_PROCESSED  = 3;
-    const STATUS_CANCELLED  = 4;
+    const STATUS_QUEUED     = 1; // Sent to rabbitmq, but not processed yet
+    const STATUS_PROCESSING = 2; // Processing by rabbit
+    const STATUS_PROCESSED  = 3; // Processed
+    const STATUS_CANCELLED  = 4; // Cancelled for X reasons
 
     /**
      * @var integer

@@ -78,3 +78,23 @@ jms_serializer:
 dizda_blockchain:
     provider: insight
     endpoint: %api_endpoint%
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     localhost
+            port:     5672
+            user:     guest
+            password: guest
+            vhost:    '/'
+            lazy:     true
+    producers:
+        deposit_topup:
+            connection:       default
+            exchange_options: { name: deposit-topup, type: direct }
+    consumers:
+        deposit_topup:
+            connection:       default
+            exchange_options: { name: deposit-topup, type: direct }
+            queue_options:    { name: deposit-topup }
+            callback:         dizda_app.consumer.deposit_topup

@@ -110,10 +110,9 @@ class DepositListener
             $topup->setDeposit($this->deposit);
             $topup->setStatus(DepositTopup::STATUS_QUEUED);
 
+            // When $topup will be flushed, it will be automatically sent to rabbitmq through DepositTopupListener
             $this->em->persist($topup);
-
         }
 
-        // TODO: dispatch here
     }
 }
