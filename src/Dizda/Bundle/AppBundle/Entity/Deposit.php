@@ -11,6 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
  *
  * @ORM\Table(name="deposit")
  * @ORM\Entity(repositoryClass="Dizda\Bundle\AppBundle\Repository\DepositRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Deposit
 {
