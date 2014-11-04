@@ -53,6 +53,15 @@ class Application
     private $confirmationsRequired;
 
     /**
+     * Callback API Endpoint
+     *
+     * @var string
+     *
+     * @ORM\Column(name="callback_endpoint", type="string", length=255)
+     */
+    private $callbackEndpoint;
+
+    /**
      * @var \Dizda\Bundle\AppBundle\Entity\Application
      *
      * @ORM\ManyToOne(targetEntity="Keychain", inversedBy="applications")
@@ -234,5 +243,28 @@ class Application
     public function getConfirmationsRequired()
     {
         return $this->confirmationsRequired;
+    }
+
+    /**
+     * Set callbackEndpoint
+     *
+     * @param string $callbackEndpoint
+     * @return Application
+     */
+    public function setCallbackEndpoint($callbackEndpoint)
+    {
+        $this->callbackEndpoint = $callbackEndpoint;
+
+        return $this;
+    }
+
+    /**
+     * Get callbackEndpoint
+     *
+     * @return string 
+     */
+    public function getCallbackEndpoint()
+    {
+        return $this->callbackEndpoint;
     }
 }

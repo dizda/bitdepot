@@ -4,6 +4,7 @@ namespace Dizda\Bundle\AppBundle\Entity;
 
 use Dizda\Bundle\AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Deposit
@@ -38,6 +39,8 @@ class Deposit
      * @var string
      *
      * @ORM\Column(name="amount_expected", type="decimal", precision=16, scale=8, nullable=true)
+     *
+     * @Serializer\Type("string")
      */
     private $amountExpected;
 
@@ -45,6 +48,8 @@ class Deposit
      * @var string
      *
      * @ORM\Column(name="amount_filled", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
+     *
+     * @Serializer\Type("string")
      */
     private $amountFilled = 0;
 
@@ -52,6 +57,8 @@ class Deposit
      * @var boolean
      *
      * @ORM\Column(name="is_fulfilled", type="boolean")
+     *
+     * @Serializer\Type("boolean")
      */
     private $isFulfilled;
 
@@ -59,6 +66,8 @@ class Deposit
      * @var boolean
      *
      * @ORM\Column(name="is_overfilled", type="boolean")
+     *
+     * @Serializer\Type("boolean")
      */
     private $isOverfilled;
 
@@ -66,6 +75,8 @@ class Deposit
      * @var \DateTime
      *
      * @ORM\Column(name="expires_at", type="datetime", nullable=true)
+     *
+     * @Serializer\Exclude
      */
     private $expiresAt;
 
@@ -74,12 +85,16 @@ class Deposit
      *
      * @ORM\ManyToOne(targetEntity="Application", inversedBy="deposits")
      * @ORM\JoinColumn(name="application_id", referencedColumnName="id", nullable=false)
+     *
+     * @Serializer\Exclude
      */
     private $application;
 
     /**
      * @ORM\OneToOne(targetEntity="Address", inversedBy="deposit")
      * @ORM\JoinColumn(name="address_external_id", referencedColumnName="id", nullable=false)
+     *
+     * @Serializer\Exclude
      **/
     private $addressExternal;
 
@@ -90,6 +105,8 @@ class Deposit
      *      targetEntity    = "DepositTopup",
      *      mappedBy        = "deposit"
      * )
+     *
+     * @Serializer\Exclude
      */
     private $topups;
 

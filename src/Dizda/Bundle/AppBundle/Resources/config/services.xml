@@ -29,6 +29,11 @@
 
         <service id="dizda_app.consumer.deposit_topup" class="Dizda\Bundle\AppBundle\Consumer\DepositTopupConsumer">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="dizda_app.service.callback" />
+        </service>
+
+        <service id="dizda_app.service.callback" class="Dizda\Bundle\AppBundle\Service\CallbackService">
+            <argument type="service" id="jms_serializer" />
         </service>
     </services>
 </container>

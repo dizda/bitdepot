@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * DepositTransaction
@@ -32,6 +33,8 @@ class AddressTransaction
      * @var integer
      *
      * @ORM\Column(name="type", type="smallint")
+     *
+     * @Serializer\Type("integer")
      */
     private $type;
 
@@ -39,6 +42,8 @@ class AddressTransaction
      * @var string
      *
      * @ORM\Column(name="amount", type="decimal", precision=16, scale=8, nullable=false)
+     *
+     * @Serializer\Type("string")
      */
     private $amount;
 
@@ -46,6 +51,8 @@ class AddressTransaction
      * @var string
      *
      * @ORM\Column(name="addresses", type="simple_array", length=65535)
+     *
+     * @Serializer\Type("array")
      */
     private $addresses;
 
@@ -54,11 +61,15 @@ class AddressTransaction
      *
      * @ORM\ManyToOne(targetEntity="Address", inversedBy="transactions")
      * @ORM\JoinColumn(name="address_id", referencedColumnName="id", nullable=false)
+     *
+     * @Serializer\Exclude
      */
     private $address;
 
     /**
      * @ORM\OneToOne(targetEntity="DepositTopup", mappedBy="transaction")
+     *
+     * @Serializer\Exclude
      **/
     private $topup;
 

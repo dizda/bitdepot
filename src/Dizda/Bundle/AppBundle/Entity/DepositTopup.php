@@ -4,6 +4,7 @@ namespace Dizda\Bundle\AppBundle\Entity;
 
 use Dizda\Bundle\AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * DepositTopup
@@ -17,9 +18,8 @@ class DepositTopup
     use Timestampable;
 
     const STATUS_QUEUED     = 1; // Sent to rabbitmq, but not processed yet
-    const STATUS_PROCESSING = 2; // Processing by rabbit
-    const STATUS_PROCESSED  = 3; // Processed
-    const STATUS_CANCELLED  = 4; // Cancelled for X reasons
+    const STATUS_PROCESSED  = 2; // Processed
+    const STATUS_CANCELLED  = 3; // Cancelled for X reasons
 
     /**
      * @var integer
@@ -27,6 +27,8 @@ class DepositTopup
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Serializer\Type("integer")
      */
     private $id;
 
@@ -34,6 +36,8 @@ class DepositTopup
      * @var integer
      *
      * @ORM\Column(name="status", type="smallint")
+     *
+     * @Serializer\Exclude()
      */
     private $status;
 
@@ -42,6 +46,8 @@ class DepositTopup
      *
      * @ORM\OneToOne(targetEntity="AddressTransaction", inversedBy="topup")
      * @ORM\JoinColumn(name="address_transaction_id", referencedColumnName="id", nullable=false)
+     *
+     * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\AddressTransaction")
      **/
     private $transaction;
 
@@ -50,6 +56,8 @@ class DepositTopup
      *
      * @ORM\ManyToOne(targetEntity="Deposit", inversedBy="topups")
      * @ORM\JoinColumn(name="deposit_id", referencedColumnName="id", nullable=false)
+     *
+     * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\Deposit")
      */
     private $deposit;
 
