@@ -23,7 +23,8 @@ Database.prototype.addKeychain = function(name, requiredSignatures)
     var keychain = {
         name: name,
         sign_required: requiredSignatures,
-        created_at: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
     };
 
     this.client.query('INSERT INTO keychain SET ?', keychain, function(err, result) {
@@ -43,7 +44,8 @@ Database.prototype.addPubkeys = function(keychainId, name, value)
         keychain_id: keychainId,
         name: name,
         value: value,
-        created_at: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
     };
 
     this.client.query('INSERT INTO pubkey SET ?', pubkey, function(err, result) {
@@ -55,17 +57,20 @@ Database.prototype.addPubkeys = function(keychainId, name, value)
     return deferred.promise;
 };
 
-Database.prototype.addAddress = function(keychainId, value, isExternal, derivation)
+Database.prototype.addAddress = function(keychainId, multisig, isExternal, derivation)
 {
     var deferred = Q.defer();
 
     var address = {
         keychain_id: keychainId,
-        value: value,
+        value:       multisig.address,
         is_external: isExternal,
-        derivation: derivation,
-        balance: 0,
-        created_at: new Date()
+        derivation:  derivation,
+        balance:     0,
+        redeem_script:  multisig.redeemScript.toHex(),
+        script_pub_key: multisig.scriptPubKey.toHex(),
+        created_at:     new Date(),
+        updated_at:     new Date()
     };
 
     this.client.query('INSERT INTO address SET ?', address, function(err, result) {

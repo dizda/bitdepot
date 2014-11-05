@@ -55,6 +55,20 @@ class Address
     private $balance;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="redeem_script", type="text", nullable=false)
+     */
+    private $redeemScript;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="script_pub_key", type="string", nullable=false)
+     */
+    private $scriptPubKey;
+
+    /**
      * @var \Dizda\Bundle\AppBundle\Entity\Keychain
      *
      * @ORM\ManyToOne(targetEntity="Dizda\Bundle\AppBundle\Entity\Keychain", inversedBy="addresses")
@@ -280,5 +294,51 @@ class Address
         }
 
         return false;
+    }
+
+    /**
+     * Set redeemScript
+     *
+     * @param string $redeemScript
+     * @return Address
+     */
+    public function setRedeemScript($redeemScript)
+    {
+        $this->redeemScript = $redeemScript;
+
+        return $this;
+    }
+
+    /**
+     * Get redeemScript
+     *
+     * @return string 
+     */
+    public function getRedeemScript()
+    {
+        return $this->redeemScript;
+    }
+
+    /**
+     * Set scriptPubKey
+     *
+     * @param string $scriptPubKey
+     * @return Address
+     */
+    public function setScriptPubKey($scriptPubKey)
+    {
+        $this->scriptPubKey = $scriptPubKey;
+
+        return $this;
+    }
+
+    /**
+     * Get scriptPubKey
+     *
+     * @return string 
+     */
+    public function getScriptPubKey()
+    {
+        return $this->scriptPubKey;
     }
 }

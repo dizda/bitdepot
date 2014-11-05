@@ -19,7 +19,12 @@ Wallet.prototype.getMultisigAddress = function(requiredSignatures, pubkeys)
     var redeemScript = bitcoin.scripts.multisigOutput(requiredSignatures, pubkeys);
     var scriptPubKey = bitcoin.scripts.scriptHashOutput(redeemScript.getHash());
 
-    return bitcoin.Address.fromOutputScript(scriptPubKey).toString();
+    //return bitcoin.Address.fromOutputScript(scriptPubKey).toString();
+    return {
+        address: bitcoin.Address.fromOutputScript(scriptPubKey).toString(),
+        redeemScript: redeemScript,
+        scriptPubKey: scriptPubKey
+    };
 };
 
 module.exports = Wallet;

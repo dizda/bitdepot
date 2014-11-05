@@ -201,10 +201,10 @@ function process()
             var externalMulti = wallet.getMultisigAddress(2, externalPubKeys);
             var internalMulti = wallet.getMultisigAddress(2, internalPubKeys);
 
-            console.log('#'+derivation+'.ext ' + externalMulti);
+            console.log('#'+derivation+'.ext ' + externalMulti.address);
             externalPromises.push(database.addAddress(keychain, externalMulti, 1, derivation));
 
-            console.log('#'+derivation+'.int ' + internalMulti);
+            console.log('#'+derivation+'.int ' + internalMulti.address);
             internalPromises.push(database.addAddress(keychain, internalMulti, 0, derivation));
 
         }
