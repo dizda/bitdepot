@@ -31,7 +31,7 @@ class DepositTopupEntityListener
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $entityManager = $args->getEntityManager();
+        //$entityManager = $args->getEntityManager();
 
         // Waiting to $topup to get his $id, to push him to rabbitmq
         if ($entity instanceof DepositTopup) {

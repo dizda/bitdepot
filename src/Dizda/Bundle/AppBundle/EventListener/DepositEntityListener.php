@@ -32,7 +32,6 @@ class DepositEntityListener
     public function postUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $entityManager = $args->getEntityManager();
 
         // When a deposit is occurred, we verify that is not a Topup reload
         if ($entity instanceof Deposit) {
