@@ -3,7 +3,6 @@
 namespace Dizda\Bundle\AppBundle\EventListener;
 
 use Dizda\Bundle\AppBundle\Entity\Deposit;
-use Dizda\Bundle\AppBundle\Traits\MessageQueuingInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use OldSound\RabbitMqBundle\RabbitMq\Producer;
 
