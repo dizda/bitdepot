@@ -84,6 +84,8 @@ class DepositListener
                 $this->logger->warning('Address balance is higher than the expected deposit amount.', [ $this->deposit->getId() ]);
             }
         }
+
+        $this->deposit->setQueueStatus(Deposit::QUEUE_STATUS_QUEUED);
     }
 
     /**
@@ -108,7 +110,7 @@ class DepositListener
             $topup = new DepositTopup();
             $topup->setTransaction($transaction);
             $topup->setDeposit($this->deposit);
-            $topup->setStatus(DepositTopup::STATUS_QUEUED);
+            $topup->setQueueStatus(DepositTopup::QUEUE_STATUS_QUEUED);
 
             // When $topup will be flushed, it will be automatically sent to rabbitmq through DepositTopupListener
             $this->em->persist($topup);

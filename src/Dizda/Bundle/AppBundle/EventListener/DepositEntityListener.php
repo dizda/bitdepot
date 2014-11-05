@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\AppBundle\EventListener;
 
 use Dizda\Bundle\AppBundle\Entity\Deposit;
+use Dizda\Bundle\AppBundle\Traits\MessageQueuingInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use OldSound\RabbitMqBundle\RabbitMq\Producer;
 
@@ -37,6 +38,10 @@ class DepositEntityListener
             // If RabbitMQ is not available, an Exception will be thrown, and a rollback of transactions will be made
             // so we will not loose any topup transactions if an error occur.
             if ($entity->getType() !== Deposit::TYPE_AMOUNT_EXPECTED) {
+                return;
+            }
+
+            if ($entity->getQueueStatus() !== Deposit::QUEUE_STATUS_QUEUED) {
                 return;
             }
 

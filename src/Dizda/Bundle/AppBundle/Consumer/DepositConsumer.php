@@ -54,8 +54,7 @@ class DepositConsumer implements ConsumerInterface
             throw new IncorrectCallbackResponseException();
         }
 
-        //TODO: add STATUS_QUEUED, STATUS_PROCESSED, etc to deposit?
-        $deposit->setStatus(DepositTopup::STATUS_PROCESSED);
+        $deposit->setQueueStatus(DepositTopup::QUEUE_STATUS_PROCESSED);
         $this->em->flush();
 
         return true;

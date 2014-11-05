@@ -54,7 +54,7 @@ class DepositTopupConsumer implements ConsumerInterface
             throw new IncorrectCallbackResponseException();
         }
 
-        $topup->setStatus(DepositTopup::STATUS_PROCESSED);
+        $topup->setQueueStatus(DepositTopup::QUEUE_STATUS_PROCESSED);
         $this->em->flush();
 
         return true;

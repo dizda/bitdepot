@@ -2,6 +2,8 @@
 
 namespace Dizda\Bundle\AppBundle\Entity;
 
+use Dizda\Bundle\AppBundle\Traits\MessageQueuing;
+use Dizda\Bundle\AppBundle\Traits\MessageQueuingInterface;
 use Dizda\Bundle\AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
@@ -13,13 +15,10 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  */
-class DepositTopup
+class DepositTopup implements MessageQueuingInterface
 {
     use Timestampable;
-
-    const STATUS_QUEUED     = 1; // Sent to rabbitmq, but not processed yet
-    const STATUS_PROCESSED  = 2; // Processed
-    const STATUS_CANCELLED  = 3; // Cancelled for X reasons
+    use MessageQueuing;
 
     /**
      * @var integer
@@ -31,15 +30,6 @@ class DepositTopup
      * @Serializer\Type("integer")
      */
     private $id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="status", type="smallint")
-     *
-     * @Serializer\Exclude()
-     */
-    private $status;
 
     /**
      * @var \Dizda\Bundle\AppBundle\Entity\AddressTransaction
@@ -69,29 +59,6 @@ class DepositTopup
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set status
-     *
-     * @param integer $status
-     * @return DepositTopup
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return integer 
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     /**

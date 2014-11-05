@@ -2,6 +2,8 @@
 
 namespace Dizda\Bundle\AppBundle\Entity;
 
+use Dizda\Bundle\AppBundle\Traits\MessageQueuing;
+use Dizda\Bundle\AppBundle\Traits\MessageQueuingInterface;
 use Dizda\Bundle\AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
@@ -13,12 +15,13 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity(repositoryClass="Dizda\Bundle\AppBundle\Repository\DepositRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Deposit
+class Deposit implements MessageQueuingInterface
 {
     const TYPE_AMOUNT_EXPECTED = 1;
     const TYPE_AMOUNT_TOPUP    = 2;
 
     use Timestampable;
+    use MessageQueuing;
 
     /**
      * @var integer
