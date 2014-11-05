@@ -89,10 +89,18 @@ old_sound_rabbit_mq:
             vhost:    '/'
             lazy:     true
     producers:
+        deposit:
+            connection:       default
+            exchange_options: { name: deposit, type: direct }
         deposit_topup:
             connection:       default
             exchange_options: { name: deposit-topup, type: direct }
     consumers:
+        deposit:
+            connection:       default
+            exchange_options: { name: deposit, type: direct }
+            queue_options:    { name: deposit }
+            callback:         dizda_app.consumer.deposit
         deposit_topup:
             connection:       default
             exchange_options: { name: deposit-topup, type: direct }

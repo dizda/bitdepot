@@ -2,6 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Service;
 
+use Dizda\Bundle\AppBundle\Entity\Deposit;
 use Dizda\Bundle\AppBundle\Entity\DepositTopup;
 use GuzzleHttp\Client;
 use JMS\Serializer\SerializerInterface;
@@ -29,14 +30,15 @@ class CallbackService
         $this->client     = new Client();
     }
 
-    public function depositExpectedFilled()
+    public function depositExpectedFilling(Deposit $deposit)
     {
+        $baseUrl = $deposit->getApplication()->getCallbackEndpoint();
 
-    }
+        $response = $this->client->post(sprintf('%s/deposit.json', $baseUrl), [
+            'json' => $this->serializer->serialize($deposit, 'json')
+        ]);
 
-    public function depositExpectedFulFilled()
-    {
-
+        return (int) $response->getStatusCode() === 200;
     }
 
     /**

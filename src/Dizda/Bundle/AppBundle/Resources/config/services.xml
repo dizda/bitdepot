@@ -22,11 +22,25 @@
             <argument type="service" id="old_sound_rabbit_mq.deposit_topup_producer" />
         </service>
 
-        <service id="dizda_app.listener.deposit_topup" class="Dizda\Bundle\AppBundle\EventListener\DepositTopupListener">
+        <!-- Producer -->
+        <service id="dizda_app.listener.deposit_entity" class="Dizda\Bundle\AppBundle\EventListener\DepositEntityListener">
+            <tag name="doctrine.event_listener" event="postUpdate" />
+            <argument type="service" id="old_sound_rabbit_mq.deposit_producer" />
+        </service>
+
+        <!-- Producer -->
+        <service id="dizda_app.listener.deposit_topup_entity" class="Dizda\Bundle\AppBundle\EventListener\DepositTopupEntityListener">
             <tag name="doctrine.event_listener" event="postPersist" />
             <argument type="service" id="old_sound_rabbit_mq.deposit_topup_producer" />
         </service>
 
+        <!-- Consumer -->
+        <service id="dizda_app.consumer.deposit" class="Dizda\Bundle\AppBundle\Consumer\DepositConsumer">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="dizda_app.service.callback" />
+        </service>
+
+        <!-- Consumer -->
         <service id="dizda_app.consumer.deposit_topup" class="Dizda\Bundle\AppBundle\Consumer\DepositTopupConsumer">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument type="service" id="dizda_app.service.callback" />

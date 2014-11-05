@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping\PostPersist;
 use OldSound\RabbitMqBundle\RabbitMq\Producer;
 
 /**
- * Class DepositTopupListener
+ * Class DepositTopupEntityListener
  */
-class DepositTopupListener
+class DepositTopupEntityListener
 {
     /**
      * @var \OldSound\RabbitMqBundle\RabbitMq\Producer
