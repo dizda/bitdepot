@@ -9,6 +9,8 @@ use OldSound\RabbitMqBundle\RabbitMq\Producer;
 
 /**
  * Class DepositEntityListener
+ *
+ * Watch Expected Deposit only
  */
 class DepositEntityListener
 {
