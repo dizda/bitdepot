@@ -41,6 +41,7 @@ class DepositEntityListener
                 return;
             }
 
+            // If the deposit is already processed, we don't push it a second time
             if ($entity->getQueueStatus() !== Deposit::QUEUE_STATUS_QUEUED) {
                 return;
             }
