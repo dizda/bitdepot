@@ -57,6 +57,13 @@ class AddressTransaction
     private $addresses;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_spent", type="boolean")
+     */
+    private $isSpent = false;
+
+    /**
      * @var \Dizda\Bundle\AppBundle\Entity\Deposit
      *
      * @ORM\ManyToOne(targetEntity="Address", inversedBy="transactions")
@@ -72,6 +79,18 @@ class AddressTransaction
      * @Serializer\Exclude
      **/
     private $topup;
+
+    /**
+     * WithdrawInputs
+     *
+     * @var \Dizda\Bundle\AppBundle\Entity\Deposit
+     *
+     * @ORM\ManyToOne(targetEntity="Withdraw", inversedBy="withdrawInputs")
+     * @ORM\JoinColumn(name="withdraw_id", referencedColumnName="id", nullable=true)
+     *
+     * @Serializer\Exclude
+     */
+    private $withdraw;
 
     /**
      * Get id
@@ -209,5 +228,52 @@ class AddressTransaction
     public function getTopup()
     {
         return $this->topup;
+    }
+
+    /**
+     * Set isSpent
+     *
+     * @param boolean $isSpent
+     * @return AddressTransaction
+     */
+    public function setIsSpent($isSpent)
+    {
+        $this->isSpent = $isSpent;
+
+        return $this;
+    }
+
+    /**
+     * Get isSpent
+     *
+     * @return boolean 
+     */
+    public function getIsSpent()
+    {
+        return $this->isSpent;
+    }
+
+    /**
+     * Set withdraw
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Withdraw $withdraw
+     *
+     * @return AddressTransaction
+     */
+    public function setWithdraw(\Dizda\Bundle\AppBundle\Entity\Withdraw $withdraw = null)
+    {
+        $this->withdraw = $withdraw;
+
+        return $this;
+    }
+
+    /**
+     * Get withdraw
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\Withdraw 
+     */
+    public function getWithdraw()
+    {
+        return $this->withdraw;
     }
 }

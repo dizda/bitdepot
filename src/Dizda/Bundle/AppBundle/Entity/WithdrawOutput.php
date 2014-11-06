@@ -2,16 +2,20 @@
 
 namespace Dizda\Bundle\AppBundle\Entity;
 
+use Dizda\Bundle\AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * WithdrawOutput
  *
- * @ORM\Table()
+ * @ORM\Table(name="withdraw_output")
  * @ORM\Entity
  */
 class WithdrawOutput
 {
+    use Timestampable;
+
     /**
      * @var integer
      *
@@ -24,7 +28,7 @@ class WithdrawOutput
     /**
      * @var string
      *
-     * @ORM\Column(name="amount", type="decimal")
+     * @ORM\Column(name="amount", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
      */
     private $amount;
 
@@ -49,6 +53,17 @@ class WithdrawOutput
      */
     private $reference;
 
+    /**
+     * Withdraw can be NULL until a grouped withdraw has been created.
+     *
+     * @var \Dizda\Bundle\AppBundle\Entity\Application
+     *
+     * @ORM\ManyToOne(targetEntity="Withdraw", inversedBy="withdrawOutputs")
+     * @ORM\JoinColumn(name="withdraw_id", referencedColumnName="id", nullable=true)
+     *
+     * @Serializer\Exclude
+     */
+    private $withdraw;
 
     /**
      * Get id
@@ -150,5 +165,28 @@ class WithdrawOutput
     public function getReference()
     {
         return $this->reference;
+    }
+
+    /**
+     * Set withdraw
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Withdraw $withdraw
+     * @return WithdrawOutput
+     */
+    public function setWithdraw(\Dizda\Bundle\AppBundle\Entity\Withdraw $withdraw = null)
+    {
+        $this->withdraw = $withdraw;
+
+        return $this;
+    }
+
+    /**
+     * Get withdraw
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\Withdraw 
+     */
+    public function getWithdraw()
+    {
+        return $this->withdraw;
     }
 }
