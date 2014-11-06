@@ -53,7 +53,7 @@ class WithdrawOutput
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -76,7 +76,7 @@ class WithdrawOutput
     /**
      * Get amount
      *
-     * @return string 
+     * @return string
      */
     public function getAmount()
     {
@@ -99,7 +99,7 @@ class WithdrawOutput
     /**
      * Get toAddress
      *
-     * @return string 
+     * @return string
      */
     public function getToAddress()
     {
@@ -122,7 +122,7 @@ class WithdrawOutput
     /**
      * Get isAccepted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsAccepted()
     {
@@ -145,7 +145,7 @@ class WithdrawOutput
     /**
      * Get reference
      *
-     * @return string 
+     * @return string
      */
     public function getReference()
     {
