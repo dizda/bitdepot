@@ -73,6 +73,13 @@ class Withdraw
     private $fees;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="txid", type="string", length=255)
+     */
+    private $txid;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="withdrawed_at", type="datetime", nullable=true)
@@ -347,5 +354,28 @@ class Withdraw
     public function getWithdrawOutputs()
     {
         return $this->withdrawOutputs;
+    }
+
+    /**
+     * Set txid
+     *
+     * @param string $txid
+     * @return Withdraw
+     */
+    public function setTxid($txid)
+    {
+        $this->txid = $txid;
+
+        return $this;
+    }
+
+    /**
+     * Get txid
+     *
+     * @return string 
+     */
+    public function getTxid()
+    {
+        return $this->txid;
     }
 }
