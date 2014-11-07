@@ -11,6 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
  *
  * @ORM\Table(name="withdraw")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Withdraw
 {
@@ -26,11 +27,33 @@ class Withdraw
     private $id;
 
     /**
+     * Total took from inputs, and the difference with $totalOutputs
+     * need to be sent to $amountTransferredToChange (change address)
+     *
      * @var string
      *
-     * @ORM\Column(name="amount_total", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
+     * @ORM\Column(name="total_inputs", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
      */
-    private $amountTotal;
+    private $totalInputs;
+
+    /**
+     * Total to withdraw
+     *
+     * @var string
+     *
+     * @ORM\Column(name="total_outputs", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
+     */
+    private $totalOutputs;
+
+    /**
+     * This field is NULL until a withdraw is processed.
+     * After that, if we don't need to seed any amount to a change address, this field will be set to 0.
+     *
+     * @var string
+     *
+     * @ORM\Column(name="amount_transferred_to_change", type="decimal", precision=16, scale=8, nullable=true)
+     */
+    private $amountTransferredToChange;
 
     /**
      * @var boolean
@@ -54,16 +77,6 @@ class Withdraw
     private $rawSignedTransaction;
 
     /**
-     * This field is NULL until a withdraw is processed.
-     * After that, if we don't need to seed any amount to a change address, this field will be set to 0.
-     *
-     * @var string
-     *
-     * @ORM\Column(name="amount_transferred_to_change", type="decimal", precision=16, scale=8, nullable=true)
-     */
-    private $amountTransferredToChange;
-
-    /**
      * Same than above.
      *
      * @var string
@@ -75,7 +88,7 @@ class Withdraw
     /**
      * @var string
      *
-     * @ORM\Column(name="txid", type="string", length=255)
+     * @ORM\Column(name="txid", type="string", length=255, nullable=true)
      */
     private $txid;
 
@@ -245,29 +258,6 @@ class Withdraw
     }
 
     /**
-     * Set amountTotal
-     *
-     * @param string $amountTotal
-     * @return Withdraw
-     */
-    public function setAmountTotal($amountTotal)
-    {
-        $this->amountTotal = $amountTotal;
-
-        return $this;
-    }
-
-    /**
-     * Get amountTotal
-     *
-     * @return string 
-     */
-    public function getAmountTotal()
-    {
-        return $this->amountTotal;
-    }
-
-    /**
      * Set withdrawedAt
      *
      * @param \DateTime $withdrawedAt
@@ -300,6 +290,8 @@ class Withdraw
     {
         $this->withdrawInputs[] = $withdrawInputs;
 
+        $withdrawInputs->setWithdraw($this);
+
         return $this;
     }
 
@@ -324,6 +316,18 @@ class Withdraw
     }
 
     /**
+     * @param array $withdrawInputs
+     *
+     * @return $this
+     */
+    public function setWithdrawInputs(array $withdrawInputs)
+    {
+        $this->withdrawInputs = $withdrawInputs;
+
+        return $this;
+    }
+
+    /**
      * Add withdrawOutputs
      *
      * @param \Dizda\Bundle\AppBundle\Entity\WithdrawOutput $withdrawOutputs
@@ -332,6 +336,8 @@ class Withdraw
     public function addWithdrawOutput(\Dizda\Bundle\AppBundle\Entity\WithdrawOutput $withdrawOutputs)
     {
         $this->withdrawOutputs[] = $withdrawOutputs;
+
+        $withdrawOutputs->setWithdraw($this);
 
         return $this;
     }
@@ -344,6 +350,18 @@ class Withdraw
     public function removeWithdrawOutput(\Dizda\Bundle\AppBundle\Entity\WithdrawOutput $withdrawOutputs)
     {
         $this->withdrawOutputs->removeElement($withdrawOutputs);
+    }
+
+    /**
+     * @param array $withdrawOutputs
+     *
+     * @return $this
+     */
+    public function setWithdrawOutputs(array $withdrawOutputs)
+    {
+        $this->withdrawOutputs = $withdrawOutputs;
+
+        return $this;
     }
 
     /**
@@ -377,5 +395,64 @@ class Withdraw
     public function getTxid()
     {
         return $this->txid;
+    }
+
+    /**
+     * Set totalInputs
+     *
+     * @param string $totalInputs
+     * @return Withdraw
+     */
+    public function setTotalInputs($totalInputs)
+    {
+        $this->totalInputs = $totalInputs;
+
+        return $this;
+    }
+
+    /**
+     * Get totalInputs
+     *
+     * @return string 
+     */
+    public function getTotalInputs()
+    {
+        return $this->totalInputs;
+    }
+
+    /**
+     * Set totalOutputs
+     *
+     * @param string $totalOutputs
+     * @return Withdraw
+     */
+    public function setTotalOutputs($totalOutputs)
+    {
+        $this->totalOutputs = $totalOutputs;
+
+        return $this;
+    }
+
+    /**
+     * Get totalOutputs
+     *
+     * @return string 
+     */
+    public function getTotalOutputs()
+    {
+        return $this->totalOutputs;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Withdraw
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 }

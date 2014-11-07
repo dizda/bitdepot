@@ -39,13 +39,17 @@ EOF
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $applications = $this->getContainer()->get('doctrine.orm.default_entity_manager')
-            ->getRepository('DizdaAppBundle:Application')
-            ->findAll()
-        ;
+        $em      = $this->getContainer()->get('doctrine.orm.default_entity_manager');
+        $manager = $this->getContainer()->get('dizda_app.manager.withdraw');
+
+        $applications = $em->getRepository('DizdaAppBundle:Application')->findAll();
 
         foreach ($applications as $application) {
-            $this->getContainer()->get('dizda_app.manager.withdraw')->search($application);
+            $outputs = $manager->search($application);
+
+            if ($outputs) {
+                $manager->create($application, $outputs);
+            }
         }
     }
 
