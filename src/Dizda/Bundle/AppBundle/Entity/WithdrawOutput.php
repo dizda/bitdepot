@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as Serializer;
  * WithdrawOutput
  *
  * @ORM\Table(name="withdraw_output")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Dizda\Bundle\AppBundle\Repository\WithdrawOutputRepository")
  */
 class WithdrawOutput
 {
@@ -54,9 +54,19 @@ class WithdrawOutput
     private $reference;
 
     /**
+     * @var \Dizda\Bundle\AppBundle\Entity\Application
+     *
+     * @ORM\ManyToOne(targetEntity="Application", inversedBy="withdrawOutputs")
+     * @ORM\JoinColumn(name="application_id", referencedColumnName="id", nullable=false)
+     *
+     * @Serializer\Exclude
+     */
+    private $application;
+
+    /**
      * Withdraw can be NULL until a grouped withdraw has been created.
      *
-     * @var \Dizda\Bundle\AppBundle\Entity\Application
+     * @var \Dizda\Bundle\AppBundle\Entity\Withdraw
      *
      * @ORM\ManyToOne(targetEntity="Withdraw", inversedBy="withdrawOutputs")
      * @ORM\JoinColumn(name="withdraw_id", referencedColumnName="id", nullable=true)
@@ -188,5 +198,28 @@ class WithdrawOutput
     public function getWithdraw()
     {
         return $this->withdraw;
+    }
+
+    /**
+     * Set application
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Application $application
+     * @return WithdrawOutput
+     */
+    public function setApplication(\Dizda\Bundle\AppBundle\Entity\Application $application)
+    {
+        $this->application = $application;
+
+        return $this;
+    }
+
+    /**
+     * Get application
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\Application 
+     */
+    public function getApplication()
+    {
+        return $this->application;
     }
 }

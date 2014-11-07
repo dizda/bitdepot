@@ -62,6 +62,13 @@ class Application
     private $callbackEndpoint;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="group_withdraws_by_quantity", type="smallint", nullable=true)
+     */
+    private $groupWithdrawsByQuantity;
+
+    /**
      * @var \Dizda\Bundle\AppBundle\Entity\Application
      *
      * @ORM\ManyToOne(targetEntity="Keychain", inversedBy="applications")
@@ -266,5 +273,28 @@ class Application
     public function getCallbackEndpoint()
     {
         return $this->callbackEndpoint;
+    }
+
+    /**
+     * Set groupWithdrawsByQuantity
+     *
+     * @param integer $groupWithdrawsByQuantity
+     * @return Application
+     */
+    public function setGroupWithdrawsByQuantity($groupWithdrawsByQuantity)
+    {
+        $this->groupWithdrawsByQuantity = $groupWithdrawsByQuantity;
+
+        return $this;
+    }
+
+    /**
+     * Get groupWithdrawsByQuantity
+     *
+     * @return integer 
+     */
+    public function getGroupWithdrawsByQuantity()
+    {
+        return $this->groupWithdrawsByQuantity;
     }
 }
