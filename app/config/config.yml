@@ -75,6 +75,13 @@ jms_serializer:
     metadata:
         auto_detection: true
 
+bitcoind:
+    schema:               http
+    username:             bitcoinrpc
+    password:             7jUWYbkCNtS9qAGyxs8qLqjNyDx2qQW5k1XLmFTfzs4N
+    host:                 127.0.0.1
+    port:                 7878
+
 dizda_blockchain:
     provider: insight
     endpoint: %api_endpoint%

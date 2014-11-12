@@ -318,6 +318,25 @@ class Withdraw
     }
 
     /**
+     * Get withdrawInputs
+     *
+     * @return array
+     */
+    public function getWithdrawInputsSerializable()
+    {
+        $inputs = [];
+
+        foreach ($this->withdrawInputs as $input) {
+            $inputs[] = [
+                'txid' => $input->getId(),
+                'vout' => 0,
+            ];
+        }
+
+        return $inputs;
+    }
+
+    /**
      * @param array $withdrawInputs
      *
      * @return $this
@@ -387,6 +406,22 @@ class Withdraw
 
         foreach ($this->withdrawOutputs as $output) {
             $outputs[$output->getToAddress()] = $output->getAmount();
+        }
+
+        return $outputs;
+    }
+
+    /**
+     * Get withdrawOutputs, that bitcoindbundle can serialize
+     *
+     * @return array
+     */
+    public function getWithdrawOutputsSerializable()
+    {
+        $outputs = [];
+
+        foreach ($this->withdrawOutputs as $output) {
+            $outputs[$output->getToAddress()] = (float) $output->getAmount();
         }
 
         return $outputs;

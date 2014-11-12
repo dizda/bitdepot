@@ -3,8 +3,7 @@
 namespace Dizda\Bundle\AppBundle\EventListener;
 
 use Dizda\Bundle\AppBundle\Event\WithdrawEvent;
-use JMS\Serializer\SerializationContext;
-use JMS\Serializer\SerializerInterface;
+use Nbobtc\Bitcoind\Bitcoind;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -18,17 +17,18 @@ class WithdrawListener
     private $logger;
 
     /**
-     * @var \JMS\Serializer\SerializerInterface
+     * @var \Nbobtc\Bitcoind\Bitcoind
      */
-    private $serializer;
+    private $bitcoind;
 
     /**
-     * @param LoggerInterface $logger
+     * @param LoggerInterface     $logger
+     * @param Bitcoind            $bitcoind
      */
-    public function __construct(LoggerInterface $logger, SerializerInterface $serializer)
+    public function __construct(LoggerInterface $logger, Bitcoind $bitcoind)
     {
         $this->logger     = $logger;
-        $this->serializer = $serializer;
+        $this->bitcoind   = $bitcoind;
     }
 
     /**
@@ -38,19 +38,13 @@ class WithdrawListener
     {
         $withdraw = $event->getWithdraw();
 
-        $contextInput = new SerializationContext();
-        $groups[] = 'Withdraw';
-        $contextInput->setGroups($groups);
+        // Let bitcoind to create the rawtransaction
+        $rawTransaction = $this->bitcoind->createrawtransaction(
+            $withdraw->getWithdrawInputsSerializable(),
+            $withdraw->getWithdrawOutputsSerializable()
+        );
 
-        $contextOutput = new SerializationContext();
-        $groups[] = 'Withdraw';
-        $contextOutput->setGroups($groups);
-
-        $inputs = $this->serializer->serialize($withdraw->getWithdrawInputs(), 'json', $contextInput);
-        $outputs = $this->serializer->serialize($withdraw->getWithdrawOutputsSerialized(), 'json', $contextOutput);
-
-
-        // call bitcoind here
+        $withdraw->setRawTransaction($rawTransaction);
     }
 
 }

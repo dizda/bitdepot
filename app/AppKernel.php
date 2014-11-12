@@ -19,6 +19,7 @@ class AppKernel extends Kernel
 
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+            new Nbobtc\Bundle\BitcoindBundle\BitcoindBundle(),
 
             new Dizda\Bundle\AppBundle\DizdaAppBundle(),
             new Dizda\Bundle\BlockchainBundle\DizdaBlockchainBundle(),
