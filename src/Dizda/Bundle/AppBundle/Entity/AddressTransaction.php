@@ -26,6 +26,9 @@ class AddressTransaction
      * @ORM\Column(name="id", type="string")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     *
+     * @Serializer\Groups({"Deposit", "Withdraw"})
+     * @Serializer\SerializedName("txid")
      */
     private $id;
 
@@ -34,6 +37,7 @@ class AddressTransaction
      *
      * @ORM\Column(name="type", type="smallint")
      *
+     * @Serializer\Groups({"Deposit"})
      * @Serializer\Type("integer")
      */
     private $type;
@@ -43,6 +47,7 @@ class AddressTransaction
      *
      * @ORM\Column(name="amount", type="decimal", precision=16, scale=8, nullable=false)
      *
+     * @Serializer\Groups({"Deposit"})
      * @Serializer\Type("string")
      */
     private $amount;
@@ -52,6 +57,7 @@ class AddressTransaction
      *
      * @ORM\Column(name="addresses", type="simple_array", length=65535)
      *
+     * @Serializer\Groups({"Deposit"})
      * @Serializer\Type("array")
      */
     private $addresses;
@@ -60,11 +66,13 @@ class AddressTransaction
      * @var boolean
      *
      * @ORM\Column(name="is_spent", type="boolean")
+     *
+     * @Serializer\Groups({"Deposit"})
      */
     private $isSpent = false;
 
     /**
-     * @var \Dizda\Bundle\AppBundle\Entity\Deposit
+     * @var \Dizda\Bundle\AppBundle\Entity\Address
      *
      * @ORM\ManyToOne(targetEntity="Address", inversedBy="transactions")
      * @ORM\JoinColumn(name="address_id", referencedColumnName="id", nullable=false)
@@ -91,6 +99,24 @@ class AddressTransaction
      * @Serializer\Exclude
      */
     private $withdraw;
+
+    /**
+     * @var string
+     *
+     * @Serializer\Groups({"Withdraw"})
+     * @Serializer\Accessor(getter="getScriptPubKey")
+     * @Serializer\SerializedName("scriptPubKey")
+     */
+    private $scriptPubKey;
+
+    /**
+     * @var string
+     *
+     * @Serializer\Groups({"Withdraw"})
+     * @Serializer\Accessor(getter="getRedeemScript")
+     * @Serializer\SerializedName("redeemScript")
+     */
+    private $redeemScript;
 
     /**
      * Get id
@@ -275,5 +301,21 @@ class AddressTransaction
     public function getWithdraw()
     {
         return $this->withdraw;
+    }
+
+    /**
+     * @return string
+     */
+    public function getScriptPubKey()
+    {
+        return $this->address->getScriptPubKey();
+    }
+
+    /**
+     * @return string
+     */
+    public function getRedeemScript()
+    {
+        return $this->address->getRedeemScript();
     }
 }

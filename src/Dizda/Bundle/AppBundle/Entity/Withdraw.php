@@ -107,7 +107,7 @@ class Withdraw
      *      mappedBy        = "withdraw"
      * )
      *
-     * @Serializer\Exclude
+     * @Serializer\Type("array<Dizda\Bundle\AppBundle\Entity\AddressTransaction>")
      */
     private $withdrawInputs;
 
@@ -119,7 +119,9 @@ class Withdraw
      *      mappedBy        = "withdraw"
      * )
      *
-     * @Serializer\Exclude
+     * Serializer\Groups({"Withdraw"})
+     * Serializer\Accessor(getter="getWithdrawOutputsSerialized")
+     * Serializer\Type("array")
      */
     private $withdrawOutputs;
 
@@ -372,6 +374,22 @@ class Withdraw
     public function getWithdrawOutputs()
     {
         return $this->withdrawOutputs;
+    }
+
+    /**
+     * Get withdrawOutputs, used to get {"address":amount} JS object
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWithdrawOutputsSerialized()
+    {
+        $outputs = [];
+
+        foreach ($this->withdrawOutputs as $output) {
+            $outputs[$output->getToAddress()] = $output->getAmount();
+        }
+
+        return $outputs;
     }
 
     /**

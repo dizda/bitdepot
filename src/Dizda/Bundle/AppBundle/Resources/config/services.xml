@@ -29,6 +29,12 @@
             <argument type="service" id="old_sound_rabbit_mq.deposit_topup_producer" />
         </service>
 
+        <service id="dizda_app.listener.withdraw" class="Dizda\Bundle\AppBundle\EventListener\WithdrawListener">
+            <tag name="kernel.event_listener" event="app.withdraw_create" method="onCreate" />
+            <argument type="service" id="logger" />
+            <argument type="service" id="jms_serializer" />
+        </service>
+
         <!-- Producer -->
         <service id="dizda_app.listener.deposit_entity" class="Dizda\Bundle\AppBundle\EventListener\DepositEntityListener">
             <tag name="doctrine.event_listener" event="postUpdate" />

@@ -13,4 +13,9 @@ class AppEvents
 
     const DEPOSIT_UPDATED     = 'app.deposit_updated';
 
+    /**
+     * On withdraw creation
+     */
+    const WITHDRAW_CREATE     = 'app.withdraw_create';
+
 }

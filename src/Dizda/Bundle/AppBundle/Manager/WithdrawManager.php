@@ -2,8 +2,10 @@
 
 namespace Dizda\Bundle\AppBundle\Manager;
 
+use Dizda\Bundle\AppBundle\AppEvents;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Entity\Withdraw;
+use Dizda\Bundle\AppBundle\Event\WithdrawEvent;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
@@ -102,6 +104,9 @@ class WithdrawManager
         }
 
         $this->em->persist($withdraw);
-        $this->em->flush();
+
+        $this->dispatcher->dispatch(AppEvents::WITHDRAW_CREATE, new WithdrawEvent($withdraw));
+
+//        $this->em->flush();
     }
 }
