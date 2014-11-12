@@ -19,6 +19,14 @@ class TransactionOutput extends TransactionOutputAbstract
     /**
      * @var string
      *
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("n")
+     */
+    protected $index;
+
+    /**
+     * @var string
+     *
      * @Serializer\Type("array")
      * @Serializer\SerializedName("scriptPubKey")
      * @Serializer\Accessor(setter="setAddresses")

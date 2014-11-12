@@ -329,7 +329,7 @@ class Withdraw
         foreach ($this->withdrawInputs as $input) {
             $inputs[] = [
                 'txid' => $input->getId(),
-                'vout' => 0,
+                'vout' => $input->getIndex(),
             ];
         }
 

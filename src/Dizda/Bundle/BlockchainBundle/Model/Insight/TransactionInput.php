@@ -22,7 +22,7 @@ class TransactionInput extends TransactionInputAbstract
      * @Serializer\Type("integer")
      * @Serializer\SerializedName("vout")
      */
-    protected $vout;
+    protected $index;
 
     /**
      * @var string

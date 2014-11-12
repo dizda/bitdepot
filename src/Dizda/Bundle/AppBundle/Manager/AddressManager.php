@@ -48,6 +48,8 @@ class AddressManager
      *
      * @param Address         $address
      * @param ArrayCollection $transactions
+     *
+     * @return array
      */
     public function saveTransactions(Address $address, ArrayCollection $transactions)
     {
@@ -73,6 +75,7 @@ class AddressManager
                     ->setType(AddressTransaction::TYPE_OUT)
                     ->setAmount($input->getValue())
                     ->setAddresses([ $input->getAddress() ])
+                    ->setIndex($input->getIndex())
                 ;
 
                 $this->em->persist($addressTransaction);
@@ -92,6 +95,7 @@ class AddressManager
                     ->setType(AddressTransaction::TYPE_IN)
                     ->setAmount($output->getValue())
                     ->setAddresses($output->getAddresses())
+                    ->setIndex($output->getIndex())
                 ;
 
                 $this->em->persist($addressTransaction);

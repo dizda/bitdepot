@@ -18,7 +18,7 @@ abstract class TransactionInputAbstract
     /**
      * @var integer
      */
-    protected $vout;
+    protected $index;
 
     /**
      * @var string
@@ -70,8 +70,8 @@ abstract class TransactionInputAbstract
     /**
      * @return int
      */
-    public function getVout()
+    public function getIndex()
     {
-        return $this->vout;
+        return $this->index;
     }
 }

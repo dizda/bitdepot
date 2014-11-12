@@ -63,6 +63,17 @@ class AddressTransaction
     private $addresses;
 
     /**
+     * The transaction index
+     *
+     * @var integer
+     *
+     * @ORM\Column(name="transaction_index", type="smallint")
+     *
+     * @Serializer\Exclude()
+     */
+    private $index;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="is_spent", type="boolean")
@@ -317,5 +328,28 @@ class AddressTransaction
     public function getRedeemScript()
     {
         return $this->address->getRedeemScript();
+    }
+
+    /**
+     * Set index
+     *
+     * @param integer $index
+     * @return AddressTransaction
+     */
+    public function setIndex($index)
+    {
+        $this->index = $index;
+
+        return $this;
+    }
+
+    /**
+     * Get index
+     *
+     * @return integer 
+     */
+    public function getIndex()
+    {
+        return $this->index;
     }
 }

@@ -16,6 +16,13 @@ abstract class TransactionOutputAbstract
     protected $value;
 
     /**
+     * Return the output index
+     *
+     * @var string
+     */
+    protected $index;
+
+    /**
      * @var string
      */
     protected $addresses;
@@ -36,4 +43,11 @@ abstract class TransactionOutputAbstract
         return $this->value;
     }
 
+    /**
+     * @return string
+     */
+    public function getIndex()
+    {
+        return $this->index;
+    }
 }
