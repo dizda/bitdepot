@@ -71,9 +71,32 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+sensio_framework_extra:
+    view:    { annotations: false }
+    router:  { annotations: true }
+    request: { converters: true }
+
 jms_serializer:
     metadata:
         auto_detection: true
+
+# FOS Rest
+fos_rest:
+    format_listener:
+        rules:
+            - { path: '^/api', priorities: ['json'], fallback_format: json, prefer_extension: false }
+            - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: false }
+    view:
+        view_response_listener: force
+        formats:
+            json: true
+            xml:  false
+    routing_loader:
+        default_format: json
+    param_fetcher_listener: true
+    body_listener: true
+    access_denied_listener:
+        json: true
 
 bitcoind:
     schema:               http

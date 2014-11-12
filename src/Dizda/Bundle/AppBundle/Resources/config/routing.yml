@@ -1,0 +1,4 @@
+dizda_app_withdraw:
+    type:           rest
+    resource:       @DizdaAppBundle/Controller/WithdrawController.php
+    prefix:         /

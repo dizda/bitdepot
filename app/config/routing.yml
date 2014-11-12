@@ -1,0 +1,3 @@
+dizda_app:
+    resource: "@DizdaAppBundle/Resources/config/routing.yml"
+    prefix:   /
