@@ -24,6 +24,7 @@ class WithdrawRepository extends EntityRepository
             ->innerJoin('w.withdrawOutputs', 'wo')
             ->andWhere('w.withdrawedAt is NULL')
             ->andWhere('wo.isAccepted = true')
+            ->setMaxResults(10)
         ;
 
         return $qb->getQuery()->execute();

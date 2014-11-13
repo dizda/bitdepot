@@ -22,6 +22,7 @@ class WithdrawOutput
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
      */
     private $id;
 
@@ -29,6 +30,8 @@ class WithdrawOutput
      * @var string
      *
      * @ORM\Column(name="amount", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
      */
     private $amount;
 
@@ -36,6 +39,8 @@ class WithdrawOutput
      * @var string
      *
      * @ORM\Column(name="to_address", type="string", length=255)
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
      */
     private $toAddress;
 
@@ -50,6 +55,8 @@ class WithdrawOutput
      * @var string
      *
      * @ORM\Column(name="reference", type="string", length=255)
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
      */
     private $reference;
 

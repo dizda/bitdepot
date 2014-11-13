@@ -27,7 +27,7 @@ class AddressTransaction
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      *
-     * @Serializer\Groups({"Deposit", "Withdraw"})
+     * @Serializer\Groups({"Deposit", "Withdraw", "WithdrawDetail"})
      * @Serializer\SerializedName("txid")
      */
     private $id;
@@ -88,7 +88,8 @@ class AddressTransaction
      * @ORM\ManyToOne(targetEntity="Address", inversedBy="transactions")
      * @ORM\JoinColumn(name="address_id", referencedColumnName="id", nullable=false)
      *
-     * @Serializer\Exclude
+     * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\Address")
+     * @Serializer\Groups({"WithdrawDetail"})
      */
     private $address;
 
@@ -111,23 +112,23 @@ class AddressTransaction
      */
     private $withdraw;
 
-    /**
-     * @var string
-     *
-     * @Serializer\Groups({"Withdraw"})
-     * @Serializer\Accessor(getter="getScriptPubKey")
-     * @Serializer\SerializedName("scriptPubKey")
-     */
-    private $scriptPubKey;
-
-    /**
-     * @var string
-     *
-     * @Serializer\Groups({"Withdraw"})
-     * @Serializer\Accessor(getter="getRedeemScript")
-     * @Serializer\SerializedName("redeemScript")
-     */
-    private $redeemScript;
+//    /**
+//     * @var string
+//     *
+//     * @Serializer\Groups({"Withdraw"})
+//     * @Serializer\Accessor(getter="getScriptPubKey")
+//     * @Serializer\SerializedName("scriptPubKey")
+//     */
+//    private $scriptPubKey;
+//
+//    /**
+//     * @var string
+//     *
+//     * @Serializer\Groups({"WithdrawDetail"})
+//     * @Serializer\Accessor(getter="getRedeemScript")
+//     * @Serializer\SerializedName("redeemScript")
+//     */
+//    private $redeemScript;
 
     /**
      * Get id
@@ -314,21 +315,21 @@ class AddressTransaction
         return $this->withdraw;
     }
 
-    /**
-     * @return string
-     */
-    public function getScriptPubKey()
-    {
-        return $this->address->getScriptPubKey();
-    }
-
-    /**
-     * @return string
-     */
-    public function getRedeemScript()
-    {
-        return $this->address->getRedeemScript();
-    }
+//    /**
+//     * @return string
+//     */
+//    public function getScriptPubKey()
+//    {
+//        return $this->address->getScriptPubKey();
+//    }
+//
+//    /**
+//     * @return string
+//     */
+//    public function getRedeemScript()
+//    {
+//        return $this->address->getRedeemScript();
+//    }
 
     /**
      * Set index

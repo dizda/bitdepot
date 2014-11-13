@@ -4,10 +4,13 @@ app.controller('WithdrawCtrl', ['$scope', '$location', 'Withdraw', function($sco
 
     $scope.withdraws = Withdraw.query();
 
-    $scope.sign = function() {
+    $scope.openModalSignature = function(withdraw) {
 
-        var tx = new bitcoin.Transaction();
-        console.log(tx);
+//        var tx = new bitcoin.Transaction();
+//        console.log(tx);
+        Withdraw.get({id: withdraw.id}, function() {
+
+        });
 
     };
 

@@ -87,10 +87,12 @@ fos_rest:
             - { path: '^/api', priorities: ['json'], fallback_format: json, prefer_extension: false }
             - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: false }
     view:
-        view_response_listener: force
+        view_response_listener: 'force'
         formats:
             json: true
             xml:  false
+        templating_formats:
+            html: false
     routing_loader:
         default_format: json
     param_fetcher_listener: true

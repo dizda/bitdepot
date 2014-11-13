@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Address
@@ -37,6 +38,8 @@ class Address
      * @var boolean
      *
      * @ORM\Column(name="is_external", type="boolean")
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
      */
     private $isExternal;
 
@@ -44,6 +47,8 @@ class Address
      * @var integer
      *
      * @ORM\Column(name="derivation", type="integer")
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
      */
     private $derivation;
 
@@ -58,6 +63,8 @@ class Address
      * @var string
      *
      * @ORM\Column(name="redeem_script", type="text", nullable=false)
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
      */
     private $redeemScript;
 

@@ -23,6 +23,8 @@ class Withdraw
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
      */
     private $id;
 
@@ -33,6 +35,8 @@ class Withdraw
      * @var string
      *
      * @ORM\Column(name="total_inputs", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
+     *
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
      */
     private $totalInputs;
 
@@ -42,6 +46,8 @@ class Withdraw
      * @var string
      *
      * @ORM\Column(name="total_outputs", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
+     *
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
      */
     private $totalOutputs;
 
@@ -52,6 +58,8 @@ class Withdraw
      * @var string
      *
      * @ORM\Column(name="amount_transferred_to_change", type="decimal", precision=16, scale=8, nullable=true)
+     *
+     * @Serializer\Groups({"WithdrawList"})
      */
     private $amountTransferredToChange;
 
@@ -59,6 +67,8 @@ class Withdraw
      * @var boolean
      *
      * @ORM\Column(name="is_signed", type="boolean")
+     *
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
      */
     private $isSigned = false;
 
@@ -66,6 +76,8 @@ class Withdraw
      * @var string
      *
      * @ORM\Column(name="raw_transaction", type="text", length=65535, nullable=true)
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
      */
     private $rawTransaction;
 
@@ -73,6 +85,8 @@ class Withdraw
      * @var string
      *
      * @ORM\Column(name="raw_signed_transaction", type="text", length=65535, nullable=true)
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
      */
     private $rawSignedTransaction;
 
@@ -82,6 +96,8 @@ class Withdraw
      * @var string
      *
      * @ORM\Column(name="fees", type="decimal", precision=16, scale=8, nullable=true)
+     *
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
      */
     private $fees;
 
@@ -89,6 +105,8 @@ class Withdraw
      * @var string
      *
      * @ORM\Column(name="txid", type="string", length=255, nullable=true)
+     *
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
      */
     private $txid;
 
@@ -96,6 +114,8 @@ class Withdraw
      * @var \DateTime
      *
      * @ORM\Column(name="withdrawed_at", type="datetime", nullable=true)
+     *
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
      */
     private $withdrawedAt;
 
@@ -107,6 +127,7 @@ class Withdraw
      *      mappedBy        = "withdraw"
      * )
      *
+     * @Serializer\Groups({"WithdrawDetail"})
      * @Serializer\Type("array<Dizda\Bundle\AppBundle\Entity\AddressTransaction>")
      */
     private $withdrawInputs;
@@ -122,6 +143,8 @@ class Withdraw
      * Serializer\Groups({"Withdraw"})
      * Serializer\Accessor(getter="getWithdrawOutputsSerialized")
      * Serializer\Type("array")
+     *
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
      */
     private $withdrawOutputs;
 
