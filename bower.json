@@ -6,11 +6,13 @@
     "angular-resource": "~1.2.26",
     "angular-route": "~1.2.26",
     "angular-sanitize": "~1.2.26",
+    "angular-animate": "~1.2.26",
     "angular-http-auth": "latest",
     "angular-qr": "~0.2.0",
     "bootstrap": "~3.2.0",
     "html5shiv": "~3.7.2",
     "respond": "~1.4.2",
-    "fontawesome": "~4.2.0"
+    "fontawesome": "~4.2.0",
+    "angular-strap": "~2.1.3"
   }
 }

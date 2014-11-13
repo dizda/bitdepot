@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('app', ['ngResource', 'ngRoute', 'ngSanitize']);
+var app = angular.module('app', ['ngResource', 'ngRoute', 'ngSanitize', 'ngAnimate', 'mgcrea.ngStrap']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
