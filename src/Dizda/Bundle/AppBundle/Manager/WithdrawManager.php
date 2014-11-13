@@ -75,6 +75,9 @@ class WithdrawManager
             $withdraw->addWithdrawOutput($output);
         }
 
+        // TODO: Remove this line, just to test with fees!
+        //$withdraw->setTotalOutputs(bcadd($withdraw->getTotalOutputs(), '0.0001', 8));
+
         // Setting inputs
         $transactions = $this->em->getRepository('DizdaAppBundle:AddressTransaction')
             ->getSpendableTransactions($application, $withdraw->getTotalOutputs())
