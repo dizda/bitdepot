@@ -50,6 +50,8 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
             // Finding the good private key according to the derivation
             if (input.address.is_external === true) {
                 privKey = wallet.getExternalAccount().derive(input.address.derivation).privKey;
+            } else {
+                privKey = wallet.getInternalAccount().derive(input.address.derivation).privKey;
             }
 
 
