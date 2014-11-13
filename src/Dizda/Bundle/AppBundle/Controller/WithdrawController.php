@@ -11,7 +11,7 @@ class WithdrawController extends Controller
     /**
      * Get list of withdraws
      *
-     * @REST\View(serializerGroups={"Withdraws"})
+     * REST\View(serializerGroups={"Withdraws"})
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */

@@ -80,11 +80,15 @@ class Address
      *
      * @ORM\ManyToOne(targetEntity="Dizda\Bundle\AppBundle\Entity\Keychain", inversedBy="addresses")
      * @ORM\JoinColumn(name="keychain_id", referencedColumnName="id", nullable=false)
+     *
+     * @Serializer\Exclude
      */
     private $keychain;
 
     /**
      * @ORM\OneToOne(targetEntity="Deposit", mappedBy="addressExternal")
+     *
+     * @Serializer\Exclude
      **/
     private $deposit;
 
@@ -95,6 +99,8 @@ class Address
      *      targetEntity  = "AddressTransaction",
      *      mappedBy      = "address"
      * )
+     *
+     * @Serializer\Exclude
      */
     private $transactions;
 
