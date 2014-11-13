@@ -11,6 +11,11 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
             controller  : 'HomeCtrl'
         })
 
+        .when('/withdraw', {
+            templateUrl : '/js/app/withdraw/list.html',
+            controller  : 'WithdrawCtrl'
+        })
+
         //.otherwise({redirectTo: '/phones'})
     ;
 

@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as Serializer;
  * Withdraw
  *
  * @ORM\Table(name="withdraw")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Dizda\Bundle\AppBundle\Repository\WithdrawRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Withdraw
@@ -275,7 +275,7 @@ class Withdraw
     /**
      * Get withdrawedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getWithdrawedAt()
     {
@@ -310,7 +310,7 @@ class Withdraw
     /**
      * Get withdrawInputs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWithdrawInputs()
     {
@@ -388,7 +388,7 @@ class Withdraw
     /**
      * Get withdrawOutputs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWithdrawOutputs()
     {
@@ -443,7 +443,7 @@ class Withdraw
     /**
      * Get txid
      *
-     * @return string 
+     * @return string
      */
     public function getTxid()
     {
@@ -466,7 +466,7 @@ class Withdraw
     /**
      * Get totalInputs
      *
-     * @return string 
+     * @return string
      */
     public function getTotalInputs()
     {
@@ -489,7 +489,7 @@ class Withdraw
     /**
      * Get totalOutputs
      *
-     * @return string 
+     * @return string
      */
     public function getTotalOutputs()
     {

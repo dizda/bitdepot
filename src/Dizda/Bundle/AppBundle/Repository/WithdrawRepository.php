@@ -17,14 +17,13 @@ class WithdrawRepository extends EntityRepository
     /**
      * @return ArrayCollection
      */
-    public function getOpenDeposits()
+    public function getUnsignedWithdraw()
     {
-        $qb = $this->createQueryBuilder('d')
-            ->addSelect('a')
-            ->addSelect('t')
-            ->innerJoin('d.addressExternal', 'a')
-            ->leftJoin('a.transactions', 't')
-            ->andWhere('d.isFulfilled = 0')
+        $qb = $this->createQueryBuilder('w')
+            ->innerJoin('w.withdrawInputs', 'wi')
+            ->innerJoin('w.withdrawOutputs', 'wo')
+            ->andWhere('w.withdrawedAt is NULL')
+            ->andWhere('wo.isAccepted = true')
         ;
 
         return $qb->getQuery()->execute();

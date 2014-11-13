@@ -8,6 +8,12 @@ class WithdrawController extends Controller
 {
     public function getWithdrawsAction()
     {
-        return [];
+//        $this->
+        $withdraws = $this->get('doctrine.orm.default_entity_manager')
+            ->getRepository('DizdaAppBundle:Withdraw')
+            ->getUnsignedWithdraw()
+        ;
+
+        return $withdraws;
     }
 }

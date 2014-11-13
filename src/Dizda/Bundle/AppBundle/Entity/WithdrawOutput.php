@@ -193,7 +193,7 @@ class WithdrawOutput
     /**
      * Get withdraw
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Withdraw 
+     * @return \Dizda\Bundle\AppBundle\Entity\Withdraw
      */
     public function getWithdraw()
     {
@@ -216,7 +216,7 @@ class WithdrawOutput
     /**
      * Get application
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Application 
+     * @return \Dizda\Bundle\AppBundle\Entity\Application
      */
     public function getApplication()
     {
