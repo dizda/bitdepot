@@ -16,6 +16,15 @@
                     </label>
 
                     <input type="text" class="form-control" id="seed" placeholder="Your private key goes here" data-ng-model="seed" data-ng-disabled="signing">
+
+                    <h4>Outputs</h4>
+                    <ol>
+                        <li data-ng-repeat="output in withdraw.withdraw_outputs">
+                            <strong>{{output.amount}}</strong>
+                            <a data-ng-href="https://blockchain.info/address/{{output.to_address}}" target="_blank">{{output.to_address}}</a>
+                            ({{output.reference}})
+                        </li>
+                    </ol>
                 </div>
             </div>
 
