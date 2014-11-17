@@ -24,3 +24,9 @@ parameters:
     use_assetic_controller: true
 
     api_endpoint: http://localhost:3000/api
+
+    bitcoind_schema:   http
+    bitcoind_username: bitcoin
+    bitcoind_password: ~
+    bitcoind_host:     127.0.0.1
+    bitcoind_port:     1111

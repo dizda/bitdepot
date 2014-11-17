@@ -101,11 +101,11 @@ fos_rest:
         json: true
 
 bitcoind:
-    schema:               http
-    username:             bitcoinrpc
-    password:             7jUWYbkCNtS9qAGyxs8qLqjNyDx2qQW5k1XLmFTfzs4N
-    host:                 127.0.0.1
-    port:                 7878
+    schema:               %bitcoind_schema%
+    username:             %bitcoind_username%
+    password:             %bitcoind_password%
+    host:                 %bitcoind_host%
+    port:                 %bitcoind_port%
 
 dizda_blockchain:
     provider: insight
