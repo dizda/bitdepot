@@ -4,6 +4,13 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
 
     $scope.withdraws = Withdraw.query();
     $scope.withdraw  = null;
+    $scope.signing   = false;
+    $scope.signState  = {
+        label: 'Enter your private key',
+        signed_by: null,
+        error: false,
+        success: false
+    };
 
     $scope.openModalSignature = function(withdraw) {
 
@@ -32,6 +39,8 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
      */
     $scope.verify = function(seed)
     {
+        $scope.initSignature();
+
         // Create a wallet from the seed submitted
         var wallet = new bitcoin.Wallet(bitcoin.crypto.sha256(seed), bitcoin.networks.bitcoin);
 
@@ -40,10 +49,15 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
         var identity = getIdentity(accountPubKey, $scope.withdraw.keychain.pub_keys);
 
         if (!identity) {
+            $scope.signState.label = 'Unknown private key.';
+            $scope.signState.error = true;
+            $scope.signing         = false;
+
             return;
         }
 
-        console.log(identity.name);
+        $scope.signState.signed_by = identity.name;
+        $scope.signState.label = 'Signing with ' + identity.name + '...';
 
         sign(seed);
     };
@@ -102,8 +116,23 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
         });
 
 
-        $scope.withdraw.$save();
+        $scope.withdraw.$save(function() {
+            $scope.signState.label   = 'Signed by ' + $scope.signState.signed_by + '.';
+            $scope.signState.success = true;
+        });
+
+        $scope.signing    = false;
     }
+
+    $scope.initSignature = function() {
+        $scope.signing    = true;
+        $scope.signState  = {
+            label: 'Enter your private key',
+            signed_by: null,
+            error: false,
+            success: false
+        };
+    };
 
     /**
      * @param seed    The public key submitted by the user
