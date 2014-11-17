@@ -122,6 +122,11 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
         return identity;
     }
 
+    /**
+     * @param {Withdraw} withdraw
+     *
+     * @returns {String}
+     */
     function getRawTransaction(withdraw)
     {
         if (withdraw.raw_signed_transaction) {
