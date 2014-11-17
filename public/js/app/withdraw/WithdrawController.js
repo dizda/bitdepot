@@ -25,6 +25,11 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
 
     };
 
+    /**
+     * Verify the submitted seed before signing
+     *
+     * @param seed
+     */
     $scope.verify = function(seed)
     {
         // Create a wallet from the seed submitted
