@@ -149,6 +149,19 @@ class Withdraw
     private $withdrawOutputs;
 
     /**
+     * Withdraw can be NULL until a grouped withdraw has been created.
+     *
+     * @var \Dizda\Bundle\AppBundle\Entity\Keychain
+     *
+     * @ORM\ManyToOne(targetEntity="Keychain", inversedBy="withdraws")
+     * @ORM\JoinColumn(name="keychain_id", referencedColumnName="id", nullable=false)
+     *
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
+     * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\Keychain")
+     */
+    private $keychain;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -520,15 +533,25 @@ class Withdraw
     }
 
     /**
-     * Set updatedAt
+     * Set keychain
      *
-     * @param \DateTime $updatedAt
+     * @param \Dizda\Bundle\AppBundle\Entity\Keychain $keychain
      * @return Withdraw
      */
-    public function setUpdatedAt($updatedAt)
+    public function setKeychain(\Dizda\Bundle\AppBundle\Entity\Keychain $keychain)
     {
-        $this->updatedAt = $updatedAt;
+        $this->keychain = $keychain;
 
         return $this;
+    }
+
+    /**
+     * Get keychain
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\Keychain 
+     */
+    public function getKeychain()
+    {
+        return $this->keychain;
     }
 }

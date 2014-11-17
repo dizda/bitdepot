@@ -68,6 +68,7 @@ class WithdrawManager
     public function create(Application $application, array $outputs)
     {
         $withdraw = new Withdraw();
+        $withdraw->setKeychain($application->getKeychain());
 
         // Setting outputs
         foreach ($outputs as $output) {

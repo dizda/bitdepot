@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Keychain
@@ -27,6 +28,8 @@ class Keychain
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
      */
     private $name;
 
@@ -34,6 +37,8 @@ class Keychain
      * @var integer
      *
      * @ORM\Column(name="sign_required", type="smallint")
+     *
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
      */
     private $signRequired;
 
@@ -44,6 +49,8 @@ class Keychain
      *      targetEntity    = "Dizda\Bundle\AppBundle\Entity\Pubkey",
      *      mappedBy        = "keychain"
      * )
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
      */
     private $pubKeys;
 
@@ -54,6 +61,8 @@ class Keychain
      *      targetEntity    = "Dizda\Bundle\AppBundle\Entity\Address",
      *      mappedBy        = "keychain"
      * )
+     *
+     * @Serializer\Exclude
      */
     private $addresses;
 
@@ -64,8 +73,22 @@ class Keychain
      *      targetEntity    = "Application",
      *      mappedBy        = "keychain"
      * )
+     *
+     * @Serializer\Exclude
      */
     private $applications;
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity    = "Withdraw",
+     *      mappedBy        = "keychain"
+     * )
+     *
+     * @Serializer\Exclude
+     */
+    private $withdraws;
 
     /**
      * Constructor
@@ -228,5 +251,38 @@ class Keychain
     public function getApplications()
     {
         return $this->applications;
+    }
+
+    /**
+     * Add withdraws
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Withdraw $withdraws
+     * @return Keychain
+     */
+    public function addWithdraw(\Dizda\Bundle\AppBundle\Entity\Withdraw $withdraws)
+    {
+        $this->withdraws[] = $withdraws;
+
+        return $this;
+    }
+
+    /**
+     * Remove withdraws
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Withdraw $withdraws
+     */
+    public function removeWithdraw(\Dizda\Bundle\AppBundle\Entity\Withdraw $withdraws)
+    {
+        $this->withdraws->removeElement($withdraws);
+    }
+
+    /**
+     * Get withdraws
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getWithdraws()
+    {
+        return $this->withdraws;
     }
 }

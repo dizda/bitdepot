@@ -7,8 +7,6 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
 
     $scope.openModalSignature = function(withdraw) {
 
-//        var tx = new bitcoin.Transaction();
-//        console.log(tx);
         Withdraw.get({id: withdraw.id}, function(withdraw) {
 
             $scope.withdraw = withdraw;
@@ -27,12 +25,30 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
 
     };
 
+    $scope.verify = function(seed)
+    {
+        // Create a wallet from the seed submitted
+        var wallet = new bitcoin.Wallet(bitcoin.crypto.sha256(seed), bitcoin.networks.bitcoin);
+
+        var accountPubKey = wallet.getExternalAccount().derive(0).pubKey.toHex();
+
+        var identity = getIdentity(accountPubKey, $scope.withdraw.keychain.pub_keys);
+
+        if (!identity) {
+            return;
+        }
+
+        console.log(identity.name);
+
+        sign(seed);
+    };
+
     /**
      * Sign each inputs with the submitted seed
      *
      * @param seed
      */
-    $scope.sign = function(seed)
+    function sign(seed)
     {
         // Recover transaction from rawtransaction created by bitcoind
         var tx  = bitcoin.Transaction.fromHex($scope.withdraw.raw_transaction);
@@ -68,7 +84,26 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
         });
 
 
-    };
+    }
+
+    /**
+     * @param seed    The public key submitted by the user
+     * @param pubKeys Public keys that can sign the withdraw
+     *
+     * @returns {boolean|Object}
+     */
+    function getIdentity(seed, pubKeys)
+    {
+        var identity = false;
+
+        pubKeys.forEach(function(pubKey) {
+            if (pubKey.value === seed) {
+                identity = pubKey;
+            }
+        });
+
+        return identity;
+    }
 
 
 }]);

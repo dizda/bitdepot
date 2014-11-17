@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Pubkey
@@ -27,6 +28,9 @@ class Pubkey
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Type("string")
      */
     private $name;
 
@@ -34,6 +38,9 @@ class Pubkey
      * @var string
      *
      * @ORM\Column(name="value", type="string", length=255)
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Type("string")
      */
     private $value;
 
