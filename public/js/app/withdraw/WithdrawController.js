@@ -55,8 +55,8 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
      */
     function sign(seed)
     {
-        // Recover transaction from rawtransaction created by bitcoind
-        var tx  = bitcoin.Transaction.fromHex($scope.withdraw.raw_transaction);
+        // Recover transaction from raw_transaction created by bitcoind || or raw_signed_transaction
+        var tx  = bitcoin.Transaction.fromHex(getRawTransaction($scope.withdraw));
 
         // Build it into Transaction Builder
         var txb = bitcoin.TransactionBuilder.fromTransaction(tx);
@@ -75,17 +75,29 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
                 privKey = wallet.getInternalAccount().derive(input.address.derivation).privKey;
             }
 
-
             console.log(privKey.toWIF());
 
             // Sign the input
             txb.sign(index, privKey, bitcoin.Script.fromHex(input.address.redeem_script));
 
-//            console.log(txb.build());
 
-            // Return the incomplete rawtransaction
-            $scope.withdraw.raw_transaction = txb.buildIncomplete().toHex();
-            console.log($scope.withdraw.raw_transaction);
+            try {
+                $scope.withdraw.raw_signed_transaction = txb.build().toHex();
+                console.log('Successfully signed.');
+            } catch (e) {
+                if ('Transaction is missing signatures' === e.message) {
+                    // Normal, because every inputs not signed yet.
+
+                    $scope.withdraw.raw_signed_transaction = txb.buildIncomplete().toHex();
+                } else if ('Not enough signatures provided' === e.message) {
+                    console.log('Not enough signatures provided');
+
+                    $scope.withdraw.raw_signed_transaction = txb.buildIncomplete().toHex();
+                }
+            }
+
+            // send the signed transaction there
+            console.log($scope.withdraw.raw_signed_transaction);
         });
 
 
@@ -108,6 +120,15 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
         });
 
         return identity;
+    }
+
+    function getRawTransaction(withdraw)
+    {
+        if (withdraw.raw_signed_transaction) {
+            return withdraw.raw_signed_transaction;
+        }
+
+        return withdraw.raw_transaction;
     }
 
 
