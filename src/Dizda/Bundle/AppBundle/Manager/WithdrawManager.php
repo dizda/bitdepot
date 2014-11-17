@@ -114,4 +114,16 @@ class WithdrawManager
 
         $this->em->flush();
     }
+
+
+    public function save(Withdraw $withdraw, $withdrawSubmitted)
+    {
+        if ($withdrawSubmitted['raw_signed_transaction']) {
+            $withdraw->setRawSignedTransaction($withdrawSubmitted['raw_signed_transaction']);
+
+            // dispatch event here
+        }
+
+
+    }
 }

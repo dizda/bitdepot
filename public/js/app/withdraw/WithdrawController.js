@@ -98,9 +98,11 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
 
             // send the signed transaction there
             console.log($scope.withdraw.raw_signed_transaction);
+
         });
 
 
+        $scope.withdraw.$save();
     }
 
     /**
