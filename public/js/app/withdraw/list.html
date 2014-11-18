@@ -28,8 +28,11 @@
                         <td>{{ withdraw.withdraw_inputs.length }}</td>
                         <td>{{ withdraw.withdraw_outputs.length }}</td>
                         <td data-ng-click="openModalSignature(withdraw)">
-                            <span class="label label-default" data-ng-if="!withdraw.is_signed">
+                            <span class="label label-default" data-ng-if="!withdraw.is_signed && withdraw.signatures == 0">
                                 Unsigned
+                            </span>
+                            <span class="label label-warning" data-ng-if="!withdraw.is_signed && withdraw.signatures.length > 0">
+                                Partially signed
                             </span>
                             <span class="label label-info" data-ng-if="withdraw.is_signed && !withdraw.withdrawed_at">
                                 Fully signed
