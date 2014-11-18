@@ -59,6 +59,8 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
         $scope.signState.signed_by = identity.name;
         $scope.signState.label = 'Signing with ' + identity.name + '...';
 
+        $scope.withdraw.signed_by = identity.value;
+
         sign(seed);
     };
 
@@ -119,6 +121,9 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
         $scope.withdraw.$save(function() {
             $scope.signState.label   = 'Signed by ' + $scope.signState.signed_by + '.';
             $scope.signState.success = true;
+        }, function() {
+            $scope.signState.label = 'Error, probably because you\'re already signed the transaction.';
+            $scope.signState.error = true;
         });
 
         $scope.signing    = false;

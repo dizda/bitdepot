@@ -8,6 +8,17 @@
 
 
             <div class="modal-body">
+
+                <div class="row">
+                    <ul class="signatures list-inline text-center">
+                        <li data-ng-repeat="signature in withdraw.signatures">
+                            <i class="fa fa-key bg-green"></i>
+                            <!--<i class="fa fa-key fa-lg text-success"></i>-->
+                            <h4>{{signature.name}}</h4>
+                        </li>
+                    </ul>
+                </div>
+
                 <div class="form-group" data-ng-class="{'has-success': signState.success, 'has-error': signState.error}">
                     <label class="control-label" for="seed">
                         <i class="fa fa-warning" data-ng-if="signState.error"></i>

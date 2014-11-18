@@ -35,14 +35,17 @@ class PostWithdrawRequest extends AbstractRequest
             'raw_signed_transaction',
             'txid',
             'created_at',
-            'updated_at'
-            // TODO: signed_by
+            'updated_at',
+            'signed_by',
+            'signatures'
         ));
 
         $resolver->setAllowedTypes(array(
             'id'    => ['integer'],
             'txid'  => ['string'],
             'raw_signed_transaction' => ['string'],
+            'signed_by' => ['string'],
+            'signatures' => ['array'],
         ));
 
         /*$resolver->setDefaults(array(

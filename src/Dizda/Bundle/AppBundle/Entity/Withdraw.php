@@ -149,8 +149,6 @@ class Withdraw
     private $withdrawOutputs;
 
     /**
-     * Withdraw can be NULL until a grouped withdraw has been created.
-     *
      * @var \Dizda\Bundle\AppBundle\Entity\Keychain
      *
      * @ORM\ManyToOne(targetEntity="Keychain", inversedBy="withdraws")
@@ -160,6 +158,20 @@ class Withdraw
      * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\Keychain")
      */
     private $keychain;
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Pubkey")
+     * @ORM\JoinTable(name="withdraw_signature",
+     *     joinColumns={@ORM\JoinColumn(name="withdraw_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="pubkey_id", referencedColumnName="id")}
+     * )
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Type("array<Dizda\Bundle\AppBundle\Entity\Pubkey>")
+     */
+    private $signatures;
 
     /**
      * Constructor
@@ -553,5 +565,38 @@ class Withdraw
     public function getKeychain()
     {
         return $this->keychain;
+    }
+
+    /**
+     * Add signatures
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Pubkey $signatures
+     * @return Withdraw
+     */
+    public function addSignature(\Dizda\Bundle\AppBundle\Entity\Pubkey $signatures)
+    {
+        $this->signatures[] = $signatures;
+
+        return $this;
+    }
+
+    /**
+     * Remove signatures
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Pubkey $signatures
+     */
+    public function removeSignature(\Dizda\Bundle\AppBundle\Entity\Pubkey $signatures)
+    {
+        $this->signatures->removeElement($signatures);
+    }
+
+    /**
+     * Get signatures
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSignatures()
+    {
+        return $this->signatures;
     }
 }
