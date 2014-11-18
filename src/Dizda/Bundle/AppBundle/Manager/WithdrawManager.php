@@ -136,6 +136,8 @@ class WithdrawManager
             ]);
 
             $withdraw->addSignature($pubkey);
+
+            // dispatch event there, like PushOver through Rabbit ?
         }
 
         if ($withdrawSubmitted['is_signed'] === true) {
