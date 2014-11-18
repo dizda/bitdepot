@@ -137,7 +137,7 @@ class WithdrawManager
         if ($withdrawSubmitted['is_signed'] === true) {
             $withdraw->setIsSigned(true);
 
-            // dispatch event to sendrawtransaction !
+            // dispatch event to sendrawtransaction ! via RabbitMQ
         }
     }
 }
