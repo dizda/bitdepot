@@ -4,4 +4,6 @@ app.controller('DepositCtrl', ['$scope', '$location', '$modal', 'Deposit', funct
 
     $scope.deposits = Deposit.query();
 
+
+
 }]);

@@ -30,4 +30,19 @@ class DepositRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getDeposits()
+    {
+        $qb = $this->createQueryBuilder('d')
+            ->addSelect('a')
+            ->addSelect('t')
+            ->innerJoin('d.addressExternal', 'a')
+            ->leftJoin('a.transactions', 't')
+        ;
+
+        return $qb->getQuery()->execute();
+    }
+
 }
