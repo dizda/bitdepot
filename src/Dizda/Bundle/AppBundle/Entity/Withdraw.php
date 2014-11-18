@@ -524,6 +524,19 @@ class Withdraw
     }
 
     /**
+     * Add totalInputs
+     *
+     * @param string $input
+     * @return Withdraw
+     */
+    public function addTotalInputs($input)
+    {
+        $this->totalInputs = bcadd($this->totalInputs, $input, 8);
+
+        return $this;
+    }
+
+    /**
      * Get totalInputs
      *
      * @return string
@@ -547,6 +560,19 @@ class Withdraw
     }
 
     /**
+     * Add totalOutputs
+     *
+     * @param string $output
+     * @return Withdraw
+     */
+    public function addTotalOutputs($output)
+    {
+        $this->totalOutputs = bcadd($this->totalOutputs, $output, 8);
+
+        return $this;
+    }
+
+    /**
      * Get totalOutputs
      *
      * @return string
@@ -554,6 +580,16 @@ class Withdraw
     public function getTotalOutputs()
     {
         return $this->totalOutputs;
+    }
+
+    /**
+     * Get totalOutputs with fees
+     *
+     * @return string
+     */
+    public function getTotalOutputsWithFees()
+    {
+        return bcadd($this->totalOutputs, $this->fees, 8);
     }
 
     /**

@@ -22,7 +22,7 @@ class WithdrawRepository extends EntityRepository
         $qb = $this->createQueryBuilder('w')
             ->innerJoin('w.withdrawInputs', 'wi')
             ->innerJoin('w.withdrawOutputs', 'wo')
-            ->andWhere('w.withdrawedAt is NULL')
+//            ->andWhere('w.withdrawedAt is NULL')
             ->andWhere('wo.isAccepted = true')
             ->setMaxResults(10)
         ;

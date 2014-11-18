@@ -31,6 +31,7 @@
 
         <service id="dizda_app.listener.withdraw" class="Dizda\Bundle\AppBundle\EventListener\WithdrawListener">
             <tag name="kernel.event_listener" event="app.withdraw_create" method="onCreate" />
+            <tag name="kernel.event_listener" event="app.withdraw_send" method="onSend" />
             <argument type="service" id="logger" />
             <argument type="service" id="bitcoind" />
         </service>

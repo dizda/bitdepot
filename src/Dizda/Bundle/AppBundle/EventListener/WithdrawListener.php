@@ -38,6 +38,8 @@ class WithdrawListener
     {
         $withdraw = $event->getWithdraw();
 
+        $toChangeAddress = bcsub($withdraw->getTotalInputs(), $withdraw->getTotalOutputsWithFees(), 8);
+
         // Let bitcoind to create the rawtransaction
         $rawTransaction = $this->bitcoind->createrawtransaction(
             $withdraw->getWithdrawInputsSerializable(),
@@ -45,6 +47,7 @@ class WithdrawListener
         );
 
         $withdraw->setRawTransaction($rawTransaction);
+        $withdraw->setAmountTransferredToChange($toChangeAddress);
     }
 
     /**
@@ -61,6 +64,13 @@ class WithdrawListener
         );
 
         $withdraw->withdrawed($transactionId);
-    }
 
+        // Mark all inputs as spent, and reset the balance of each related addresses
+        foreach ($withdraw->getWithdrawInputs() as $input) {
+            $input->setIsSpent(true);
+            $input->getAddress()->setBalance(0);
+        }
+
+        // Dispatch an event here, to launch a callback to all outputs
+    }
 }

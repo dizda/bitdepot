@@ -23,7 +23,7 @@
                     </ul>
                 </div>
 
-                <div class="form-group" data-ng-class="{'has-success': signState.success, 'has-error': signState.error}">
+                <div class="form-group" data-ng-class="{'has-success': signState.success, 'has-error': signState.error}" data-ng-hide="withdraw.keychain.sign_required == withdraw.signatures.length">
                     <label class="control-label" for="seed">
                         <i class="fa fa-warning" data-ng-if="signState.error"></i>
                         <i class="fa fa-check" data-ng-if="signState.signed_by && !signState.error"></i>
@@ -31,21 +31,21 @@
                     </label>
 
                     <input type="text" class="form-control" id="seed" placeholder="Your private key goes here" data-ng-model="seed">
-
-                    <h4>Outputs</h4>
-                    <ol>
-                        <li data-ng-repeat="output in withdraw.withdraw_outputs">
-                            <strong>{{output.amount}}</strong>
-                            <a data-ng-href="https://blockchain.info/address/{{output.to_address}}" target="_blank">{{output.to_address}}</a>
-                            ({{output.reference}})
-                        </li>
-                    </ol>
                 </div>
+
+                <h4>Outputs</h4>
+                <ol>
+                    <li data-ng-repeat="output in withdraw.withdraw_outputs">
+                        <strong>{{output.amount}}</strong>
+                        <a data-ng-href="https://blockchain.info/address/{{output.to_address}}" target="_blank">{{output.to_address}}</a>
+                        ({{output.reference}})
+                    </li>
+                </ol>
             </div>
 
 
             <div class="modal-footer">
-                <button class="btn btn-success" data-ng-click="verify(seed)" data-ng-disabled="signing">
+                <button class="btn btn-success" data-ng-click="verify(seed)" data-ng-disabled="signing || withdraw.keychain.sign_required == withdraw.signatures.length">
                     Sign for <i class="fa fa-bitcoin"></i> {{withdraw.total_outputs}}
                 </button>
 

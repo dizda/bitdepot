@@ -37,7 +37,8 @@ class PostWithdrawRequest extends AbstractRequest
             'created_at',
             'updated_at',
             'signed_by',
-            'signatures'
+            'signatures',
+            'fees'
         ));
 
         $resolver->setAllowedTypes(array(

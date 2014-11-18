@@ -69,10 +69,11 @@ class WithdrawManager
     {
         $withdraw = new Withdraw();
         $withdraw->setKeychain($application->getKeychain());
+        $withdraw->setFees('0.0001');
 
         // Setting outputs
         foreach ($outputs as $output) {
-            $withdraw->setTotalOutputs(bcadd($withdraw->getTotalOutputs(), $output->getAmount(), 8));
+            $withdraw->addTotalOutputs($output->getAmount());
             $withdraw->addWithdrawOutput($output);
         }
 
@@ -85,23 +86,23 @@ class WithdrawManager
         ;
 
         foreach ($transactions as $transaction) {
-            $withdraw->setTotalInputs(bcadd($withdraw->getTotalInputs(), $transaction->getAmount(), 8));
+            $withdraw->addTotalInputs($transaction->getAmount());
             $withdraw->addWithdrawInput($transaction);
 
-            // $sumOutputs >= $withdraw->getTotalOutputs()
-            if (bccomp($withdraw->getTotalInputs(), $withdraw->getTotalOutputs(), 8) !== -1) {
+            // $withdraw->getTotalInputs() >= $withdraw->getTotalOutputs()
+            if (bccomp($withdraw->getTotalInputs(), $withdraw->getTotalOutputsWithFees(), 8) !== -1) {
                 // if the amount collected is sufficient, we quit the foreach to do not add more inputs
                 break;
             }
         }
 
         // TODO: Handle the case when totalInputs is equal as totalOutputs, so there is no more funds for fees
-        // $sumOutputs < $withdraw->getTotalOutputs()
-        if (bccomp($withdraw->getTotalInputs(), $withdraw->getTotalOutputs(), 8) === -1) {
+        // $withdraw->getTotalInputs() < $withdraw->getTotalOutputsWithFees()
+        if (bccomp($withdraw->getTotalInputs(), $withdraw->getTotalOutputsWithFees(), 8) === -1) {
             // if the amount of inputs is insufficient, we give up the creation of the withdraw
             $this->logger->warning(
                 'WithdrawManager: Insufficient amount available to create a new withdraw as requested. Available/Requested',
-                [ $withdraw->getTotalInputs(), $withdraw->getTotalOutputs() ]
+                [ $withdraw->getTotalInputs(), $withdraw->getTotalOutputsWithFees() ]
             );
 
             return;
@@ -140,8 +141,8 @@ class WithdrawManager
         if ($withdrawSubmitted['is_signed'] === true) {
             $withdraw->setIsSigned(true);
 
-            // dispatch event to sendrawtransaction ! via RabbitMQ
-            $this->dispatcher->dispatch(AppEvents::WITHDRAW_CREATE, new WithdrawEvent($withdraw));
+            // dispatch event to sendrawtransaction !
+            $this->dispatcher->dispatch(AppEvents::WITHDRAW_SEND, new WithdrawEvent($withdraw));
         }
     }
 }
