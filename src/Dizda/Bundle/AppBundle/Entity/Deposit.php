@@ -95,10 +95,14 @@ class Deposit implements MessageQueuingInterface
     private $application;
 
     /**
+     * @var \Dizda\Bundle\AppBundle\Entity\Address
+     *
      * @ORM\OneToOne(targetEntity="Address", inversedBy="deposit")
      * @ORM\JoinColumn(name="address_external_id", referencedColumnName="id", nullable=false)
      *
-     * @Serializer\Exclude
+     * @Serializer\Groups({"Deposits"})
+     * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\Address")
+     *
      **/
     private $addressExternal;
 

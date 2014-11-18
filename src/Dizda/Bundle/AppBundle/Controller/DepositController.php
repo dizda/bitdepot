@@ -14,7 +14,7 @@ class DepositController extends Controller
     /**
      * Get list of deposits
      *
-     * REST\View(serializerGroups={"Withdraws"})
+     * REST\View(serializerGroups={"Deposits"})
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
