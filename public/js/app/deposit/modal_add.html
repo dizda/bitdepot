@@ -1,0 +1,38 @@
+<div class="modal" tabindex="-1" role="dialog" data-ng-controller="WithdrawModalCtrl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" ng-show="title">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind="title"></h4>
+            </div>
+
+
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label class="control-label" for="type">Type of deposit</label>
+                    <select id="type" data-ng-model="deposit.type">
+                        <option value="1">Expected amount</option>
+                        <option value="2">Topup (unknown amount)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" data-ng-if="deposit.type == 1">
+                    <label class="control-label" for="seed">Amount Expected</label>
+                    <input type="text" class="form-control" id="seed" placeholder="0.00010000" data-ng-model="deposit.amount_expected">
+                </div>
+
+                <!-- Expires_at? -->
+            </div>
+
+
+            <div class="modal-footer">
+                <button class="btn btn-success">
+                    Create deposit
+                </button>
+
+                <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

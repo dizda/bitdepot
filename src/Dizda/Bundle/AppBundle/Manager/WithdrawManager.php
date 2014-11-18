@@ -77,9 +77,6 @@ class WithdrawManager
             $withdraw->addWithdrawOutput($output);
         }
 
-        // TODO: Remove this line, just to test with fees!
-        //$withdraw->setTotalOutputs(bcadd($withdraw->getTotalOutputs(), '0.0001', 8));
-
         // Setting inputs
         $transactions = $this->em->getRepository('DizdaAppBundle:AddressTransaction')
             ->getSpendableTransactions($application, $withdraw->getTotalOutputs())
@@ -108,6 +105,7 @@ class WithdrawManager
             return;
         }
 
+        //TODO: Send overamount to changeaddress !!
         $this->em->persist($withdraw);
 
         // Create the rawtransaction
