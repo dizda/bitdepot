@@ -47,4 +47,20 @@ class WithdrawListener
         $withdraw->setRawTransaction($rawTransaction);
     }
 
+    /**
+     * When the withdraw raw hex is sended to the blockchain
+     *
+     * @param WithdrawEvent $event
+     */
+    public function onSend(WithdrawEvent $event)
+    {
+        $withdraw = $event->getWithdraw();
+
+        $transactionId = $this->bitcoind->sendrawtransaction(
+            $withdraw->getRawSignedTransaction()
+        );
+
+        $withdraw->withdrawed($transactionId);
+    }
+
 }

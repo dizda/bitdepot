@@ -115,7 +115,10 @@ class WithdrawManager
         $this->em->flush();
     }
 
-
+    /**
+     * @param Withdraw $withdraw          The original $withdraw fetched from DB
+     * @param array    $withdrawSubmitted The json Withdraw data submitted by angular
+     */
     public function save(Withdraw $withdraw, $withdrawSubmitted)
     {
         if ($withdrawSubmitted['raw_signed_transaction']) {
@@ -138,6 +141,7 @@ class WithdrawManager
             $withdraw->setIsSigned(true);
 
             // dispatch event to sendrawtransaction ! via RabbitMQ
+            $this->dispatcher->dispatch(AppEvents::WITHDRAW_CREATE, new WithdrawEvent($withdraw));
         }
     }
 }

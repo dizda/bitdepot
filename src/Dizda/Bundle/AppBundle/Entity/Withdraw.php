@@ -184,6 +184,17 @@ class Withdraw
     }
 
     /**
+     * Set the withdraw as withdrawed status
+     *
+     * @param $txId
+     */
+    public function withdrawed($txId)
+    {
+        $this->withdrawedAt = new \DateTime();
+        $this->setTxid($txId);
+    }
+
+    /**
      * Get id
      *
      * @return integer
