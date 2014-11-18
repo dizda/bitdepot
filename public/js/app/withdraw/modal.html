@@ -13,8 +13,12 @@
                     <ul class="signatures list-inline text-center">
                         <li data-ng-repeat="signature in withdraw.signatures">
                             <i class="fa fa-key bg-green"></i>
-                            <!--<i class="fa fa-key fa-lg text-success"></i>-->
                             <h4>{{signature.name}}</h4>
+                        </li>
+                        <li data-ng-if="withdraw.signatures.length < withdraw.keychain.sign_required"
+                            data-ng-repeat="signRequired in withdraw.keychain.pub_keys | limitTo:(withdraw.keychain.sign_required - withdraw.signatures.length)">
+                            <i class="fa fa-key bg-success"></i>
+                            <h4>&nbsp;</h4>
                         </li>
                     </ul>
                 </div>
