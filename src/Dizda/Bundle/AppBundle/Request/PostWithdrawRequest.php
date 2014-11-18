@@ -44,8 +44,9 @@ class PostWithdrawRequest extends AbstractRequest
             'id'    => ['integer'],
             'txid'  => ['string'],
             'raw_signed_transaction' => ['string'],
-            'signed_by' => ['string'],
-            'signatures' => ['array'],
+            'is_signed'  => ['bool'],
+            'signed_by'  => ['string'],
+            'signatures' => ['array']
         ));
 
         /*$resolver->setDefaults(array(

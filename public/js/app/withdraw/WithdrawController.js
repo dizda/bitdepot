@@ -99,6 +99,7 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', fun
 
             try {
                 $scope.withdraw.raw_signed_transaction = txb.build().toHex();
+                $scope.withdraw.is_signed = true;
                 console.log('Successfully signed.');
             } catch (e) {
                 if ('Transaction is missing signatures' === e.message) {

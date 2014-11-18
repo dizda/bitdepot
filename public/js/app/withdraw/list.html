@@ -26,7 +26,7 @@
                         <td>{{ withdraw.total_outputs }}</td>
                         <td>{{ withdraw.withdraw_outputs.length }}</td>
                         <td>
-                            <span class="label label-success" data-ng-if="withdraw.is_signed">Signed</span>
+                            <span class="label label-success" data-ng-if="withdraw.is_signed">Fully signed</span>
                             <span class="label label-default" data-ng-if="!withdraw.is_signed" data-ng-click="openModalSignature(withdraw)">Unsigned</span>
                         </td>
                         <td>{{ withdraw.created_at | date:'dd/MM/yyyy HH:mm' }}</td>

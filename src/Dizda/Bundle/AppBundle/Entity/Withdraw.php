@@ -69,6 +69,7 @@ class Withdraw
      * @ORM\Column(name="is_signed", type="boolean")
      *
      * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
+     * @Serializer\Type("boolean")
      */
     private $isSigned = false;
 

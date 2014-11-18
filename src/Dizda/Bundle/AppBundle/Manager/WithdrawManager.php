@@ -134,5 +134,8 @@ class WithdrawManager
             $withdraw->addSignature($pubkey);
         }
 
+        if ($withdrawSubmitted['is_signed'] === true) {
+            $withdraw->setIsSigned(true);
+        }
     }
 }
