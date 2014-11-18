@@ -5,13 +5,17 @@ var app = angular.module('app', ['ngResource', 'ngRoute', 'ngSanitize', 'ngAnima
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
 
-        // route for the home page
         .when('/', {
             templateUrl : '/js/app/home.html',
             controller  : 'HomeCtrl'
         })
 
-        .when('/withdraw', {
+        .when('/deposits', {
+            templateUrl : '/js/app/deposit/list.html',
+            controller  : 'DepositCtrl'
+        })
+
+        .when('/withdraws', {
             templateUrl : '/js/app/withdraw/list.html',
             controller  : 'WithdrawCtrl'
         })
