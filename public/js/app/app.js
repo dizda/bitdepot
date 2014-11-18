@@ -16,7 +16,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
             controller  : 'WithdrawCtrl'
         })
 
-        //.otherwise({redirectTo: '/phones'})
+        .otherwise({redirectTo: '/404'})
     ;
 
     $locationProvider.html5Mode(true);
