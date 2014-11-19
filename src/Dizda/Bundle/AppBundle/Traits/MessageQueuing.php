@@ -16,7 +16,7 @@ trait MessageQueuing
      *
      * @Serializer\Exclude()
      */
-    private $queueStatus;
+    private $queueStatus = 0;
 
     /**
      * Set queueStatus

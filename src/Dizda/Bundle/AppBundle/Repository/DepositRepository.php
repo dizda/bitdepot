@@ -40,6 +40,7 @@ class DepositRepository extends EntityRepository
             ->addSelect('t')
             ->innerJoin('d.addressExternal', 'a')
             ->leftJoin('a.transactions', 't')
+            ->orderBy('d.createdAt', 'DESC')
         ;
 
         return $qb->getQuery()->execute();

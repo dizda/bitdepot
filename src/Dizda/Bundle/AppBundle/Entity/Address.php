@@ -9,7 +9,7 @@ use JMS\Serializer\Annotation as Serializer;
  * Address
  *
  * @ORM\Table(name="address")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Dizda\Bundle\AppBundle\Repository\AddressRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Address

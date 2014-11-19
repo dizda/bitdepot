@@ -11,9 +11,15 @@ app.controller('DepositCtrl', ['$scope', '$location', '$modal', 'Deposit', funct
             template: 'js/app/deposit/modal_add.html',
             animation:'am-fade-and-scale',
             placement:'center',
-            show:     true
+            show:     true,
+            scope:    $scope
         });
 
     };
+
+
+    $scope.$on('deposit:create', function(e, deposit) {
+        $scope.deposits.unshift(deposit);
+    });
 
 }]);

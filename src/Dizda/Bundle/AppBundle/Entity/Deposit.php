@@ -55,7 +55,7 @@ class Deposit implements MessageQueuingInterface
      *
      * @Serializer\Type("string")
      */
-    private $amountFilled = 0;
+    private $amountFilled = '0.00000000';
 
     /**
      * @var boolean
@@ -64,7 +64,7 @@ class Deposit implements MessageQueuingInterface
      *
      * @Serializer\Type("boolean")
      */
-    private $isFulfilled;
+    private $isFulfilled = false;
 
     /**
      * @var boolean
@@ -73,7 +73,7 @@ class Deposit implements MessageQueuingInterface
      *
      * @Serializer\Type("boolean")
      */
-    private $isOverfilled;
+    private $isOverfilled = false;
 
     /**
      * @var \DateTime

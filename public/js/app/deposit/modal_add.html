@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog" data-ng-controller="WithdrawModalCtrl">
+<div class="modal" tabindex="-1" role="dialog" data-ng-controller="DepositModalAddCtrl">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" ng-show="title">
@@ -11,10 +11,7 @@
 
                 <div class="form-group">
                     <label class="control-label" for="type">Type of deposit</label>
-                    <select id="type" data-ng-model="deposit.type">
-                        <option value="1">Expected amount</option>
-                        <option value="2">Topup (unknown amount)</option>
-                    </select>
+                    <select id="type" data-ng-model="deposit.type" data-ng-options="option.value as option.text for option in typeOptions"></select>
                 </div>
 
                 <div class="form-group" data-ng-if="deposit.type == 1">
@@ -27,7 +24,7 @@
 
 
             <div class="modal-footer">
-                <button class="btn btn-success">
+                <button class="btn btn-success" data-ng-click="create()">
                     Create deposit
                 </button>
 
