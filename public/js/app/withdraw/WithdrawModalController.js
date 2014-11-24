@@ -128,11 +128,7 @@ app.controller('WithdrawModalCtrl', ['$scope', 'Withdraw', function($scope, With
      */
     function getRawTransaction(withdraw)
     {
-        if (withdraw.raw_signed_transaction) {
-            return withdraw.raw_signed_transaction;
-        }
-
-        return withdraw.raw_transaction;
+        return withdraw.raw_signed_transaction || withdraw.raw_transaction;
     }
 
 }]);
