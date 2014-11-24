@@ -14,7 +14,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class AddressTransactionRepository extends EntityRepository
 {
-
+    /**
+     * @return mixed
+     */
     public function getSpendableTransactions()
     {
         $qb = $this->createQueryBuilder('at')
@@ -26,5 +28,4 @@ class AddressTransactionRepository extends EntityRepository
 
         return $qb->getQuery()->execute();
     }
-
 }

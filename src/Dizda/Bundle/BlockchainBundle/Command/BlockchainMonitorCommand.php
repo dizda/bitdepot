@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class BlockchainWatchCommand extends ContainerAwareCommand
+class BlockchainMonitorCommand extends ContainerAwareCommand
 {
     /**
      * {@inheritdoc}
@@ -15,7 +15,7 @@ class BlockchainWatchCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('dizda:blockchain:watch')
+            ->setName('dizda:blockchain:monitor')
             ->setDefinition(array(
                 new InputArgument('address')
             ))
@@ -40,7 +40,6 @@ EOF
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $blockchain = $this->getContainer()->get('dizda_blockchain.blockchain.manager');
-        $blockchain->update();
+        $blockchain->monitor();
     }
-
 }

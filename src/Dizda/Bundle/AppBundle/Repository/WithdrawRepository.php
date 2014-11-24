@@ -30,4 +30,18 @@ class WithdrawRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
+    /**
+     * @return mixed
+     */
+    public function getChangeAddressesMonitored()
+    {
+        $qb = $this->createQueryBuilder('w')
+            ->join('w.changeAddress', 'a')
+            ->leftJoin('a.transactions', 'adt')
+            ->where('w.changeAddress is NOT NULL')
+            ->andWhere('adt.id is NULL')
+        ;
+
+        return $qb->getQuery()->execute();
+    }
 }
