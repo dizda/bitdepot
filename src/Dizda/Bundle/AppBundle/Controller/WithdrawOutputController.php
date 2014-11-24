@@ -18,8 +18,6 @@ class WithdrawOutputController extends Controller
     /**
      * Get list of withdraws
      *
-     * REST\View(serializerGroups={"Withdraws"})
-     *
      * @param Application $application
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
@@ -37,38 +35,14 @@ class WithdrawOutputController extends Controller
     /**
      * @REST\View(serializerGroups={"WithdrawDetail"})
      *
-     * @param Withdraw $withdraw
+     * @param Application $application
+     * @param Withdraw    $withdrawOutput
      *
      * @return Withdraw
      */
-    public function getWithdrawAction(Withdraw $withdraw)
+    public function getWithdrawOutputAction(Application $application, Withdraw $withdrawOutput)
     {
 
-        return $withdraw;
-    }
-
-    /**
-     * @REST\View(serializerGroups={"WithdrawDetail"})
-     *
-     * @param Request  $request
-     * @param Withdraw $withdraw
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return Withdraw
-     */
-    public function postWithdrawAction(Request $request, Withdraw $withdraw)
-    {
-        $withdrawSubmitted = (new PostWithdrawRequest($request->request->all()))->options;
-
-        if ($withdraw->getId() !== $withdrawSubmitted['id']) {
-            throw new NotFoundHttpException();
-        }
-
-        $this->get('dizda_app.manager.withdraw')->save($withdraw, $withdrawSubmitted);
-
-        $this->get('doctrine.orm.default_entity_manager')->flush();
-
-        return $withdraw;
+        return $withdrawOutput;
     }
 }

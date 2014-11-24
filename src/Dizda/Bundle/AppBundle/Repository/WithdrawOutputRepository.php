@@ -36,6 +36,7 @@ class WithdrawOutputRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('wo')
             ->andWhere('wo.application = :application')
+            ->orderBy('wo.createdAt', 'DESC')
             ->setParameter('application', $application)
         ;
 

@@ -1,8 +1,9 @@
 'use strict';
 
-app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', function($scope, $location, $modal, Withdraw) {
+app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', 'WithdrawOutput', function($scope, $location, $modal, Withdraw, WithdrawOutput) {
 
     $scope.withdraws = Withdraw.query();
+    $scope.withdrawOutputs = WithdrawOutput.query({application: 10});
 
     $scope.openModalSignature = function(withdraw) {
 
