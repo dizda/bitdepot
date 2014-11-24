@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\AppBundle\EventListener;
 
 use Dizda\Bundle\AppBundle\Event\WithdrawEvent;
+use Doctrine\ORM\EntityManager;
 use Nbobtc\Bitcoind\Bitcoind;
 use Psr\Log\LoggerInterface;
 
@@ -22,13 +23,20 @@ class WithdrawListener
     private $bitcoind;
 
     /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    private $em;
+
+    /**
      * @param LoggerInterface     $logger
      * @param Bitcoind            $bitcoind
+     * @param EntityManager       $em
      */
-    public function __construct(LoggerInterface $logger, Bitcoind $bitcoind)
+    public function __construct(LoggerInterface $logger, Bitcoind $bitcoind, EntityManager $em)
     {
         $this->logger     = $logger;
         $this->bitcoind   = $bitcoind;
+        $this->em         = $em;
     }
 
     /**
@@ -38,7 +46,16 @@ class WithdrawListener
     {
         $withdraw = $event->getWithdraw();
 
-        $toChangeAddress = bcsub($withdraw->getTotalInputs(), $withdraw->getTotalOutputsWithFees(), 8);
+        $withdraw->setChangeAddressAmount(bcsub($withdraw->getTotalInputs(), $withdraw->getTotalOutputsWithFees(), 8));
+
+        // $withdraw->getChangeAddressAmount() > 0
+        if (bccomp($withdraw->getChangeAddressAmount(), '0', 8) === 1) {
+            // Get a changeaddress
+            $changeAddress = $this->em->getRepository('DizdaAppBundle:Address')->getOneFreeAddress(false);
+
+            // Sending change to a changeaddress
+            $withdraw->setChangeAddress($changeAddress);
+        }
 
         // Let bitcoind to create the rawtransaction
         $rawTransaction = $this->bitcoind->createrawtransaction(
@@ -47,7 +64,6 @@ class WithdrawListener
         );
 
         $withdraw->setRawTransaction($rawTransaction);
-        $withdraw->setAmountTransferredToChange($toChangeAddress);
     }
 
     /**

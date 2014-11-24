@@ -24,7 +24,12 @@
                     </tr>
                     <tr data-ng-repeat="withdraw in withdraws">
                         <td>{{ withdraw.id }}</td>
-                        <td>{{ withdraw.total_outputs }}</td>
+                        <td data-ng-if="!withdraw.txid"><i class="fa fa-btc"></i> {{ withdraw.total_outputs }}</td>
+                        <td data-ng-if="withdraw.txid">
+                            <a data-ng-href="https://blockchain.info/tx/{{withdraw.txid}}" target="_blank">
+                                <i class="fa fa-btc"></i> {{ withdraw.total_outputs }}
+                            </a>
+                        </td>
                         <td>{{ withdraw.withdraw_inputs.length }}</td>
                         <td>{{ withdraw.withdraw_outputs.length }}</td>
                         <td data-ng-click="openModalSignature(withdraw)">

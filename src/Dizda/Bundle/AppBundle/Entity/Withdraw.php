@@ -48,6 +48,7 @@ class Withdraw
      * @ORM\Column(name="total_outputs", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
      *
      * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
+     * @Serializer\Type("string")
      */
     private $totalOutputs;
 
@@ -57,11 +58,11 @@ class Withdraw
      *
      * @var string
      *
-     * @ORM\Column(name="amount_transferred_to_change", type="decimal", precision=16, scale=8, nullable=true)
+     * @ORM\Column(name="change_address_amount", type="decimal", precision=16, scale=8, nullable=true)
      *
      * @Serializer\Groups({"WithdrawList"})
      */
-    private $amountTransferredToChange;
+    private $changeAddressAmount;
 
     /**
      * @var boolean
@@ -148,6 +149,17 @@ class Withdraw
      * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
      */
     private $withdrawOutputs;
+
+    /**
+     * @var \Dizda\Bundle\AppBundle\Entity\Address
+     *
+     * @ORM\OneToOne(targetEntity="Address", inversedBy="withdrawChangeAddress")
+     * @ORM\JoinColumn(name="change_address", referencedColumnName="id", nullable=true)
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\Address")
+     **/
+    private $changeAddress;
 
     /**
      * @var \Dizda\Bundle\AppBundle\Entity\Keychain
@@ -271,29 +283,6 @@ class Withdraw
     public function getRawSignedTransaction()
     {
         return $this->rawSignedTransaction;
-    }
-
-    /**
-     * Set amountTransferredToChange
-     *
-     * @param string $amountTransferredToChange
-     * @return Withdraw
-     */
-    public function setAmountTransferredToChange($amountTransferredToChange)
-    {
-        $this->amountTransferredToChange = $amountTransferredToChange;
-
-        return $this;
-    }
-
-    /**
-     * Get amountTransferredToChange
-     *
-     * @return string
-     */
-    public function getAmountTransferredToChange()
-    {
-        return $this->amountTransferredToChange;
     }
 
     /**
@@ -484,6 +473,11 @@ class Withdraw
             $outputs[$output->getToAddress()] = (float) $output->getAmount();
         }
 
+        // Send change to a change address if amount of inputs are higher than amount needed for the withdraw
+        if ($this->getChangeAddress()) {
+            $outputs[$this->getChangeAddress()->getValue()] = (float) $this->changeAddressAmount;
+        }
+
         return $outputs;
     }
 
@@ -646,5 +640,51 @@ class Withdraw
     public function getSignatures()
     {
         return $this->signatures;
+    }
+
+    /**
+     * Set changeAddressAmount
+     *
+     * @param string $changeAddressAmount
+     * @return Withdraw
+     */
+    public function setChangeAddressAmount($changeAddressAmount)
+    {
+        $this->changeAddressAmount = $changeAddressAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get changeAddressAmount
+     *
+     * @return string 
+     */
+    public function getChangeAddressAmount()
+    {
+        return $this->changeAddressAmount;
+    }
+
+    /**
+     * Set changeAddress
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Address $changeAddress
+     * @return Withdraw
+     */
+    public function setChangeAddress(\Dizda\Bundle\AppBundle\Entity\Address $changeAddress = null)
+    {
+        $this->changeAddress = $changeAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get changeAddress
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\Address 
+     */
+    public function getChangeAddress()
+    {
+        return $this->changeAddress;
     }
 }

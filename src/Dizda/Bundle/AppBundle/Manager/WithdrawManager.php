@@ -93,7 +93,6 @@ class WithdrawManager
             }
         }
 
-        // TODO: Handle the case when totalInputs is equal as totalOutputs, so there is no more funds for fees
         // $withdraw->getTotalInputs() < $withdraw->getTotalOutputsWithFees()
         if (bccomp($withdraw->getTotalInputs(), $withdraw->getTotalOutputsWithFees(), 8) === -1) {
             // if the amount of inputs is insufficient, we give up the creation of the withdraw
@@ -105,7 +104,6 @@ class WithdrawManager
             return;
         }
 
-        //TODO: Send overamount to changeaddress !!
         $this->em->persist($withdraw);
 
         // Create the rawtransaction

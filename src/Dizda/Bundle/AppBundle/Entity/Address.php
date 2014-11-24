@@ -96,6 +96,13 @@ class Address
     private $deposit;
 
     /**
+     * @ORM\OneToOne(targetEntity="Withdraw", mappedBy="changeAddress")
+     *
+     * @Serializer\Exclude
+     **/
+    private $withdrawChangeAddress;
+
+    /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\OneToMany(
@@ -356,5 +363,28 @@ class Address
     public function getScriptPubKey()
     {
         return $this->scriptPubKey;
+    }
+
+    /**
+     * Set withdrawChangeAddress
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Withdraw $withdrawChangeAddress
+     * @return Address
+     */
+    public function setWithdrawChangeAddress(\Dizda\Bundle\AppBundle\Entity\Withdraw $withdrawChangeAddress = null)
+    {
+        $this->withdrawChangeAddress = $withdrawChangeAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get withdrawChangeAddress
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\Withdraw 
+     */
+    public function getWithdrawChangeAddress()
+    {
+        return $this->withdrawChangeAddress;
     }
 }

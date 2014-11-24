@@ -16,7 +16,9 @@ class AddressRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('a')
             ->leftJoin('a.deposit', 'd')
-            ->andWhere('d.id is NULL')
+            ->leftJoin('a.withdrawChangeAddress', 'wca')
+            ->andWhere('d.id is NULL')   // Where not used for deposits yet
+            ->andWhere('wca.id is NULL') // Where not used as a change address yet
             ->andWhere('a.isExternal = :external')
             // TODO: where application id || keychain
             ->setParameter('external', $isExternal)
