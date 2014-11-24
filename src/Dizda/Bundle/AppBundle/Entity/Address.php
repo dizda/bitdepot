@@ -56,6 +56,9 @@ class Address
      * @var string
      *
      * @ORM\Column(name="balance", type="decimal", precision=16, scale=8, nullable=false)
+     *
+     * @Serializer\Groups("Deposits")
+     * @Serializer\Type("string")
      */
     private $balance;
 

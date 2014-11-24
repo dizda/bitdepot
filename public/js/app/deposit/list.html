@@ -20,6 +20,7 @@
                     <tr>
                         <th class="text-center">ID</th>
                         <th class="text-center">Address</th>
+                        <th class="text-center">Balance</th>
                         <th class="text-center">Amount expected</th>
                         <th class="text-center">Amount filled</th>
                         <th class="text-center">status</th>
@@ -32,9 +33,16 @@
                         <td>
                             <a data-ng-href="https://blockchain.info/address/{{deposit.address_external.value}}" target="_blank">{{deposit.address_external.value}}</a>
                         </td>
+                        <td data-ng-class="{'text-muted': deposit.address_external.balance == 0}"><i class="fa fa-btc"></i> {{ deposit.address_external.balance }}</td>
                         <td data-ng-if="deposit.type == 1"><i class="fa fa-btc"></i> {{ deposit.amount_expected }}</td>
                         <td data-ng-if="deposit.type == 2">∞</td>
-                        <td><i class="fa fa-btc"></i> {{ deposit.amount_filled }}</td>
+                        <td data-ng-class="{
+                        'text-light-blue': deposit.amount_filled > 0 && deposit.amount_filled < deposit.amount_expected,
+                        'text-green': deposit.amount_filled == deposit.amount_expected || deposit.type == 2 && deposit.amount_filled > 0,
+                        'text-red': deposit.type == 1 && deposit.amount_filled > deposit.amount_expected
+                        }">
+                            <i class="fa fa-btc"></i> {{ deposit.amount_filled }}
+                        </td>
                         <td>
                             <!--<span class="label label-default" data-ng-if="!withdraw.is_signed && withdraw.signatures == 0">
                                 Unsigned
