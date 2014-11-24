@@ -27,4 +27,19 @@ class WithdrawOutputRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
+    /**
+     * @param Application $application
+     *
+     * @return mixed
+     */
+    public function getWithdrawOutputs(Application $application)
+    {
+        $qb = $this->createQueryBuilder('wo')
+            ->andWhere('wo.application = :application')
+            ->setParameter('application', $application)
+        ;
+
+        return $qb->getQuery()->execute();
+    }
+
 }

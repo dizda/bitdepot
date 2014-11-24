@@ -31,6 +31,22 @@ class WithdrawRepository extends EntityRepository
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getWithdraws()
+    {
+        $qb = $this->createQueryBuilder('w')
+            ->innerJoin('w.withdrawInputs', 'wi')
+            ->innerJoin('w.withdrawOutputs', 'wo')
+            ->andWhere('wo.isAccepted = true')
+            ->orderBy('w.createdAt', 'DESC')
+            ->setMaxResults(10)
+        ;
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
      * @return mixed
      */
     public function getChangeAddressesMonitored()
