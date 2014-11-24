@@ -13,7 +13,7 @@
         </div><!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
-                <tbody>
+                <thead>
                     <tr>
                         <th>ID</th>
                         <th>Amount</th>
@@ -21,6 +21,11 @@
                         <th>Number of recipient</th>
                         <th>Signed</th>
                         <th>date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
                     </tr>
                     <tr data-ng-repeat="withdraw in withdraws">
                         <td>{{ withdraw.id }}</td>
