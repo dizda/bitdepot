@@ -24,9 +24,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-
-                    </tr>
                     <tr data-ng-repeat="withdraw in withdraws">
                         <td>{{ withdraw.id }}</td>
                         <td data-ng-if="!withdraw.txid"><i class="fa fa-btc"></i> {{ withdraw.total_outputs }}</td>
