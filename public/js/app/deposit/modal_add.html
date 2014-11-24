@@ -1,9 +1,9 @@
 <div class="modal" tabindex="-1" role="dialog" data-ng-controller="DepositModalAddCtrl">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" ng-show="title">
-                <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <h4 class="modal-title" ng-bind="title"></h4>
+            <div class="modal-header" data-ng-show="title">
+                <button type="button" class="close" data-ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" data-ng-bind="title"></h4>
             </div>
 
 
@@ -28,7 +28,7 @@
                     Create deposit
                 </button>
 
-                <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+                <button type="button" class="btn btn-default" data-ng-click="$hide()">Close</button>
             </div>
         </div>
     </div>
