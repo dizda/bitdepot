@@ -1,0 +1,39 @@
+<div class="modal" tabindex="-1" role="dialog" data-ng-controller="WithdrawOutputModalAddCtrl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" data-ng-show="title">
+                <button type="button" class="close" data-ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" data-ng-bind="title"></h4>
+            </div>
+
+
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label class="control-label" for="amount">Amount</label>
+                    <input type="text" class="form-control" id="amount" placeholder="0.00010000" data-ng-model="withdrawOutput.amount">
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="to_address">To address</label>
+                    <input type="text" class="form-control" id="to_address" placeholder="3QYr3UHFsTbEKVheCRx5CMJSiEECS4ZWX4" data-ng-model="withdrawOutput.to_address">
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="reference">Reference or a note</label>
+                    <input type="text" class="form-control" id="reference" placeholder="user" data-ng-model="withdrawOutput.reference">
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+                <button class="btn btn-success" data-ng-click="create()">
+                    Create a Withdraw Output
+                </button>
+
+                <button type="button" class="btn btn-default" data-ng-click="$hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

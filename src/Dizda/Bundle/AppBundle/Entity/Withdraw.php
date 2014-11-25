@@ -117,7 +117,7 @@ class Withdraw
      *
      * @ORM\Column(name="withdrawed_at", type="datetime", nullable=true)
      *
-     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail", "WithdrawOutputs"})
      */
     private $withdrawedAt;
 

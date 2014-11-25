@@ -11,6 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
  *
  * @ORM\Table(name="withdraw_output")
  * @ORM\Entity(repositoryClass="Dizda\Bundle\AppBundle\Repository\WithdrawOutputRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class WithdrawOutput
 {

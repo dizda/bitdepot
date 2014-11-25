@@ -3,7 +3,10 @@
         <div class="box-header">
             <h3 class="box-title">Withdraws outputs</h3>
             <div class="box-tools">
+
                 <div class="input-group">
+                    <button class="btn btn-sm btn-info" data-ng-click="openModalAddWithdrawOutput()"><i class="fa fa-plus"></i></button>
+
                     <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search">
                     <div class="input-group-btn">
                         <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
@@ -25,10 +28,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-ng-repeat="output in withdrawOutputs">
+                    <tr data-ng-repeat="output in withdrawOutputs" data-ng-class="{'bg-success': output.withdraw.withdrawed_at}">
                         <td>{{ output.id }}</td>
                         <td data-ng-if="output.withdraw">{{ output.withdraw.id }}</td>
-                        <td data-ng-if="!output.withdraw" class="text-muted"><i class="fa fa-fw fa-square-o"></i></td>
+                        <td data-ng-if="!output.withdraw" class="text-muted">Not assigned yet</td>
                         <td><i class="fa fa-btc"></i> {{ output.amount }}</td>
                         <td>
                             <a data-ng-href="https://blockchain.info/address/{{output.to_address}}" target="_blank">{{output.to_address}}</a>

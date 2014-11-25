@@ -24,6 +24,12 @@
             <argument type="service" id="event_dispatcher" />
         </service>
 
+        <service id="dizda_app.manager.withdraw_output" class="Dizda\Bundle\AppBundle\Manager\WithdrawOutputManager">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="logger" />
+            <argument type="service" id="event_dispatcher" />
+        </service>
+
         <!-- Listener -->
         <service id="dizda_app.listener.address_transaction" class="Dizda\Bundle\AppBundle\EventListener\AddressTransactionListener">
             <tag name="kernel.event_listener" event="app.address_transaction_create" method="onCreate" />

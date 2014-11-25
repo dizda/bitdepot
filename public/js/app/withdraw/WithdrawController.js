@@ -3,7 +3,7 @@
 app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', 'WithdrawOutput', function($scope, $location, $modal, Withdraw, WithdrawOutput) {
 
     $scope.withdraws = Withdraw.query();
-    $scope.withdrawOutputs = WithdrawOutput.query({application: 10});
+    $scope.withdrawOutputs = WithdrawOutput.query({application_id: 10});
 
     $scope.openModalSignature = function(withdraw) {
 
@@ -31,6 +31,26 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', 'Wi
         var index = _.findIndex($scope.withdraws, {id: withdraw.id});
 
         $scope.withdraws[index] = withdraw;
+    });
+
+
+    $scope.openModalAddWithdrawOutput = function()
+    {
+        $modal({
+            title:    'New withdraw output',
+            template: 'js/app/withdraw/modal_output_add.html',
+            animation:'am-fade-and-scale',
+            placement:'center',
+            show:     true,
+            scope:    $scope
+        });
+    };
+
+    /**
+     * When a withdraw output is created, add it to the top of the list
+     */
+    $scope.$on('withdraw_output:create', function(e, deposit) {
+        $scope.withdrawOutputs.unshift(deposit);
     });
 
 }]);
