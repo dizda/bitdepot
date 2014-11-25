@@ -3,7 +3,7 @@
 app.controller('WithdrawModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw) {
 
     $scope.signing   = false;
-    $scope.signState  = {
+    $scope.signState = {
         label: 'Enter your private key',
         signed_by: null,
         error: false,
