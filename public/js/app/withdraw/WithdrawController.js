@@ -13,7 +13,7 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', 'Wi
 
             $modal({
                 title:    'Withdraw detail',
-                template: 'js/app/withdraw/modal.html',
+                template: 'js/app/withdraw/modal_sign.html',
                 animation:'am-fade-and-scale',
                 placement:'center',
                 show:     true,

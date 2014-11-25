@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('WithdrawModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw) {
+app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw) {
 
     $scope.signing   = false;
     $scope.signState = {
