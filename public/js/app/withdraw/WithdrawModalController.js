@@ -92,7 +92,7 @@ app.controller('WithdrawModalCtrl', ['$scope', 'Withdraw', function($scope, With
                 }
             }
 
-            // send the signed transaction there
+            // print the signed transaction there
             console.log($scope.withdraw.raw_signed_transaction);
 
         });
