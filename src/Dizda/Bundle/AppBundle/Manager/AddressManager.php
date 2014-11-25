@@ -57,11 +57,6 @@ class AddressManager
 
         // for each transactions, check if we got each in our db
         foreach ($transactions as $transaction) {
-            if ($address->hasTransaction($transaction->getTxid())) {
-                continue;
-            }
-
-            $this->logger->notice('Transaction added', [ $transaction->getTxid(), $address->getValue() ]);
 
             // scan inputs to see if our address is the emitter
             foreach ($transaction->getInputs() as $input) {
@@ -69,9 +64,18 @@ class AddressManager
                     continue;
                 }
 
+                // Check if transaction already exist
+                if ($address->hasTransaction(
+                    $transaction->getTxid(),
+                    AddressTransaction::TYPE_OUT,
+                    $input->getIndex()
+                )) {
+                    continue;
+                }
+
                 $addressTransaction = new AddressTransaction();
                 $addressTransaction->setAddress($address)
-                    ->setId($transaction->getTxid())
+                    ->setTxid($transaction->getTxid())
                     ->setType(AddressTransaction::TYPE_OUT)
                     ->setAmount($input->getValue())
                     ->setAddresses([ $input->getAddress() ])
@@ -79,6 +83,8 @@ class AddressManager
                 ;
 
                 $this->em->persist($addressTransaction);
+
+                $this->logger->notice('Transaction added', [ $transaction->getTxid(), $address->getValue() ]);
 
                 $this->dispatcher->dispatch(AppEvents::ADDRESS_TRANSACTION_CREATE, new AddressTransactionEvent($addressTransaction));
             }
@@ -89,9 +95,18 @@ class AddressManager
                     continue;
                 }
 
+                // Check if transaction already exist
+                if ($address->hasTransaction(
+                    $transaction->getTxid(),
+                    AddressTransaction::TYPE_IN,
+                    $output->getIndex()
+                )) {
+                    continue;
+                }
+
                 $addressTransaction = new AddressTransaction();
                 $addressTransaction->setAddress($address)
-                    ->setId($transaction->getTxid())
+                    ->setTxid($transaction->getTxid())
                     ->setType(AddressTransaction::TYPE_IN)
                     ->setAmount($output->getValue())
                     ->setAddresses($output->getAddresses())

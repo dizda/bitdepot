@@ -304,14 +304,19 @@ class Address
     }
 
     /**
-     * @param string $txid
+     * @param string  $txid
+     * @param integer $type
+     * @param integer $transactionIndex
      *
      * @return bool
      */
-    public function hasTransaction($txid)
+    public function hasTransaction($txid, $type, $transactionIndex)
     {
         foreach ($this->transactions as $transaction) {
-            if ($transaction->getId() === $txid) {
+            if ($transaction->getTxid() === $txid
+                && $transaction->getType() === $type
+                && $transaction->getIndex() === $transactionIndex
+            ) {
                 return true;
             }
         }

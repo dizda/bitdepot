@@ -23,14 +23,23 @@ class AddressTransaction
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="string")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Serializer\Groups({"Deposit", "Withdraw", "WithdrawDetail"})
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="txid", type="string", nullable=false)
      *
      * @Serializer\Groups({"Deposit", "Withdraw", "WithdrawDetail"})
      * @Serializer\SerializedName("txid")
      */
-    private $id;
+    private $txid;
 
     /**
      * @var integer
@@ -352,5 +361,28 @@ class AddressTransaction
     public function getIndex()
     {
         return $this->index;
+    }
+
+    /**
+     * Set txid
+     *
+     * @param string $txid
+     * @return AddressTransaction
+     */
+    public function setTxid($txid)
+    {
+        $this->txid = $txid;
+
+        return $this;
+    }
+
+    /**
+     * Get txid
+     *
+     * @return string 
+     */
+    public function getTxid()
+    {
+        return $this->txid;
     }
 }
