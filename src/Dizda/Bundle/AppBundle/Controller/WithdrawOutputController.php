@@ -15,9 +15,9 @@ class WithdrawOutputController extends Controller
     /**
      * Get list of withdraws
      *
-     * @param Application $application
-     *
      * @REST\View(serializerGroups={"WithdrawOutputs"})
+     *
+     * @param Application $application
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
