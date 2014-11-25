@@ -470,7 +470,12 @@ class Withdraw
         $outputs = [];
 
         foreach ($this->withdrawOutputs as $output) {
-            $outputs[$output->getToAddress()] = (float) $output->getAmount();
+            // verify is address is already present in outputs to avoid overwrite, but add amount to the address instead
+            if (isset($outputs[$output->getToAddress()])) {
+                $outputs[$output->getToAddress()] = (float) bcadd($outputs[$output->getToAddress()], $output->getAmount(), 8);
+            } else {
+                $outputs[$output->getToAddress()] = (float) $output->getAmount();
+            }
         }
 
         // Send change to a change address if amount of inputs are higher than amount needed for the withdraw
