@@ -23,6 +23,7 @@ class WithdrawOutput
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      *
+     * @Serializer\Groups({"WithdrawOutputs"})
      */
     private $id;
 
@@ -31,7 +32,7 @@ class WithdrawOutput
      *
      * @ORM\Column(name="amount", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
      *
-     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs"})
      */
     private $amount;
 
@@ -40,7 +41,7 @@ class WithdrawOutput
      *
      * @ORM\Column(name="to_address", type="string", length=255)
      *
-     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs"})
      */
     private $toAddress;
 
@@ -48,6 +49,8 @@ class WithdrawOutput
      * @var boolean
      *
      * @ORM\Column(name="is_accepted", type="boolean")
+     *
+     * @Serializer\Groups({"WithdrawOutputs"})
      */
     private $isAccepted;
 
@@ -56,7 +59,7 @@ class WithdrawOutput
      *
      * @ORM\Column(name="reference", type="string", length=255)
      *
-     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs"})
      */
     private $reference;
 
@@ -78,7 +81,9 @@ class WithdrawOutput
      * @ORM\ManyToOne(targetEntity="Withdraw", inversedBy="withdrawOutputs")
      * @ORM\JoinColumn(name="withdraw_id", referencedColumnName="id", nullable=true)
      *
-     * @Serializer\Exclude
+     * Serializer\Exclude
+     * @Serializer\Groups({"WithdrawOutputs"})
+     * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\Withdraw")
      */
     private $withdraw;
 

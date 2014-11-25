@@ -27,7 +27,8 @@
                 <tbody>
                     <tr data-ng-repeat="output in withdrawOutputs">
                         <td>{{ output.id }}</td>
-                        <td>{{ output.withdraw_id }}</td>
+                        <td data-ng-if="output.withdraw">{{ output.withdraw.id }}</td>
+                        <td data-ng-if="!output.withdraw" class="text-muted"><i class="fa fa-fw fa-square-o"></i></td>
                         <td><i class="fa fa-btc"></i> {{ output.amount }}</td>
                         <td>
                             <a data-ng-href="https://blockchain.info/address/{{output.to_address}}" target="_blank">{{output.to_address}}</a>

@@ -24,7 +24,7 @@ class Withdraw
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail", "WithdrawOutputs"})
      */
     private $id;
 

@@ -4,11 +4,8 @@ namespace Dizda\Bundle\AppBundle\Controller;
 
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Entity\Withdraw;
-use Dizda\Bundle\AppBundle\Request\PostWithdrawRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations as REST;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class WithdrawOutputController
@@ -19,6 +16,8 @@ class WithdrawOutputController extends Controller
      * Get list of withdraws
      *
      * @param Application $application
+     *
+     * @REST\View(serializerGroups={"WithdrawOutputs"})
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
