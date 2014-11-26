@@ -16,4 +16,8 @@ install:
     - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source install
 
 script:
+    - mkdir -p build/logs
     - ./vendor/phpunit/phpunit/phpunit -c app/
+
+after_script:
+    - php vendor/bin/coveralls
