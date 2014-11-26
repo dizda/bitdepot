@@ -1,3 +1,5 @@
+[![Coverage Status](https://img.shields.io/coveralls/dizda/coinegger.svg)](https://coveralls.io/r/dizda/coinegger)
+
 Coinegger - Work In Progress
 ========================
 
