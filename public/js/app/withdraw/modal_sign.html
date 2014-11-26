@@ -38,7 +38,7 @@
                     <li data-ng-repeat="output in withdraw.withdraw_outputs">
                         <strong>{{output.amount}}</strong>
                         <a data-ng-href="https://blockchain.info/address/{{output.to_address}}" target="_blank">{{output.to_address}}</a>
-                        ({{output.reference}})
+                        <span data-ng-if="output.reference">({{output.reference}})</span>
                     </li>
                 </ol>
             </div>
