@@ -6,9 +6,9 @@ php:
     - 5.6
     - hhvm
 
-matrix:
-    allow_failures:
-        - php: hhvm
+#matrix:
+#    allow_failures:
+#        - php: hhvm
 
 install:
     # This line avoid weird error about permission when it try to clear:cache
