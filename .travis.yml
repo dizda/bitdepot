@@ -20,4 +20,4 @@ script:
     - ./vendor/phpunit/phpunit/phpunit -c app/
 
 after_script:
-    - php vendor/bin/coveralls
+    - php bin/coveralls
