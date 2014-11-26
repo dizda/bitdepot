@@ -1,4 +1,6 @@
 [![Coverage Status](https://img.shields.io/coveralls/dizda/coinegger.svg)](https://coveralls.io/r/dizda/coinegger)
+[![Code Climate](https://codeclimate.com/github/dizda/coinegger/badges/gpa.svg)](https://codeclimate.com/github/dizda/coinegger)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dizda/coinegger/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dizda/coinegger/?branch=master)
 
 Coinegger - Work In Progress
 ========================
