@@ -2,8 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Repository;
 
-use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
-use Doctrine\Common\Collections\ArrayCollection;
+use Dizda\Bundle\AppBundle\Entity\Address;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,6 +11,11 @@ use Doctrine\ORM\EntityRepository;
 class AddressRepository extends EntityRepository
 {
 
+    /**
+     * @param bool $isExternal Internal or External address is given
+     *
+     * @return Address
+     */
     public function getOneFreeAddress($isExternal = true)
     {
         $qb = $this->createQueryBuilder('a')
@@ -28,6 +32,11 @@ class AddressRepository extends EntityRepository
         return $qb->getQuery()->execute()[0];
     }
 
+    /**
+     * @param array $filters
+     *
+     * @return mixed
+     */
     public function getAddresses(array $filters)
     {
         $qb = $this->createQueryBuilder('a')
@@ -53,5 +62,4 @@ class AddressRepository extends EntityRepository
 
         return $qb->getQuery()->execute();
     }
-
 }
