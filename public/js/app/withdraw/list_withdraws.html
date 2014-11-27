@@ -17,10 +17,11 @@
                 <tr>
                     <th>ID</th>
                     <th>Amount</th>
-                    <th># of inputs</th>
+                    <th>inputs</th>
                     <th># of recipient</th>
                     <th>Signed</th>
                     <th>date</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,23 +33,31 @@
                             <i class="fa fa-btc"></i> {{ withdraw.total_outputs }}
                         </a>
                     </td>
-                    <td>{{ withdraw.withdraw_inputs.length }}</td>
+                    <td>
+                        {{ withdraw.total_inputs }}
+                        <i class="fa fa-times"></i>{{ withdraw.withdraw_inputs.length }}
+                    </td>
                     <td>{{ withdraw.withdraw_outputs.length }}</td>
                     <td data-ng-click="openModalSignature(withdraw)">
-                            <span class="label label-default" data-ng-if="!withdraw.is_signed && withdraw.signatures == 0">
-                                Unsigned
-                            </span>
-                            <span class="label label-warning" data-ng-if="!withdraw.is_signed && withdraw.signatures.length > 0">
-                                Partially signed
-                            </span>
-                            <span class="label label-info" data-ng-if="withdraw.is_signed && !withdraw.withdrawed_at">
-                                Fully signed
-                            </span>
-                            <span class="label label-success" data-ng-if="withdraw.is_signed && withdraw.withdrawed_at">
-                                Withdrawed
-                            </span>
+                        <span class="label label-default" data-ng-if="!withdraw.is_signed && withdraw.signatures == 0">
+                            Unsigned
+                        </span>
+                        <span class="label label-warning" data-ng-if="!withdraw.is_signed && withdraw.signatures.length > 0">
+                            Partially signed
+                        </span>
+                        <span class="label label-info" data-ng-if="withdraw.is_signed && !withdraw.withdrawed_at">
+                            Fully signed
+                        </span>
+                        <span class="label label-success" data-ng-if="withdraw.is_signed && withdraw.withdrawed_at">
+                            Withdrawed
+                        </span>
                     </td>
                     <td>{{ withdraw.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
+                    <td>
+                        <button class="btn btn-danger btn-xs" data-ng-if="!withdraw.is_signed && withdraw.signatures == 0" data-ng-click="deleteWithdraw(withdraw)">
+                            <i class="fa fa-trash-o fa-lg"></i> Delete
+                        </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -115,7 +115,7 @@ class AddressTransaction
      * @var \Dizda\Bundle\AppBundle\Entity\Deposit
      *
      * @ORM\ManyToOne(targetEntity="Withdraw", inversedBy="withdrawInputs")
-     * @ORM\JoinColumn(name="withdraw_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="withdraw_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      *
      * @Serializer\Exclude
      */

@@ -80,7 +80,7 @@ class WithdrawOutput
      * @var \Dizda\Bundle\AppBundle\Entity\Withdraw
      *
      * @ORM\ManyToOne(targetEntity="Withdraw", inversedBy="withdrawOutputs")
-     * @ORM\JoinColumn(name="withdraw_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="withdraw_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      *
      * Serializer\Exclude
      * @Serializer\Groups({"WithdrawOutputs"})

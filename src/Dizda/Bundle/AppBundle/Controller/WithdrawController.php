@@ -65,4 +65,18 @@ class WithdrawController extends Controller
 
         return $withdraw;
     }
+
+    /**
+     * @param Withdraw $withdraw
+     *
+     * @return \StdClass
+     */
+    public function deleteWithdrawAction(Withdraw $withdraw)
+    {
+        $em = $this->get('doctrine.orm.default_entity_manager');
+        $em->remove($withdraw);
+        $em->flush();
+
+        return new \StdClass(); // return an empty object {}
+    }
 }

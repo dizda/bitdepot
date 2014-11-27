@@ -49,8 +49,19 @@ app.controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', 'Wi
     /**
      * When a withdraw output is created, add it to the top of the list
      */
-    $scope.$on('withdraw_output:create', function(e, deposit) {
-        $scope.withdrawOutputs.unshift(deposit);
+    $scope.$on('withdraw_output:create', function(e, withdrawOutput) {
+        $scope.withdrawOutputs.unshift(withdrawOutput);
     });
+
+    /**
+     * @param {Object} withdraw
+     */
+    $scope.deleteWithdraw = function(withdraw)
+    {
+        withdraw.$delete(function() {
+            // success
+            $scope.withdraws.splice($scope.withdraws.indexOf(withdraw), 1);
+        });
+    };
 
 }]);
