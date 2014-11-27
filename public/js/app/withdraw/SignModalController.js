@@ -59,21 +59,20 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
         // Create a wallet from the seed submitted
         var wallet = new bitcoin.Wallet(bitcoin.crypto.sha256(seed), bitcoin.networks.bitcoin);
 
-        // We sign the transaction for each inputs
-        angular.forEach($scope.withdraw.withdraw_inputs, function(input, index) {
-            var privKey;
+        // Loop on each inputs
+        txb.tx.ins.forEach(function(input, index) {
+
+            // get the txid of the input
+            var txid   = bitcoin.bufferutils.reverse(input.hash).toString('hex');
+            var wInput = _.find($scope.withdraw.withdraw_inputs, { txid: txid });
 
             // Finding the good private key according to the derivation
-            if (input.address.is_external === true) {
-                privKey = wallet.getExternalAccount().derive(input.address.derivation).privKey;
-            } else {
-                privKey = wallet.getInternalAccount().derive(input.address.derivation).privKey;
-            }
+            var privKey = getPrivateKey(wallet, wInput.address.is_external, wInput.address.derivation);
 
             console.log(privKey.toWIF());
 
             // Sign the input
-            txb.sign(index, privKey, bitcoin.Script.fromHex(input.address.redeem_script));
+            txb.sign(index, privKey, bitcoin.Script.fromHex(wInput.address.redeem_script));
 
 
             try {
@@ -94,7 +93,6 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
 
             // print the signed transaction there
             console.log($scope.withdraw.raw_signed_transaction);
-
         });
 
 
@@ -129,6 +127,22 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
     function getRawTransaction(withdraw)
     {
         return withdraw.raw_signed_transaction || withdraw.raw_transaction;
+    }
+
+    /**
+     * @param {Wallet}  wallet
+     * @param {Boolean} isExternal
+     * @param {Number}  derivation
+     *
+     * @returns {HDNode.privKey|*|.HDNode.privKey}
+     */
+    function getPrivateKey(wallet, isExternal, derivation)
+    {
+        if (isExternal === true) {
+            return wallet.getExternalAccount().derive(derivation).privKey;
+        }
+
+        return wallet.getInternalAccount().derive(derivation).privKey;
     }
 
 }]);
