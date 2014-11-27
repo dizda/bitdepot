@@ -14,6 +14,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 abstract class AbstractRequest
 {
+    public $options;
+
     /**
      * @param array $options
      */
