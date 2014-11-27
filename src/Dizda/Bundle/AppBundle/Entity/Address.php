@@ -22,6 +22,8 @@ class Address
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Serializer\Groups({"Addresses"})
      */
     private $id;
 
@@ -31,6 +33,8 @@ class Address
      * @var string
      *
      * @ORM\Column(name="value", type="string", length=255, unique=true)
+     *
+     * @Serializer\Groups({"Addresses"})
      */
     private $value;
 
@@ -40,6 +44,8 @@ class Address
      * @ORM\Column(name="is_external", type="boolean")
      *
      * @Serializer\Groups({"WithdrawDetail"})
+     *
+     * @Serializer\Groups({"Addresses"})
      */
     private $isExternal;
 
@@ -57,7 +63,7 @@ class Address
      *
      * @ORM\Column(name="balance", type="decimal", precision=16, scale=8, nullable=false)
      *
-     * @Serializer\Groups("Deposits")
+     * @Serializer\Groups({"Deposits", "Addresses"})
      * @Serializer\Type("string")
      */
     private $balance;
@@ -91,14 +97,14 @@ class Address
     /**
      * @ORM\OneToOne(targetEntity="Deposit", mappedBy="addressExternal")
      *
-     * @Serializer\Exclude
+     * @Serializer\Groups({"Addresses"})
      **/
     private $deposit;
 
     /**
      * @ORM\OneToOne(targetEntity="Withdraw", mappedBy="changeAddress")
      *
-     * @Serializer\Exclude
+     * @Serializer\Groups({"Addresses"})
      **/
     private $withdrawChangeAddress;
 
@@ -110,7 +116,7 @@ class Address
      *      mappedBy      = "address"
      * )
      *
-     * @Serializer\Exclude
+     * @Serializer\Groups({"Addresses"})
      */
     private $transactions;
 

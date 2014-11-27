@@ -10,6 +10,11 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
             controller  : 'HomeCtrl'
         })
 
+        .when('/addresses', {
+            templateUrl : '/js/app/address/list.html',
+            controller  : 'AddressCtrl'
+        })
+
         .when('/deposits', {
             templateUrl : '/js/app/deposit/list.html',
             controller  : 'DepositCtrl'

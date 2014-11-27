@@ -1,0 +1,47 @@
+<div class="col-xs-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Addresses</h3>
+            <div class="box-tools">
+
+                <div class="input-group">
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-flat" data-ng-click="filters.show = 'all'">All</button>
+                        <button type="button" class="btn btn-default btn-flat" data-ng-click="filters.show = 'only_used'">Only used</button>
+                        <button type="button" class="btn btn-default btn-flat" data-ng-click="filters.show = 'positive_balance'">Positive balance</button>
+                    </div>
+                    <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search">
+                    <div class="input-group-btn">
+                        <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Address</th>
+                        <th class="text-center">Balance</th>
+                        <th class="text-center">Updated at</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="address in addresses" class="text-center">
+                        <td>#{{ address.id }}</td>
+                        <td class="text-left">
+                            <small class="label label-success" data-ng-if="address.deposit"><i class="fa fa-clock-o"></i> deposit</small>
+                            <small class="label label-primary" data-ng-if="address.withdraw_change_address"><i class="fa fa-money"></i> change</small>
+                            <a data-ng-href="https://blockchain.info/address/{{address.value}}" target="_blank">{{address.value}}</a>
+                            <span class="text-muted" data-ng-if="address.transactions.length" data-toggle="tooltip" title="Transactions count" data-original-title="Transactions count">({{ address.transactions.length }})</span>
+                        </td>
+                        <td data-ng-class="{'text-muted': address.balance == 0}"><i class="fa fa-btc"></i> {{ address.balance }}</td>
+                        <td>{{ address.updated_at | date:'dd/MM/yyyy HH:mm' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+</div>
