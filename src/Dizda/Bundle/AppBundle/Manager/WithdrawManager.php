@@ -44,6 +44,8 @@ class WithdrawManager
     }
 
     /**
+     * Search if there are outputs available to group them into a withdraw.
+     *
      * @param Application $application
      *
      * @return bool|ArrayCollection
@@ -62,6 +64,10 @@ class WithdrawManager
     }
 
     /**
+     * Create a withdraw according to outputs
+     * If sufficient money available, we can proceed to the creation of the withdraw.
+     * Otherwise, the function will return null.
+     *
      * @param Application $application
      * @param array       $outputs
      *
@@ -106,6 +112,8 @@ class WithdrawManager
     }
 
     /**
+     * Saving data received from Angular
+     *
      * @param Withdraw $withdraw          The original $withdraw fetched from DB
      * @param array    $withdrawSubmitted The json Withdraw data submitted by angular
      */
