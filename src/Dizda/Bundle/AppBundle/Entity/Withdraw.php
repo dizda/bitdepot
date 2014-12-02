@@ -692,4 +692,36 @@ class Withdraw
     {
         return $this->changeAddress;
     }
+
+    /**
+     * Setting outputs
+     *
+     * @param array $outputs
+     */
+    public function setOutputs(array $outputs)
+    {
+        foreach ($outputs as $output) {
+            $this->addTotalOutputs($output->getAmount());
+            $this->addWithdrawOutput($output);
+        }
+    }
+
+    /**
+     * Setting input transactions from AddressTransaction entities
+     *
+     * @param array $inputs
+     */
+    public function setInputs(array $inputs)
+    {
+        foreach ($inputs as $transaction) {
+            $this->addTotalInputs($transaction->getAmount());
+            $this->addWithdrawInput($transaction);
+
+            // $withdraw->getTotalInputs() >= $withdraw->getTotalOutputs()
+            if (bccomp($this->getTotalInputs(), $this->getTotalOutputsWithFees(), 8) !== -1) {
+                // if the amount collected is sufficient, we quit the foreach to do not add more inputs
+                break;
+            }
+        }
+    }
 }

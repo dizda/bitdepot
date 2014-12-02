@@ -72,26 +72,15 @@ class WithdrawManager
         $withdraw->setFees('0.0001');
 
         // Setting outputs
-        foreach ($outputs as $output) {
-            $withdraw->addTotalOutputs($output->getAmount());
-            $withdraw->addWithdrawOutput($output);
-        }
+        $withdraw->setOutputs($outputs);
 
-        // Setting inputs
         $transactions = $this->em->getRepository('DizdaAppBundle:AddressTransaction')
-            ->getSpendableTransactions($application, $withdraw->getTotalOutputs())
+            ->getSpendableTransactions()
+//            ->getSpendableTransactions($application, $withdraw->getTotalOutputs())
         ;
 
-        foreach ($transactions as $transaction) {
-            $withdraw->addTotalInputs($transaction->getAmount());
-            $withdraw->addWithdrawInput($transaction);
-
-            // $withdraw->getTotalInputs() >= $withdraw->getTotalOutputs()
-            if (bccomp($withdraw->getTotalInputs(), $withdraw->getTotalOutputsWithFees(), 8) !== -1) {
-                // if the amount collected is sufficient, we quit the foreach to do not add more inputs
-                break;
-            }
-        }
+        // Setting inputs
+        $withdraw->setInputs($transactions);
 
         // $withdraw->getTotalInputs() < $withdraw->getTotalOutputsWithFees()
         if (bccomp($withdraw->getTotalInputs(), $withdraw->getTotalOutputsWithFees(), 8) === -1) {

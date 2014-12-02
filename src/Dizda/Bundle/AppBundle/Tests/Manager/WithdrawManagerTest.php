@@ -3,7 +3,9 @@
 namespace Dizda\Bundle\AppBundle\Tests\Manager;
 
 use Dizda\Bundle\AppBundle\Entity\Address;
+use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
 use Dizda\Bundle\AppBundle\Entity\Application;
+use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
 use Dizda\Bundle\AppBundle\Manager\DepositManager;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTestCase;
@@ -107,6 +109,69 @@ class WithdrawManagerTest extends ProphecyTestCase
         $return = $this->manager->search($app->reveal());
 
         $this->assertCount(3, $return);
+    }
+
+
+    public function testCreateSuccess()
+    {
+        $addressTransRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\AddressTransactionRepository');
+
+        $this->em->getRepository('DizdaAppBundle:AddressTransaction')
+            ->shouldBeCalled()
+            ->willReturn($addressTransRepo->reveal())
+        ;
+
+        $addressTransRepo->getSpendableTransactions()
+            ->shouldBeCalled()
+            ->willReturn([(new AddressTransaction())->setAmount('0.0002')])
+        ;
+
+        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Withdraw'))->shouldBeCalled();
+        $this->em->flush()->shouldBeCalled();
+
+        $this->manager->create($this->getApp()->reveal(), $this->getOutputs());
+    }
+
+    public function testCreateSuccessInsufficientAmountAvailable()
+    {
+        $addressTransRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\AddressTransactionRepository');
+
+        $this->em->getRepository('DizdaAppBundle:AddressTransaction')
+            ->shouldBeCalled()
+            ->willReturn($addressTransRepo->reveal())
+        ;
+
+        $addressTransRepo->getSpendableTransactions()
+            ->shouldBeCalled()
+            ->willReturn([(new AddressTransaction())->setAmount('0.0001')])
+        ;
+
+        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Withdraw'))->shouldNotBeCalled();
+        $this->em->flush()->shouldNotBeCalled();
+
+        $this->manager->create($this->getApp()->reveal(), $this->getOutputs());
+    }
+
+    private function getOutputs()
+    {
+        return [
+            (new WithdrawOutput())
+                ->setAmount('0.0001')
+                ->setApplication($this->getApp()->reveal())
+                ->setIsAccepted(true)
+                ->setToAddress('lol')
+        ];
+    }
+
+    private function getApp()
+    {
+        $app = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Application');
+        $keychain = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Keychain');
+
+        $app->reveal();
+        $app->getKeychain()->willReturn($keychain->reveal());
+
+        return $app;
     }
 
     /**
