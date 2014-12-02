@@ -112,7 +112,7 @@ class WithdrawManagerTest extends ProphecyTestCase
     }
 
 
-    public function testCreateSuccess()
+    public function testCreateSuccessWithNoChangeAddress()
     {
         $addressTransRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\AddressTransactionRepository');
 
@@ -129,7 +129,12 @@ class WithdrawManagerTest extends ProphecyTestCase
         $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Withdraw'))->shouldBeCalled();
         $this->em->flush()->shouldBeCalled();
 
-        $this->manager->create($this->getApp()->reveal(), $this->getOutputs());
+        $return = $this->manager->create($this->getApp()->reveal(), $this->getOutputs());
+        $this->assertEquals('0.00020000', $return->getTotalInputs());
+        $this->assertEquals('0.00010000', $return->getTotalOutputs());
+        $this->assertEquals('0.00010000', $return->getFees());
+        $this->assertNull($return->getChangeAddressAmount());
+        $this->assertNull($return->getChangeAddress());
     }
 
     public function testCreateSuccessInsufficientAmountAvailable()
@@ -149,7 +154,8 @@ class WithdrawManagerTest extends ProphecyTestCase
         $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Withdraw'))->shouldNotBeCalled();
         $this->em->flush()->shouldNotBeCalled();
 
-        $this->manager->create($this->getApp()->reveal(), $this->getOutputs());
+        $return = $this->manager->create($this->getApp()->reveal(), $this->getOutputs());
+        $this->assertNull($return);
     }
 
     private function getOutputs()

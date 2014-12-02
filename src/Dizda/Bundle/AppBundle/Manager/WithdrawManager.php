@@ -64,6 +64,8 @@ class WithdrawManager
     /**
      * @param Application $application
      * @param array       $outputs
+     *
+     * @return null|Withdraw
      */
     public function create(Application $application, array $outputs)
     {
@@ -90,7 +92,7 @@ class WithdrawManager
                 [ $withdraw->getTotalInputs(), $withdraw->getTotalOutputsWithFees() ]
             );
 
-            return;
+            return null;
         }
 
         $this->em->persist($withdraw);
@@ -99,6 +101,8 @@ class WithdrawManager
         $this->dispatcher->dispatch(AppEvents::WITHDRAW_CREATE, new WithdrawEvent($withdraw));
 
         $this->em->flush();
+
+        return $withdraw;
     }
 
     /**
