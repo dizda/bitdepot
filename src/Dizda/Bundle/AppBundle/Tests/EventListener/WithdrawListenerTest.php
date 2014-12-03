@@ -2,6 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\EventListener;
 
+use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
 use Dizda\Bundle\AppBundle\Entity\Withdraw;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
@@ -55,6 +56,33 @@ class WithdrawListenerTest extends ProphecyTestCase
 
         $this->manager->onCreate($this->withdrawEvent->reveal());
         $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
+    }
+
+    /**
+     * WithdrawListener::create()
+     */
+    public function testOnCreateWithChangeAddress()
+    {
+        $repo     = $this->prophesize('Dizda\Bundle\AppBundle\Repository\AddressRepository');
+        $withdraw = $this->getSpentWithdrawWithChangeAddress();
+        $changeAddress = (new Address())
+            ->setValue('1MxXHgScDGaA7GaJY8bGa9MsCKU6iXaiRh')
+        ;
+
+        $this->withdrawEvent->getWithdraw()->shouldBeCalled()->willReturn($withdraw);
+
+        $this->em->getRepository('DizdaAppBundle:Address')->shouldBeCalled()->willReturn($repo->reveal());
+        $repo->getOneFreeAddress(Argument::exact(false))->shouldBeCalled()->willReturn($changeAddress);
+
+        $this->bitcoind->createrawtransaction(
+            Argument::exact($this->getExpectedInputs()),
+            Argument::exact($this->getExpectedOutputsWithChangeAddress())
+        )->shouldBeCalled()->willReturn('R4wTr4nsact!on');
+
+        $this->manager->onCreate($this->withdrawEvent->reveal());
+        $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
+        $this->assertEquals($changeAddress, $withdraw->getChangeAddress());
+        $this->assertEquals('0.00010000', $withdraw->getChangeAddressAmount());
     }
 
     /**
@@ -129,6 +157,35 @@ class WithdrawListenerTest extends ProphecyTestCase
         ;
     }
 
+    private function getSpentWithdrawWithChangeAddress()
+    {
+        return (new Withdraw())
+            ->setTotalInputs('0.0005')
+            ->setTotalOutputs('0.0003')
+            ->setFees('0.0001')
+            ->addWithdrawInput(
+                (new AddressTransaction())
+                    ->setTxid('431c5231114ce2d00125ea4a88f4e4637b80fef1117a0b20606204e45cc3678f')
+                    ->setIndex(1)
+            )
+            ->addWithdrawInput(
+                (new AddressTransaction())
+                    ->setTxid('be0f6dc2cd45c0fcfaaf2d7aa19190bc2fcb5481b0a21ac7f309cecd5e75db9f')
+                    ->setIndex(0)
+            )
+            ->addWithdrawOutput(
+                (new WithdrawOutput())
+                    ->setToAddress('1LGTbdVSEbD9C37qXcpvVJ1egdBu8jYSeV')
+                    ->setAmount('0.0001')
+            )
+            ->addWithdrawOutput(
+                (new WithdrawOutput())
+                    ->setToAddress('1Cxtev7KLyEen5UxqsBYn6JqcZREm28DXh')
+                    ->setAmount('0.0002')
+            )
+        ;
+    }
+
     private function getExpectedInputs()
     {
         return [
@@ -148,6 +205,15 @@ class WithdrawListenerTest extends ProphecyTestCase
         return [
             '1LGTbdVSEbD9C37qXcpvVJ1egdBu8jYSeV' => 0.0001,
             '1Cxtev7KLyEen5UxqsBYn6JqcZREm28DXh' => 0.0002
+        ];
+    }
+
+    private function getExpectedOutputsWithChangeAddress()
+    {
+        return [
+            '1LGTbdVSEbD9C37qXcpvVJ1egdBu8jYSeV' => 0.0001,
+            '1Cxtev7KLyEen5UxqsBYn6JqcZREm28DXh' => 0.0002,
+            '1MxXHgScDGaA7GaJY8bGa9MsCKU6iXaiRh' => 0.0001
         ];
     }
 
