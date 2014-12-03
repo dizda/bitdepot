@@ -100,6 +100,31 @@ class WithdrawListenerTest extends ProphecyTestCase
     }
 
     /**
+     * WithdrawListener::send()
+     */
+    public function testOnSend()
+    {
+        $withdraw = $this->getSpendableWithdraw();
+        $withdraw->setRawSignedTransaction('coucou');
+
+        $this->withdrawEvent->getWithdraw()->shouldBeCalled()->willReturn($withdraw);
+
+        $this->bitcoind->sendrawtransaction(
+            Argument::exact('coucou')
+        )->shouldBeCalled()->willReturn('tr4ns4ct!onId');
+
+        $this->manager->onSend($this->withdrawEvent->reveal());
+        $this->assertEquals('tr4ns4ct!onId', $withdraw->getTxid());
+        $this->assertNotNull($withdraw->getWithdrawedAt());
+
+        // check that inputs are marked as spent
+        foreach ($withdraw->getWithdrawInputs() as $input) {
+            $this->assertTrue($input->getIsSpent());
+            $this->assertEquals('0', $input->getAddress()->getBalance());
+        }
+    }
+
+    /**
      * @return Withdraw
      */
     private function getSpendableWithdraw()
@@ -112,11 +137,13 @@ class WithdrawListenerTest extends ProphecyTestCase
                 (new AddressTransaction())
                     ->setTxid('431c5231114ce2d00125ea4a88f4e4637b80fef1117a0b20606204e45cc3678f')
                     ->setIndex(1)
+                    ->setAddress(new Address())
             )
             ->addWithdrawInput(
                 (new AddressTransaction())
                     ->setTxid('be0f6dc2cd45c0fcfaaf2d7aa19190bc2fcb5481b0a21ac7f309cecd5e75db9f')
                     ->setIndex(0)
+                    ->setAddress(new Address())
             )
             ->addWithdrawOutput(
                 (new WithdrawOutput())
