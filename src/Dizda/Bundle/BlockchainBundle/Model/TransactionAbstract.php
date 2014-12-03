@@ -88,4 +88,75 @@ abstract class TransactionAbstract
         return $this->txid;
     }
 
+    /**
+     * @param string $amount
+     *
+     * @return $this
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * @param int $confirmations
+     *
+     * @return $this
+     */
+    public function setConfirmations($confirmations)
+    {
+        $this->confirmations = $confirmations;
+
+        return $this;
+    }
+
+    /**
+     * @param string $fees
+     *
+     * @return $this
+     */
+    public function setFees($fees)
+    {
+        $this->fees = $fees;
+
+        return $this;
+    }
+
+    /**
+     * @param array $inputs
+     *
+     * @return $this
+     */
+    public function setInputs($inputs)
+    {
+        $this->inputs = $inputs;
+
+        return $this;
+    }
+
+    /**
+     * @param array $outputs
+     *
+     * @return $this
+     */
+    public function setOutputs($outputs)
+    {
+        $this->outputs = $outputs;
+
+        return $this;
+    }
+
+    /**
+     * @param string $txid
+     *
+     * @return $this
+     */
+    public function setTxid($txid)
+    {
+        $this->txid = $txid;
+
+        return $this;
+    }
 }

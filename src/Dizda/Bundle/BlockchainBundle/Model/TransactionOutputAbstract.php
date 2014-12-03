@@ -23,7 +23,7 @@ abstract class TransactionOutputAbstract
     protected $index;
 
     /**
-     * @var string
+     * @var array
      */
     protected $addresses;
 
@@ -50,4 +50,30 @@ abstract class TransactionOutputAbstract
     {
         return $this->index;
     }
+
+    /**
+     * @param string $index
+     *
+     * @return $this
+     */
+    public function setIndex($index)
+    {
+        $this->index = $index;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+
 }

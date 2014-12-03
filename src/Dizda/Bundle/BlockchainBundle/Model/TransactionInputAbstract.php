@@ -74,4 +74,64 @@ abstract class TransactionInputAbstract
     {
         return $this->index;
     }
+
+    /**
+     * @param string $address
+     *
+     * @return $this
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @param string $doubleSpentTxID
+     *
+     * @return $this
+     */
+    public function setDoubleSpentTxID($doubleSpentTxID)
+    {
+        $this->doubleSpentTxID = $doubleSpentTxID;
+
+        return $this;
+    }
+
+    /**
+     * @param int $index
+     *
+     * @return $this
+     */
+    public function setIndex($index)
+    {
+        $this->index = $index;
+
+        return $this;
+    }
+
+    /**
+     * @param string $txid
+     *
+     * @return $this
+     */
+    public function setTxid($txid)
+    {
+        $this->txid = $txid;
+
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
 }

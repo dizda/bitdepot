@@ -33,8 +33,15 @@ class TransactionOutput extends TransactionOutputAbstract
      */
     protected $addresses;
 
+    /**
+     * @param $addresses
+     *
+     * @return $this
+     */
     public function setAddresses($addresses)
     {
         $this->addresses = $addresses['addresses'];
+
+        return $this;
     }
 }
