@@ -99,6 +99,9 @@ class WithdrawListenerTest extends ProphecyTestCase
         $this->manager->onCreate($this->withdrawEvent->reveal());
     }
 
+    /**
+     * @return Withdraw
+     */
     private function getSpendableWithdraw()
     {
         return (new Withdraw())
@@ -128,6 +131,9 @@ class WithdrawListenerTest extends ProphecyTestCase
             ;
     }
 
+    /**
+     * @return Withdraw
+     */
     private function getCantSpentWithdraw()
     {
         return (new Withdraw())
@@ -157,6 +163,9 @@ class WithdrawListenerTest extends ProphecyTestCase
         ;
     }
 
+    /**
+     * @return Withdraw
+     */
     private function getSpentWithdrawWithChangeAddress()
     {
         return (new Withdraw())
@@ -186,6 +195,9 @@ class WithdrawListenerTest extends ProphecyTestCase
         ;
     }
 
+    /**
+     * @return array
+     */
     private function getExpectedInputs()
     {
         return [
@@ -200,6 +212,9 @@ class WithdrawListenerTest extends ProphecyTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     private function getExpectedOutputs()
     {
         return [
@@ -208,6 +223,9 @@ class WithdrawListenerTest extends ProphecyTestCase
         ];
     }
 
+    /**
+     * @return array
+     */
     private function getExpectedOutputsWithChangeAddress()
     {
         return [
