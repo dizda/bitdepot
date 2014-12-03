@@ -155,7 +155,7 @@ class WithdrawListenerTest extends ProphecyTestCase
                     ->setToAddress('1Cxtev7KLyEen5UxqsBYn6JqcZREm28DXh')
                     ->setAmount('0.0002')
             )
-            ;
+        ;
     }
 
     /**
