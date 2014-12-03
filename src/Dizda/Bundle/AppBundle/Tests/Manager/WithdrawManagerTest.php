@@ -2,17 +2,13 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Manager;
 
-use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
-use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
-use Dizda\Bundle\AppBundle\Manager\DepositManager;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTestCase;
-use Dizda\Bundle\AppBundle\Manager\WithdrawManager;
 
 /**
- * Class DepositManagerTest
+ * Class WithdrawManagerTest
  */
 class WithdrawManagerTest extends ProphecyTestCase
 {
@@ -111,7 +107,9 @@ class WithdrawManagerTest extends ProphecyTestCase
         $this->assertCount(3, $return);
     }
 
-
+    /**
+     * WithdrawManager::create()
+     */
     public function testCreateSuccessWithNoChangeAddress()
     {
         $addressTransRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\AddressTransactionRepository');
@@ -137,6 +135,9 @@ class WithdrawManagerTest extends ProphecyTestCase
         $this->assertNull($return->getChangeAddress());
     }
 
+    /**
+     * WithdrawManager::create()
+     */
     public function testCreateSuccessInsufficientAmountAvailable()
     {
         $addressTransRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\AddressTransactionRepository');
@@ -158,6 +159,9 @@ class WithdrawManagerTest extends ProphecyTestCase
         $this->assertNull($return);
     }
 
+    /**
+     * @return array
+     */
     private function getOutputs()
     {
         return [
@@ -169,6 +173,9 @@ class WithdrawManagerTest extends ProphecyTestCase
         ];
     }
 
+    /**
+     * @return \Dizda\Bundle\AppBundle\Entity\Application
+     */
     private function getApp()
     {
         $app = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Application');
