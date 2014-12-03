@@ -48,6 +48,11 @@ class WithdrawListener
 
         $withdraw->setChangeAddressAmount(bcsub($withdraw->getTotalInputs(), $withdraw->getTotalOutputsWithFees(), 8));
 
+        if (!$withdraw->isSpendable()) {
+            // TODO: throw exception here
+            return false;
+        }
+
         // $withdraw->getChangeAddressAmount() > 0
         if (bccomp($withdraw->getChangeAddressAmount(), '0', 8) === 1) {
             // Get a changeaddress

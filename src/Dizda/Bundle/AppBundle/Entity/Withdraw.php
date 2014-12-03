@@ -661,6 +661,22 @@ class Withdraw
     }
 
     /**
+     * Be sure that available inputs is sufficient to spend to outputs
+     *
+     * @return bool
+     */
+    public function isSpendable()
+    {
+        $rest = bcsub($this->getTotalInputs(), $this->getTotalOutputsWithFees(), 8);
+
+        if (bccomp($rest, '0', 8) === -1) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Get changeAddressAmount
      *
      * @return string 
