@@ -100,5 +100,4 @@ class BlockchainProviderTest extends ProphecyTestCase
             $this->watcher->reveal()
         );
     }
-
 }
