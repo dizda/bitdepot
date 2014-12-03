@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\AppBundle\EventListener;
 
 use Dizda\Bundle\AppBundle\Event\WithdrawEvent;
+use Dizda\Bundle\AppBundle\Exception\InsufficientAmountException;
 use Doctrine\ORM\EntityManager;
 use Nbobtc\Bitcoind\Bitcoind;
 use Psr\Log\LoggerInterface;
@@ -41,6 +42,8 @@ class WithdrawListener
 
     /**
      * @param WithdrawEvent $event
+     *
+     * @throws InsufficientAmountException
      */
     public function onCreate(WithdrawEvent $event)
     {
@@ -49,8 +52,7 @@ class WithdrawListener
         $withdraw->setChangeAddressAmount(bcsub($withdraw->getTotalInputs(), $withdraw->getTotalOutputsWithFees(), 8));
 
         if (!$withdraw->isSpendable()) {
-            // TODO: throw exception here
-            return false;
+            throw new InsufficientAmountException();
         }
 
         // $withdraw->getChangeAddressAmount() > 0

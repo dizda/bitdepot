@@ -57,10 +57,53 @@ class WithdrawListenerTest extends ProphecyTestCase
         $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
     }
 
+    /**
+     * WithdrawListener::create()
+     *
+     * @expectedException \Dizda\Bundle\AppBundle\Exception\InsufficientAmountException
+     */
+    public function testOnCreateThrowException()
+    {
+        $withdraw = $this->getCantSpentWithdraw();
+
+        $this->withdrawEvent->getWithdraw()->shouldBeCalled()->willReturn($withdraw);
+
+        $this->manager->onCreate($this->withdrawEvent->reveal());
+    }
+
     private function getSpendableWithdraw()
     {
         return (new Withdraw())
             ->setTotalInputs('0.0004')
+            ->setTotalOutputs('0.0003')
+            ->setFees('0.0001')
+            ->addWithdrawInput(
+                (new AddressTransaction())
+                    ->setTxid('431c5231114ce2d00125ea4a88f4e4637b80fef1117a0b20606204e45cc3678f')
+                    ->setIndex(1)
+            )
+            ->addWithdrawInput(
+                (new AddressTransaction())
+                    ->setTxid('be0f6dc2cd45c0fcfaaf2d7aa19190bc2fcb5481b0a21ac7f309cecd5e75db9f')
+                    ->setIndex(0)
+            )
+            ->addWithdrawOutput(
+                (new WithdrawOutput())
+                    ->setToAddress('1LGTbdVSEbD9C37qXcpvVJ1egdBu8jYSeV')
+                    ->setAmount('0.0001')
+            )
+            ->addWithdrawOutput(
+                (new WithdrawOutput())
+                    ->setToAddress('1Cxtev7KLyEen5UxqsBYn6JqcZREm28DXh')
+                    ->setAmount('0.0002')
+            )
+            ;
+    }
+
+    private function getCantSpentWithdraw()
+    {
+        return (new Withdraw())
+            ->setTotalInputs('0.0003')
             ->setTotalOutputs('0.0003')
             ->setFees('0.0001')
             ->addWithdrawInput(
