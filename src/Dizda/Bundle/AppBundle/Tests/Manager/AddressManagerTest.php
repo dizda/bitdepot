@@ -72,6 +72,24 @@ class AddressManagerTest extends ProphecyTestCase
         $this->assertCount(1, $return);
     }
 
+//    /**
+//     * AddressManager::saveTransactions()
+//     */
+//    public function testSaveTransactionsHasTransactionsContinue()
+//    {
+//        $address = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Address');
+//        $address->getValue()->shouldBeCalled()->willReturn('addressExpectedIN');
+//        $address->hasTransaction('transactionId', AddressTransaction::TYPE_IN, 6)
+//            ->shouldBeCalled()
+//            ->willReturn(false)
+//        ; // check that match the input
+//
+//        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\AddressTransaction'))->shouldBeCalledTimes(1);
+//
+//        $return = $this->manager->saveTransactions($address->reveal(), new ArrayCollection($this->getTransactionsOutput()));
+//        $this->assertCount(1, $return);
+//    }
+
     /**
      * @return array
      */
