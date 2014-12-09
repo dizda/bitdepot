@@ -607,7 +607,7 @@ class Withdraw
     /**
      * Get keychain
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Keychain 
+     * @return \Dizda\Bundle\AppBundle\Entity\Keychain
      */
     public function getKeychain()
     {
@@ -640,7 +640,7 @@ class Withdraw
     /**
      * Get signatures
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSignatures()
     {
@@ -679,7 +679,7 @@ class Withdraw
     /**
      * Get changeAddressAmount
      *
-     * @return string 
+     * @return string
      */
     public function getChangeAddressAmount()
     {
@@ -702,7 +702,7 @@ class Withdraw
     /**
      * Get changeAddress
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Address 
+     * @return \Dizda\Bundle\AppBundle\Entity\Address
      */
     public function getChangeAddress()
     {
