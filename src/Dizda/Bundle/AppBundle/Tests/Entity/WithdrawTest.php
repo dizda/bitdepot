@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Tests\Entity;
 
 use Dizda\Bundle\AppBundle\Entity\Address;
+use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
 use Dizda\Bundle\AppBundle\Entity\Withdraw;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
 use Prophecy\PhpUnit\ProphecyTestCase;
@@ -64,6 +65,32 @@ class WithdrawTest extends ProphecyTestCase
             'secondAddress' => '1.001',
             'changeAddress' => '0.01'
         ], $withdraw->getWithdrawOutputsSerializable());
+    }
+
+    /**
+     * Withdraw::setInputs()
+     */
+    public function testSetInputs()
+    {
+        $transactions = [
+            (new AddressTransaction())
+                ->setAmount('0.0001'),
+            (new AddressTransaction())
+                ->setAmount('0.0001'),
+            (new AddressTransaction())
+                ->setAmount('0.0002'),
+            (new AddressTransaction())
+                ->setAmount('0.0001'),
+            (new AddressTransaction())
+                ->setAmount('0.0002'), // not used
+        ];
+
+        $withdraw = new Withdraw();
+        $withdraw->setTotalOutputs('0.0004');
+        $withdraw->setFees('0.0001');
+        $withdraw->setInputs($transactions);
+
+        $this->assertCount(4, $withdraw->getWithdrawInputs());
     }
 
 //    private function isSpendableProvider()
