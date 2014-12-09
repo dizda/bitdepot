@@ -7,6 +7,7 @@ use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Manager\DepositManager;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTestCase;
+use Dizda\Bundle\AppBundle\Request\PostDepositsRequest;
 
 /**
  * Class DepositManagerTest
@@ -35,11 +36,14 @@ class DepositManagerTest extends ProphecyTestCase
         $em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Deposit'))->shouldBeCalled();
 
         $manager = new DepositManager($em->reveal(), $logger->reveal(), $dispatcher->reveal());
-        $return = $manager->create([
+        $data    = [
             'application_id' => 11,
             'type'           => 1,
             'amount_expected'=> '77.00000000'
-        ]);
+        ];
+        $data = new PostDepositsRequest($data);
+
+        $return = $manager->create($data->options);
 
         $this->assertEquals(1, $return->getType());
         $this->assertEquals('77.00000000', $return->getAmountExpected());
