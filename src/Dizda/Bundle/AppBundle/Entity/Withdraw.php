@@ -445,22 +445,6 @@ class Withdraw
     }
 
     /**
-     * Get withdrawOutputs, used to get {"address":amount} JS object
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getWithdrawOutputsSerialized()
-    {
-        $outputs = [];
-
-        foreach ($this->withdrawOutputs as $output) {
-            $outputs[$output->getToAddress()] = $output->getAmount();
-        }
-
-        return $outputs;
-    }
-
-    /**
      * Get withdrawOutputs, that bitcoindbundle can serialize
      *
      * @return array

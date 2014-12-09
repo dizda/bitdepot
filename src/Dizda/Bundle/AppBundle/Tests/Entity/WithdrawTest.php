@@ -2,7 +2,9 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Entity;
 
+use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\Withdraw;
+use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
 use Prophecy\PhpUnit\ProphecyTestCase;
 
 class WithdrawTest extends ProphecyTestCase
@@ -28,6 +30,40 @@ class WithdrawTest extends ProphecyTestCase
 
         $withdraw->setTotalInputs('0.0004');
         $this->assertTrue($withdraw->isSpendable());
+    }
+
+    /**
+     * Withdraw::getWithdrawOutputsSerializable()
+     */
+    public function testGetWithdrawOutputsSerializable()
+    {
+        $withdraw = new Withdraw();
+        $withdraw->addWithdrawOutput((new WithdrawOutput())
+            ->setToAddress('firstAddress')
+            ->setAmount('0.001')
+        );
+        $withdraw->addWithdrawOutput((new WithdrawOutput())
+                ->setToAddress('secondAddress')
+                ->setAmount('1.001')
+        );
+
+        // Send again to the firstAddress to check that do not overwrite the amount
+        $withdraw->addWithdrawOutput((new WithdrawOutput())
+                ->setToAddress('firstAddress')
+                ->setAmount('0.001')
+        );
+
+        // Setting a change address and it's value
+        $withdraw->setChangeAddress((new Address())
+                ->setValue('changeAddress')
+        );
+        $withdraw->setChangeAddressAmount('0.01');
+
+        $this->assertEquals([
+            'firstAddress'  => '0.002',
+            'secondAddress' => '1.001',
+            'changeAddress' => '0.01'
+        ], $withdraw->getWithdrawOutputsSerializable());
     }
 
 //    private function isSpendableProvider()
