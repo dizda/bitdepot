@@ -7,6 +7,7 @@ use Dizda\Bundle\AppBundle\Entity\Pubkey;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTestCase;
+use Dizda\Bundle\AppBundle\Request\PostWithdrawRequest;
 
 /**
  * Class WithdrawManagerTest
@@ -169,10 +170,19 @@ class WithdrawManagerTest extends ProphecyTestCase
         $repo     = $this->prophesize('Doctrine\ORM\EntityRepository');
 
         $withdrawSubmitted = [
+            'id'                     => 22,
+            'raw_transaction'        => 'rawTransactionBITCH',
+            'keychain'               => [],
+            'total_inputs'           => '0.0003',
+            'total_outputs'          => '0.0001',
+            'withdraw_inputs'        => [],
+            'withdraw_outputs'       => [],
+            // Important fields :
             'raw_signed_transaction' => 'rawSignedTransactionBITCH',
             'signed_by'              => 'JESSEEPINKM4n',
             'is_signed'              => true
         ];
+        $withdrawSubmitted = (new PostWithdrawRequest($withdrawSubmitted))->options;
 
         $withdraw->setRawSignedTransaction(Argument::exact('rawSignedTransactionBITCH'))->shouldBeCalled();
         $withdraw->getKeychain()->shouldBeCalled();
