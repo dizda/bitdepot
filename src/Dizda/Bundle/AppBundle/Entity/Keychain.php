@@ -100,6 +100,7 @@ class Keychain
 
     /**
      * Get id
+     * @codeCoverageIgnore
      *
      * @return integer 
      */
@@ -110,6 +111,7 @@ class Keychain
 
     /**
      * Set name
+     * @codeCoverageIgnore
      *
      * @param string $name
      * @return Keychain
@@ -123,6 +125,7 @@ class Keychain
 
     /**
      * Get name
+     * @codeCoverageIgnore
      *
      * @return string 
      */
@@ -133,6 +136,7 @@ class Keychain
 
     /**
      * Set signRequired
+     * @codeCoverageIgnore
      *
      * @param integer $signRequired
      * @return Keychain
@@ -146,6 +150,7 @@ class Keychain
 
     /**
      * Get signRequired
+     * @codeCoverageIgnore
      *
      * @return integer 
      */
@@ -156,6 +161,7 @@ class Keychain
 
     /**
      * Add pubKeys
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Pubkey $pubKeys
      * @return Keychain
@@ -169,6 +175,7 @@ class Keychain
 
     /**
      * Remove pubKeys
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Pubkey $pubKeys
      */
@@ -179,6 +186,7 @@ class Keychain
 
     /**
      * Get pubKeys
+     * @codeCoverageIgnore
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
@@ -189,6 +197,7 @@ class Keychain
 
     /**
      * Add addresses
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Address $addresses
      * @return Keychain
@@ -202,6 +211,7 @@ class Keychain
 
     /**
      * Remove addresses
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Address $addresses
      */
@@ -212,6 +222,7 @@ class Keychain
 
     /**
      * Get addresses
+     * @codeCoverageIgnore
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
@@ -222,6 +233,7 @@ class Keychain
 
     /**
      * Add applications
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Application $applications
      * @return Keychain
@@ -235,6 +247,7 @@ class Keychain
 
     /**
      * Remove applications
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Application $applications
      */
@@ -245,6 +258,7 @@ class Keychain
 
     /**
      * Get applications
+     * @codeCoverageIgnore
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
@@ -255,6 +269,7 @@ class Keychain
 
     /**
      * Add withdraws
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Withdraw $withdraws
      * @return Keychain
@@ -268,6 +283,7 @@ class Keychain
 
     /**
      * Remove withdraws
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Withdraw $withdraws
      */
@@ -278,6 +294,7 @@ class Keychain
 
     /**
      * Get withdraws
+     * @codeCoverageIgnore
      *
      * @return \Doctrine\Common\Collections\Collection 
      */

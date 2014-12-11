@@ -208,6 +208,7 @@ class Withdraw
 
     /**
      * Get id
+     * @codeCoverageIgnore
      *
      * @return integer
      */
@@ -218,6 +219,7 @@ class Withdraw
 
     /**
      * Set isSigned
+     * @codeCoverageIgnore
      *
      * @param boolean $isSigned
      * @return Withdraw
@@ -231,6 +233,7 @@ class Withdraw
 
     /**
      * Get isSigned
+     * @codeCoverageIgnore
      *
      * @return boolean
      */
@@ -310,6 +313,7 @@ class Withdraw
 
     /**
      * Set withdrawedAt
+     * @codeCoverageIgnore
      *
      * @param \DateTime $withdrawedAt
      * @return Withdraw
@@ -348,6 +352,7 @@ class Withdraw
 
     /**
      * Remove withdrawInputs
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\AddressTransaction $withdrawInputs
      */
@@ -387,6 +392,7 @@ class Withdraw
 
     /**
      * @param array $withdrawInputs
+     * @codeCoverageIgnore
      *
      * @return $this
      */
@@ -414,6 +420,7 @@ class Withdraw
 
     /**
      * Remove withdrawOutputs
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\WithdrawOutput $withdrawOutputs
      */
@@ -424,6 +431,7 @@ class Withdraw
 
     /**
      * @param array $withdrawOutputs
+     * @codeCoverageIgnore
      *
      * @return $this
      */
@@ -436,6 +444,7 @@ class Withdraw
 
     /**
      * Get withdrawOutputs
+     * @codeCoverageIgnore
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -590,6 +599,7 @@ class Withdraw
 
     /**
      * Get keychain
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Keychain
      */
@@ -600,6 +610,7 @@ class Withdraw
 
     /**
      * Add signatures
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Pubkey $signatures
      * @return Withdraw
@@ -613,6 +624,7 @@ class Withdraw
 
     /**
      * Remove signatures
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Pubkey $signatures
      */
@@ -623,6 +635,7 @@ class Withdraw
 
     /**
      * Get signatures
+     * @codeCoverageIgnore
      *
      * @return \Doctrine\Common\Collections\Collection
      */

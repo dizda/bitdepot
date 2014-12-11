@@ -96,6 +96,7 @@ class Application
 
     /**
      * Get id
+     * @codeCoverageIgnore
      *
      * @return integer 
      */
@@ -106,6 +107,7 @@ class Application
 
     /**
      * Set name
+     * @codeCoverageIgnore
      *
      * @param string $name
      * @return Application
@@ -119,6 +121,7 @@ class Application
 
     /**
      * Get name
+     * @codeCoverageIgnore
      *
      * @return string 
      */
@@ -129,6 +132,7 @@ class Application
 
     /**
      * Set appId
+     * @codeCoverageIgnore
      *
      * @param string $appId
      * @return Application
@@ -142,6 +146,7 @@ class Application
 
     /**
      * Get appId
+     * @codeCoverageIgnore
      *
      * @return string 
      */
@@ -152,6 +157,7 @@ class Application
 
     /**
      * Set appSecret
+     * @codeCoverageIgnore
      *
      * @param string $appSecret
      * @return Application
@@ -165,6 +171,7 @@ class Application
 
     /**
      * Get appSecret
+     * @codeCoverageIgnore
      *
      * @return string 
      */
@@ -175,6 +182,7 @@ class Application
 
     /**
      * Add deposits
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Deposit $deposits
      * @return Application
@@ -188,6 +196,7 @@ class Application
 
     /**
      * Remove deposits
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Deposit $deposits
      */
@@ -198,6 +207,7 @@ class Application
 
     /**
      * Get deposits
+     * @codeCoverageIgnore
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
@@ -208,6 +218,7 @@ class Application
 
     /**
      * Set keychain
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Keychain $keychain
      * @return Application
@@ -221,6 +232,7 @@ class Application
 
     /**
      * Get keychain
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Keychain 
      */
@@ -254,6 +266,7 @@ class Application
 
     /**
      * Set callbackEndpoint
+     * @codeCoverageIgnore
      *
      * @param string $callbackEndpoint
      * @return Application
@@ -267,6 +280,7 @@ class Application
 
     /**
      * Get callbackEndpoint
+     * @codeCoverageIgnore
      *
      * @return string 
      */
@@ -277,6 +291,7 @@ class Application
 
     /**
      * Set groupWithdrawsByQuantity
+     * @codeCoverageIgnore
      *
      * @param integer $groupWithdrawsByQuantity
      * @return Application
@@ -290,6 +305,7 @@ class Application
 
     /**
      * Get groupWithdrawsByQuantity
+     * @codeCoverageIgnore
      *
      * @return integer 
      */

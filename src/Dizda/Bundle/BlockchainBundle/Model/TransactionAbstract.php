@@ -41,6 +41,8 @@ abstract class TransactionAbstract
     protected $amount;
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return mixed
      */
     public function getAmount()
@@ -49,6 +51,8 @@ abstract class TransactionAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return int
      */
     public function getConfirmations()
@@ -57,6 +61,8 @@ abstract class TransactionAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return mixed
      */
     public function getFees()
@@ -89,6 +95,8 @@ abstract class TransactionAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param string $amount
      *
      * @return $this
@@ -101,6 +109,8 @@ abstract class TransactionAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param int $confirmations
      *
      * @return $this
@@ -113,6 +123,8 @@ abstract class TransactionAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param string $fees
      *
      * @return $this

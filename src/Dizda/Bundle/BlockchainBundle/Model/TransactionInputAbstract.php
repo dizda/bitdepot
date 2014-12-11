@@ -44,6 +44,8 @@ abstract class TransactionInputAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return string
      */
     public function getDoubleSpentTxID()
@@ -52,6 +54,8 @@ abstract class TransactionInputAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return string
      */
     public function getTxid()
@@ -88,6 +92,8 @@ abstract class TransactionInputAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param string $doubleSpentTxID
      *
      * @return $this
@@ -112,6 +118,8 @@ abstract class TransactionInputAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param string $txid
      *
      * @return $this
@@ -124,6 +132,8 @@ abstract class TransactionInputAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param string $value
      *
      * @return $this

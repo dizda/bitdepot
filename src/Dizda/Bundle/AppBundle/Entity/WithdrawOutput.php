@@ -90,6 +90,7 @@ class WithdrawOutput
 
     /**
      * Get id
+     * @codeCoverageIgnore
      *
      * @return integer
      */
@@ -228,6 +229,7 @@ class WithdrawOutput
 
     /**
      * Get application
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Application
      */

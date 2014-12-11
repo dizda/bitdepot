@@ -53,6 +53,7 @@ class DepositTopup implements MessageQueuingInterface
 
     /**
      * Get id
+     * @codeCoverageIgnore
      *
      * @return integer 
      */
@@ -63,6 +64,7 @@ class DepositTopup implements MessageQueuingInterface
 
     /**
      * Set deposit
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Deposit $deposit
      * @return DepositTopup
@@ -76,6 +78,7 @@ class DepositTopup implements MessageQueuingInterface
 
     /**
      * Get deposit
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Deposit 
      */
@@ -86,6 +89,7 @@ class DepositTopup implements MessageQueuingInterface
 
     /**
      * Set transaction
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\AddressTransaction $transaction
      * @return DepositTopup
@@ -99,6 +103,7 @@ class DepositTopup implements MessageQueuingInterface
 
     /**
      * Get transaction
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\AddressTransaction 
      */

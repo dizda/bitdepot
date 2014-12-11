@@ -128,6 +128,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Get id
+     * @codeCoverageIgnore
      *
      * @return integer 
      */
@@ -184,6 +185,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Set amountFilled
+     * @codeCoverageIgnore
      *
      * @param string $amountFilled
      * @return Deposit
@@ -197,6 +199,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Get amountFilled
+     * @codeCoverageIgnore
      *
      * @return string 
      */
@@ -207,6 +210,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Set isFulfilled
+     * @codeCoverageIgnore
      *
      * @param boolean $isFulfilled
      * @return Deposit
@@ -220,6 +224,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Get isFulfilled
+     * @codeCoverageIgnore
      *
      * @return boolean 
      */
@@ -230,6 +235,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Set expiresAt
+     * @codeCoverageIgnore
      *
      * @param \DateTime $expiresAt
      * @return Deposit
@@ -243,6 +249,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Get expiresAt
+     * @codeCoverageIgnore
      *
      * @return \DateTime 
      */
@@ -266,6 +273,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Get addressExternal
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Address
      */
@@ -289,6 +297,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Get application
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Application 
      */
@@ -299,6 +308,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Set isOverfilled
+     * @codeCoverageIgnore
      *
      * @param boolean $isOverfilled
      * @return Deposit
@@ -312,6 +322,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Get isOverfilled
+     * @codeCoverageIgnore
      *
      * @return boolean 
      */
@@ -322,6 +333,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Add topups
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\DepositTopup $topups
      * @return Deposit
@@ -335,6 +347,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Remove topups
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\DepositTopup $topups
      */
@@ -345,6 +358,7 @@ class Deposit implements MessageQueuingInterface
 
     /**
      * Get topups
+     * @codeCoverageIgnore
      *
      * @return \Doctrine\Common\Collections\Collection 
      */

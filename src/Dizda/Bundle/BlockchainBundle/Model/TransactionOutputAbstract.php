@@ -64,6 +64,8 @@ abstract class TransactionOutputAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param string $value
      *
      * @return $this

@@ -141,6 +141,7 @@ class AddressTransaction
 
     /**
      * Get id
+     * @codeCoverageIgnore
      *
      * @return integer 
      */
@@ -174,6 +175,7 @@ class AddressTransaction
 
     /**
      * Set id
+     * @codeCoverageIgnore
      *
      * @param string $id
      * @return AddressTransaction
@@ -223,6 +225,7 @@ class AddressTransaction
 
     /**
      * Get addresses
+     * @codeCoverageIgnore
      *
      * @return array 
      */
@@ -256,6 +259,7 @@ class AddressTransaction
 
     /**
      * Set topup
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\DepositTopup $topup
      * @return AddressTransaction
@@ -269,6 +273,7 @@ class AddressTransaction
 
     /**
      * Get topup
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\DepositTopup 
      */
@@ -316,6 +321,7 @@ class AddressTransaction
 
     /**
      * Get withdraw
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Withdraw 
      */

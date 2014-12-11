@@ -24,6 +24,8 @@ class TransactionList
     protected $txs;
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return integer
      */
     public function getPagesTotal()
@@ -32,6 +34,8 @@ class TransactionList
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return ArrayCollection
      */
     public function getTxs()

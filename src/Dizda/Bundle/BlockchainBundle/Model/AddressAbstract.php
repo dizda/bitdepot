@@ -69,6 +69,8 @@ abstract class AddressAbstract
 
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param string $address
      */
     public function setAddress($address)
@@ -77,6 +79,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return string
      */
     public function getAddress()
@@ -85,6 +89,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param mixed $balance
      */
     public function setBalance($balance)
@@ -93,6 +99,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return mixed
      */
     public function getBalance()
@@ -101,6 +109,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param mixed $totalReceived
      */
     public function setTotalReceived($totalReceived)
@@ -109,6 +119,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return mixed
      */
     public function getTotalReceived()
@@ -117,6 +129,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param mixed $totalSent
      */
     public function setTotalSent($totalSent)
@@ -125,6 +139,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return mixed
      */
     public function getTotalSent()
@@ -133,6 +149,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param array $transactions
      */
     public function setTransactions($transactions)
@@ -141,6 +159,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return array
      */
     public function getTransactions()
@@ -149,6 +169,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param mixed $txApperances
      */
     public function setTxApperances($txApperances)
@@ -157,6 +179,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return mixed
      */
     public function getTxApperances()
@@ -165,6 +189,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param mixed $unconfirmedBalance
      */
     public function setUnconfirmedBalance($unconfirmedBalance)
@@ -173,6 +199,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return mixed
      */
     public function getUnconfirmedBalance()
@@ -181,6 +209,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @param mixed $unconfirmedTxApperances
      */
     public function setUnconfirmedTxApperances($unconfirmedTxApperances)
@@ -189,6 +219,8 @@ abstract class AddressAbstract
     }
 
     /**
+     * @codeCoverageIgnore
+     *
      * @return mixed
      */
     public function getUnconfirmedTxApperances()

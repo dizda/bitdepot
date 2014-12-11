@@ -54,6 +54,7 @@ class Pubkey
 
     /**
      * Get id
+     * @codeCoverageIgnore
      *
      * @return integer 
      */
@@ -64,6 +65,7 @@ class Pubkey
 
     /**
      * Set name
+     * @codeCoverageIgnore
      *
      * @param string $name
      * @return Pubkey
@@ -77,6 +79,7 @@ class Pubkey
 
     /**
      * Get name
+     * @codeCoverageIgnore
      *
      * @return string 
      */
@@ -87,6 +90,7 @@ class Pubkey
 
     /**
      * Set value
+     * @codeCoverageIgnore
      *
      * @param string $value
      * @return Pubkey
@@ -100,6 +104,7 @@ class Pubkey
 
     /**
      * Get value
+     * @codeCoverageIgnore
      *
      * @return string 
      */
@@ -110,6 +115,7 @@ class Pubkey
 
     /**
      * Set keychain
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Keychain $keychain
      * @return Pubkey
@@ -123,6 +129,7 @@ class Pubkey
 
     /**
      * Get keychain
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Keychain 
      */

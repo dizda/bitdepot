@@ -130,6 +130,7 @@ class Address
 
     /**
      * Get id
+     * @codeCoverageIgnore
      *
      * @return integer 
      */
@@ -163,6 +164,7 @@ class Address
 
     /**
      * Set isExternal
+     * @codeCoverageIgnore
      *
      * @param boolean $isExternal
      * @return Address
@@ -176,6 +178,7 @@ class Address
 
     /**
      * Get isExternal
+     * @codeCoverageIgnore
      *
      * @return boolean 
      */
@@ -186,6 +189,7 @@ class Address
 
     /**
      * Set derivation
+     * @codeCoverageIgnore
      *
      * @param integer $derivation
      * @return Address
@@ -199,6 +203,7 @@ class Address
 
     /**
      * Get derivation
+     * @codeCoverageIgnore
      *
      * @return integer 
      */
@@ -232,6 +237,7 @@ class Address
 
     /**
      * Set keychain
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Keychain $keychain
      * @return Address
@@ -245,6 +251,7 @@ class Address
 
     /**
      * Get keychain
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Keychain 
      */
@@ -255,6 +262,7 @@ class Address
 
     /**
      * Set deposit
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Deposit $deposit
      * @return Address
@@ -268,6 +276,7 @@ class Address
 
     /**
      * Get deposit
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Deposit 
      */
@@ -278,6 +287,7 @@ class Address
 
     /**
      * Add transactions
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\AddressTransaction $transactions
      * @return Address
@@ -291,6 +301,7 @@ class Address
 
     /**
      * Remove transactions
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\AddressTransaction $transactions
      */
@@ -301,6 +312,7 @@ class Address
 
     /**
      * Get transactions
+     * @codeCoverageIgnore
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
@@ -332,6 +344,7 @@ class Address
 
     /**
      * Set redeemScript
+     * @codeCoverageIgnore
      *
      * @param string $redeemScript
      * @return Address
@@ -345,6 +358,7 @@ class Address
 
     /**
      * Get redeemScript
+     * @codeCoverageIgnore
      *
      * @return string 
      */
@@ -355,6 +369,7 @@ class Address
 
     /**
      * Set scriptPubKey
+     * @codeCoverageIgnore
      *
      * @param string $scriptPubKey
      * @return Address
@@ -368,6 +383,7 @@ class Address
 
     /**
      * Get scriptPubKey
+     * @codeCoverageIgnore
      *
      * @return string 
      */
@@ -378,6 +394,7 @@ class Address
 
     /**
      * Set withdrawChangeAddress
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Withdraw $withdrawChangeAddress
      * @return Address
@@ -391,6 +408,7 @@ class Address
 
     /**
      * Get withdrawChangeAddress
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Withdraw 
      */
