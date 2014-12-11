@@ -4,6 +4,7 @@ namespace Dizda\Bundle\AppBundle\Service;
 
 use Dizda\Bundle\AppBundle\Entity\Deposit;
 use Dizda\Bundle\AppBundle\Entity\DepositTopup;
+use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
 use GuzzleHttp\Client;
 use JMS\Serializer\SerializerInterface;
 
@@ -55,5 +56,23 @@ class CallbackService
         ]);
 
         return (int) $response->getStatusCode() === 201;
+    }
+
+    /**
+     * Notify the application when an output got withdrawn
+     *
+     * @param WithdrawOutput $withdrawOutput
+     *
+     * @return bool
+     */
+    public function withdrawOutputWithdrawn(WithdrawOutput $withdrawOutput)
+    {
+        $baseUrl = $withdrawOutput->getApplication()->getCallbackEndpoint();
+
+        $response = $this->client->post(sprintf('%s/withdraw_output.json', $baseUrl), [
+            'json' => $this->serializer->serialize($withdrawOutput, 'json')
+        ]);
+
+        return (int) $response->getStatusCode() === 200;
     }
 }

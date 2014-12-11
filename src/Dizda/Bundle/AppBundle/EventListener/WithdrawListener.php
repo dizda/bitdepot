@@ -7,6 +7,7 @@ use Dizda\Bundle\AppBundle\Exception\InsufficientAmountException;
 use Doctrine\ORM\EntityManager;
 use Nbobtc\Bitcoind\Bitcoind;
 use Psr\Log\LoggerInterface;
+use OldSound\RabbitMqBundle\RabbitMq\Producer;
 
 /**
  * Class WithdrawListener
@@ -29,15 +30,22 @@ class WithdrawListener
     private $em;
 
     /**
+     * @var \OldSound\RabbitMqBundle\RabbitMq\Producer
+     */
+    private $withdrawOutputProducer;
+
+    /**
      * @param LoggerInterface     $logger
      * @param Bitcoind            $bitcoind
      * @param EntityManager       $em
+     * @param Producer            $withdrawOutputProducer
      */
-    public function __construct(LoggerInterface $logger, Bitcoind $bitcoind, EntityManager $em)
+    public function __construct(LoggerInterface $logger, Bitcoind $bitcoind, EntityManager $em, Producer $withdrawOutputProducer)
     {
         $this->logger     = $logger;
         $this->bitcoind   = $bitcoind;
         $this->em         = $em;
+        $this->withdrawOutputProducer = $withdrawOutputProducer;
     }
 
     /**
@@ -94,6 +102,9 @@ class WithdrawListener
             $input->getAddress()->setBalance(0);
         }
 
-        // Dispatch an event here, to launch a callback to all outputs
+        // Dispatch every outputs to rabbit, to launch a callback to all of them
+        foreach ($withdraw->getWithdrawOutputs() as $output) {
+            $this->withdrawOutputProducer->publish($output->getId());
+        }
     }
 }

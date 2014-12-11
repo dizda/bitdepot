@@ -127,6 +127,10 @@ old_sound_rabbit_mq:
         deposit_topup:
             connection:       default
             exchange_options: { name: deposit-topup, type: direct }
+        withdraw_output_callback:
+            connection:       default
+            exchange_options: { name: withdraw-output-callback, type: direct }
+
     consumers:
         deposit:
             connection:       default
@@ -138,3 +142,8 @@ old_sound_rabbit_mq:
             exchange_options: { name: deposit-topup, type: direct }
             queue_options:    { name: deposit-topup }
             callback:         dizda_app.consumer.deposit_topup
+        withdraw_output_callback:
+            connection:       default
+            exchange_options: { name: withdraw-output-callback, type: direct }
+            queue_options:    { name: withdraw-output-callback }
+            callback:         dizda_app.consumer.withdraw_output_callback

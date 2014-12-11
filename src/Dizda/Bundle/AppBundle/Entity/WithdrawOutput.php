@@ -2,6 +2,8 @@
 
 namespace Dizda\Bundle\AppBundle\Entity;
 
+use Dizda\Bundle\AppBundle\Traits\MessageQueuing;
+use Dizda\Bundle\AppBundle\Traits\MessageQueuingInterface;
 use Dizda\Bundle\AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
@@ -13,9 +15,9 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity(repositoryClass="Dizda\Bundle\AppBundle\Repository\WithdrawOutputRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class WithdrawOutput
+class WithdrawOutput implements MessageQueuingInterface
 {
-    use Timestampable;
+    use Timestampable, MessageQueuing;
 
     /**
      * @var integer
