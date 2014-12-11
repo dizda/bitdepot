@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bd5fc0375aee08668637271255a1170f",
+    "hash": "5423ab355677fc06aff28a3e56ec01de",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1430,17 +1430,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nbobtc/BitcoindBundle.git",
-                "reference": "14d43846fe872d575e562fdd24ffc6ae5a7cdbe4"
+                "reference": "527969fca33e2b6d29d5c2def6b2d0ad2af9ca48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nbobtc/BitcoindBundle/zipball/14d43846fe872d575e562fdd24ffc6ae5a7cdbe4",
-                "reference": "14d43846fe872d575e562fdd24ffc6ae5a7cdbe4",
+                "url": "https://api.github.com/repos/nbobtc/BitcoindBundle/zipball/527969fca33e2b6d29d5c2def6b2d0ad2af9ca48",
+                "reference": "527969fca33e2b6d29d5c2def6b2d0ad2af9ca48",
                 "shasum": ""
             },
             "require": {
                 "nbobtc/bitcoind-php": "*",
-                "symfony/symfony": ">=2.1,<=2.6"
+                "symfony/symfony": ">=2.1,<=2.7"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -1470,7 +1470,7 @@
                 "bitcoin",
                 "bitcoind"
             ],
-            "time": "2014-09-09 11:05:45"
+            "time": "2014-12-11 17:24:26"
         },
         {
             "name": "nbobtc/bitcoind-php",
@@ -2144,16 +2144,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.6.0",
+            "version": "v2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "645bb3248db50d653d18929eb0c92b131b4f35ad"
+                "reference": "d805dfd67950848ec0338b4acd75777b340977b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/645bb3248db50d653d18929eb0c92b131b4f35ad",
-                "reference": "645bb3248db50d653d18929eb0c92b131b4f35ad",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/d805dfd67950848ec0338b4acd75777b340977b7",
+                "reference": "d805dfd67950848ec0338b4acd75777b340977b7",
                 "shasum": ""
             },
             "require": {
@@ -2214,7 +2214,7 @@
                 "doctrine/doctrine-bundle": "~1.2",
                 "doctrine/orm": "~2.2,>=2.2.3",
                 "egulias/email-validator": "~1.2",
-                "ircmaxell/password-compat": "1.0.*",
+                "ircmaxell/password-compat": "~1.0",
                 "monolog/monolog": "~1.11",
                 "ocramius/proxy-manager": ">=0.3.1,<0.6-dev",
                 "propel/propel1": "~1.6"
@@ -2256,7 +2256,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-11-28 15:59:01"
+            "time": "2014-12-03 16:40:43"
         },
         {
             "name": "twig/extensions",
