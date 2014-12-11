@@ -36,6 +36,11 @@ class WithdrawListenerTest extends ProphecyTestCase
     private $withdrawEvent;
 
     /**
+     * @var \OldSound\RabbitMqBundle\RabbitMq\Producer
+     */
+    private $producer;
+
+    /**
      * @var \Dizda\Bundle\AppBundle\EventListener\WithdrawListener
      */
     private $manager;
@@ -273,10 +278,12 @@ class WithdrawListenerTest extends ProphecyTestCase
         $this->logger       = $this->prophesize('Psr\Log\LoggerInterface');
         $this->bitcoind     = $this->prophesize('Nbobtc\Bitcoind\Bitcoind');
         $this->withdrawEvent = $this->prophesize('Dizda\Bundle\AppBundle\Event\WithdrawEvent');
+        $this->producer      = $this->prophesize('OldSound\RabbitMqBundle\RabbitMq\Producer');
         $this->manager      = new WithdrawListener(
             $this->logger->reveal(),
             $this->bitcoind->reveal(),
-            $this->em->reveal()
+            $this->em->reveal(),
+            $this->producer->reveal()
         );
     }
 }
