@@ -22,17 +22,12 @@ class PostWithdrawRequest extends AbstractRequest
 
         $resolver->setRequired(array(
             'id',
-            'is_signed',
-            'keychain',
-            'raw_transaction',
-            'total_inputs',
-            'total_outputs',
-            'withdraw_inputs',
-            'withdraw_outputs'
+            'raw_signed_transaction',
+            'signed_by',
+            'is_signed'
         ));
 
         $resolver->setOptional(array(
-            'raw_signed_transaction',
             'txid',
             'created_at',
             'updated_at',
@@ -40,7 +35,15 @@ class PostWithdrawRequest extends AbstractRequest
             'signatures',
             'fees',
             'withdrawed_at',
-            'change_address'
+            'change_address',
+            'is_signed',
+            'keychain',
+            'raw_transaction',
+            'total_inputs',
+            'total_outputs',
+            'withdraw_inputs',
+            'withdraw_outputs',
+            'raw_signed_transaction'
         ));
 
         $resolver->setAllowedTypes(array(

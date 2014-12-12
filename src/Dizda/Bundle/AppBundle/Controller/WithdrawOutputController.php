@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class WithdrawOutputController
+ *
+ * @author Jonathan Dizdarevic <dizda@dizda.fr>
  */
 class WithdrawOutputController extends Controller
 {

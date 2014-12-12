@@ -37,6 +37,7 @@ class Withdraw
      * @ORM\Column(name="total_inputs", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
      *
      * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
+     * @Serializer\Type("string")
      */
     private $totalInputs;
 
@@ -100,6 +101,7 @@ class Withdraw
      * @ORM\Column(name="fees", type="decimal", precision=16, scale=8, nullable=true)
      *
      * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
+     * @Serializer\Type("string")
      */
     private $fees;
 
@@ -129,7 +131,7 @@ class Withdraw
      *      mappedBy        = "withdraw"
      * )
      *
-     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
      * @Serializer\Type("array<Dizda\Bundle\AppBundle\Entity\AddressTransaction>")
      */
     private $withdrawInputs;
@@ -181,7 +183,7 @@ class Withdraw
      *     inverseJoinColumns={@ORM\JoinColumn(name="pubkey_id", referencedColumnName="id")}
      * )
      *
-     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
      * @Serializer\Type("array<Dizda\Bundle\AppBundle\Entity\Pubkey>")
      */
     private $signatures;

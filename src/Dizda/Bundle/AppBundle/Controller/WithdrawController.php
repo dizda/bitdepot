@@ -9,12 +9,17 @@ use FOS\RestBundle\Controller\Annotations as REST;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Class WithdrawController
+ *
+ * @author Jonathan Dizdarevic <dizda@dizda.fr>
+ */
 class WithdrawController extends Controller
 {
     /**
      * Get list of withdraws
      *
-     * REST\View(serializerGroups={"Withdraws"})
+     * @REST\View(serializerGroups={"Withdraws"})
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */

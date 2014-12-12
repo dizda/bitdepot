@@ -8,6 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations as REST;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class DepositController
+ *
+ * @author Jonathan Dizdarevic <dizda@dizda.fr>
+ */
 class DepositController extends Controller
 {
     /**

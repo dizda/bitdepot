@@ -7,6 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations as REST;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class AddressController
+ *
+ * @author Jonathan Dizdarevic <dizda@dizda.fr>
+ */
 class AddressController extends Controller
 {
     /**

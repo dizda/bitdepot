@@ -2,6 +2,8 @@
 
 namespace Dizda\Bundle\AppBundle\Traits;
 
+use JMS\Serializer\Annotation as Serializer;
+
 /**
  * Trait Timestampable
  *
@@ -13,6 +15,8 @@ trait Timestampable
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     *
+     * @Serializer\Groups({"Withdraws"})
      */
     protected $createdAt;
 
