@@ -26,6 +26,7 @@ doctrine:
         connections:
             default:
                 driver:  pdo_sqlite
+#                dbname:  %database_name%_test
                 path:    %kernel.cache_dir%/test.db
                 charset: UTF8
 
