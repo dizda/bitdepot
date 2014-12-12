@@ -2,6 +2,8 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Controller;
 
+use Dizda\Bundle\AppBundle\Tests\BaseFunctionalTestController;
+
 /**
  * Class AddressControllerTest
  *

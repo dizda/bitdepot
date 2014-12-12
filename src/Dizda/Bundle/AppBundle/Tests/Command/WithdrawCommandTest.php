@@ -4,7 +4,7 @@ namespace Dizda\Bundle\AppBundle\Tests\Command;
 
 use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
-use Dizda\Bundle\AppBundle\Tests\Command\BaseFunctionalTestCommand;
+use Dizda\Bundle\AppBundle\Tests\BaseFunctionalTestCommand;
 
 /**
  * Class WithdrawCommandTest

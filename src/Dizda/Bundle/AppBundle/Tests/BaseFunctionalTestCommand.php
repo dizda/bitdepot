@@ -1,6 +1,6 @@
 <?php
 
-namespace Dizda\Bundle\AppBundle\Tests\Command;
+namespace Dizda\Bundle\AppBundle\Tests;
 
 use Dizda\Bundle\AppBundle\Tests\Fixtures;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
