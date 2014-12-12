@@ -240,3 +240,4 @@ class WithdrawOutput implements MessageQueuingInterface
         return $this->application;
     }
 }
+
