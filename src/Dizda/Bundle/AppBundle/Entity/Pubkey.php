@@ -10,6 +10,7 @@ use JMS\Serializer\Annotation as Serializer;
  *
  * @ORM\Table(name="pubkey")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Pubkey
 {

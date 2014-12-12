@@ -28,7 +28,8 @@
         "sensio/generator-bundle": "~2.3",
         "phpunit/phpunit": "4.3.*",
         "phpspec/prophecy-phpunit": "~1.0",
-        "satooshi/php-coveralls": "dev-master"
+        "satooshi/php-coveralls": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "2.2.*"
     },
     "scripts": {
         "post-root-package-install": [
