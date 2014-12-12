@@ -26,6 +26,24 @@ class WithdrawOutputControllerTest extends BaseFunctionalTestController
     }
 
     /**
+     * Not used yet.
+     *
+     * @group functional
+     */
+    public function testGetWithdrawOutputAction()
+    {
+        $this->client->request('GET', sprintf(
+            '/withdraws/%d/outputs/%d.json',
+            /* application_id */ 1,
+            /* withdrawOutput */ 1
+        ));
+
+        $content = json_decode($this->client->getResponse()->getContent());
+
+        $this->assertEquals(1, $content->id);
+    }
+
+    /**
      * @group functional
      */
     public function testPostWithdrawOutputsAction()
