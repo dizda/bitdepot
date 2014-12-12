@@ -2,7 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
  * Class BaseFunctionalTestController
@@ -24,5 +24,11 @@ class BaseFunctionalTestController extends WebTestCase
     {
         $this->client = static::createClient();
         $this->em     = $this->client->getContainer()->get('doctrine')->getManager();
+
+        $this->loadFixtures([
+            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadKeychainData',
+            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadPubkeyData',
+            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadAddressData'
+        ]);
     }
 }

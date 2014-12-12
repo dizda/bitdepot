@@ -29,7 +29,8 @@
         "phpunit/phpunit": "4.3.*",
         "phpspec/prophecy-phpunit": "~1.0",
         "satooshi/php-coveralls": "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "2.2.*"
+        "doctrine/doctrine-fixtures-bundle": "2.2.*",
+        "liip/functional-test-bundle": "dev-master"
     },
     "scripts": {
         "post-root-package-install": [
