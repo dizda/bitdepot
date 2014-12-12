@@ -2,6 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Controller;
 
+use Dizda\Bundle\AppBundle\Tests\Fixtures;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
@@ -25,15 +26,6 @@ class BaseFunctionalTestController extends WebTestCase
         $this->client = static::createClient();
         $this->em     = $this->client->getContainer()->get('doctrine')->getManager();
 
-        $this->loadFixtures([
-            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadKeychainData',
-            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadPubkeyData',
-            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadApplicationData',
-            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadAddressData',
-            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadDepositData',
-            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadAddressTransactionData',
-            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadWithdrawOutputData',
-            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadWithdrawData'
-        ]);
+        $this->loadFixtures(Fixtures::getPaths());
     }
 }

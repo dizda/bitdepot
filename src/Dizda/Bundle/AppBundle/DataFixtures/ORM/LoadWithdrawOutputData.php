@@ -20,6 +20,7 @@ class LoadWithdrawOutputData extends AbstractFixture implements OrderedFixtureIn
      */
     public function load(ObjectManager $manager)
     {
+        # For Withdraw #1
         $withdrawOutput1 = (new WithdrawOutput())
             ->setApplication($this->getReference('application-1'))
             ->setAmount('0.0001')
@@ -27,6 +28,7 @@ class LoadWithdrawOutputData extends AbstractFixture implements OrderedFixtureIn
             ->setToAddress('1LGTbdVSEbD9C37qXcpvVJ1egdBu8jYSeV')
         ;
 
+        # For Withdraw #2
         $withdrawOutput2 = (new WithdrawOutput())
             ->setApplication($this->getReference('application-1'))
             ->setAmount('0.0001')
