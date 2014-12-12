@@ -7,6 +7,7 @@ use Dizda\Bundle\AppBundle\Entity\Deposit;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Doctrine\ORM\NoResultException;
 
 /**
  * Class DepositManager
@@ -50,7 +51,13 @@ class DepositManager
         $app = $this->em->getRepository('DizdaAppBundle:Application')->find($depositSubmitted['application_id']);
 
         // Find an address not used yet.
-        $address = $this->em->getRepository('DizdaAppBundle:Address')->getOneFreeAddress();
+        try {
+            $address = $this->em->getRepository('DizdaAppBundle:Address')->getOneFreeAddress();
+        } catch (NoResultException $e) {
+            $this->logger->alert('There is no available address anymore! Please generate new addresses.');
+
+            throw new NoResultException();
+        }
 
         $deposit = new Deposit();
         $deposit

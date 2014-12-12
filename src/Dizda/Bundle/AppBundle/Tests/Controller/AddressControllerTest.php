@@ -9,7 +9,9 @@ namespace Dizda\Bundle\AppBundle\Tests\Controller;
  */
 class AddressControllerTest extends BaseFunctionalTestController
 {
-
+    /**
+     * @group functional
+     */
     public function testGetAddressesAction()
     {
         $this->client->request('GET', '/addresses.json');
@@ -17,7 +19,7 @@ class AddressControllerTest extends BaseFunctionalTestController
         $content = $this->client->getResponse()->getContent();
 
         $this->assertEquals(
-            '[{"id":1,"value":"3M2C54k8xit7oLAgSat5PbmAtbhCyp5EqU","is_external":true,"balance":"0.0002","transactions":[]}]',
+            '[{"id":1,"value":"3M2C54k8xit7oLAgSat5PbmAtbhCyp5EqU","is_external":true,"balance":"0.0002","deposit":{},"transactions":[]},{"id":2,"value":"3QYr3UHFsTbEKVheCRx5CMJSiEECS4ZWX4","is_external":true,"balance":"0","transactions":[]},{"id":3,"value":"3MxR1yHVpfB7cXULzpetoyNVvUeqhoaJhE","is_external":true,"balance":"0","transactions":[]}]',
             $content
         );
     }

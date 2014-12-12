@@ -34,7 +34,7 @@ class Address
      *
      * @ORM\Column(name="value", type="string", length=255, unique=true)
      *
-     * @Serializer\Groups({"Addresses"})
+     * @Serializer\Groups({"Addresses", "Deposits"})
      */
     private $value;
 
@@ -43,9 +43,7 @@ class Address
      *
      * @ORM\Column(name="is_external", type="boolean")
      *
-     * @Serializer\Groups({"WithdrawDetail"})
-     *
-     * @Serializer\Groups({"Addresses"})
+     * @Serializer\Groups({"WithdrawDetail", "Addresses", "Deposits"})
      */
     private $isExternal;
 

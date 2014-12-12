@@ -28,7 +28,9 @@ class BaseFunctionalTestController extends WebTestCase
         $this->loadFixtures([
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadKeychainData',
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadPubkeyData',
-            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadAddressData'
+            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadApplicationData',
+            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadAddressData',
+            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadDepositData'
         ]);
     }
 }

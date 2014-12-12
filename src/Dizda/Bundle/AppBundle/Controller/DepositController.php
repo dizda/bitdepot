@@ -13,7 +13,7 @@ class DepositController extends Controller
     /**
      * Get list of deposits
      *
-     * REST\View(serializerGroups={"Deposits"})
+     * @REST\View(serializerGroups={"Deposits"})
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
@@ -28,7 +28,7 @@ class DepositController extends Controller
     }
 
     /**
-     * REST\View(serializerGroups={"Deposits"})
+     * @REST\View(serializerGroups={"Deposits"})
      *
      * @param Request $request
      *

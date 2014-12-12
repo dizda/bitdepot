@@ -29,7 +29,7 @@ class AddressRepository extends EntityRepository
             ->setMaxResults(1)
         ;
 
-        return $qb->getQuery()->execute()[0];
+        return $qb->getQuery()->getSingleResult();
     }
 
     /**

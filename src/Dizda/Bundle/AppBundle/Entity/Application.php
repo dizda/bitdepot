@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="application")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Application
 {

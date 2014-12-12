@@ -29,6 +29,8 @@ class Deposit implements MessageQueuingInterface
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Serializer\Groups({"Deposits"})
      */
     private $id;
 
@@ -36,6 +38,8 @@ class Deposit implements MessageQueuingInterface
      * @var integer
      *
      * @ORM\Column(name="type", type="smallint")
+     *
+     * @Serializer\Groups({"Deposits"})
      */
     private $type;
 
@@ -44,6 +48,7 @@ class Deposit implements MessageQueuingInterface
      *
      * @ORM\Column(name="amount_expected", type="decimal", precision=16, scale=8, nullable=true)
      *
+     * @Serializer\Groups({"Deposits"})
      * @Serializer\Type("string")
      */
     private $amountExpected;
@@ -53,6 +58,7 @@ class Deposit implements MessageQueuingInterface
      *
      * @ORM\Column(name="amount_filled", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
      *
+     * @Serializer\Groups({"Deposits"})
      * @Serializer\Type("string")
      */
     private $amountFilled = '0.00000000';
@@ -62,6 +68,7 @@ class Deposit implements MessageQueuingInterface
      *
      * @ORM\Column(name="is_fulfilled", type="boolean")
      *
+     * @Serializer\Groups({"Deposits"})
      * @Serializer\Type("boolean")
      */
     private $isFulfilled = false;
@@ -71,6 +78,7 @@ class Deposit implements MessageQueuingInterface
      *
      * @ORM\Column(name="is_overfilled", type="boolean")
      *
+     * @Serializer\Groups({"Deposits"})
      * @Serializer\Type("boolean")
      */
     private $isOverfilled = false;
