@@ -52,14 +52,40 @@ class LoadAddressData extends AbstractFixture implements OrderedFixtureInterface
             ->setKeychain($this->getReference('keychain-1'))
         ;
 
+        // Will be used for withdraw #1
+        $address4 = (new Address())
+            ->setValue('3L2ryDvAAS4db6GxdMhyTNWhqE9KznxpyC')
+            ->setIsExternal(false)
+            ->setDerivation(1)
+            ->setBalance('0.0003')
+            ->setRedeemScript('522103ad50a5aa6e6210e00bcd95197cc318833f0016c769a7d291ba4fe49e43bed56621029dd61b0195ff5e69a6dbcc454f30fb55f0deeb34418de576830c674d33a0dbcb210210febba17348636dd1779ca2d86beea81ad065cfea924178bbc296d3c6ed372c53ae')
+            ->setScriptPubKey('a914c9331bed56f83dfc288ca47e0c61778cd064be0f87')
+            ->setKeychain($this->getReference('keychain-1'))
+        ;
+
+        // Change address for withdraw #1
+        $address5 = (new Address())
+            ->setValue('373sZt2kkNZgaVamtRMmevkRk3NUX98kqV')
+            ->setIsExternal(false)
+            ->setDerivation(2)
+            ->setBalance('0.0001')
+            ->setRedeemScript('5221025c54dfb67d0af92aa3997a23c9ab3f36476071f1130352bbaff2942b95e7703521035ebf1e6a067055b3463a01a42eff4755a9e5a57ac19e8e8e6b97e8f77879e4c22102e64aaa741dc18c283dc4c16862dbdd16431d0575b11073059354dfa4f10fcf6a53ae')
+            ->setScriptPubKey('a9143aca637f52791147b4d66cff47c08c99f86b8a9887')
+            ->setKeychain($this->getReference('keychain-1'))
+        ;
+
         $manager->persist($address1);
         $manager->persist($address2);
         $manager->persist($address3);
+        $manager->persist($address4);
+        $manager->persist($address5);
         $manager->flush();
 
         $this->addReference('address-1', $address1);
         $this->addReference('address-2', $address2);
         $this->addReference('address-3', $address3);
+        $this->addReference('address-4', $address4);
+        $this->addReference('address-5', $address5);
     }
 
     /**

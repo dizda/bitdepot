@@ -36,6 +36,7 @@ class WithdrawOutput implements MessageQueuingInterface
      * @ORM\Column(name="amount", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
      *
      * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs"})
+     * @Serializer\Type("string")
      */
     private $amount;
 

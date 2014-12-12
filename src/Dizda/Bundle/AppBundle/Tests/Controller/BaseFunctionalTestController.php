@@ -30,7 +30,10 @@ class BaseFunctionalTestController extends WebTestCase
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadPubkeyData',
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadApplicationData',
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadAddressData',
-            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadDepositData'
+            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadDepositData',
+            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadAddressTransactionData',
+            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadWithdrawOutputData',
+            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadWithdrawData'
         ]);
     }
 }
