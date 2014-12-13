@@ -23,7 +23,7 @@ parameters:
     debug_redirects:        false
     use_assetic_controller: true
 
-    api_endpoint: http://localhost:3000/api
+    api_endpoint: https://insight.bitpay.com/api/
 
     bitcoind_schema:   http
     bitcoind_username: bitcoin
