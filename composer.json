@@ -30,7 +30,8 @@
         "phpspec/prophecy-phpunit": "~1.0",
         "satooshi/php-coveralls": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
-        "liip/functional-test-bundle": "dev-master"
+        "liip/functional-test-bundle": "dev-master",
+        "phing/phing": "~2.9"
     },
     "scripts": {
         "post-root-package-install": [

@@ -17,19 +17,23 @@ swiftmailer:
     disable_delivery: true
 
 # Liip Functional Tests
-liip_functional_test:
-    cache_sqlite_db: true
+liip_functional_test: ~
+#    cache_sqlite_db: true
 
 doctrine:
     dbal:
-        default_connection: default
-        connections:
-            default:
-                driver:  pdo_sqlite
+        dbname: %database_name%_test
+#        default_connection: default
+#        connections:
+#            default:
+#                driver:  pdo_sqlite
 #                dbname:  %database_name%_test
-                path:    %kernel.cache_dir%/test.db
-                charset: UTF8
+#                path:    %kernel.cache_dir%/test.db
+#                charset: UTF8
 
 #    orm:
 #        auto_generate_proxy_classes: true
 #        auto_mapping: true
+
+parameters:
+    test.client.class: Dizda\Bundle\AppBundle\Tests\Client

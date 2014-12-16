@@ -17,7 +17,9 @@ class WithdrawOutputControllerTest extends BaseFunctionalTestController
      */
     public function testGetWithdrawOutputsAction()
     {
-        $this->client->request('GET', sprintf('/withdraws/%d/outputs.json', 1));
+        $app = $this->em->getRepository('DizdaAppBundle:Application')->findOneByName('Application-Fixture');
+
+        $this->client->request('GET', sprintf('/withdraws/%d/outputs.json', $app->getId()));
 
         $content = json_decode($this->client->getResponse()->getContent());
 
@@ -34,10 +36,13 @@ class WithdrawOutputControllerTest extends BaseFunctionalTestController
      */
     public function testGetWithdrawOutputAction()
     {
+        $app = $this->em->getRepository('DizdaAppBundle:Application')->findOneByName('Application-Fixture');
+        $withdrawOutput = $this->em->getRepository('DizdaAppBundle:WithdrawOutput')->findOneByToAddress('1LGTbdVSEbD9C37qXcpvVJ1egdBu8jYSeV');
+
         $this->client->request('GET', sprintf(
             '/withdraws/%d/outputs/%d.json',
-            /* application_id */ 1,
-            /* withdrawOutput */ 1
+            $app->getId(),
+            $withdrawOutput->getId()
         ));
 
         $content = json_decode($this->client->getResponse()->getContent());
@@ -51,7 +56,7 @@ class WithdrawOutputControllerTest extends BaseFunctionalTestController
     public function testPostWithdrawOutputsAction()
     {
         $this->client->request('POST', sprintf('/withdraws/%d/outputs.json', 1), [
-            'application_id' => 1,
+            'application_id' => /* application */ 1,
             'to_address'     => '1Cxtev7KLyEen5UxqsBYn6JqcZREm28DXh',
             'amount'         => '0.00111',
             'is_accepted'    => true,
@@ -60,7 +65,6 @@ class WithdrawOutputControllerTest extends BaseFunctionalTestController
 
         $content = json_decode($this->client->getResponse()->getContent());
 
-        $this->assertEquals(3, $content->id);
         $this->assertEquals('0.00111', $content->amount);
         $this->assertEquals('1Cxtev7KLyEen5UxqsBYn6JqcZREm28DXh', $content->to_address);
         $this->assertTrue($content->is_accepted);

@@ -21,11 +21,27 @@ class BaseFunctionalTestController extends WebTestCase
      */
     protected $em = null;
 
+    /**
+     * Set up
+     */
     public function setUp()
     {
+        parent::setUp();
+
         $this->client = static::createClient();
         $this->em     = $this->client->getContainer()->get('doctrine')->getManager();
 
-        $this->loadFixtures(Fixtures::getPaths());
+        $this->client->startIsolation();
+    }
+
+    /**
+     * Tear down
+     */
+    public function tearDown()
+    {
+        if (null !== $this->client) {
+            $this->client->stopIsolation();
+        }
+        parent::tearDown();
     }
 }

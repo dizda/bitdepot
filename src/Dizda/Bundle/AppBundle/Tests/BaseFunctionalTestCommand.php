@@ -15,10 +15,20 @@ class BaseFunctionalTestCommand extends WebTestCase
      */
     protected $em = null;
 
+    /**
+     * Set up
+     */
     public function setUp()
     {
         $this->em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
+        $this->getContainer()->get('doctrine.dbal.default_connection')->beginTransaction();
+    }
 
-        $this->loadFixtures(Fixtures::getPaths());
+    /**
+     * Tear down
+     */
+    public function tearDown()
+    {
+        $this->getContainer()->get('doctrine.dbal.default_connection')->rollBack();
     }
 }

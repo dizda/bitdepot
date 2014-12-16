@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="coinegger" basedir="." default="build">
+    <target name="build">
+        <phingcall target="database_drop" />
+        <phingcall target="database_create" />
+        <phingcall target="database_update" />
+        <phingcall target="fixtures" />
+    </target>
+
+
+
+    <target name="database_drop">
+        <echo msg="Drop database..." />
+        <exec command="php app/console doctrine:database:drop --env=test --force" escape="false" passthru="true" />
+    </target>
+
+    <target name="database_create">
+        <echo msg="Create database..." />
+        <exec command="php app/console doctrine:database:create --env=test" escape="false" passthru="true" />
+    </target>
+
+    <target name="database_update">
+        <echo msg="Update database..." />
+        <exec command="php app/console doctrine:schema:update --env=test --force" escape="false" passthru="true" />
+    </target>
+
+    <target name="fixtures">
+        <echo msg="Load fixtures..." />
+        <exec command="php app/console doctrine:fixtures:load --env=test --no-interaction" escape="false" passthru="true" />
+    </target>
+</project>
