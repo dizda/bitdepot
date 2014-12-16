@@ -46,3 +46,10 @@ Create withdraw from outputs requests
 
 
 This repository is under intensive work, do not use yet.
+
+## Tests
+
+Launch tests suite
+
+    make tests
+
