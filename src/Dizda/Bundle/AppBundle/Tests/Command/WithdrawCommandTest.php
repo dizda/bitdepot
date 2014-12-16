@@ -25,7 +25,7 @@ class WithdrawCommandTest extends BaseFunctionalTestCommand
         $this->assertCount(2, $this->em->getRepository('DizdaAppBundle:Withdraw')->findAll());
 
         // Run the Command!
-        $this->runCommand('dizda:app:withdraw', ['-vv'], true);
+        var_dump($this->runCommand('dizda:app:withdraw', ['-vv'], true));
 
         // Now we got 3 withdraws
         $this->assertCount(3, $this->em->getRepository('DizdaAppBundle:Withdraw')->findAll());
