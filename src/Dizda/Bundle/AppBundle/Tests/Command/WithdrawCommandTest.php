@@ -24,8 +24,12 @@ class WithdrawCommandTest extends BaseFunctionalTestCommand
         // Assert we got 2
         $this->assertCount(2, $this->em->getRepository('DizdaAppBundle:Withdraw')->findAll());
 
+        // Mock bitcoind because of travis
+        $this->mockBitcoind();
+
         // Run the Command!
-        var_dump($this->runCommand('dizda:app:withdraw', ['-vv'], true));
+        $this->runCommand('dizda:app:withdraw', ['-vv'], true);
+        // TODO: install bitcoind on travisci
 
         // Now we got 3 withdraws
         $this->assertCount(3, $this->em->getRepository('DizdaAppBundle:Withdraw')->findAll());
@@ -46,6 +50,36 @@ class WithdrawCommandTest extends BaseFunctionalTestCommand
         $this->assertEquals('1MxXHgScDGaA7GaJY8bGa9MsCKU6iXaiRh', $withdraw->getWithdrawOutputs()->first()->getToAddress());
         $this->assertNull($withdraw->getChangeAddress());
         $this->assertTrue($withdraw->isSpendable());
+    }
+
+    /**
+     * Mock Bitcoind calls because TravisCI does not have bitcoind server
+     */
+    private function mockBitcoind()
+    {
+        $inputs = [
+            [
+                'txid' => '32fa591b82cae594b286cd1f638af947e22e9aee72bfd42c68c1a872197d42e5',
+                'vout' => 0
+            ]
+        ];
+
+        $outputs = [
+            '1MxXHgScDGaA7GaJY8bGa9MsCKU6iXaiRh' => 0.0002
+        ];
+
+        $bitcoind = $this->getMockBuilder('Nbobtc\Bitcoind\Bitcoind')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $bitcoind
+            ->expects($this->once())
+            ->method('createrawtransaction')
+            ->with($this->equalTo($inputs), $this->equalTo($outputs))
+            ->will($this->returnValue('0100000001e5427d1972a8c1682cd4bf72ee9a2ee247f98a631fcd86b294e5ca821b59fa320000000000ffffffff01204e0000000000001976a914e5e2ad271ceea56299d2965cf8222fcb65d5bb8e88ac00000000'))
+        ;
+
+        $this->getContainer()->set('bitcoind', $bitcoind);
     }
 
     private function addTransactionAndWithdrawOutput()
