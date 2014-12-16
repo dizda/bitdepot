@@ -17,7 +17,8 @@ install:
 
 script:
     - mkdir -p build/logs
-    - ./vendor/phpunit/phpunit/phpunit -c app/
+#    - ./vendor/phpunit/phpunit/phpunit -c app/
+    - make tests
 
 after_script:
     - php bin/coveralls
