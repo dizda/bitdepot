@@ -7,6 +7,7 @@ Coinegger - Work In Progress
 ========================
 
 When bitcoin meet Arnold Schwarzenegger.
+Coinegger is an application-oriented wallet designed for those who run bitcoin websites on their servers.
 
 Features :
 
