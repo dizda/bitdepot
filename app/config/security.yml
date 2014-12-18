@@ -1,12 +1,47 @@
 security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    ryan:  { password: ryanpass, roles: 'ROLE_USER' }
+                    dizda: { password: bambou, roles: 'ROLE_ADMIN' }
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        default:
-            anonymous: ~
+#        wsse_secured:
+#            # we're already on /api
+#            pattern:   ^/.*
+#            wsse:
+#                realm: "Secured with WSSE" #identifies the set of resources to which the authentication information will apply (WWW-Authenticate)
+#                profile: "UsernameToken" #WSSE profile (WWW-Authenticate)
+
+        login:
+            pattern:  ^/login
+            stateless: true
+            anonymous: true
+            form_login:
+                provider: in_memory
+                check_path:               /login_check
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+
+        api:
+            pattern:   ^/
+            stateless: true
+            lexik_jwt: ~
+
+
+#        default:
+#            anonymous: ~
+
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/,       roles: IS_AUTHENTICATED_FULLY }

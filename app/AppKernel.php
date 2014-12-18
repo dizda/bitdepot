@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
             new Nbobtc\Bundle\BitcoindBundle\BitcoindBundle(),
+            new Escape\WSSEAuthenticationBundle\EscapeWSSEAuthenticationBundle(),
+            new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
 
             new Dizda\Bundle\AppBundle\DizdaAppBundle(),
             new Dizda\Bundle\BlockchainBundle\DizdaBlockchainBundle(),

@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Client as BaseClient;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class Client
@@ -14,11 +15,15 @@ class Client extends BaseClient
 {
     /**
      * The current DBAL connection.
+     *
+     * @var \Doctrine\DBAL\Connection
      */
     static protected $connection;
 
     /**
      * Was this client already requested?
+     *
+     * @var bool
      */
     protected $requested = false;
 
@@ -39,22 +44,6 @@ class Client extends BaseClient
 
         return $this->kernel->handle($request);
     }
-
-//    protected function injectConnection()
-//    {
-//        if (null === self::$connection) {
-//            self::$connection = $this->getContainer()->get('doctrine.dbal.default_connection');
-//        } else {
-//            if (! $this->requested) {
-//                self::$connection->rollback();
-//            }
-//            $this->getContainer()->set('doctrine.dbal.default_connection', self::$connection);
-//        }
-//
-//        if (! $this->requested) {
-//            self::$connection->beginTransaction();
-//        }
-//    }
 
     /**
      * Starts the isolation process of the client.

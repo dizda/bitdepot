@@ -22,7 +22,9 @@
         "jms/serializer-bundle": "~0.13",
         "oldsound/rabbitmq-bundle": "~1.5",
         "nbobtc/bitcoind-bundle": "dev-master",
-        "friendsofsymfony/rest-bundle": "~1.4"
+        "friendsofsymfony/rest-bundle": "~1.4",
+        "escapestudios/wsse-authentication-bundle": "~2.0",
+        "lexik/jwt-authentication-bundle": "~1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

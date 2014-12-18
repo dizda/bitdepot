@@ -24,7 +24,7 @@
           <script src="components/respond/dest/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="skin-black" data-ng-app="app">
+    <body class="skin-black" data-ng-app="app" data-ng-controller="SystemCtrl">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
             <a href="/" class="logo">
@@ -329,6 +329,8 @@
                             </a>
                         </li>
                     </ul>
+
+                    <a href="#" data-ng-click="login()">login</a>
                 </section>
                 <!-- /.sidebar -->
             </aside>
@@ -384,8 +386,12 @@
         <script src="components/angular-resource/angular-resource.min.js"></script>
         <script src="components/angular-route/angular-route.min.js"></script>
         <script src="components/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="components/angular-local-storage/dist/angular-local-storage.min.js"></script>
 
         <script src="js/app/app.js"></script>
+        <script src="js/app/common/LoginService.js"></script>
+        <script src="js/app/common/SystemController.js"></script>
+
         <script src="js/app/HomeController.js"></script>
         <script src="js/app/withdraw/WithdrawFactory.js"></script>
         <script src="js/app/withdraw/WithdrawOutputFactory.js"></script>
