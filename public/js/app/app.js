@@ -2,6 +2,15 @@
 
 var app = angular.module('app', ['ngResource', 'ngRoute', 'ngSanitize', 'ngAnimate', 'mgcrea.ngStrap', 'LocalStorageModule']);
 
+app.constant('AUTH_EVENTS', {
+    loginSuccess:     'auth-login-success',
+    loginFailed:      'auth-login-failed',
+    logoutSuccess:    'auth-logout-success',
+    sessionTimeout:   'auth-session-timeout',
+    notAuthenticated: 'auth-not-authenticated',
+    notAuthorized:    'auth-not-authorized'
+});
+
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
 
@@ -31,3 +40,28 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     $locationProvider.html5Mode(true);
 
 }]);
+
+/**
+ * @see https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec
+ */
+app.run(function ($rootScope, AUTH_EVENTS, AuthService) {
+//    if (!AuthService.isAuthenticated()) {
+//        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+//    }
+
+    $rootScope.$on('$routeChangeStart', function (event, next) {
+//        var authorizedRoles = next.data.authorizedRoles;
+        var authorizedRoles = null;
+//        if (!AuthService.isAuthorized(authorizedRoles)) {
+        if (!AuthService.isAuthorized(authorizedRoles)) {
+            event.preventDefault();
+            if (AuthService.isAuthenticated()) {
+                // user is not allowed
+                $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+            } else {
+                // user is not logged in
+                $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+            }
+        }
+    });
+});

@@ -24,9 +24,13 @@
           <script src="components/respond/dest/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="skin-black" data-ng-app="app" data-ng-controller="SystemCtrl">
+    <body class="skin-black" data-ng-app="app" data-ng-controller="SystemCtrl" data-ng-class="{'bg-black': isAuthenticated() == false}">
+
+        <div login-dialog></div>
+
+
         <!-- header logo: style can be found in header.less -->
-        <header class="header">
+        <header class="header" data-ng-if="isAuthenticated() == true">
             <a href="/" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 Coinegger
@@ -272,7 +276,7 @@
                 </div>
             </nav>
         </header>
-        <div class="wrapper row-offcanvas row-offcanvas-left">
+        <div class="wrapper row-offcanvas row-offcanvas-left" data-ng-show="isAuthenticated() == true">
             <!-- Left side column. contains the logo and sidebar -->
             <aside class="left-side sidebar-offcanvas">
                 <!-- sidebar: style can be found in sidebar.less -->
@@ -362,7 +366,6 @@
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
-        <!-- add new calendar event modal -->
 
 
         <script src="components/jquery/dist/jquery.min.js"></script>
@@ -389,8 +392,10 @@
         <script src="components/angular-local-storage/dist/angular-local-storage.min.js"></script>
 
         <script src="js/app/app.js"></script>
-        <script src="js/app/common/LoginService.js"></script>
+        <script src="js/app/common/AuthService.js"></script>
+        <script src="js/app/common/SessionService.js"></script>
         <script src="js/app/common/SystemController.js"></script>
+        <script src="js/app/common/LoginDirective.js"></script>
 
         <script src="js/app/HomeController.js"></script>
         <script src="js/app/withdraw/WithdrawFactory.js"></script>

@@ -51,6 +51,10 @@
             <argument type="service" id="old_sound_rabbit_mq.withdraw_output_callback_producer" />
         </service>
 
+        <service id="dizda_app.listener.jwt_response_listener" class="Dizda\Bundle\AppBundle\EventListener\JWTResponseListener">
+            <tag name="kernel.event_listener" event="lexik_jwt_authentication.on_authentication_success" method="onAuthenticationSuccessResponse"/>
+        </service>
+
         <!-- Doctrine EventListener -->
         <service id="dizda_app.listener.deposit_entity" class="Dizda\Bundle\AppBundle\EventListener\DepositEntityListener">
             <tag name="doctrine.event_listener" event="postUpdate" />
