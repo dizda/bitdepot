@@ -2,6 +2,9 @@
 
 var app = angular.module('app', ['ngResource', 'ngRoute', 'ngSanitize', 'ngAnimate', 'mgcrea.ngStrap', 'LocalStorageModule']);
 
+/**
+ * Constants
+ */
 app.constant('AUTH_EVENTS', {
     loginSuccess:     'auth-login-success',
     loginFailed:      'auth-login-failed',
@@ -11,6 +14,9 @@ app.constant('AUTH_EVENTS', {
     notAuthorized:    'auth-not-authorized'
 });
 
+/**
+ * Routes
+ */
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
 
@@ -42,12 +48,15 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 }]);
 
 /**
+ * Run once the appli loaded
+ *
  * @see https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec
  */
 app.run(function ($rootScope, AUTH_EVENTS, AuthService) {
 //    if (!AuthService.isAuthenticated()) {
 //        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
 //    }
+    AuthService.retrieveSession();
 
     $rootScope.$on('$routeChangeStart', function (event, next) {
 //        var authorizedRoles = next.data.authorizedRoles;

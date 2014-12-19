@@ -3,13 +3,16 @@
 app.factory('AuthService', ['$rootScope', '$http', 'localStorageService', 'Session', 'AUTH_EVENTS', function ($rootScope, $http, localStorageService, Session, AUTH_EVENTS) {
 
     var authService = {};
-    var credentials = localStorageService.get('credentials');
 
-    if (credentials) {
-        $http.defaults.headers.common.Authorization = 'Bearer ' + credentials.token;  // Step 1
-    }
-    // TODO: Login automatically when refreshing the page
+    authService.retrieveSession = function() {
+        var credentials = localStorageService.get('credentials');
 
+        if (credentials) {
+            $http.defaults.headers.common.Authorization = 'Bearer ' + credentials.token;  // Step 1
+            Session.create(credentials.token, credentials.data.username);
+            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+        }
+    };
 
     authService.login = function (credentials) {
         $http
@@ -18,9 +21,11 @@ app.factory('AuthService', ['$rootScope', '$http', 'localStorageService', 'Sessi
                 localStorageService.set('credentials', response); // save into localStorage
                 $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;  // Step 1
 
-                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-
+                // Create session
                 Session.create(response.token, response.data.username);
+
+                // Dispatch event to all services
+                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
 
             })
             .error(function (data, status, headers, config) {
@@ -46,7 +51,9 @@ app.factory('AuthService', ['$rootScope', '$http', 'localStorageService', 'Sessi
     authService.logout = function () {
         localStorageService.remove('credentials');
         delete $http.defaults.headers.common.Authorization;
-        $rootScope.$broadcast('login:auth-logout-complete');
+        Session.destroy();
+
+        $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
     };
 
     /**
@@ -65,7 +72,7 @@ app.factory('AuthService', ['$rootScope', '$http', 'localStorageService', 'Sessi
                 callback(credentials.data);
             })
             .error(function (data, status) {
-                $rootScope.$broadcast('login:auth-login-failed', status);
+                $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
             })
         ;
     };

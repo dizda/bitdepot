@@ -1,11 +1,31 @@
 'use strict';
 
-app.controller('SystemCtrl', ['$scope', '$http', '$location', 'localStorageService', 'AuthService', function($scope, $http, $location, localStorageService, AuthService) {
+app.controller('SystemCtrl', ['$scope', '$location', 'AuthService', 'Session', 'AUTH_EVENTS', function($scope, $location, AuthService, Session, AUTH_EVENTS) {
 
-    $scope.credentials     = {};
+    $scope.credentials     = {
+        username: '',
+        password: ''
+    };
     $scope.isAuthenticated = AuthService.isAuthenticated;
+    $scope.currentUser     = Session;
 
+    /**
+     * Redirect after login
+     */
+    $scope.$on(AUTH_EVENTS.loginSuccess, function() {
+        $location.path('/');
+    });
 
+    /**
+     * Redirect after logout
+     */
+    $scope.$on(AUTH_EVENTS.logoutSuccess, function() {
+        $location.path('/');
+    });
+
+    /**
+     * Trigger a login
+     */
     $scope.login = function()
     {
         AuthService.login({
@@ -14,6 +34,9 @@ app.controller('SystemCtrl', ['$scope', '$http', '$location', 'localStorageServi
         });
     };
 
+    /**
+     * Logout
+     */
     $scope.logout = function()
     {
         AuthService.logout();
