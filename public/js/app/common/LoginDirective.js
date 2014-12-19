@@ -9,7 +9,6 @@ app.directive('loginDialog', function (AUTH_EVENTS) {
         template: '<div ng-if="visible" ng-include="\'/js/app/login.html\'">',
         link: function (scope) {
             var showDialog = function () {
-                console.log('visible!');
                 scope.visible = true;
             };
 
