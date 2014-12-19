@@ -148,6 +148,11 @@ old_sound_rabbit_mq:
             queue_options:    { name: withdraw-output-callback }
             callback:         dizda_app.consumer.withdraw_output_callback
 
+fos_user:
+    db_driver: orm
+    firewall_name: login
+    user_class: Dizda\Bundle\UserBundle\Entity\User
+
 # Angular Authentification
 lexik_jwt_authentication:
     private_key_path: %kernel.root_dir%/var/jwt/private.pem   # ssh private key path

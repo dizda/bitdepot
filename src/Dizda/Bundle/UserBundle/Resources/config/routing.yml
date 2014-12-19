@@ -1,0 +1,9 @@
+login_check:
+    path: /login_check
+
+
+dizda_user_auth_ping:
+    pattern: /ping
+    defaults: { _controller: 'DizdaUserBundle:Authentication:ping' }
+    requirements:
+        _method: HEAD|GET

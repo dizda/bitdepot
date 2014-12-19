@@ -1,6 +1,6 @@
 <?php
 
-namespace Dizda\Bundle\AppBundle\EventListener;
+namespace Dizda\Bundle\UserBundle\EventListener;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -27,7 +27,7 @@ class JWTResponseListener
         }
 
         $data['data'] = [
-            'username'    => $user->getUsername(),
+            'username' => $user->getUsername(),
 //            'roles'    => $user->getRoles()
         ];
 

@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
+            new FOS\UserBundle\FOSUserBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
@@ -24,6 +25,7 @@ class AppKernel extends Kernel
             new Escape\WSSEAuthenticationBundle\EscapeWSSEAuthenticationBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
 
+            new Dizda\Bundle\UserBundle\DizdaUserBundle(),
             new Dizda\Bundle\AppBundle\DizdaAppBundle(),
             new Dizda\Bundle\BlockchainBundle\DizdaBlockchainBundle(),
         );

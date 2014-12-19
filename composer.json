@@ -24,7 +24,8 @@
         "nbobtc/bitcoind-bundle": "dev-master",
         "friendsofsymfony/rest-bundle": "~1.4",
         "escapestudios/wsse-authentication-bundle": "~2.0",
-        "lexik/jwt-authentication-bundle": "~1.0"
+        "lexik/jwt-authentication-bundle": "~1.0",
+        "friendsofsymfony/user-bundle": "~2.0@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

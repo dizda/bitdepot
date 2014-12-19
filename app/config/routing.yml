@@ -3,5 +3,5 @@ dizda_app:
     prefix:   /
 
 
-login_check:
-    path: /login_check
+dizda_user:
+    resource: @DizdaUserBundle/Resources/config/routing.yml
