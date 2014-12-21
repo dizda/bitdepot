@@ -31,6 +31,7 @@ parameters:
     bitcoind_host:     127.0.0.1
     bitcoind_port:     1111
 
+    # Replace by your keys
     jwt_private_key_path: %kernel.root_dir%/var/jwt/private_test.pem
     jwt_public_key_path:  %kernel.root_dir%/var/jwt/public_test.pem
-    jwt_pass_phrase:      ''
+    jwt_pass_phrase:      'bambou'
