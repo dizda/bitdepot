@@ -30,3 +30,7 @@ parameters:
     bitcoind_password: putYourPasswordBITCH
     bitcoind_host:     127.0.0.1
     bitcoind_port:     1111
+
+    jwt_private_key_path: %kernel.root_dir%/var/jwt/private.pem
+    jwt_public_key_path:  %kernel.root_dir%/var/jwt/public.pem
+    jwt_pass_phrase:      ''
