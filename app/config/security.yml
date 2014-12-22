@@ -3,20 +3,20 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     providers:
+        # Only for JWT-Auth
         fos_userbundle:
             id: fos_user.user_provider.username
+
+        # Only for WSSE-Auth
+        in_memory:
+            memory:
+                users:
+                    application_1: { password: '04e7bc77ce0aeee6834f0400f0140f04c0474b383ffe43c9e37ee02c303cbfc94da95c6e7d59b6853c70b9b02600415391fbf771cad6a350c866c0f17b4479b0', roles: 'ROLE_WSSE' }
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
-#        wsse_secured:
-#            # we're already on /api
-#            pattern:   ^/.*
-#            wsse:
-#                realm: "Secured with WSSE" #identifies the set of resources to which the authentication information will apply (WWW-Authenticate)
-#                profile: "UsernameToken" #WSSE profile (WWW-Authenticate)
 
         login:
             pattern:  ^/login
@@ -32,12 +32,15 @@ security:
         api:
             pattern:   ^/
             stateless: true
+
+            # JWT-Auth, for users only
             lexik_jwt: ~
 
-
-#        default:
-#            anonymous: ~
-
+            # WSSE-Auth, for application only
+            wsse:
+                provider: in_memory
+                realm: "Secured with WSSE" #identifies the set of resources to which the authentication information will apply (WWW-Authenticate)
+                profile: "UsernameToken" #WSSE profile (WWW-Authenticate)
 
     access_control:
         - { path: ^/login,  roles: IS_AUTHENTICATED_ANONYMOUSLY }
