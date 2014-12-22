@@ -32,19 +32,23 @@ class BaseFunctionalTestController extends WebTestCase
         $this->em     = $this->client->getContainer()->get('doctrine')->getManager();
 
         $this->client->startIsolation();
-//        $this->client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJleHAiOjE0MTkyNjE3MzQsInVzZXJuYW1lIjoiZGl6ZGEiLCJpYXQiOiIxNDE5MTc1MzM0In0.WCnsth8PnY65qJNEyG8Bvgp7uwq0tTrLNeQp-W6u6MOGzt5rWSl8OIp7YBFuiNA9vJxTyHIUiVDnfb5wpX31SVtmFniXaXpo1q743hj6JhPaw0RfVDvhgWOFr3Cx8XHMvc4qakkWtbjgzYAYK8QIPM5XqAcaoKvGcPgXBoyN0R7KzsN3WiynjgWo3q4z3YpQfWIMN6JGBQxI0oMB-qrLmXQcaXZnUZ1iZGylp08IzBXN5ku26xzbrjSm33DDk3EldEbV9r6ITBlO6Lor-VHoDilxby_H2hahDLFswcstzK5dP4YMRDO-1K_aI16wy66AW-fmq4kSK_kG-w3cv4mXws9SuVNxtVor9jUSfV8lvp3Nn9_nAeTA-2EuBjiHZ5QEZfFOYSEe2gmA-sb'));
 
-        $this->client->request(
-            'POST',
-            '/login_check',
-            array(
-                '_username' => 'dizda',
-                '_password' => 'bambou',
-            )
-        );
+        // Login as dizda via JWT Token
+        $this->client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJleHAiOjE0MTkzNDYwNTcsInVzZXJuYW1lIjoiZGl6ZGEiLCJpYXQiOiIxNDE5MjU5NjU3In0.v446yY7SvuFRGtO6qPJreVVWXyBwThPf6O5FjMrbITq5P9WbBSg7IugIIZXZr0iobb59fXoJl9KYM42SHRQxkuWkEj3Fpifz99K_CTwKU9Asb02TTqcwu_k5L7GhixW106A-SvXBNc2l6a54xLyB2YrEPdk9PaszIHtr3i2vwxM1PgFWoMJNOkE6mCHvlPWXlEHDqEVg9JW1Lb9o5OzwCMNy4L5OIA_rGOfvwlk7mHKbohXrj6Da5QMFAdhNRqpL4XXNCUsa_fPzQAem0WiEl5wr8kTkJwmgJSqZVFqGAYUb7TWq8LbCGJCWpsEcSfKEl57nUwNFdgi9Me-nMIUXnCKDP5g2PKDx7JSraKix9l7W50hFNP20-iVZAkqND5ZQdTNH34P5W2bKl6OZwpx3OKsgs4YJ672H5ZHEaKWuqQhk1GrwHPMGPNleG43SE_6ur_SjcjAwj3jmDhT-wYO-WHWAiDkgH2q8AviInplJ6i0xOd18vSiGwMYQXSm3rHCb_eGOskzxa7TquR1-4I56JHe03IfNMPkOIz-5ouvXUi2IORCda8scmiQrpq5_bt-KO0IKRpDQDgPdDbemOf7cWTNxMpqC7sVwWI2oQB5pRHxCsbxFqyUFcrJor71gBDYDS5cESLuysOEXxfIJ4Ci-M7QmIk_yHpz4Adomu5s3XlQ'));
 
-        $data = json_decode($this->client->getResponse()->getContent(), true);
-        $this->client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
+//        // Regenerate token
+//        $this->client->request(
+//            'POST',
+//            '/login_check',
+//            array(
+//                '_username' => 'dizda',
+//                '_password' => 'bambou',
+//            )
+//        );
+//
+//        $data = json_decode($this->client->getResponse()->getContent(), true);
+////        echo $data['token']; // Token
+//        $this->client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
     }
 
     /**
