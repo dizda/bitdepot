@@ -34,14 +34,14 @@ var hdPubAddress = new bitcore.Address(extendedPublicKey.derive(0 /* internal ac
 
 console.log(hdPubAddress);
 
-var pubkey1 = extendedPublicKey.derive(0).derive(0).publicKey;
-var pubkey2 = extendedPublicKey.derive(0).derive(1).publicKey;
-var pubkey3 = extendedPublicKey.derive(0).derive(2).publicKey;
+var signer1 = extendedPublicKey.derive(0).derive(0).publicKey;
+var signer2 = extendedPublicKey.derive(0).derive(1).publicKey;
+var signer3 = extendedPublicKey.derive(0).derive(2).publicKey;
 
 var pubkeys = [
-    pubkey1,
-    pubkey2,
-    pubkey3
+    signer1,
+    signer2,
+    signer3
 ];
 var redeemScript = bitcore.Script.buildMultisigOut(pubkeys, 2);
 var script = redeemScript.toScriptHashOut();
