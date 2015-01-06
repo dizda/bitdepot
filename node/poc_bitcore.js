@@ -50,4 +50,5 @@ console.log(redeemScript.toBuffer().toString('hex')); // serialize to Hex format
 var multisigAddress = new bitcore.Address(redeemScript, bitcore.Networks.livenet);
 console.log(multisigAddress);
 
+
 // TODO: add 'extended_public_key' field to 'Pubkey' entity
