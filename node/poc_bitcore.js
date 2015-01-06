@@ -25,7 +25,7 @@ console.log(hdPrivateKey);
 var derived = hdPrivateKey.derive(44 /* BIP44, constant */, true).derive(0 /* cointype: bitcoin */, true).derive(0 /* account */, true); // Extended privatekey
 console.log(derived);
 
-var extendedPublicKey = derived.hdPublicKey;
+var extendedPublicKey = derived.hdPublicKey; // TODO: Add this to BDD
 
 console.log('---');
 console.log(extendedPublicKey);
@@ -41,7 +41,7 @@ var pubkey3 = extendedPublicKey.derive(0).derive(2).publicKey;
 var pubkeys = [
     pubkey1,
     pubkey2,
-    pubkey3,
+    pubkey3
 ];
 var redeemScript = bitcore.Script.buildMultisigOut(pubkeys, 2);
 var script = redeemScript.toScriptHashOut();
@@ -50,4 +50,4 @@ console.log(redeemScript.toBuffer().toString('hex')); // serialize to Hex format
 var multisigAddress = new bitcore.Address(redeemScript, bitcore.Networks.livenet);
 console.log(multisigAddress);
 
-// TODO: add 'extended_public_key' field to 'application' MySQL table
+// TODO: add 'extended_public_key' field to 'Pubkey' entity
