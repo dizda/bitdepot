@@ -10,6 +10,7 @@
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument type="service" id="logger" />
             <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="dizda_app.service.address" />
         </service>
 
         <service id="dizda_app.manager.withdraw" class="Dizda\Bundle\AppBundle\Manager\WithdrawManager">
@@ -81,6 +82,10 @@
         <!-- Services -->
         <service id="dizda_app.service.callback" class="Dizda\Bundle\AppBundle\Service\CallbackService">
             <argument type="service" id="jms_serializer" />
+        </service>
+
+        <service id="dizda_app.service.address" class="Dizda\Bundle\AppBundle\Service\AddressService">
+            <argument type="service" id="serializer" />
         </service>
     </services>
 </container>

@@ -399,10 +399,22 @@ class Application
     /**
      * Get addresses
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAddresses()
     {
         return $this->addresses;
+    }
+
+    /**
+     * Get pubKeys that can be serialized
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPubKeysSerializable()
+    {
+        return $this->getPubKeys()->map(function ($item) {
+            return $item->getExtendedPubKey();
+        });
     }
 }

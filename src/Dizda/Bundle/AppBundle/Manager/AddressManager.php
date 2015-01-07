@@ -5,7 +5,9 @@ namespace Dizda\Bundle\AppBundle\Manager;
 use Dizda\Bundle\AppBundle\AppEvents;
 use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
+use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Event\AddressTransactionEvent;
+use Dizda\Bundle\AppBundle\Service\AddressService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
@@ -32,15 +34,35 @@ class AddressManager
     private $dispatcher;
 
     /**
+     * @var \Dizda\Bundle\AppBundle\Service\AddressService
+     */
+    private $addressService;
+
+    /**
      * @param EntityManager            $em
      * @param LoggerInterface          $logger
      * @param EventDispatcherInterface $dispatcher
+     * @param AddressService           $addressService
      */
-    public function __construct(EntityManager $em, LoggerInterface $logger, EventDispatcherInterface $dispatcher)
+    public function __construct(EntityManager $em, LoggerInterface $logger, EventDispatcherInterface $dispatcher, AddressService $addressService)
     {
         $this->em         = $em;
         $this->logger     = $logger;
         $this->dispatcher = $dispatcher;
+        $this->addressService = $addressService;
+    }
+
+    public function create(Application $application, $isExternal = true)
+    {
+        // getting last derivation
+        // internal/external?
+        $derivation = $this->em->getRepository('DizdaAppBundle:Address')->getLastDerivation($application, $isExternal);
+
+        if ($derivation === null) {
+            $derivation = 0;
+        }
+
+        $this->addressService->generateHDMultisigAddress($application, $isExternal, $derivation);
     }
 
     /**
@@ -57,7 +79,6 @@ class AddressManager
 
         // for each transactions, check if we got each in our db
         foreach ($transactions as $transaction) {
-
             // scan inputs to see if our address is the emitter
             foreach ($transaction->getInputs() as $input) {
                 if ($input->getAddress() !== $address->getValue()) {
