@@ -88,6 +88,8 @@
         <service id="dizda_app.service.address" class="Dizda\Bundle\AppBundle\Service\AddressService">
             <argument type="service" id="serializer" />
             <argument type="service" id="logger" />
+            <argument>%kernel.root_dir%/../</argument>
+            <argument>%nodejs_path%</argument>
         </service>
     </services>
 </container>

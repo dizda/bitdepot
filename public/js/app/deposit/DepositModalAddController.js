@@ -8,7 +8,7 @@ app.controller('DepositModalAddCtrl', ['$scope', '$modal','Deposit', function($s
     ];
 
     $scope.deposit = {
-        application_id: 10,
+        application_id: 1,
         type: 1
     };
 

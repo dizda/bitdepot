@@ -25,13 +25,25 @@ class AddressService
     private $logger;
 
     /**
+     * @var string
+     */
+    private $rootPath;
+
+    /**
+     * @var string
+     */
+    private $nodejsPath;
+
+    /**
      * @param Serializer $serializer
      * @param Logger     $logger
      */
-    public function __construct(Serializer $serializer, Logger $logger)
+    public function __construct(Serializer $serializer, Logger $logger, $rootPath, $nodejsPath)
     {
         $this->serializer = $serializer;
         $this->logger     = $logger;
+        $this->rootPath   = $rootPath;
+        $this->nodejsPath = $nodejsPath;
     }
 
     /**
@@ -55,10 +67,14 @@ class AddressService
             'derivation'      => $derivation
         ];
 
-        // send the 3 extendedPubKeys, then the derivation, the the external or not
+        // send the 3 extendedPubKeys, then the derivation, then the external chain or internal (change address)
         $process = new Process(
-            sprintf('node ./node/generate_multisig_address.js \'%s\'', $this->serializer->serialize($params, 'json')),
-            null
+            sprintf(
+                '%s ./node/generate_multisig_address.js \'%s\'',
+                $this->nodejsPath, // we specify the path of nodejs
+                $this->serializer->serialize($params, 'json')
+            ),
+            $this->rootPath
         );
         $process->run();
 
