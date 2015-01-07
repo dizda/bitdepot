@@ -83,14 +83,14 @@ class Address
     private $scriptPubKey;
 
     /**
-     * @var \Dizda\Bundle\AppBundle\Entity\Keychain
+     * @var \Dizda\Bundle\AppBundle\Entity\Application
      *
-     * @ORM\ManyToOne(targetEntity="Dizda\Bundle\AppBundle\Entity\Keychain", inversedBy="addresses")
-     * @ORM\JoinColumn(name="keychain_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Application", inversedBy="addresses")
+     * @ORM\JoinColumn(name="application_id", referencedColumnName="id", nullable=false)
      *
      * @Serializer\Exclude
      */
-    private $keychain;
+    private $application;
 
     /**
      * @ORM\OneToOne(targetEntity="Deposit", mappedBy="addressExternal")
@@ -130,7 +130,7 @@ class Address
      * Get id
      * @codeCoverageIgnore
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -153,7 +153,7 @@ class Address
     /**
      * Get value
      *
-     * @return string 
+     * @return string
      */
     public function getValue()
     {
@@ -178,7 +178,7 @@ class Address
      * Get isExternal
      * @codeCoverageIgnore
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsExternal()
     {
@@ -203,7 +203,7 @@ class Address
      * Get derivation
      * @codeCoverageIgnore
      *
-     * @return integer 
+     * @return integer
      */
     public function getDerivation()
     {
@@ -226,7 +226,7 @@ class Address
     /**
      * Get balance
      *
-     * @return string 
+     * @return string
      */
     public function getBalance()
     {
@@ -251,7 +251,7 @@ class Address
      * Get keychain
      * @codeCoverageIgnore
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Keychain 
+     * @return \Dizda\Bundle\AppBundle\Entity\Keychain
      */
     public function getKeychain()
     {
@@ -276,7 +276,7 @@ class Address
      * Get deposit
      * @codeCoverageIgnore
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Deposit 
+     * @return \Dizda\Bundle\AppBundle\Entity\Deposit
      */
     public function getDeposit()
     {
@@ -312,7 +312,7 @@ class Address
      * Get transactions
      * @codeCoverageIgnore
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTransactions()
     {
@@ -358,7 +358,7 @@ class Address
      * Get redeemScript
      * @codeCoverageIgnore
      *
-     * @return string 
+     * @return string
      */
     public function getRedeemScript()
     {
@@ -383,7 +383,7 @@ class Address
      * Get scriptPubKey
      * @codeCoverageIgnore
      *
-     * @return string 
+     * @return string
      */
     public function getScriptPubKey()
     {
@@ -408,10 +408,33 @@ class Address
      * Get withdrawChangeAddress
      * @codeCoverageIgnore
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Withdraw 
+     * @return \Dizda\Bundle\AppBundle\Entity\Withdraw
      */
     public function getWithdrawChangeAddress()
     {
         return $this->withdrawChangeAddress;
+    }
+
+    /**
+     * Set application
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Application $application
+     * @return Address
+     */
+    public function setApplication(\Dizda\Bundle\AppBundle\Entity\Application $application)
+    {
+        $this->application = $application;
+
+        return $this;
+    }
+
+    /**
+     * Get application
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\Application 
+     */
+    public function getApplication()
+    {
+        return $this->application;
     }
 }

@@ -47,18 +47,6 @@ class Keychain
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\OneToMany(
-     *      targetEntity    = "Dizda\Bundle\AppBundle\Entity\Address",
-     *      mappedBy        = "keychain"
-     * )
-     *
-     * @Serializer\Exclude
-     */
-    private $addresses;
-
-    /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     *
-     * @ORM\OneToMany(
      *      targetEntity    = "Application",
      *      mappedBy        = "keychain"
      * )
@@ -146,42 +134,6 @@ class Keychain
     public function getSignRequired()
     {
         return $this->signRequired;
-    }
-
-    /**
-     * Add addresses
-     * @codeCoverageIgnore
-     *
-     * @param \Dizda\Bundle\AppBundle\Entity\Address $addresses
-     * @return Keychain
-     */
-    public function addAddress(\Dizda\Bundle\AppBundle\Entity\Address $addresses)
-    {
-        $this->addresses[] = $addresses;
-
-        return $this;
-    }
-
-    /**
-     * Remove addresses
-     * @codeCoverageIgnore
-     *
-     * @param \Dizda\Bundle\AppBundle\Entity\Address $addresses
-     */
-    public function removeAddress(\Dizda\Bundle\AppBundle\Entity\Address $addresses)
-    {
-        $this->addresses->removeElement($addresses);
-    }
-
-    /**
-     * Get addresses
-     * @codeCoverageIgnore
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAddresses()
-    {
-        return $this->addresses;
     }
 
     /**
