@@ -59,12 +59,12 @@ class Address
     /**
      * @var string
      *
-     * @ORM\Column(name="balance", type="decimal", precision=16, scale=8, nullable=false)
+     * @ORM\Column(name="balance", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
      *
      * @Serializer\Groups({"Deposits", "Addresses"})
      * @Serializer\Type("string")
      */
-    private $balance;
+    private $balance = 0;
 
     /**
      * @var string
@@ -78,7 +78,9 @@ class Address
     /**
      * @var string
      *
-     * @ORM\Column(name="script_pub_key", type="string", nullable=false)
+     * @ORM\Column(name="script_pub_key", type="string", nullable=true)
+     *
+     * @deprecated
      */
     private $scriptPubKey;
 
@@ -231,31 +233,6 @@ class Address
     public function getBalance()
     {
         return $this->balance;
-    }
-
-    /**
-     * Set keychain
-     * @codeCoverageIgnore
-     *
-     * @param \Dizda\Bundle\AppBundle\Entity\Keychain $keychain
-     * @return Address
-     */
-    public function setKeychain(\Dizda\Bundle\AppBundle\Entity\Keychain $keychain)
-    {
-        $this->keychain = $keychain;
-
-        return $this;
-    }
-
-    /**
-     * Get keychain
-     * @codeCoverageIgnore
-     *
-     * @return \Dizda\Bundle\AppBundle\Entity\Keychain
-     */
-    public function getKeychain()
-    {
-        return $this->keychain;
     }
 
     /**
@@ -431,7 +408,7 @@ class Address
     /**
      * Get application
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Application 
+     * @return \Dizda\Bundle\AppBundle\Entity\Application
      */
     public function getApplication()
     {

@@ -17,14 +17,12 @@ class GenerateNewAddressCommand extends ContainerAwareCommand
         $this
             ->setName('dizda:generate:address')
             ->setDescription('Address')
+            ->addArgument('application_name', InputArgument::REQUIRED, 'The application\'s name')
+            ->addArgument('is_external', InputArgument::REQUIRED, 'Do you want an external address ?')
             ->setHelp(<<<EOF
-The <info>%command.name%</info> command clears the application cache for a given environment
-and debug mode:
+The <info>%command.name%</info> generate you a multisig address, and insert it to DB.
 
-coucou
-
-<info>php %command.full_name% --env=dev</info>
-<info>php %command.full_name% --env=prod --no-debug</info>
+<info>php %command.full_name% applicationName true</info>
 
 EOF
             )
@@ -39,18 +37,13 @@ EOF
         $em      = $this->getContainer()->get('doctrine.orm.default_entity_manager');
         $manager = $this->getContainer()->get('dizda_app.manager.address');
 
+        $applications = $em->getRepository('DizdaAppBundle:Application')->findOneByName($input->getArgument('application_name'));
+        $isExternal   = $input->getArgument('is_external') === 'true';
 
-        $applications = $em->getRepository('DizdaAppBundle:Application')->findOneByName('ptc');
+        $address = $manager->create($applications, $isExternal);
 
-        $manager->create($applications, true);
-//
-//        foreach ($applications as $application) {
-//            $outputs = $manager->search($application);
-//
-//            if ($outputs) {
-//                $manager->create($application, $outputs);
-//            }
-//        }
+        $output->writeln(sprintf('The generated address is: <info>%s</info>.', $address->getValue()));
+
+        $em->flush();
     }
-
 }

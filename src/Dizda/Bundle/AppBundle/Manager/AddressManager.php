@@ -15,6 +15,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class AddressManager
+ *
+ * @author Jonathan Dizdarevic <dizda@dizda.fr>
  */
 class AddressManager
 {
@@ -52,17 +54,40 @@ class AddressManager
         $this->addressService = $addressService;
     }
 
+    /**
+     * Generate a new address, save it to the DB.
+     *
+     * @param Application $application
+     * @param bool $isExternal
+     *
+     * @return Address
+     */
     public function create(Application $application, $isExternal = true)
     {
         // getting last derivation
         // internal/external?
-        $derivation = $this->em->getRepository('DizdaAppBundle:Address')->getLastDerivation($application, $isExternal);
+        $lastAddress = $this->em->getRepository('DizdaAppBundle:Address')->getLastDerivation($application, $isExternal);
 
-        if ($derivation === null) {
+        if ($lastAddress !== null) {
+            $derivation = $lastAddress->getDerivation() + 1; // increment the derivation
+        } else {
             $derivation = 0;
         }
 
-        $this->addressService->generateHDMultisigAddress($application, $isExternal, $derivation);
+        $multisigAddress = $this->addressService->generateHDMultisigAddress($application, $isExternal, $derivation);
+
+        $address = (new Address())
+            ->setApplication($application)
+            ->setValue($multisigAddress['address'])
+            ->setRedeemScript($multisigAddress['redeemScript'])
+            ->setIsExternal($isExternal)
+            ->setDerivation($derivation)
+            //->setScriptPubKey()
+        ;
+
+        $this->em->persist($address);
+
+        return $address;
     }
 
     /**

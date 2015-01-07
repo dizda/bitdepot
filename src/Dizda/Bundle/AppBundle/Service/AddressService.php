@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Service;
 
 use Dizda\Bundle\AppBundle\Entity\Application;
+use Monolog\Logger;
 use Symfony\Component\Process\Process;
 use JMS\Serializer\Serializer;
 
@@ -18,12 +19,33 @@ class AddressService
      */
     private $serializer;
 
-    public function __construct(Serializer $serializer)
+    /**
+     * @var \Monolog\Logger
+     */
+    private $logger;
+
+    /**
+     * @param Serializer $serializer
+     * @param Logger     $logger
+     */
+    public function __construct(Serializer $serializer, Logger $logger)
     {
         $this->serializer = $serializer;
+        $this->logger     = $logger;
     }
 
-
+    /**
+     * Generate an HD multisig address according to the extendedPubKeys of each signers, the application_id,
+     * the wallet type, and the derivation.
+     *
+     * @param Application $application
+     * @param $isExternal
+     * @param $derivation
+     *
+     * @throws \RuntimeException
+     *
+     * @return mixed|object
+     */
     public function generateHDMultisigAddress(Application $application, $isExternal, $derivation)
     {
         $params = [
@@ -40,35 +62,13 @@ class AddressService
         );
         $process->run();
 
-        var_dump($process->getOutput());
-//        if ($process->isTerminated()) {
-//            $option->setNodeProcess([
-//                'stdout' => $process->getOutput(),
-//                'stderr' => $process->getErrorOutput(),
-//                'code'   => $process->getExitCode()
-//            ]);
-//            $option->finish($process);
-//
-//            $this->om->flush();
-//        }
-//
-//        if (!$process->isSuccessful()) {
-//            if (77 === $process->getExitCode()) {
-//                /**
-//                 * The case when agent got a new signature that is different from the one submitted
-//                 */
-//                throw new SignatureMismatchException('The fresh signature mismatch.');
-//            }
-//            if (78 === $process->getExitCode()) {
-//                /**
-//                 * The case when agent found that the lot is already optioned
-//                 */
-//                throw new OptionUnavailableException('The lot is already optioned.');
-//            }
-//
-//            // Process failed
-//            throw new \RuntimeException($process->getErrorOutput());
-//        }
+        if (!$process->isSuccessful()) {
+            $this->logger->error('Can not generate HDMultisig address.', [ $process->getErrorOutput() ]);
 
+            // Process failed
+            throw new \RuntimeException($process->getErrorOutput());
+        }
+
+        return $this->serializer->deserialize($process->getOutput(), 'array', 'json');
     }
 }

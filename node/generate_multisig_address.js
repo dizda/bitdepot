@@ -21,11 +21,18 @@ var script = redeemScript.toScriptHashOut();
 
 var multisigAddress = new bitcore.Address(redeemScript, bitcore.Networks.livenet);
 
-var out = {
+var stdout = {
     redeemScript: redeemScript.toBuffer().toString('hex'), // serialize to Hex format the redeemScript
     address:      multisigAddress.toString()
 };
 
 if (bitcore.Address.isValid(multisigAddress.toString(), bitcore.Networks.livenet, bitcore.Address.PayToScriptHash)) {
-    console.log(JSON.stringify(out));
+
+    // stdout
+    console.log(JSON.stringify(stdout));
+
+} else {
+
+    throw new Error('Address generated is invalid (not a PayToScriptHash).');
+
 }

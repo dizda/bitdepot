@@ -7,7 +7,9 @@ use Dizda\Bundle\AppBundle\Entity\Application;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * AddressRepository
+ * Class AddressRepository
+ *
+ * @author Jonathan Dizdarevic <dizda@dizda.fr>
  */
 class AddressRepository extends EntityRepository
 {
@@ -69,7 +71,7 @@ class AddressRepository extends EntityRepository
      * @param Application $application
      * @param bool $isExternal
      *
-     * @return mixed
+     * @return Address|null
      */
     public function getLastDerivation(Application $application, $isExternal = true)
     {
@@ -78,10 +80,11 @@ class AddressRepository extends EntityRepository
             ->andWhere('a.isExternal = :isExternal')
             ->setParameter('application', $application)
             ->setParameter('isExternal', $isExternal)
+            ->orderBy('a.derivation', 'DESC')
             ->setMaxResults(1)
         ;
 
-        $address = $qb->getQuery()->getFirstResult();
+        $address = $qb->getQuery()->getOneOrNullResult();
 
         return $address;
     }

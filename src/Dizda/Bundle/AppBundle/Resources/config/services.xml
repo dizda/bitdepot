@@ -86,6 +86,7 @@
 
         <service id="dizda_app.service.address" class="Dizda\Bundle\AppBundle\Service\AddressService">
             <argument type="service" id="serializer" />
+            <argument type="service" id="logger" />
         </service>
     </services>
 </container>
