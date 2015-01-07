@@ -62,3 +62,15 @@ console.log(multisigAddress);
 
 
 // TODO: add 'extended_public_key' field to 'Pubkey' entity
+
+
+
+
+
+
+console.log('\nGenerate an address from Public Extended Key:');
+
+var pubkey = new bitcore.HDPublicKey('xpub6CceUL4HSiPa2ms86Ay94Pw4YETv4xAyfRyt7vk9CuQ71rZo5hmNmm9uSx7vVxVG4SUeADNBSUhoRNGU2CbPEsGxNtBJ7uBSQQUdxtSNeT2');
+
+var hdPubAddress = new bitcore.Address(pubkey.derive(0 /* internal account */).derive(0 /* address index */).publicKey, bitcore.Networks.livenet);
+console.log(hdPubAddress);
