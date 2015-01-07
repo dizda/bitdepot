@@ -81,6 +81,16 @@ class Application
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\OneToMany(
+     *      targetEntity    = "PubKey",
+     *      mappedBy        = "application"
+     * )
+     */
+    private $pubKeys;
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(
      *      targetEntity    = "Deposit",
      *      mappedBy        = "application"
      * )

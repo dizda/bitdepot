@@ -47,18 +47,6 @@ class Keychain
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\OneToMany(
-     *      targetEntity    = "Dizda\Bundle\AppBundle\Entity\Pubkey",
-     *      mappedBy        = "keychain"
-     * )
-     *
-     * @Serializer\Groups({"WithdrawDetail"})
-     */
-    private $pubKeys;
-
-    /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     *
-     * @ORM\OneToMany(
      *      targetEntity    = "Dizda\Bundle\AppBundle\Entity\Address",
      *      mappedBy        = "keychain"
      * )
@@ -103,7 +91,7 @@ class Keychain
      * Get id
      * @codeCoverageIgnore
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -128,7 +116,7 @@ class Keychain
      * Get name
      * @codeCoverageIgnore
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -153,47 +141,11 @@ class Keychain
      * Get signRequired
      * @codeCoverageIgnore
      *
-     * @return integer 
+     * @return integer
      */
     public function getSignRequired()
     {
         return $this->signRequired;
-    }
-
-    /**
-     * Add pubKeys
-     * @codeCoverageIgnore
-     *
-     * @param \Dizda\Bundle\AppBundle\Entity\Pubkey $pubKeys
-     * @return Keychain
-     */
-    public function addPubKey(\Dizda\Bundle\AppBundle\Entity\Pubkey $pubKeys)
-    {
-        $this->pubKeys[] = $pubKeys;
-
-        return $this;
-    }
-
-    /**
-     * Remove pubKeys
-     * @codeCoverageIgnore
-     *
-     * @param \Dizda\Bundle\AppBundle\Entity\Pubkey $pubKeys
-     */
-    public function removePubKey(\Dizda\Bundle\AppBundle\Entity\Pubkey $pubKeys)
-    {
-        $this->pubKeys->removeElement($pubKeys);
-    }
-
-    /**
-     * Get pubKeys
-     * @codeCoverageIgnore
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPubKeys()
-    {
-        return $this->pubKeys;
     }
 
     /**
@@ -225,7 +177,7 @@ class Keychain
      * Get addresses
      * @codeCoverageIgnore
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAddresses()
     {
@@ -261,7 +213,7 @@ class Keychain
      * Get applications
      * @codeCoverageIgnore
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getApplications()
     {
@@ -297,7 +249,7 @@ class Keychain
      * Get withdraws
      * @codeCoverageIgnore
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWithdraws()
     {

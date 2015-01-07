@@ -1,4 +1,6 @@
-var bitcore = require('bitcore');
+var bitcore = require('bitcore')
+  , bitcoin = require('bitcoinjs-lib')
+  , Hash = bitcore.crypto.Hash;
 
 
 //var rawTransaction = '010000000155a3dd66c03bd64f6512fc47c9156db1a431946e07536d7ed5321df051d6bfc50100000000ffffffff0210270000000000001976a914d356d4d8079f8556be4c8102ecf00cc63344e75488ac102700000000000017a914dec137068316fe8ddffdf05befb24d786e38adf98700000000';
@@ -8,9 +10,17 @@ var bitcore = require('bitcore');
 //console.log(transaction.toObject());
 
 // TODO: https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki
-
+//console.log(Hash.sha256('coucou'));
 var hdPrivateKey = new bitcore.HDPrivateKey('xprv9s21ZrQH143K2JF8RafpqtKiTbsbaxEeUaMnNHsm5o6wCW3z8ySyH4UxFVSfZ8n7ESu7fgir8imbZKLYVBxFPND1pniTZ81vKfd45EHKX73');
 console.log(hdPrivateKey);
+
+var hdPrivateKey = new bitcore.HDPrivateKey.fromSeed(bitcoin.crypto.sha256('coucou'), bitcore.Networks.livenet);
+console.log(hdPrivateKey);
+
+var wallet = new bitcoin.Wallet(bitcoin.crypto.sha256('coucou'), bitcoin.networks.testnet);
+console.log(wallet.getMasterKey().toBase58());
+console.log('end');
+
 //var retrieved = new HDPrivateKey('xpriv...');
 //var derived = hdPrivateKey.derive("m/0'");
 //var derived = hdPrivateKey.derive(1).derive(2, true);

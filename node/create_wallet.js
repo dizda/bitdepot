@@ -22,7 +22,7 @@ function askNetwork()
             type: 'list',
             name: 'network',
             message: 'Choose your network',
-            choices: [ 'Bitcoin', 'Testnet' ],
+            choices: [ 'Livenet', 'Testnet' ],
             filter: function( val ) { return val.toLowerCase(); }
         }
     ];
