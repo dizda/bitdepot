@@ -90,7 +90,7 @@ class WithdrawControllerTest extends BaseFunctionalTestController
         $this->client->request('POST', sprintf('/withdraws/%d.json', /* withdraw */ 2), [
             'id' => 2,
             'raw_signed_transaction' => 'coucou',
-            'signed_by' => '024929ebd103ec6ffaafcafd19806b3a404de9dcb6231d86bf1f9dbec23cd6059b', // Pubkey #2
+            'signed_by' => '024929ebd103ec6ffaafcafd19806b3a404de9dcb6231d86bf1f9dbec23cd6059b', // PubKey #2
             'is_signed' => false
         ]);
 
@@ -99,7 +99,7 @@ class WithdrawControllerTest extends BaseFunctionalTestController
         $this->assertEquals('coucou', $content->raw_signed_transaction);
 
         // verify that the signature is present
-        $this->assertEquals('Pubkey2 keychain1 fixture', $content->signatures[0]->name);
+        $this->assertEquals('PubKey keychain1 fixture', $content->signatures[0]->name);
     }
 
     /**

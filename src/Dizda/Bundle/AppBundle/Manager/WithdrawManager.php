@@ -127,7 +127,7 @@ class WithdrawManager
 
         // Add signature if submitted
         if ($withdrawSubmitted['signed_by']) {
-            $pubkey = $this->em->getRepository('DizdaAppBundle:Pubkey')->findOneBy([
+            $pubkey = $this->em->getRepository('DizdaAppBundle:PubKey')->findOneBy([
                 'keychain' => $withdraw->getKeychain(),
                 'value'    => $withdrawSubmitted['signed_by']
             ]);

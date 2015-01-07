@@ -30,15 +30,22 @@ class DepositManager
     private $dispatcher;
 
     /**
+     * @var AddressManager
+     */
+    private $addressManager;
+
+    /**
      * @param EntityManager            $em
      * @param LoggerInterface          $logger
      * @param EventDispatcherInterface $dispatcher
+     * @param AddressManager           $addressManager
      */
-    public function __construct(EntityManager $em, LoggerInterface $logger, EventDispatcherInterface $dispatcher)
+    public function __construct(EntityManager $em, LoggerInterface $logger, EventDispatcherInterface $dispatcher, AddressManager $addressManager)
     {
         $this->em         = $em;
         $this->logger     = $logger;
         $this->dispatcher = $dispatcher;
+        $this->addressManager = $addressManager;
     }
 
     /**
@@ -50,17 +57,10 @@ class DepositManager
     {
         $app = $this->em->getRepository('DizdaAppBundle:Application')->find($depositSubmitted['application_id']);
 
-        // Find an address not used yet.
-        try {
-            $address = $this->em->getRepository('DizdaAppBundle:Address')->getOneFreeAddress();
-        } catch (NoResultException $e) {
-            $this->logger->alert('There is no available address anymore! Please generate new addresses.');
+        // Generate an external address
+        $address = $this->addressManager->create($app, true);
 
-            throw new NoResultException();
-        }
-
-        $deposit = new Deposit();
-        $deposit
+        $deposit = (new Deposit())
             ->setType($depositSubmitted['type'])
             ->setApplication($app) // TODO: verify that application id is owned by user
             ->setAddressExternal($address)

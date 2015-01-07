@@ -69,7 +69,7 @@ class PubKey
      * @codeCoverageIgnore
      *
      * @param string $name
-     * @return Pubkey
+     * @return PubKey
      */
     public function setName($name)
     {
@@ -93,7 +93,7 @@ class PubKey
      * Set extendedPubKey
      *
      * @param string $extendedPubKey
-     * @return Pubkey
+     * @return PubKey
      */
     public function setExtendedPubKey($extendedPubKey)
     {
@@ -116,7 +116,7 @@ class PubKey
      * Set application
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Application $application
-     * @return Pubkey
+     * @return PubKey
      */
     public function setApplication(\Dizda\Bundle\AppBundle\Entity\Application $application)
     {
