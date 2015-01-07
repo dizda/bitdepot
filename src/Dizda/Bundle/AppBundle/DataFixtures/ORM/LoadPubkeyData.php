@@ -2,39 +2,39 @@
 
 namespace Dizda\Bundle\AppBundle\DataFixtures\ORM;
 
-use Dizda\Bundle\AppBundle\Entity\Pubkey;
+use Dizda\Bundle\AppBundle\Entity\PubKey;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * Class LoadPubkeyData
+ * Class LoadPubKeyData
  *
  * @author Jonathan Dizdarevic <dizda@dizda.fr>
  */
-class LoadPubkeyData extends AbstractFixture implements OrderedFixtureInterface
+class LoadPubKeyData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager)
     {
-        $pubkey1 = (new Pubkey())
-            ->setName('Pubkey1 keychain1 fixture')
-            ->setValue('02dfe3572ad679394934e0998c9dce49548cae55e923c655f4c46d7ebf9d67eab2')
-            ->setKeychain($this->getReference('keychain-1'))
+        $pubkey1 = (new PubKey())
+            ->setName('PubKey1 keychain1 fixture')
+            ->setExtendedPubKey('xpub6DAXwftEkosDZopbbVQ2me4j9R5FHYq1H7qabk3mPLBbhxHBVFLkid5beJUmzj6XJcvRskt544uCHFc4LFXkeyYCpAWzPTLUPBTT5ZifPgn')
+            ->setApplication($this->getReference('application-1'))
         ;
 
-        $pubkey2 = (new Pubkey())
-            ->setName('Pubkey2 keychain1 fixture')
-            ->setValue('024929ebd103ec6ffaafcafd19806b3a404de9dcb6231d86bf1f9dbec23cd6059b')
-            ->setKeychain($this->getReference('keychain-1'))
+        $pubkey2 = (new PubKey())
+            ->setName('PubKey2 keychain1 fixture')
+            ->setExtendedPubKey('xpub6D2a4Mq3EypbBVRPXFnphXWRMfmVkgRk2Y5ZuFZ5SrvUqci9vc4zMroUxgNYoe9x6fjrFSK6LnC4yg1xFZS4JrEFQ4s14kHXeJwARbCQg9r')
+            ->setApplication($this->getReference('application-1'))
         ;
 
-        $pubkey3 = (new Pubkey())
-            ->setName('Pubkey3 keychain1 fixture')
-            ->setValue('020dcc43a616f162b0dacc2ac8f632f95b85cef52ed903ea576b127e22eef56a70')
-            ->setKeychain($this->getReference('keychain-1'))
+        $pubkey3 = (new PubKey())
+            ->setName('PubKey3 keychain1 fixture')
+            ->setExtendedPubKey('xpub6CceUL4HSiPa2ms86Ay94Pw4YETv4xAyfRyt7vk9CuQ71rZo5hmNmm9uSx7vVxVG4SUeADNBSUhoRNGU2CbPEsGxNtBJ7uBSQQUdxtSNeT2')
+            ->setApplication($this->getReference('application-1'))
         ;
 
         $manager->persist($pubkey1);
@@ -52,6 +52,6 @@ class LoadPubkeyData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 2; // the order in which fixtures will be loaded
+        return 3; // the order in which fixtures will be loaded
     }
 }

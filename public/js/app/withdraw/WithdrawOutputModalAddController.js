@@ -3,7 +3,7 @@
 app.controller('WithdrawOutputModalAddCtrl', ['$scope', '$modal','WithdrawOutput', function($scope, $modal, WithdrawOutput) {
 
     $scope.withdrawOutput = {
-        application_id: 10,
+        application_id: 1,
         is_accepted:    true
     };
 
