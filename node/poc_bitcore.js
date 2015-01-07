@@ -14,7 +14,7 @@ var bitcore = require('bitcore')
 var hdPrivateKey = new bitcore.HDPrivateKey('xprv9s21ZrQH143K2JF8RafpqtKiTbsbaxEeUaMnNHsm5o6wCW3z8ySyH4UxFVSfZ8n7ESu7fgir8imbZKLYVBxFPND1pniTZ81vKfd45EHKX73');
 console.log(hdPrivateKey);
 
-var hdPrivateKey = new bitcore.HDPrivateKey.fromSeed(bitcoin.crypto.sha256('coucou'), bitcore.Networks.livenet);
+var hdPrivateKey = bitcore.HDPrivateKey.fromSeed(bitcoin.crypto.sha256('coucou'), bitcore.Networks.livenet);
 console.log(hdPrivateKey);
 
 var wallet = new bitcoin.Wallet(bitcoin.crypto.sha256('coucou'), bitcoin.networks.testnet);

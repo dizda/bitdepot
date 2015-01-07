@@ -13,11 +13,11 @@ bootstrap.start();
 //bootstrap.end();
 var wallet = new Wallet();
 var seeds = [];
-var network, requiredSignatures, numberToGenerate, keychainName;
+var network, requiredSignatures, keychainName, application;
 
 function askNetwork()
 {
-    var network = [
+    var question = [
         {
             type: 'list',
             name: 'network',
@@ -27,7 +27,7 @@ function askNetwork()
         }
     ];
 
-    inquirer.prompt(network, function(answer) {
+    inquirer.prompt(question, function(answer) {
         network = answer.network;
 
         askSeeds();
@@ -88,29 +88,7 @@ function askSignaturesRequired()
 
         requiredSignatures = signatures.required;
 
-        askNumberToGenerate();
-    });
-}
-
-function askNumberToGenerate()
-{
-    inquirer.prompt({
-        type: "input",
-        name: "count",
-        message: 'How many address do you want to generate?',
-        default: 1000,
-        validate: function( value ) {
-            var valid = !isNaN(parseInt(value));
-
-            return valid || "Please enter a number";
-        },
-        filter: Number
-    }, function(answer) {
-
-        numberToGenerate = answer.count;
-
         askKeychainName();
-
     });
 }
 
@@ -134,7 +112,23 @@ function askKeychainName()
 
         keychainName = keychain.name;
 
+        askGenerateApplication();
+
+    });
+}
+
+function askGenerateApplication()
+{
+    inquirer.prompt({
+        type: "input",
+        name: "application",
+        message: 'Please type a name for your application :'
+    }, function(answer) {
+
+        application = answer.application;
+
         askConfirm();
+
     });
 }
 
@@ -147,7 +141,7 @@ function askConfirm()
         default: false
     }, function(generation) {
         if (!generation.isConfirmed) {
-            console.error('Creation aborted.')
+            console.error('Creation aborted.');
             process.exit();
         }
 
@@ -157,59 +151,32 @@ function askConfirm()
 
 function process()
 {
-    var wallets  = [];
     var deferred = Q.defer();
-    var keychain;
 
     database.addKeychain(keychainName, requiredSignatures)
     .then(function(keychainId) {
 
+
+        return database.addApplication(keychainId, application);
+    })
+    .then(function(applicationId) {
+
         var promises = [];
 
-        keychain = keychainId;
-
         for (var i=0; i < seeds.length; i++) {
-            var walletTemp = wallet.create(seeds[i], network);
-            wallets.push(walletTemp);
+
+            var walletCreated = wallet.create(seeds[i], network);
 
             promises.push(
-                database.addPubkeys(keychainId, '', walletTemp.getExternalAccount().derive(0).pubKey.toHex())
+                database.addPubkeys(
+                    applicationId,
+                    '',
+                    walletCreated.derive(44 /* BIP44, constant */, true).derive(0 /* cointype: bitcoin */, true).derive(applicationId /* account */, true).hdPublicKey
+                )
             );
         }
 
         return Q.all(promises);
-    })
-    .then(function() {
-
-        // derive keys, start from #1
-        for (var derivation=1; derivation <= numberToGenerate; derivation++) {
-            var externalPubKeys = [];
-            var internalPubKeys = [];
-            var externalPromises = [];
-            var internalPromises = [];
-
-            for (var w=0; w < wallets.length; w++) {
-                externalPubKeys.push(wallets[w].getExternalAccount().derive(derivation).pubKey);
-                internalPubKeys.push(wallets[w].getInternalAccount().derive(derivation).pubKey);
-            }
-
-            /*console.log(externalPubKeys.map(function(item) {
-                return item.toHex();
-            }));*/
-
-
-            var externalMulti = wallet.getMultisigAddress(2, externalPubKeys);
-            var internalMulti = wallet.getMultisigAddress(2, internalPubKeys);
-
-            console.log('#'+derivation+'.ext ' + externalMulti.address);
-            externalPromises.push(database.addAddress(keychain, externalMulti, 1, derivation));
-
-            console.log('#'+derivation+'.int ' + internalMulti.address);
-            internalPromises.push(database.addAddress(keychain, internalMulti, 0, derivation));
-
-        }
-
-        return Q.all(externalPromises) && Q.all(internalPromises);
     })
     .then(function() {
 

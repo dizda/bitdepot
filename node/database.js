@@ -36,19 +36,23 @@ Database.prototype.addKeychain = function(name, requiredSignatures)
     return deferred.promise;
 };
 
-Database.prototype.addPubkeys = function(keychainId, name, value)
+Database.prototype.addApplication = function(keychainId, name)
 {
     var deferred = Q.defer();
 
-    var pubkey = {
+    var application = {
         keychain_id: keychainId,
-        name: name,
-        value: value,
-        created_at: new Date(),
-        updated_at: new Date()
+        name:        name,
+        app_id:      '1313131',         // generated value
+        app_secret:  '1313131secret',   // generated value
+        callback_endpoint:  'http://test.com',
+        confirmations_required:  6,
+        group_withdraws_by_quantity:  1,
+        created_at:     new Date(),
+        updated_at:     new Date()
     };
 
-    this.client.query('INSERT INTO pubkey SET ?', pubkey, function(err, result) {
+    this.client.query('INSERT INTO application SET ?', application, function(err, result) {
         if (err) throw err;
 
         deferred.resolve(result.insertId);
@@ -57,23 +61,19 @@ Database.prototype.addPubkeys = function(keychainId, name, value)
     return deferred.promise;
 };
 
-Database.prototype.addAddress = function(keychainId, multisig, isExternal, derivation)
+Database.prototype.addPubkeys = function(applicationId, name, extendedPubKey)
 {
     var deferred = Q.defer();
 
-    var address = {
-        keychain_id: keychainId,
-        value:       multisig.address,
-        is_external: isExternal,
-        derivation:  derivation,
-        balance:     0,
-        redeem_script:  multisig.redeemScript.toHex(),
-        script_pub_key: multisig.scriptPubKey.toHex(),
-        created_at:     new Date(),
-        updated_at:     new Date()
+    var pubKey = {
+        name: name,
+        application_id: applicationId,
+        extended_pub_key: extendedPubKey,
+        created_at: new Date(),
+        updated_at: new Date()
     };
 
-    this.client.query('INSERT INTO address SET ?', address, function(err, result) {
+    this.client.query('INSERT INTO pub_key SET ?', pubKey, function(err, result) {
         if (err) throw err;
 
         deferred.resolve(result.insertId);
