@@ -36,4 +36,4 @@ parameters:
     jwt_public_key_path:  %kernel.root_dir%/var/jwt/public_test.pem
     jwt_pass_phrase:      'bambou'
 
-    nodejs_path: /usr/bin/node
+    nodejs_path: /home/travis/.nvm/v0.10.35/bin/node
