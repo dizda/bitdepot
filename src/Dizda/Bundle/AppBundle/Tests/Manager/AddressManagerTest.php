@@ -37,6 +37,11 @@ class AddressManagerTest extends ProphecyTestCase
     private $manager;
 
     /**
+     * @var \Dizda\Bundle\AppBundle\Service\AddressService
+     */
+    private $addressService;
+
+    /**
      * AddressManager::saveTransactions()
      */
     public function testSaveTransactionsInputs()
@@ -177,10 +182,12 @@ class AddressManagerTest extends ProphecyTestCase
         $this->em           = $this->prophesize('Doctrine\ORM\EntityManager');
         $this->logger       = $this->prophesize('Psr\Log\LoggerInterface');
         $this->dispatcher   = $this->prophesize('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $this->addressService = $this->prophesize('Dizda\Bundle\AppBundle\Service\AddressService');
         $this->manager      = new AddressManager(
             $this->em->reveal(),
             $this->logger->reveal(),
-            $this->dispatcher->reveal()
+            $this->dispatcher->reveal(),
+            $this->addressService->reveal()
         );
     }
 }

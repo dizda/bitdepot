@@ -42,7 +42,7 @@ class DepositControllerTest extends BaseFunctionalTestController
         $content = $this->client->getResponse()->getContent();
 
         $this->assertEquals(
-            '{"id":2,"type":1,"amount_expected":"0.00040000","amount_filled":"0.00000000","is_fulfilled":false,"is_overfilled":false,"address_external":{"value":"3QYr3UHFsTbEKVheCRx5CMJSiEECS4ZWX4","is_external":true,"balance":"0.00000000"}}',
+            '{"id":2,"type":1,"amount_expected":"0.00040000","amount_filled":"0.00000000","is_fulfilled":false,"is_overfilled":false,"address_external":{"value":"3CzQosnjC24GBezPyP2v1fGBN1DM39LmBT","is_external":true,"balance":"0.00000000"}}',
             $content
         );
 
@@ -55,7 +55,7 @@ class DepositControllerTest extends BaseFunctionalTestController
         $content = $this->client->getResponse()->getContent();
 
         $this->assertEquals(
-            '{"id":3,"type":2,"amount_filled":"0.00000000","is_fulfilled":false,"is_overfilled":false,"address_external":{"value":"3MxR1yHVpfB7cXULzpetoyNVvUeqhoaJhE","is_external":true,"balance":"0.00000000"}}',
+            '{"id":3,"type":2,"amount_filled":"0.00000000","is_fulfilled":false,"is_overfilled":false,"address_external":{"value":"3HqJkrZymZFMJk8ToUL7RnrHutdAtsuFgW","is_external":true,"balance":"0.00000000"}}',
             $content
         );
 

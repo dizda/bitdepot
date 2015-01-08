@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\NoResultException;
+use Dizda\Bundle\AppBundle\Manager\AddressManager;
 
 /**
  * Class DepositManager

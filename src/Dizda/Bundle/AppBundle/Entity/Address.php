@@ -64,7 +64,7 @@ class Address
      * @Serializer\Groups({"Deposits", "Addresses"})
      * @Serializer\Type("string")
      */
-    private $balance = 0;
+    private $balance = '0.00000000';
 
     /**
      * @var string
