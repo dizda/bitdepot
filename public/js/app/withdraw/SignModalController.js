@@ -27,18 +27,18 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
         // search identity according to the public key submitted
         var identity = _.find($scope.withdraw.keychain.pub_keys, {value: accountPubKey});
 
-        if (!identity) {
-            $scope.signState.label = 'Unknown private key.';
-            $scope.signState.error = true;
-            $scope.signing         = false;
-
-            return;
-        }
-
-        $scope.signState.signed_by = identity.name;
-        $scope.signState.label = 'Signing with ' + identity.name + '...';
-
-        $scope.withdraw.signed_by = identity.value;
+//        if (!identity) {
+//            $scope.signState.label = 'Unknown private key.';
+//            $scope.signState.error = true;
+//            $scope.signing         = false;
+//
+//            return;
+//        }
+//
+//        $scope.signState.signed_by = identity.name;
+//        $scope.signState.label = 'Signing with ' + identity.name + '...';
+//
+//        $scope.withdraw.signed_by = identity.value;
 
         sign(seed);
     };
