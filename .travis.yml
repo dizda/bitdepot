@@ -13,6 +13,7 @@ script:
     - mkdir -p build/logs
 #    - ./vendor/phpunit/phpunit/phpunit -c app/
     - make tests
+    - which node
 
 after_script:
     - php bin/coveralls
