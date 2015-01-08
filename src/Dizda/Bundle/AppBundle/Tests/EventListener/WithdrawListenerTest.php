@@ -4,6 +4,7 @@ namespace Dizda\Bundle\AppBundle\Tests\EventListener;
 
 use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
+use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Entity\Withdraw;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
 use Prophecy\Argument;
@@ -16,9 +17,9 @@ use Dizda\Bundle\AppBundle\EventListener\WithdrawListener;
 class WithdrawListenerTest extends ProphecyTestCase
 {
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var \Dizda\Bundle\AppBundle\Manager\AddressManager
      */
-    private $em;
+    private $addressManager;
 
     /**
      * @var \Psr\Log\LoggerInterface
@@ -76,8 +77,10 @@ class WithdrawListenerTest extends ProphecyTestCase
 
         $this->withdrawEvent->getWithdraw()->shouldBeCalled()->willReturn($withdraw);
 
-        $this->em->getRepository('DizdaAppBundle:Address')->shouldBeCalled()->willReturn($repo->reveal());
-        $repo->getOneFreeAddress(Argument::exact(false))->shouldBeCalled()->willReturn($changeAddress);
+        $this->addressManager->create(
+            Argument::type('Dizda\Bundle\AppBundle\Entity\Application'),
+            Argument::exact(false)
+        )->shouldBeCalled()->willReturn($changeAddress);
 
         $this->bitcoind->createrawtransaction(
             Argument::exact($this->getExpectedInputs()),
@@ -218,6 +221,7 @@ class WithdrawListenerTest extends ProphecyTestCase
                 (new WithdrawOutput())
                     ->setToAddress('1LGTbdVSEbD9C37qXcpvVJ1egdBu8jYSeV')
                     ->setAmount('0.0001')
+                    ->setApplication(new Application())
             )
             ->addWithdrawOutput(
                 (new WithdrawOutput())
@@ -274,7 +278,7 @@ class WithdrawListenerTest extends ProphecyTestCase
      */
     public function setUpObjects()
     {
-        $this->em           = $this->prophesize('Doctrine\ORM\EntityManager');
+        $this->addressManager = $this->prophesize('Dizda\Bundle\AppBundle\Manager\AddressManager');
         $this->logger       = $this->prophesize('Psr\Log\LoggerInterface');
         $this->bitcoind     = $this->prophesize('Nbobtc\Bitcoind\Bitcoind');
         $this->withdrawEvent = $this->prophesize('Dizda\Bundle\AppBundle\Event\WithdrawEvent');
@@ -282,7 +286,7 @@ class WithdrawListenerTest extends ProphecyTestCase
         $this->manager      = new WithdrawListener(
             $this->logger->reveal(),
             $this->bitcoind->reveal(),
-            $this->em->reveal(),
+            $this->addressManager->reveal(),
             $this->producer->reveal()
         );
     }

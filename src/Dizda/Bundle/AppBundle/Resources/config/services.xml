@@ -49,7 +49,7 @@
             <tag name="kernel.event_listener" event="app.withdraw_send" method="onSend" />
             <argument type="service" id="logger" />
             <argument type="service" id="bitcoind" />
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="dizda_app.manager.address" />
             <argument type="service" id="old_sound_rabbit_mq.withdraw_output_callback_producer" />
         </service>
 
