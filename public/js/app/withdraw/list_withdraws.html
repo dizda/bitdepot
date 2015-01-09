@@ -15,7 +15,7 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>#</th>
                     <th>Amount</th>
                     <th>inputs</th>
                     <th># of recipient</th>
@@ -26,7 +26,7 @@
                 </thead>
                 <tbody>
                 <tr data-ng-repeat="withdraw in withdraws">
-                    <td>{{ withdraw.id }}</td>
+                    <td>#{{ withdraw.id }}</td>
                     <td data-ng-if="!withdraw.txid"><i class="fa fa-btc"></i> {{ withdraw.total_outputs }}</td>
                     <td data-ng-if="withdraw.txid">
                         <a data-ng-href="https://blockchain.info/tx/{{withdraw.txid}}" target="_blank">

@@ -18,7 +18,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>#</th>
                         <th># withdraw</th>
                         <th>amount</th>
                         <th>To address</th>
@@ -29,8 +29,8 @@
                 </thead>
                 <tbody>
                     <tr data-ng-repeat="output in withdrawOutputs" data-ng-class="{'bg-success': output.withdraw.withdrawed_at}">
-                        <td>{{ output.id }}</td>
-                        <td data-ng-if="output.withdraw">{{ output.withdraw.id }}</td>
+                        <td>#{{ output.id }}</td>
+                        <td data-ng-if="output.withdraw">#{{ output.withdraw.id }}</td>
                         <td data-ng-if="!output.withdraw" class="text-muted">Not assigned yet</td>
                         <td><i class="fa fa-btc"></i> {{ output.amount }}</td>
                         <td>
