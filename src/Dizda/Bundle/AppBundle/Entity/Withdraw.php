@@ -177,14 +177,14 @@ class Withdraw
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="PubKey")
+     * @ORM\ManyToMany(targetEntity="Identity")
      * @ORM\JoinTable(name="withdraw_signature",
      *     joinColumns={@ORM\JoinColumn(name="withdraw_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="pubkey_id", referencedColumnName="id")}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="identity_id", referencedColumnName="id")}
      * )
      *
      * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
-     * @Serializer\Type("array<Dizda\Bundle\AppBundle\Entity\PubKey>")
+     * @Serializer\Type("array<Dizda\Bundle\AppBundle\Entity\Identity>")
      */
     private $signatures;
 
@@ -614,10 +614,11 @@ class Withdraw
      * Add signatures
      * @codeCoverageIgnore
      *
-     * @param \Dizda\Bundle\AppBundle\Entity\PubKey $signatures
+     * @param \Dizda\Bundle\AppBundle\Entity\Identity $signatures
+     *
      * @return Withdraw
      */
-    public function addSignature(\Dizda\Bundle\AppBundle\Entity\PubKey $signatures)
+    public function addSignature(\Dizda\Bundle\AppBundle\Entity\Identity $signatures)
     {
         $this->signatures[] = $signatures;
 
@@ -628,9 +629,9 @@ class Withdraw
      * Remove signatures
      * @codeCoverageIgnore
      *
-     * @param \Dizda\Bundle\AppBundle\Entity\PubKey $signatures
+     * @param \Dizda\Bundle\AppBundle\Entity\Identity $signatures
      */
-    public function removeSignature(\Dizda\Bundle\AppBundle\Entity\PubKey $signatures)
+    public function removeSignature(\Dizda\Bundle\AppBundle\Entity\Identity $signatures)
     {
         $this->signatures->removeElement($signatures);
     }

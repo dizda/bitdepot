@@ -128,8 +128,9 @@ class WithdrawManager
 
         // Add signature if submitted
         if ($withdrawSubmitted['signed_by']) {
-            $pubKey = $this->em->getRepository('DizdaAppBundle:PubKey')->findOneBy([
-                'extendedPubKey' => $withdrawSubmitted['signed_by']
+            $pubKey = $this->em->getRepository('DizdaAppBundle:Identity')->findOneBy([
+                'publicKey' => $withdrawSubmitted['signed_by'],
+                'keychain'  => $withdraw->getKeychain()
             ]);
 
             // If the given PubKey doesn't exist
@@ -138,7 +139,7 @@ class WithdrawManager
             }
 
             // The case where the signature doesn't match with the keychain of the application
-            if ($pubKey->getApplication()->getKeychain() !== $withdraw->getKeychain()) {
+            if ($pubKey->getKeychain() !== $withdraw->getKeychain()) {
                 throw new UnknownSignatureException();
             }
 

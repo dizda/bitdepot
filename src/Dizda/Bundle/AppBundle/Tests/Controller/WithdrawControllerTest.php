@@ -90,7 +90,7 @@ class WithdrawControllerTest extends BaseFunctionalTestController
         $this->client->request('POST', sprintf('/withdraws/%d.json', /* withdraw */ 2), [
             'id' => 2,
             'raw_signed_transaction' => 'coucou',
-            'signed_by' => 'xpub6D2a4Mq3EypbBVRPXFnphXWRMfmVkgRk2Y5ZuFZ5SrvUqci9vc4zMroUxgNYoe9x6fjrFSK6LnC4yg1xFZS4JrEFQ4s14kHXeJwARbCQg9r', // PubKey #2
+            'signed_by' => '03bdd087f7c9d6aac4857be62dc7d80f5f9435f57293a84ed50fe689d7ade58983', // PubKey #2
             'is_signed' => false
         ]);
 
@@ -99,7 +99,7 @@ class WithdrawControllerTest extends BaseFunctionalTestController
         $this->assertEquals('coucou', $content->raw_signed_transaction);
 
         // verify that the signature is present
-        $this->assertEquals('PubKey2 keychain1 fixture', $content->signatures[0]->name);
+        $this->assertEquals('Identity2', $content->signatures[0]->name);
     }
 
     /**
@@ -112,7 +112,7 @@ class WithdrawControllerTest extends BaseFunctionalTestController
         $this->client->request('POST', sprintf('/withdraws/%d.json', /* withdraw */ 2), [
             'id' => 2,
             'raw_signed_transaction' => 'coucou',
-            'signed_by' => '024929ebd103ec6ffaafcafd19806b3a404de9dcb6231d86bf1f9dbec23cd6059b', // PubKey #2
+            'signed_by' => '024929ebd103ddssdfsdfsdd19806b3a404de9dcb6231d86bf1f9dbec23cd6059b',
             'is_signed' => false
         ]);
 
