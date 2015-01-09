@@ -19,6 +19,7 @@ class Fixtures
     {
         return [
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadKeychainData',
+            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadIdentityData',
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadApplicationData',
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadPubKeyData',
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadAddressData',

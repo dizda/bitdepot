@@ -20,25 +20,36 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
         $scope.initSignature();
 
         // Create a wallet from the seed submitted
-        var wallet = new bitcoin.Wallet(bitcoin.crypto.sha256(seed), bitcoin.networks.bitcoin);
+//        var wallet = new bitcoin.Wallet(bitcoin.crypto.sha256(seed), bitcoin.networks.bitcoin);
+        var wallet = bitcore.HDPrivateKey.fromSeed(bitcoin.crypto.sha256(seed), bitcore.Networks.livenet);
 
-        var accountPubKey = wallet.getExternalAccount().derive(0).pubKey.toHex();
+//        wallet.derive("m/44'/0'/1'/1/4")
+        var accountPubKey = wallet
+            .derive(44, true) // BIP44 constant
+            .derive(0, true)  // bitcoin
+            .derive(0, true)  // # application
+            .derive(0)        // chain
+            .derive(0)        // address
+        .publicKey.toString();
+
+        console.log(accountPubKey);
+//        var accountPubKey = wallet.getExternalAccount().derive(0).pubKey.toHex();
 
         // search identity according to the public key submitted
         var identity = _.find($scope.withdraw.keychain.pub_keys, {value: accountPubKey});
 
-//        if (!identity) {
-//            $scope.signState.label = 'Unknown private key.';
-//            $scope.signState.error = true;
-//            $scope.signing         = false;
-//
-//            return;
-//        }
-//
-//        $scope.signState.signed_by = identity.name;
-//        $scope.signState.label = 'Signing with ' + identity.name + '...';
-//
-//        $scope.withdraw.signed_by = identity.value;
+        if (!identity) {
+            $scope.signState.label = 'Unknown private key.';
+            $scope.signState.error = true;
+            $scope.signing         = false;
+
+            return;
+        }
+
+        $scope.signState.signed_by = identity.name;
+        $scope.signState.label = 'Signing with ' + identity.name + '...';
+
+        $scope.withdraw.signed_by = identity.value;
 
         sign(seed);
     };

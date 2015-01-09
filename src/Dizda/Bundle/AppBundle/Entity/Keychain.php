@@ -68,6 +68,18 @@ class Keychain
     private $withdraws;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity    = "Identity",
+     *      mappedBy        = "keychain"
+     * )
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
+     */
+    private $identities;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -206,5 +218,38 @@ class Keychain
     public function getWithdraws()
     {
         return $this->withdraws;
+    }
+
+    /**
+     * Add identities
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Identity $identities
+     * @return Keychain
+     */
+    public function addIdentity(\Dizda\Bundle\AppBundle\Entity\Identity $identities)
+    {
+        $this->identities[] = $identities;
+
+        return $this;
+    }
+
+    /**
+     * Remove identities
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Identity $identities
+     */
+    public function removeIdentity(\Dizda\Bundle\AppBundle\Entity\Identity $identities)
+    {
+        $this->identities->removeElement($identities);
+    }
+
+    /**
+     * Get identities
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIdentities()
+    {
+        return $this->identities;
     }
 }

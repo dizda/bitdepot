@@ -90,7 +90,7 @@ class Address
      * @ORM\ManyToOne(targetEntity="Application", inversedBy="addresses")
      * @ORM\JoinColumn(name="application_id", referencedColumnName="id", nullable=false)
      *
-     * @Serializer\Exclude
+     * @Serializer\Groups({"WithdrawDetail"})
      */
     private $application;
 

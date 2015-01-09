@@ -28,19 +28,8 @@ class PubKey
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
-     *
-     * @Serializer\Groups({"WithdrawDetail"})
-     * @Serializer\Type("string")
-     */
-    private $name;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="extended_pub_key", type="string", length=255)
      *
-     * @Serializer\Groups({"WithdrawDetail"})
      * @Serializer\Type("string")
      */
     private $extendedPubKey;
@@ -54,6 +43,14 @@ class PubKey
     private $application;
 
     /**
+     * @var \Dizda\Bundle\AppBundle\Entity\Identity
+     *
+     * @ORM\ManyToOne(targetEntity="Identity", inversedBy="pubKeys")
+     * @ORM\JoinColumn(name="identity_id", referencedColumnName="id", nullable=false)
+     */
+    private $identity;
+
+    /**
      * Get id
      * @codeCoverageIgnore
      *
@@ -62,31 +59,6 @@ class PubKey
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     * @codeCoverageIgnore
-     *
-     * @param string $name
-     * @return PubKey
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     * @codeCoverageIgnore
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -133,5 +105,28 @@ class PubKey
     public function getApplication()
     {
         return $this->application;
+    }
+
+    /**
+     * Set identity
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Identity $identity
+     * @return PubKey
+     */
+    public function setIdentity(\Dizda\Bundle\AppBundle\Entity\Identity $identity)
+    {
+        $this->identity = $identity;
+
+        return $this;
+    }
+
+    /**
+     * Get identity
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\Identity
+     */
+    public function getIdentity()
+    {
+        return $this->identity;
     }
 }
