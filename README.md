@@ -13,6 +13,7 @@ Features :
 
 - Create multisig wallet
 - Derivation to have multiple address with the same seed (BIP32 HDWallet)
+- Multi-Application HDWallet (BIP44)
 - Watch created addresses when their used using Insight (recommended), or Chain.com
 - Save every deposits incoming, and dispatch a callback to an url
 - Handle withdraw from multisig addresses
