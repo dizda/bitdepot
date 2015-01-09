@@ -121,29 +121,11 @@ class AddressTransaction
      */
     private $withdraw;
 
-//    /**
-//     * @var string
-//     *
-//     * @Serializer\Groups({"Withdraw"})
-//     * @Serializer\Accessor(getter="getScriptPubKey")
-//     * @Serializer\SerializedName("scriptPubKey")
-//     */
-//    private $scriptPubKey;
-//
-//    /**
-//     * @var string
-//     *
-//     * @Serializer\Groups({"WithdrawDetail"})
-//     * @Serializer\Accessor(getter="getRedeemScript")
-//     * @Serializer\SerializedName("redeemScript")
-//     */
-//    private $redeemScript;
-
     /**
      * Get id
      * @codeCoverageIgnore
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -166,7 +148,7 @@ class AddressTransaction
     /**
      * Get amount
      *
-     * @return string 
+     * @return string
      */
     public function getAmount()
     {
@@ -203,7 +185,7 @@ class AddressTransaction
     /**
      * Get type
      *
-     * @return integer 
+     * @return integer
      */
     public function getType()
     {
@@ -227,7 +209,7 @@ class AddressTransaction
      * Get addresses
      * @codeCoverageIgnore
      *
-     * @return array 
+     * @return array
      */
     public function getAddresses()
     {
@@ -250,7 +232,7 @@ class AddressTransaction
     /**
      * Get address
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Address 
+     * @return \Dizda\Bundle\AppBundle\Entity\Address
      */
     public function getAddress()
     {
@@ -275,7 +257,7 @@ class AddressTransaction
      * Get topup
      * @codeCoverageIgnore
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\DepositTopup 
+     * @return \Dizda\Bundle\AppBundle\Entity\DepositTopup
      */
     public function getTopup()
     {
@@ -298,7 +280,7 @@ class AddressTransaction
     /**
      * Get isSpent
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsSpent()
     {
@@ -323,28 +305,12 @@ class AddressTransaction
      * Get withdraw
      * @codeCoverageIgnore
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Withdraw 
+     * @return \Dizda\Bundle\AppBundle\Entity\Withdraw
      */
     public function getWithdraw()
     {
         return $this->withdraw;
     }
-
-//    /**
-//     * @return string
-//     */
-//    public function getScriptPubKey()
-//    {
-//        return $this->address->getScriptPubKey();
-//    }
-//
-//    /**
-//     * @return string
-//     */
-//    public function getRedeemScript()
-//    {
-//        return $this->address->getRedeemScript();
-//    }
 
     /**
      * Set index
@@ -362,7 +328,7 @@ class AddressTransaction
     /**
      * Get index
      *
-     * @return integer 
+     * @return integer
      */
     public function getIndex()
     {
@@ -385,7 +351,7 @@ class AddressTransaction
     /**
      * Get txid
      *
-     * @return string 
+     * @return string
      */
     public function getTxid()
     {

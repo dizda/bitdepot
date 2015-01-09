@@ -6,6 +6,7 @@ use Dizda\Bundle\AppBundle\AppEvents;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Entity\Withdraw;
 use Dizda\Bundle\AppBundle\Event\WithdrawEvent;
+use Dizda\Bundle\AppBundle\Exception\UnknownSignatureException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
@@ -127,12 +128,22 @@ class WithdrawManager
 
         // Add signature if submitted
         if ($withdrawSubmitted['signed_by']) {
-            $pubkey = $this->em->getRepository('DizdaAppBundle:Pubkey')->findOneBy([
-                'keychain' => $withdraw->getKeychain(),
-                'value'    => $withdrawSubmitted['signed_by']
+            $pubKey = $this->em->getRepository('DizdaAppBundle:Identity')->findOneBy([
+                'publicKey' => $withdrawSubmitted['signed_by'],
+                'keychain'  => $withdraw->getKeychain()
             ]);
 
-            $withdraw->addSignature($pubkey);
+            // If the given PubKey doesn't exist
+            if ($pubKey === null) {
+                throw new UnknownSignatureException();
+            }
+
+            // The case where the signature doesn't match with the keychain of the application
+            if ($pubKey->getKeychain() !== $withdraw->getKeychain()) {
+                throw new UnknownSignatureException();
+            }
+
+            $withdraw->addSignature($pubKey);
 
             // dispatch event there, like PushOver through Rabbit ?
         }

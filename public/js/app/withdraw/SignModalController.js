@@ -20,12 +20,23 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
         $scope.initSignature();
 
         // Create a wallet from the seed submitted
-        var wallet = new bitcoin.Wallet(bitcoin.crypto.sha256(seed), bitcoin.networks.bitcoin);
+//        var wallet = new bitcoin.Wallet(bitcoin.crypto.sha256(seed), bitcoin.networks.bitcoin);
+        var wallet = bitcore.HDPrivateKey.fromSeed(bitcoin.crypto.sha256(seed), bitcore.Networks.livenet);
 
-        var accountPubKey = wallet.getExternalAccount().derive(0).pubKey.toHex();
+//        wallet.derive("m/44'/0'/0'/0/0")
+        var accountPubKey = wallet
+            .derive(44, true) // BIP44 constant
+            .derive(0, true)  // bitcoin
+            .derive(0, true)  // # application
+            .derive(0)        // chain
+            .derive(0)        // address
+        .publicKey.toString();
+
+        console.log(accountPubKey);
+//        var accountPubKey = wallet.getExternalAccount().derive(0).pubKey.toHex();
 
         // search identity according to the public key submitted
-        var identity = _.find($scope.withdraw.keychain.pub_keys, {value: accountPubKey});
+        var identity = _.find($scope.withdraw.keychain.identities, {public_key: accountPubKey});
 
         if (!identity) {
             $scope.signState.label = 'Unknown private key.';
@@ -38,7 +49,7 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
         $scope.signState.signed_by = identity.name;
         $scope.signState.label = 'Signing with ' + identity.name + '...';
 
-        $scope.withdraw.signed_by = identity.value;
+        $scope.withdraw.signed_by = identity.public_key;
 
         sign(seed);
     };
@@ -57,7 +68,7 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
         var txb = bitcoin.TransactionBuilder.fromTransaction(tx);
 
         // Create a wallet from the seed submitted
-        var wallet = new bitcoin.Wallet(bitcoin.crypto.sha256(seed), bitcoin.networks.bitcoin);
+        var wallet = bitcore.HDPrivateKey.fromSeed(bitcoin.crypto.sha256(seed), bitcore.Networks.livenet);
 
         // Loop on each inputs
         txb.tx.ins.forEach(function(input, index) {
@@ -67,7 +78,7 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
             var wInput = _.find($scope.withdraw.withdraw_inputs, { txid: txid });
 
             // Finding the good private key according to the derivation
-            var privKey = getPrivateKey(wallet, wInput.address.is_external, wInput.address.derivation);
+            var privKey = getPrivateKey(wallet, wInput.address.application.id, wInput.address.is_external, wInput.address.derivation);
 
             console.log(privKey.toWIF());
 
@@ -88,6 +99,8 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
                     console.log('Not enough signatures provided');
 
                     $scope.withdraw.raw_signed_transaction = txb.buildIncomplete().toHex();
+                } else {
+                    console.log(e);
                 }
             }
 
@@ -131,18 +144,24 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
 
     /**
      * @param {Wallet}  wallet
+     * @param {Number}  application Application id
      * @param {Boolean} isExternal
-     * @param {Number}  derivation
+     * @param {Number}  address
      *
      * @returns {HDNode.privKey|*|.HDNode.privKey}
      */
-    function getPrivateKey(wallet, isExternal, derivation)
+    function getPrivateKey(wallet, application, isExternal, address)
     {
-        if (isExternal === true) {
-            return wallet.getExternalAccount().derive(derivation).privKey;
-        }
+        var privateKey = wallet
+            .derive(44, true) // BIP44 constant
+            .derive(0, true)  // bitcoin
+            .derive(application, true)  // # application
+            .derive(isExternal ? 0 : 1)        // chain
+            .derive(address)        // address
+        ;
 
-        return wallet.getInternalAccount().derive(derivation).privKey;
+        // Convert bitcore privateKey to bitcoinjs-lib format
+        return bitcoin.ECKey.fromWIF(privateKey.privateKey.toWIF());
     }
 
 }]);

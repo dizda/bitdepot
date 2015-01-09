@@ -4,7 +4,7 @@ namespace Dizda\Bundle\AppBundle\EventListener;
 
 use Dizda\Bundle\AppBundle\Event\WithdrawEvent;
 use Dizda\Bundle\AppBundle\Exception\InsufficientAmountException;
-use Doctrine\ORM\EntityManager;
+use Dizda\Bundle\AppBundle\Manager\AddressManager;
 use Nbobtc\Bitcoind\Bitcoind;
 use Psr\Log\LoggerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\Producer;
@@ -25,9 +25,9 @@ class WithdrawListener
     private $bitcoind;
 
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var \Dizda\Bundle\AppBundle\Manager\AddressManager
      */
-    private $em;
+    private $addressManager;
 
     /**
      * @var \OldSound\RabbitMqBundle\RabbitMq\Producer
@@ -37,14 +37,14 @@ class WithdrawListener
     /**
      * @param LoggerInterface     $logger
      * @param Bitcoind            $bitcoind
-     * @param EntityManager       $em
+     * @param AddressManager      $addressManager
      * @param Producer            $withdrawOutputProducer
      */
-    public function __construct(LoggerInterface $logger, Bitcoind $bitcoind, EntityManager $em, Producer $withdrawOutputProducer)
+    public function __construct(LoggerInterface $logger, Bitcoind $bitcoind, AddressManager $addressManager, Producer $withdrawOutputProducer)
     {
         $this->logger     = $logger;
         $this->bitcoind   = $bitcoind;
-        $this->em         = $em;
+        $this->addressManager = $addressManager;
         $this->withdrawOutputProducer = $withdrawOutputProducer;
     }
 
@@ -66,7 +66,7 @@ class WithdrawListener
         // $withdraw->getChangeAddressAmount() > 0
         if (bccomp($withdraw->getChangeAddressAmount(), '0', 8) === 1) {
             // Get a changeaddress
-            $changeAddress = $this->em->getRepository('DizdaAppBundle:Address')->getOneFreeAddress(false);
+            $changeAddress = $this->addressManager->create($withdraw->getWithdrawOutputs()[0]->getApplication(), false);
 
             // Sending change to a changeaddress
             $withdraw->setChangeAddress($changeAddress);

@@ -54,6 +54,6 @@ class LoadAddressTransactionData extends AbstractFixture implements OrderedFixtu
      */
     public function getOrder()
     {
-        return 6; // the order in which fixtures will be loaded
+        return 7; // the order in which fixtures will be loaded
     }
 }

@@ -47,30 +47,6 @@ class Keychain
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\OneToMany(
-     *      targetEntity    = "Dizda\Bundle\AppBundle\Entity\Pubkey",
-     *      mappedBy        = "keychain"
-     * )
-     *
-     * @Serializer\Groups({"WithdrawDetail"})
-     */
-    private $pubKeys;
-
-    /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     *
-     * @ORM\OneToMany(
-     *      targetEntity    = "Dizda\Bundle\AppBundle\Entity\Address",
-     *      mappedBy        = "keychain"
-     * )
-     *
-     * @Serializer\Exclude
-     */
-    private $addresses;
-
-    /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     *
-     * @ORM\OneToMany(
      *      targetEntity    = "Application",
      *      mappedBy        = "keychain"
      * )
@@ -92,6 +68,18 @@ class Keychain
     private $withdraws;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity    = "Identity",
+     *      mappedBy        = "keychain"
+     * )
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
+     */
+    private $identities;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -103,7 +91,7 @@ class Keychain
      * Get id
      * @codeCoverageIgnore
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -128,7 +116,7 @@ class Keychain
      * Get name
      * @codeCoverageIgnore
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -153,83 +141,11 @@ class Keychain
      * Get signRequired
      * @codeCoverageIgnore
      *
-     * @return integer 
+     * @return integer
      */
     public function getSignRequired()
     {
         return $this->signRequired;
-    }
-
-    /**
-     * Add pubKeys
-     * @codeCoverageIgnore
-     *
-     * @param \Dizda\Bundle\AppBundle\Entity\Pubkey $pubKeys
-     * @return Keychain
-     */
-    public function addPubKey(\Dizda\Bundle\AppBundle\Entity\Pubkey $pubKeys)
-    {
-        $this->pubKeys[] = $pubKeys;
-
-        return $this;
-    }
-
-    /**
-     * Remove pubKeys
-     * @codeCoverageIgnore
-     *
-     * @param \Dizda\Bundle\AppBundle\Entity\Pubkey $pubKeys
-     */
-    public function removePubKey(\Dizda\Bundle\AppBundle\Entity\Pubkey $pubKeys)
-    {
-        $this->pubKeys->removeElement($pubKeys);
-    }
-
-    /**
-     * Get pubKeys
-     * @codeCoverageIgnore
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPubKeys()
-    {
-        return $this->pubKeys;
-    }
-
-    /**
-     * Add addresses
-     * @codeCoverageIgnore
-     *
-     * @param \Dizda\Bundle\AppBundle\Entity\Address $addresses
-     * @return Keychain
-     */
-    public function addAddress(\Dizda\Bundle\AppBundle\Entity\Address $addresses)
-    {
-        $this->addresses[] = $addresses;
-
-        return $this;
-    }
-
-    /**
-     * Remove addresses
-     * @codeCoverageIgnore
-     *
-     * @param \Dizda\Bundle\AppBundle\Entity\Address $addresses
-     */
-    public function removeAddress(\Dizda\Bundle\AppBundle\Entity\Address $addresses)
-    {
-        $this->addresses->removeElement($addresses);
-    }
-
-    /**
-     * Get addresses
-     * @codeCoverageIgnore
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAddresses()
-    {
-        return $this->addresses;
     }
 
     /**
@@ -261,7 +177,7 @@ class Keychain
      * Get applications
      * @codeCoverageIgnore
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getApplications()
     {
@@ -297,10 +213,43 @@ class Keychain
      * Get withdraws
      * @codeCoverageIgnore
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWithdraws()
     {
         return $this->withdraws;
+    }
+
+    /**
+     * Add identities
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Identity $identities
+     * @return Keychain
+     */
+    public function addIdentity(\Dizda\Bundle\AppBundle\Entity\Identity $identities)
+    {
+        $this->identities[] = $identities;
+
+        return $this;
+    }
+
+    /**
+     * Remove identities
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Identity $identities
+     */
+    public function removeIdentity(\Dizda\Bundle\AppBundle\Entity\Identity $identities)
+    {
+        $this->identities->removeElement($identities);
+    }
+
+    /**
+     * Get identities
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIdentities()
+    {
+        return $this->identities;
     }
 }

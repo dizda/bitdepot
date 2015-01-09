@@ -17,9 +17,9 @@ class BlockchainMonitorCommand extends ContainerAwareCommand
         $this
             ->setName('dizda:blockchain:monitor')
             ->setDefinition(array(
-                new InputArgument('address')
+                new InputArgument('Monitor addresses')
             ))
-            ->setDescription('Get address')
+            ->setDescription('Monitor addresses')
             ->setHelp(<<<EOF
 The <info>%command.name%</info> command clears the application cache for a given environment
 and debug mode:

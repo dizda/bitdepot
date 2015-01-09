@@ -3,8 +3,6 @@
 namespace Dizda\Bundle\AppBundle\DataFixtures\ORM;
 
 use Dizda\Bundle\AppBundle\Entity\Application;
-use Dizda\Bundle\AppBundle\Entity\Deposit;
-use Dizda\Bundle\AppBundle\Entity\Pubkey;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;

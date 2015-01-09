@@ -4,6 +4,7 @@ namespace Dizda\Bundle\AppBundle\Entity;
 
 use Dizda\Bundle\AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Application
@@ -22,6 +23,8 @@ class Application
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
      */
     private $id;
 
@@ -81,6 +84,16 @@ class Application
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\OneToMany(
+     *      targetEntity    = "PubKey",
+     *      mappedBy        = "application"
+     * )
+     */
+    private $pubKeys;
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(
      *      targetEntity    = "Deposit",
      *      mappedBy        = "application"
      * )
@@ -88,18 +101,32 @@ class Application
     private $deposits;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity    = "Dizda\Bundle\AppBundle\Entity\Address",
+     *      mappedBy        = "application"
+     * )
+     *
+     * @Serializer\Exclude
+     */
+    private $addresses;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->deposits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->deposits  = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pubKeys   = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Get id
      * @codeCoverageIgnore
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -124,7 +151,7 @@ class Application
      * Get name
      * @codeCoverageIgnore
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -149,7 +176,7 @@ class Application
      * Get appId
      * @codeCoverageIgnore
      *
-     * @return string 
+     * @return string
      */
     public function getAppId()
     {
@@ -174,7 +201,7 @@ class Application
      * Get appSecret
      * @codeCoverageIgnore
      *
-     * @return string 
+     * @return string
      */
     public function getAppSecret()
     {
@@ -210,7 +237,7 @@ class Application
      * Get deposits
      * @codeCoverageIgnore
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDeposits()
     {
@@ -235,7 +262,7 @@ class Application
      * Get keychain
      * @codeCoverageIgnore
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Keychain 
+     * @return \Dizda\Bundle\AppBundle\Entity\Keychain
      */
     public function getKeychain()
     {
@@ -258,7 +285,7 @@ class Application
     /**
      * Get confirmationsRequired
      *
-     * @return integer 
+     * @return integer
      */
     public function getConfirmationsRequired()
     {
@@ -283,7 +310,7 @@ class Application
      * Get callbackEndpoint
      * @codeCoverageIgnore
      *
-     * @return string 
+     * @return string
      */
     public function getCallbackEndpoint()
     {
@@ -308,10 +335,88 @@ class Application
      * Get groupWithdrawsByQuantity
      * @codeCoverageIgnore
      *
-     * @return integer 
+     * @return integer
      */
     public function getGroupWithdrawsByQuantity()
     {
         return $this->groupWithdrawsByQuantity;
+    }
+
+    /**
+     * Add pubKeys
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\PubKey $pubKeys
+     * @return Application
+     */
+    public function addPubKey(\Dizda\Bundle\AppBundle\Entity\PubKey $pubKeys)
+    {
+        $this->pubKeys[] = $pubKeys;
+
+        return $this;
+    }
+
+    /**
+     * Remove pubKeys
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\PubKey $pubKeys
+     */
+    public function removePubKey(\Dizda\Bundle\AppBundle\Entity\PubKey $pubKeys)
+    {
+        $this->pubKeys->removeElement($pubKeys);
+    }
+
+    /**
+     * Get pubKeys
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPubKeys()
+    {
+        return $this->pubKeys;
+    }
+
+    /**
+     * Add addresses
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Address $addresses
+     * @return Application
+     */
+    public function addAddress(\Dizda\Bundle\AppBundle\Entity\Address $addresses)
+    {
+        $this->addresses[] = $addresses;
+
+        return $this;
+    }
+
+    /**
+     * Remove addresses
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Address $addresses
+     */
+    public function removeAddress(\Dizda\Bundle\AppBundle\Entity\Address $addresses)
+    {
+        $this->addresses->removeElement($addresses);
+    }
+
+    /**
+     * Get addresses
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
+
+    /**
+     * Get pubKeys that can be serialized
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPubKeysSerializable()
+    {
+        return $this->getPubKeys()->map(function ($item) {
+            return $item->getExtendedPubKey();
+        });
     }
 }

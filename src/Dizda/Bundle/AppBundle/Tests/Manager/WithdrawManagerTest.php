@@ -3,7 +3,10 @@
 namespace Dizda\Bundle\AppBundle\Tests\Manager;
 
 use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
-use Dizda\Bundle\AppBundle\Entity\Pubkey;
+use Dizda\Bundle\AppBundle\Entity\Application;
+use Dizda\Bundle\AppBundle\Entity\Identity;
+use Dizda\Bundle\AppBundle\Entity\Keychain;
+use Dizda\Bundle\AppBundle\Entity\PubKey;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTestCase;
@@ -184,21 +187,25 @@ class WithdrawManagerTest extends ProphecyTestCase
         ];
         $withdrawSubmitted = (new PostWithdrawRequest($withdrawSubmitted))->options;
 
-        $withdraw->setRawSignedTransaction(Argument::exact('rawSignedTransactionBITCH'))->shouldBeCalled();
-        $withdraw->getKeychain()->shouldBeCalled();
+        $keychain = new Keychain();
+        $identity = (new Identity())->setKeychain($keychain);
 
-        $this->em->getRepository('DizdaAppBundle:Pubkey')
+        $withdraw->setRawSignedTransaction(Argument::exact('rawSignedTransactionBITCH'))->shouldBeCalled();
+        $withdraw->getKeychain()->shouldBeCalled()->willReturn($keychain);
+
+        $this->em->getRepository('DizdaAppBundle:Identity')
             ->shouldBeCalled()
             ->willReturn($repo->reveal())
         ;
 
         $repo->findOneBy([
-            'keychain' => null,
-            'value'    => 'JESSEEPINKM4n'
-        ])->shouldBeCalled()->willReturn(new Pubkey());
+            'publicKey' => 'JESSEEPINKM4n',
+            'keychain'  => $keychain
+        ])->shouldBeCalled()->willReturn($identity);
 
-        $withdraw->addSignature(Argument::type('Dizda\Bundle\AppBundle\Entity\Pubkey'))->shouldBeCalled();
+        $withdraw->addSignature(Argument::type('Dizda\Bundle\AppBundle\Entity\Identity'))->shouldBeCalled();
         $withdraw->setIsSigned(true)->shouldBeCalled();
+
 
         $this->manager->save($withdraw->reveal(), $withdrawSubmitted);
     }

@@ -1,4 +1,6 @@
-var bitcore = require('bitcore');
+var bitcore = require('bitcore')
+  , bitcoin = require('bitcoinjs-lib')
+  , Hash = bitcore.crypto.Hash;
 
 
 //var rawTransaction = '010000000155a3dd66c03bd64f6512fc47c9156db1a431946e07536d7ed5321df051d6bfc50100000000ffffffff0210270000000000001976a914d356d4d8079f8556be4c8102ecf00cc63344e75488ac102700000000000017a914dec137068316fe8ddffdf05befb24d786e38adf98700000000';
@@ -8,9 +10,17 @@ var bitcore = require('bitcore');
 //console.log(transaction.toObject());
 
 // TODO: https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki
-
+//console.log(Hash.sha256('coucou'));
 var hdPrivateKey = new bitcore.HDPrivateKey('xprv9s21ZrQH143K2JF8RafpqtKiTbsbaxEeUaMnNHsm5o6wCW3z8ySyH4UxFVSfZ8n7ESu7fgir8imbZKLYVBxFPND1pniTZ81vKfd45EHKX73');
 console.log(hdPrivateKey);
+
+var hdPrivateKey = bitcore.HDPrivateKey.fromSeed(bitcoin.crypto.sha256('coucou'), bitcore.Networks.livenet);
+console.log(hdPrivateKey);
+
+var wallet = new bitcoin.Wallet(bitcoin.crypto.sha256('coucou'), bitcoin.networks.testnet);
+console.log(wallet.getMasterKey().toBase58());
+console.log('end');
+
 //var retrieved = new HDPrivateKey('xpriv...');
 //var derived = hdPrivateKey.derive("m/0'");
 //var derived = hdPrivateKey.derive(1).derive(2, true);
@@ -34,14 +44,14 @@ var hdPubAddress = new bitcore.Address(extendedPublicKey.derive(0 /* internal ac
 
 console.log(hdPubAddress);
 
-var pubkey1 = extendedPublicKey.derive(0).derive(0).publicKey;
-var pubkey2 = extendedPublicKey.derive(0).derive(1).publicKey;
-var pubkey3 = extendedPublicKey.derive(0).derive(2).publicKey;
+var signer1 = extendedPublicKey.derive(0).derive(0).publicKey;
+var signer2 = extendedPublicKey.derive(0).derive(1).publicKey;
+var signer3 = extendedPublicKey.derive(0).derive(2).publicKey;
 
 var pubkeys = [
-    pubkey1,
-    pubkey2,
-    pubkey3
+    signer1,
+    signer2,
+    signer3
 ];
 var redeemScript = bitcore.Script.buildMultisigOut(pubkeys, 2);
 var script = redeemScript.toScriptHashOut();
@@ -50,4 +60,17 @@ console.log(redeemScript.toBuffer().toString('hex')); // serialize to Hex format
 var multisigAddress = new bitcore.Address(redeemScript, bitcore.Networks.livenet);
 console.log(multisigAddress);
 
+
 // TODO: add 'extended_public_key' field to 'Pubkey' entity
+
+
+
+
+
+
+console.log('\nGenerate an address from Public Extended Key:');
+
+var pubkey = new bitcore.HDPublicKey('xpub6CceUL4HSiPa2ms86Ay94Pw4YETv4xAyfRyt7vk9CuQ71rZo5hmNmm9uSx7vVxVG4SUeADNBSUhoRNGU2CbPEsGxNtBJ7uBSQQUdxtSNeT2');
+
+var hdPubAddress = new bitcore.Address(pubkey.derive(0 /* internal account */).derive(0 /* address index */).publicKey, bitcore.Networks.livenet);
+console.log(hdPubAddress);

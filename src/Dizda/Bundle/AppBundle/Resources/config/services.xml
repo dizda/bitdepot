@@ -10,6 +10,7 @@
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument type="service" id="logger" />
             <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="dizda_app.service.address" />
         </service>
 
         <service id="dizda_app.manager.withdraw" class="Dizda\Bundle\AppBundle\Manager\WithdrawManager">
@@ -22,6 +23,7 @@
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument type="service" id="logger" />
             <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="dizda_app.manager.address" />
         </service>
 
         <service id="dizda_app.manager.withdraw_output" class="Dizda\Bundle\AppBundle\Manager\WithdrawOutputManager">
@@ -47,7 +49,7 @@
             <tag name="kernel.event_listener" event="app.withdraw_send" method="onSend" />
             <argument type="service" id="logger" />
             <argument type="service" id="bitcoind" />
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="dizda_app.manager.address" />
             <argument type="service" id="old_sound_rabbit_mq.withdraw_output_callback_producer" />
         </service>
 
@@ -81,6 +83,13 @@
         <!-- Services -->
         <service id="dizda_app.service.callback" class="Dizda\Bundle\AppBundle\Service\CallbackService">
             <argument type="service" id="jms_serializer" />
+        </service>
+
+        <service id="dizda_app.service.address" class="Dizda\Bundle\AppBundle\Service\AddressService">
+            <argument type="service" id="serializer" />
+            <argument type="service" id="logger" />
+            <argument>%kernel.root_dir%/../</argument>
+            <argument>%nodejs_path%</argument>
         </service>
     </services>
 </container>

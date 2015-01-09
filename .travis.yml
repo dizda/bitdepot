@@ -12,6 +12,7 @@ install:
 script:
     - mkdir -p build/logs
 #    - ./vendor/phpunit/phpunit/phpunit -c app/
+    - cd node/ && npm install && cd ../
     - make tests
 
 after_script:
