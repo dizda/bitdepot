@@ -4,6 +4,7 @@ namespace Dizda\Bundle\BlockchainBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -25,8 +26,14 @@ class DizdaBlockchainExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        foreach($config as $k => $v) {
+        foreach ($config as $k => $v) {
             $container->setParameter('dizda_blockchain.' . $k, $v);
         }
+
+        // Let the user to choose the blockchain provider
+        $blockchainProvider = $container->getDefinition('dizda_blockchain.blockchain.provider');
+        $blockchainProvider->replaceArgument(0, new Reference(
+            sprintf('dizda_blockchain.blockchain.%s', $container->getParameter('dizda_blockchain.provider'))
+        ));
     }
 }

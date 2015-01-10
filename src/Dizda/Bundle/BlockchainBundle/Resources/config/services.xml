@@ -17,7 +17,7 @@
         </service>
 
         <service id="dizda_blockchain.blockchain.provider" class="Dizda\Bundle\BlockchainBundle\Blockchain\BlockchainProvider">
-            <argument type="service" id="dizda_blockchain.blockchain.insight" />
+            <argument type="service" id="dizda_blockchain.blockchain.chain" />
         </service>
 
         <service id="dizda_blockchain.blockchain.manager" class="Dizda\Bundle\BlockchainBundle\Manager\BlockchainManager">
