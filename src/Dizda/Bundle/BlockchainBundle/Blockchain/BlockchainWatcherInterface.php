@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\BlockchainBundle\Blockchain;
 
 use Dizda\Bundle\BlockchainBundle\Client\HttpClient;
+use Dizda\Bundle\BlockchainBundle\Model\TransactionAbstract;
 use JMS\Serializer\SerializerInterface;
 use Dizda\Bundle\BlockchainBundle\Model\AddressAbstract;
 
@@ -21,6 +22,9 @@ interface BlockchainWatcherInterface
     public function getAddress($address, $withTransactions);
     public function getAddresses(array $addresses, $withTransactions);
 
+    /**
+     * @return TransactionAbstract
+     */
     public function getTransaction($txid);
 
     public function getAddressUnspentOutputs($address);

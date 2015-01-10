@@ -283,11 +283,13 @@ class WithdrawListenerTest extends ProphecyTestCase
         $this->bitcoind     = $this->prophesize('Nbobtc\Bitcoind\Bitcoind');
         $this->withdrawEvent = $this->prophesize('Dizda\Bundle\AppBundle\Event\WithdrawEvent');
         $this->producer      = $this->prophesize('OldSound\RabbitMqBundle\RabbitMq\Producer');
+        $this->producer2      = $this->prophesize('OldSound\RabbitMqBundle\RabbitMq\Producer');
         $this->manager      = new WithdrawListener(
             $this->logger->reveal(),
             $this->bitcoind->reveal(),
             $this->addressManager->reveal(),
-            $this->producer->reveal()
+            $this->producer->reveal(),
+            $this->producer2->reveal()
         );
     }
 }

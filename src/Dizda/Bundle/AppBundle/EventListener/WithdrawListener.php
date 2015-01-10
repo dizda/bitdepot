@@ -32,6 +32,11 @@ class WithdrawListener
     /**
      * @var \OldSound\RabbitMqBundle\RabbitMq\Producer
      */
+    private $withdrawProducer;
+
+    /**
+     * @var \OldSound\RabbitMqBundle\RabbitMq\Producer
+     */
     private $withdrawOutputProducer;
 
     /**
@@ -39,12 +44,14 @@ class WithdrawListener
      * @param Bitcoind            $bitcoind
      * @param AddressManager      $addressManager
      * @param Producer            $withdrawOutputProducer
+     * @param Producer            $withdrawProducer
      */
-    public function __construct(LoggerInterface $logger, Bitcoind $bitcoind, AddressManager $addressManager, Producer $withdrawOutputProducer)
+    public function __construct(LoggerInterface $logger, Bitcoind $bitcoind, AddressManager $addressManager, Producer $withdrawOutputProducer, Producer $withdrawProducer)
     {
         $this->logger     = $logger;
         $this->bitcoind   = $bitcoind;
         $this->addressManager = $addressManager;
+        $this->withdrawProducer = $withdrawProducer;
         $this->withdrawOutputProducer = $withdrawOutputProducer;
     }
 
@@ -106,5 +113,9 @@ class WithdrawListener
         foreach ($withdraw->getWithdrawOutputs() as $output) {
             $this->withdrawOutputProducer->publish($output->getId());
         }
+
+//        $this->withdrawProducer->publish(serialize([
+//            'txid' => $transactionId
+//        ]));
     }
 }

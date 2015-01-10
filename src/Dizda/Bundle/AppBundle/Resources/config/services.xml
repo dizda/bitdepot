@@ -51,6 +51,7 @@
             <argument type="service" id="bitcoind" />
             <argument type="service" id="dizda_app.manager.address" />
             <argument type="service" id="old_sound_rabbit_mq.withdraw_output_callback_producer" />
+            <argument type="service" id="old_sound_rabbit_mq.withdraw_producer" />
         </service>
 
         <!-- Doctrine EventListener -->

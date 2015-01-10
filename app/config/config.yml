@@ -127,6 +127,10 @@ old_sound_rabbit_mq:
         deposit_topup:
             connection:       default
             exchange_options: { name: deposit-topup, type: direct }
+        # Withdrawed, then get informations on the blockchain, then dispatch withdraw_output_callback
+        withdraw:
+            connection:       default
+            exchange_options: { name: withdraw, type: direct }
         withdraw_output_callback:
             connection:       default
             exchange_options: { name: withdraw-output-callback, type: direct }
