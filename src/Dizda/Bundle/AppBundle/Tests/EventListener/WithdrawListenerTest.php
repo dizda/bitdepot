@@ -3,7 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Tests\EventListener;
 
 use Dizda\Bundle\AppBundle\Entity\Address;
-use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
+use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Entity\Withdraw;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
@@ -142,13 +142,13 @@ class WithdrawListenerTest extends ProphecyTestCase
             ->setTotalOutputs('0.0003')
             ->setFees('0.0001')
             ->addWithdrawInput(
-                (new AddressTransaction())
+                (new Transaction())
                     ->setTxid('431c5231114ce2d00125ea4a88f4e4637b80fef1117a0b20606204e45cc3678f')
                     ->setIndex(1)
                     ->setAddress(new Address())
             )
             ->addWithdrawInput(
-                (new AddressTransaction())
+                (new Transaction())
                     ->setTxid('be0f6dc2cd45c0fcfaaf2d7aa19190bc2fcb5481b0a21ac7f309cecd5e75db9f')
                     ->setIndex(0)
                     ->setAddress(new Address())
@@ -176,12 +176,12 @@ class WithdrawListenerTest extends ProphecyTestCase
             ->setTotalOutputs('0.0003')
             ->setFees('0.0001')
             ->addWithdrawInput(
-                (new AddressTransaction())
+                (new Transaction())
                     ->setTxid('431c5231114ce2d00125ea4a88f4e4637b80fef1117a0b20606204e45cc3678f')
                     ->setIndex(1)
             )
             ->addWithdrawInput(
-                (new AddressTransaction())
+                (new Transaction())
                     ->setTxid('be0f6dc2cd45c0fcfaaf2d7aa19190bc2fcb5481b0a21ac7f309cecd5e75db9f')
                     ->setIndex(0)
             )
@@ -208,12 +208,12 @@ class WithdrawListenerTest extends ProphecyTestCase
             ->setTotalOutputs('0.0003')
             ->setFees('0.0001')
             ->addWithdrawInput(
-                (new AddressTransaction())
+                (new Transaction())
                     ->setTxid('431c5231114ce2d00125ea4a88f4e4637b80fef1117a0b20606204e45cc3678f')
                     ->setIndex(1)
             )
             ->addWithdrawInput(
-                (new AddressTransaction())
+                (new Transaction())
                     ->setTxid('be0f6dc2cd45c0fcfaaf2d7aa19190bc2fcb5481b0a21ac7f309cecd5e75db9f')
                     ->setIndex(0)
             )

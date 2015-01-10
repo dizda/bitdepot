@@ -4,9 +4,9 @@ namespace Dizda\Bundle\AppBundle\Manager;
 
 use Dizda\Bundle\AppBundle\AppEvents;
 use Dizda\Bundle\AppBundle\Entity\Address;
-use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
+use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\Entity\Application;
-use Dizda\Bundle\AppBundle\Event\AddressTransactionEvent;
+use Dizda\Bundle\AppBundle\Event\TransactionEvent;
 use Dizda\Bundle\AppBundle\Service\AddressService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
@@ -113,16 +113,16 @@ class AddressManager
                 // Check if transaction already exist
                 if ($address->hasTransaction(
                     $transaction->getTxid(),
-                    AddressTransaction::TYPE_OUT,
+                    Transaction::TYPE_OUT,
                     $input->getIndex()
                 )) {
                     continue;
                 }
 
-                $addressTransaction = new AddressTransaction();
+                $addressTransaction = new Transaction();
                 $addressTransaction->setAddress($address)
                     ->setTxid($transaction->getTxid())
-                    ->setType(AddressTransaction::TYPE_OUT)
+                    ->setType(Transaction::TYPE_OUT)
                     ->setAmount($input->getValue())
                     ->setAddresses([ $input->getAddress() ])
                     ->setIndex($input->getIndex())
@@ -132,7 +132,7 @@ class AddressManager
 
                 $this->logger->notice('Transaction added', [ $transaction->getTxid(), $address->getValue() ]);
 
-                $this->dispatcher->dispatch(AppEvents::ADDRESS_TRANSACTION_CREATE, new AddressTransactionEvent($addressTransaction));
+                $this->dispatcher->dispatch(AppEvents::ADDRESS_TRANSACTION_CREATE, new TransactionEvent($addressTransaction));
             }
 
             // if not, we scan the outputs to see if our address is the receiver
@@ -144,16 +144,16 @@ class AddressManager
                 // Check if transaction already exist
                 if ($address->hasTransaction(
                     $transaction->getTxid(),
-                    AddressTransaction::TYPE_IN,
+                    Transaction::TYPE_IN,
                     $output->getIndex()
                 )) {
                     continue;
                 }
 
-                $addressTransaction = new AddressTransaction();
+                $addressTransaction = new Transaction();
                 $addressTransaction->setAddress($address)
                     ->setTxid($transaction->getTxid())
-                    ->setType(AddressTransaction::TYPE_IN)
+                    ->setType(Transaction::TYPE_IN)
                     ->setAmount($output->getValue())
                     ->setAddresses($output->getAddresses())
                     ->setIndex($output->getIndex())
@@ -161,7 +161,7 @@ class AddressManager
 
                 $this->em->persist($addressTransaction);
 
-                $this->dispatcher->dispatch(AppEvents::ADDRESS_TRANSACTION_CREATE, new AddressTransactionEvent($addressTransaction));
+                $this->dispatcher->dispatch(AppEvents::ADDRESS_TRANSACTION_CREATE, new TransactionEvent($addressTransaction));
 
                 $transactionsInAdded[] = $addressTransaction;
             }

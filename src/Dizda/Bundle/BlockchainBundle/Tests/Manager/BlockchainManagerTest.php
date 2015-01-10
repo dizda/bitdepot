@@ -3,7 +3,7 @@
 namespace Dizda\Bundle\BlockchainBundle\Tests\Manager;
 
 use Dizda\Bundle\AppBundle\Entity\Address;
-use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
+use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Doctrine\Common\Collections\ArrayCollection;
 use Prophecy\Argument;
@@ -44,7 +44,7 @@ class BlockchainManagerTest extends ProphecyTestCase
         $address           = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Address');
         $addressFromBc     = $this->prophesize('Dizda\Bundle\BlockchainBundle\Model\AddressAbstract');
 
-        $transactions = new ArrayCollection([new AddressTransaction()]);
+        $transactions = new ArrayCollection([new Transaction()]);
         $application  = new Application();
         $application->setConfirmationsRequired(2);
 
@@ -93,7 +93,7 @@ class BlockchainManagerTest extends ProphecyTestCase
         $address           = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Address');
         $addressFromBc     = $this->prophesize('Dizda\Bundle\BlockchainBundle\Model\AddressAbstract');
 
-        $transactions = new ArrayCollection([new AddressTransaction()]);
+        $transactions = new ArrayCollection([new Transaction()]);
         $application  = new Application();
         $application->setConfirmationsRequired(2);
 

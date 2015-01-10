@@ -3,7 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Tests\Entity;
 
 use Dizda\Bundle\AppBundle\Entity\Address;
-use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
+use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Prophecy\PhpUnit\ProphecyTestCase;
 
 class AddressTest extends ProphecyTestCase
@@ -14,17 +14,17 @@ class AddressTest extends ProphecyTestCase
      */
     public function testHasTransaction()
     {
-        $transaction = (new AddressTransaction())
+        $transaction = (new Transaction())
             ->setTxid('suckMyBitecoin')
-            ->setType(AddressTransaction::TYPE_IN)
+            ->setType(Transaction::TYPE_IN)
             ->setIndex(1)
         ;
 
         $address = new Address();
-        $this->assertFalse($address->hasTransaction('suckMyBitecoin', AddressTransaction::TYPE_IN, 1));
+        $this->assertFalse($address->hasTransaction('suckMyBitecoin', Transaction::TYPE_IN, 1));
 
         $address->addTransaction($transaction);
-        $this->assertTrue($address->hasTransaction('suckMyBitecoin', AddressTransaction::TYPE_IN, 1));
-        $this->assertFalse($address->hasTransaction('suckMyBitecoin', AddressTransaction::TYPE_OUT, 1));
+        $this->assertTrue($address->hasTransaction('suckMyBitecoin', Transaction::TYPE_IN, 1));
+        $this->assertFalse($address->hasTransaction('suckMyBitecoin', Transaction::TYPE_OUT, 1));
     }
 }

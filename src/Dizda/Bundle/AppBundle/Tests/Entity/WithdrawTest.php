@@ -3,7 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Tests\Entity;
 
 use Dizda\Bundle\AppBundle\Entity\Address;
-use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
+use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\Entity\Withdraw;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
 use Prophecy\PhpUnit\ProphecyTestCase;
@@ -73,15 +73,15 @@ class WithdrawTest extends ProphecyTestCase
     public function testSetInputs()
     {
         $transactions = [
-            (new AddressTransaction())
+            (new Transaction())
                 ->setAmount('0.0001'),
-            (new AddressTransaction())
+            (new Transaction())
                 ->setAmount('0.0001'),
-            (new AddressTransaction())
+            (new Transaction())
                 ->setAmount('0.0002'),
-            (new AddressTransaction())
+            (new Transaction())
                 ->setAmount('0.0001'),
-            (new AddressTransaction())
+            (new Transaction())
                 ->setAmount('0.0002'), // not used
         ];
 

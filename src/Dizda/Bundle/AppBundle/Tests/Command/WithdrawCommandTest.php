@@ -2,7 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Command;
 
-use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
+use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
 use Dizda\Bundle\AppBundle\Tests\BaseFunctionalTestCommand;
 
@@ -89,8 +89,8 @@ class WithdrawCommandTest extends BaseFunctionalTestCommand
             ->findOneByValue('3MxR1yHVpfB7cXULzpetoyNVvUeqhoaJhE')
         ;
 
-        $transaction = (new AddressTransaction())
-            ->setType(AddressTransaction::TYPE_IN)
+        $transaction = (new Transaction)
+            ->setType(Transaction::TYPE_IN)
             ->setAddress($address)
             ->setAmount('0.0003')
             ->setIndex(0)

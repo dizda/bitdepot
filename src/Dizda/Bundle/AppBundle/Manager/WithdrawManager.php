@@ -83,7 +83,7 @@ class WithdrawManager
         // Setting outputs
         $withdraw->setOutputs($outputs);
 
-        $transactions = $this->em->getRepository('DizdaAppBundle:AddressTransaction')
+        $transactions = $this->em->getRepository('DizdaAppBundle:Transaction')
             ->getSpendableTransactions()
 //            ->getSpendableTransactions($application, $withdraw->getTotalOutputs())
         ;

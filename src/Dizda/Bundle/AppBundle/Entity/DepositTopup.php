@@ -32,12 +32,12 @@ class DepositTopup implements MessageQueuingInterface
     private $id;
 
     /**
-     * @var \Dizda\Bundle\AppBundle\Entity\AddressTransaction
+     * @var \Dizda\Bundle\AppBundle\Entity\Transaction
      *
-     * @ORM\OneToOne(targetEntity="AddressTransaction", inversedBy="topup")
+     * @ORM\OneToOne(targetEntity="Transaction", inversedBy="topup")
      * @ORM\JoinColumn(name="address_transaction_id", referencedColumnName="id", nullable=false)
      *
-     * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\AddressTransaction")
+     * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\Transaction")
      **/
     private $transaction;
 
@@ -91,10 +91,10 @@ class DepositTopup implements MessageQueuingInterface
      * Set transaction
      * @codeCoverageIgnore
      *
-     * @param \Dizda\Bundle\AppBundle\Entity\AddressTransaction $transaction
+     * @param \Dizda\Bundle\AppBundle\Entity\Transaction $transaction
      * @return DepositTopup
      */
-    public function setTransaction(\Dizda\Bundle\AppBundle\Entity\AddressTransaction $transaction)
+    public function setTransaction(\Dizda\Bundle\AppBundle\Entity\Transaction $transaction)
     {
         $this->transaction = $transaction;
 
@@ -105,7 +105,7 @@ class DepositTopup implements MessageQueuingInterface
      * Get transaction
      * @codeCoverageIgnore
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\AddressTransaction 
+     * @return \Dizda\Bundle\AppBundle\Entity\Transaction
      */
     public function getTransaction()
     {

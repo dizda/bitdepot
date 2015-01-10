@@ -24,7 +24,7 @@ class Fixtures
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadPubKeyData',
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadAddressData',
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadDepositData',
-            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadAddressTransactionData',
+            'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadTransactionData',
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadWithdrawOutputData',
             'Dizda\Bundle\AppBundle\DataFixtures\ORM\LoadWithdrawData',
             'Dizda\Bundle\UserBundle\DataFixtures\ORM\LoadUserData'

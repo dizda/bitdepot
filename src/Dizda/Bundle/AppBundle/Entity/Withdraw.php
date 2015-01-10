@@ -127,12 +127,12 @@ class Withdraw
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\OneToMany(
-     *      targetEntity    = "AddressTransaction",
+     *      targetEntity    = "Transaction",
      *      mappedBy        = "withdraw"
      * )
      *
      * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
-     * @Serializer\Type("array<Dizda\Bundle\AppBundle\Entity\AddressTransaction>")
+     * @Serializer\Type("array<Dizda\Bundle\AppBundle\Entity\Transaction>")
      */
     private $withdrawInputs;
 
@@ -340,10 +340,10 @@ class Withdraw
     /**
      * Add withdrawInputs
      *
-     * @param \Dizda\Bundle\AppBundle\Entity\AddressTransaction $withdrawInputs
+     * @param \Dizda\Bundle\AppBundle\Entity\Transaction $withdrawInputs
      * @return Withdraw
      */
-    public function addWithdrawInput(\Dizda\Bundle\AppBundle\Entity\AddressTransaction $withdrawInputs)
+    public function addWithdrawInput(\Dizda\Bundle\AppBundle\Entity\Transaction $withdrawInputs)
     {
         $this->withdrawInputs[] = $withdrawInputs;
 
@@ -356,9 +356,9 @@ class Withdraw
      * Remove withdrawInputs
      * @codeCoverageIgnore
      *
-     * @param \Dizda\Bundle\AppBundle\Entity\AddressTransaction $withdrawInputs
+     * @param \Dizda\Bundle\AppBundle\Entity\Transaction $withdrawInputs
      */
-    public function removeWithdrawInput(\Dizda\Bundle\AppBundle\Entity\AddressTransaction $withdrawInputs)
+    public function removeWithdrawInput(\Dizda\Bundle\AppBundle\Entity\Transaction $withdrawInputs)
     {
         $this->withdrawInputs->removeElement($withdrawInputs);
     }
@@ -723,7 +723,7 @@ class Withdraw
     }
 
     /**
-     * Setting input transactions from AddressTransaction entities
+     * Setting input transactions from Transaction entities
      *
      * @param array $inputs
      */

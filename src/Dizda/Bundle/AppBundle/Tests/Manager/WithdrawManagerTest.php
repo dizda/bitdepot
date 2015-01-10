@@ -2,7 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Manager;
 
-use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
+use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Entity\Identity;
 use Dizda\Bundle\AppBundle\Entity\Keychain;
@@ -117,16 +117,16 @@ class WithdrawManagerTest extends ProphecyTestCase
      */
     public function testCreateSuccessWithNoChangeAddress()
     {
-        $addressTransRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\AddressTransactionRepository');
+        $addressTransRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\TransactionRepository');
 
-        $this->em->getRepository('DizdaAppBundle:AddressTransaction')
+        $this->em->getRepository('DizdaAppBundle:Transaction')
             ->shouldBeCalled()
             ->willReturn($addressTransRepo->reveal())
         ;
 
         $addressTransRepo->getSpendableTransactions()
             ->shouldBeCalled()
-            ->willReturn([(new AddressTransaction())->setAmount('0.0002')])
+            ->willReturn([(new Transaction())->setAmount('0.0002')])
         ;
 
         $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Withdraw'))->shouldBeCalled();
@@ -145,16 +145,16 @@ class WithdrawManagerTest extends ProphecyTestCase
      */
     public function testCreateSuccessInsufficientAmountAvailable()
     {
-        $addressTransRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\AddressTransactionRepository');
+        $addressTransRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\TransactionRepository');
 
-        $this->em->getRepository('DizdaAppBundle:AddressTransaction')
+        $this->em->getRepository('DizdaAppBundle:Transaction')
             ->shouldBeCalled()
             ->willReturn($addressTransRepo->reveal())
         ;
 
         $addressTransRepo->getSpendableTransactions()
             ->shouldBeCalled()
-            ->willReturn([(new AddressTransaction())->setAmount('0.0001')])
+            ->willReturn([(new Transaction())->setAmount('0.0001')])
         ;
 
         $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Withdraw'))->shouldNotBeCalled();

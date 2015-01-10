@@ -112,7 +112,7 @@ class Address
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\OneToMany(
-     *      targetEntity  = "AddressTransaction",
+     *      targetEntity  = "Transaction",
      *      mappedBy      = "address"
      * )
      *
@@ -264,10 +264,10 @@ class Address
      * Add transactions
      * @codeCoverageIgnore
      *
-     * @param \Dizda\Bundle\AppBundle\Entity\AddressTransaction $transactions
+     * @param \Dizda\Bundle\AppBundle\Entity\Transaction $transactions
      * @return Address
      */
-    public function addTransaction(\Dizda\Bundle\AppBundle\Entity\AddressTransaction $transactions)
+    public function addTransaction(\Dizda\Bundle\AppBundle\Entity\Transaction $transactions)
     {
         $this->transactions[] = $transactions;
 
@@ -278,9 +278,9 @@ class Address
      * Remove transactions
      * @codeCoverageIgnore
      *
-     * @param \Dizda\Bundle\AppBundle\Entity\AddressTransaction $transactions
+     * @param \Dizda\Bundle\AppBundle\Entity\Transaction $transactions
      */
-    public function removeTransaction(\Dizda\Bundle\AppBundle\Entity\AddressTransaction $transactions)
+    public function removeTransaction(\Dizda\Bundle\AppBundle\Entity\Transaction $transactions)
     {
         $this->transactions->removeElement($transactions);
     }

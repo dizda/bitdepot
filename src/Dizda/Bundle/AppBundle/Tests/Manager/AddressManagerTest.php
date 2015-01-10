@@ -2,8 +2,8 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Manager;
 
-use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
-use Dizda\Bundle\BlockchainBundle\Model\Insight\Transaction;
+use Dizda\Bundle\AppBundle\Entity\Transaction;
+use Dizda\Bundle\BlockchainBundle\Model\Insight\Transaction as InsightTransaction;
 use Dizda\Bundle\BlockchainBundle\Model\Insight\TransactionInput;
 use Dizda\Bundle\BlockchainBundle\Model\Insight\TransactionOutput;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -48,12 +48,12 @@ class AddressManagerTest extends ProphecyTestCase
     {
         $address = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Address');
         $address->getValue()->shouldBeCalled()->willReturn('addressExpected');
-        $address->hasTransaction('transactionId', AddressTransaction::TYPE_OUT, 5)
+        $address->hasTransaction('transactionId', Transaction::TYPE_OUT, 5)
             ->shouldBeCalled()
             ->willReturn(false)
         ; // check that doesn't match the input
 
-        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\AddressTransaction'))->shouldBeCalledTimes(1);
+        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Transaction'))->shouldBeCalledTimes(1);
 
         $return = $this->manager->saveTransactions($address->reveal(), new ArrayCollection($this->getDummyTransactionsInput()));
         $this->assertCount(0, $return);
@@ -66,12 +66,12 @@ class AddressManagerTest extends ProphecyTestCase
     {
         $address = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Address');
         $address->getValue()->shouldBeCalled()->willReturn('addressExpectedIN');
-        $address->hasTransaction('transactionId', AddressTransaction::TYPE_IN, 6)
+        $address->hasTransaction('transactionId', Transaction::TYPE_IN, 6)
             ->shouldBeCalled()
             ->willReturn(false)
         ; // check that doesn't match the output
 
-        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\AddressTransaction'))->shouldBeCalledTimes(1);
+        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Transaction'))->shouldBeCalledTimes(1);
 
         $return = $this->manager->saveTransactions($address->reveal(), new ArrayCollection($this->getDummyTransactionsOutput()));
         $this->assertCount(1, $return);
@@ -84,12 +84,12 @@ class AddressManagerTest extends ProphecyTestCase
     {
         $address = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Address');
         $address->getValue()->shouldBeCalled()->willReturn('addressExpected');
-        $address->hasTransaction('transactionId', AddressTransaction::TYPE_OUT, 5)
+        $address->hasTransaction('transactionId', Transaction::TYPE_OUT, 5)
             ->shouldBeCalled()
             ->willReturn(true)
         ; // check that match the input
 
-        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\AddressTransaction'))->shouldNotBeCalled();
+        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Transaction'))->shouldNotBeCalled();
 
         $return = $this->manager->saveTransactions($address->reveal(), new ArrayCollection($this->getDummyTransactionsNone()));
         $this->assertCount(0, $return);
@@ -102,12 +102,12 @@ class AddressManagerTest extends ProphecyTestCase
     {
         $address = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Address');
         $address->getValue()->shouldBeCalled()->willReturn('addressExpectedIN');
-        $address->hasTransaction('transactionId', AddressTransaction::TYPE_IN, 6)
+        $address->hasTransaction('transactionId', Transaction::TYPE_IN, 6)
             ->shouldBeCalled()
             ->willReturn(true)
         ; // check that match the output
 
-        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\AddressTransaction'))->shouldNotBeCalled();
+        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Transaction'))->shouldNotBeCalled();
 
         $return = $this->manager->saveTransactions($address->reveal(), new ArrayCollection($this->getDummyTransactionsNone()));
         $this->assertCount(0, $return);
@@ -119,7 +119,7 @@ class AddressManagerTest extends ProphecyTestCase
     public function getDummyTransactionsInput()
     {
         return [
-            (new Transaction())
+            (new InsightTransaction())
                 ->setTxid('transactionId')
                 ->setInputs([
                     (new TransactionInput())
@@ -138,7 +138,7 @@ class AddressManagerTest extends ProphecyTestCase
     public function getDummyTransactionsOutput()
     {
         return [
-            (new Transaction())
+            (new InsightTransaction())
                 ->setTxid('transactionId')
                 ->setInputs([
                     (new TransactionInput())
@@ -157,7 +157,7 @@ class AddressManagerTest extends ProphecyTestCase
     public function getDummyTransactionsNone()
     {
         return [
-            (new Transaction())
+            (new InsightTransaction())
                 ->setTxid('transactionId')
                 ->setInputs([
                     (new TransactionInput())

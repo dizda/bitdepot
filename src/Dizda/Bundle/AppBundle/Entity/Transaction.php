@@ -9,11 +9,11 @@ use JMS\Serializer\Annotation as Serializer;
  * DepositTransaction
  *
  * @ORM\Table(name="address_transaction")
- * @ORM\Entity(repositoryClass="Dizda\Bundle\AppBundle\Repository\AddressTransactionRepository")
+ * @ORM\Entity(repositoryClass="Dizda\Bundle\AppBundle\Repository\TransactionRepository")
  *
  * @ORM\HasLifecycleCallbacks()
  */
-class AddressTransaction
+class Transaction
 {
     use \Dizda\Bundle\AppBundle\Traits\Timestampable;
 
@@ -136,7 +136,7 @@ class AddressTransaction
      * Set amount
      *
      * @param string $amount
-     * @return AddressTransaction
+     * @return Transaction
      */
     public function setAmount($amount)
     {
@@ -160,7 +160,7 @@ class AddressTransaction
      * @codeCoverageIgnore
      *
      * @param string $id
-     * @return AddressTransaction
+     * @return Transaction
      */
     public function setId($id)
     {
@@ -173,7 +173,7 @@ class AddressTransaction
      * Set type
      *
      * @param integer $type
-     * @return AddressTransaction
+     * @return Transaction
      */
     public function setType($type)
     {
@@ -196,7 +196,7 @@ class AddressTransaction
      * Set addresses
      *
      * @param array $addresses
-     * @return AddressTransaction
+     * @return Transaction
      */
     public function setAddresses($addresses)
     {
@@ -220,7 +220,7 @@ class AddressTransaction
      * Set address
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Address $address
-     * @return AddressTransaction
+     * @return Transaction
      */
     public function setAddress(\Dizda\Bundle\AppBundle\Entity\Address $address)
     {
@@ -244,7 +244,7 @@ class AddressTransaction
      * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\DepositTopup $topup
-     * @return AddressTransaction
+     * @return Transaction
      */
     public function setTopup(\Dizda\Bundle\AppBundle\Entity\DepositTopup $topup = null)
     {
@@ -268,7 +268,7 @@ class AddressTransaction
      * Set isSpent
      *
      * @param boolean $isSpent
-     * @return AddressTransaction
+     * @return Transaction
      */
     public function setIsSpent($isSpent)
     {
@@ -292,7 +292,7 @@ class AddressTransaction
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Withdraw $withdraw
      *
-     * @return AddressTransaction
+     * @return Transaction
      */
     public function setWithdraw(\Dizda\Bundle\AppBundle\Entity\Withdraw $withdraw = null)
     {
@@ -316,7 +316,7 @@ class AddressTransaction
      * Set index
      *
      * @param integer $index
-     * @return AddressTransaction
+     * @return Transaction
      */
     public function setIndex($index)
     {
@@ -339,7 +339,7 @@ class AddressTransaction
      * Set txid
      *
      * @param string $txid
-     * @return AddressTransaction
+     * @return Transaction
      */
     public function setTxid($txid)
     {

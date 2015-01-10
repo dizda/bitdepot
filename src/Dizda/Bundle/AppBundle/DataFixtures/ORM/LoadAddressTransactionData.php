@@ -2,17 +2,17 @@
 
 namespace Dizda\Bundle\AppBundle\DataFixtures\ORM;
 
-use Dizda\Bundle\AppBundle\Entity\AddressTransaction;
+use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * Class LoadAddressTransactionData
+ * Class LoadTransactionData
  *
  * @author Jonathan Dizdarevic <dizda@dizda.fr>
  */
-class LoadAddressTransactionData extends AbstractFixture implements OrderedFixtureInterface
+class LoadTransactionData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritDoc}
@@ -20,8 +20,8 @@ class LoadAddressTransactionData extends AbstractFixture implements OrderedFixtu
     public function load(ObjectManager $manager)
     {
         // For withdraw #1
-        $transaction1 = (new AddressTransaction())
-            ->setType(AddressTransaction::TYPE_IN)
+        $transaction1 = (new Transaction())
+            ->setType(Transaction::TYPE_IN)
             ->setAddress($this->getReference('address-4'))
             ->setAmount('0.0003')
             ->setIndex(1)
@@ -31,8 +31,8 @@ class LoadAddressTransactionData extends AbstractFixture implements OrderedFixtu
         ;
 
         // For withdraw #2
-        $transaction2 = (new AddressTransaction())
-            ->setType(AddressTransaction::TYPE_IN)
+        $transaction2 = (new Transaction())
+            ->setType(Transaction::TYPE_IN)
             ->setAddress($this->getReference('address-5'))
             ->setAmount('0.0003')
             ->setIndex(0)

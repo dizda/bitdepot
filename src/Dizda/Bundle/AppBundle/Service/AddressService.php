@@ -37,6 +37,8 @@ class AddressService
     /**
      * @param Serializer $serializer
      * @param Logger     $logger
+     * @param string     $rootPath
+     * @param string     $nodejsPath
      */
     public function __construct(Serializer $serializer, Logger $logger, $rootPath, $nodejsPath)
     {
