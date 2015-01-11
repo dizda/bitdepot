@@ -8,7 +8,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * DepositTransaction
  *
- * @ORM\Table(name="transaction")
+ * @ORM\Table(name="address_transaction")
  * @ORM\Entity(repositoryClass="Dizda\Bundle\AppBundle\Repository\TransactionRepository")
  *
  * @ORM\HasLifecycleCallbacks()
@@ -62,6 +62,16 @@ class Transaction
     private $amount;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="addresses", type="simple_array", length=65535)
+     *
+     * @Serializer\Groups({"Deposit"})
+     * @Serializer\Type("array")
+     */
+    private $addresses;
+
+    /**
      * The transaction index
      *
      * @var integer
@@ -84,12 +94,13 @@ class Transaction
     /**
      * @var \Dizda\Bundle\AppBundle\Entity\Address
      *
-     * @ORM\ManyToMany(targetEntity="Address", mappedBy="transactions")
+     * @ORM\ManyToOne(targetEntity="Address", inversedBy="transactions")
+     * @ORM\JoinColumn(name="address_id", referencedColumnName="id", nullable=false)
      *
      * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\Address")
      * @Serializer\Groups({"WithdrawDetail"})
      */
-    private $addresses;
+    private $address;
 
     /**
      * @ORM\OneToOne(targetEntity="DepositTopup", mappedBy="transaction")
@@ -109,14 +120,6 @@ class Transaction
      * @Serializer\Exclude
      */
     private $withdraw;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -187,6 +190,53 @@ class Transaction
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set addresses
+     *
+     * @param array $addresses
+     * @return Transaction
+     */
+    public function setAddresses($addresses)
+    {
+        $this->addresses = $addresses;
+
+        return $this;
+    }
+
+    /**
+     * Get addresses
+     * @codeCoverageIgnore
+     *
+     * @return array
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
+
+    /**
+     * Set address
+     *
+     * @param \Dizda\Bundle\AppBundle\Entity\Address $address
+     * @return Transaction
+     */
+    public function setAddress(\Dizda\Bundle\AppBundle\Entity\Address $address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return \Dizda\Bundle\AppBundle\Entity\Address
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
 
     /**
@@ -306,39 +356,5 @@ class Transaction
     public function getTxid()
     {
         return $this->txid;
-    }
-
-    /**
-     * Add addresses
-     *
-     * @param \Dizda\Bundle\AppBundle\Entity\Address $addresses
-     * @return Transaction
-     */
-    public function addAddress(\Dizda\Bundle\AppBundle\Entity\Address $addresses)
-    {
-        $addresses->addTransaction($this);
-        $this->addresses[] = $addresses;
-
-        return $this;
-    }
-
-    /**
-     * Remove addresses
-     *
-     * @param \Dizda\Bundle\AppBundle\Entity\Address $addresses
-     */
-    public function removeAddress(\Dizda\Bundle\AppBundle\Entity\Address $addresses)
-    {
-        $this->addresses->removeElement($addresses);
-    }
-
-    /**
-     * Get addresses
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAddresses()
-    {
-        return $this->addresses;
     }
 }

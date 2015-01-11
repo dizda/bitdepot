@@ -111,8 +111,10 @@ class Address
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Transaction", inversedBy="addresses")
-     * @ORM\JoinTable(name="addresses_transactions")
+     * @ORM\OneToMany(
+     *      targetEntity  = "Transaction",
+     *      mappedBy      = "address"
+     * )
      *
      * @Serializer\Groups({"Addresses"})
      */

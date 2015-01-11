@@ -52,7 +52,6 @@ class AddressManagerTest extends ProphecyTestCase
             ->shouldBeCalled()
             ->willReturn(false)
         ; // check that doesn't match the input
-        $address->addTransaction(Argument::type('Dizda\Bundle\AppBundle\Entity\Transaction'))->shouldBeCalled();
 
         $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Transaction'))->shouldBeCalledTimes(1);
 
@@ -71,7 +70,6 @@ class AddressManagerTest extends ProphecyTestCase
             ->shouldBeCalled()
             ->willReturn(false)
         ; // check that doesn't match the output
-        $address->addTransaction(Argument::type('Dizda\Bundle\AppBundle\Entity\Transaction'))->shouldBeCalled();
 
         $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Transaction'))->shouldBeCalledTimes(1);
 

@@ -128,10 +128,7 @@ class WithdrawListenerTest extends ProphecyTestCase
         // check that inputs are marked as spent
         foreach ($withdraw->getWithdrawInputs() as $input) {
             $this->assertTrue($input->getIsSpent());
-
-            foreach ($input->getAddresses() as $address) {
-                $this->assertEquals('0', $address->getBalance());
-            }
+            $this->assertEquals('0', $input->getAddress()->getBalance());
         }
     }
 
@@ -148,13 +145,13 @@ class WithdrawListenerTest extends ProphecyTestCase
                 (new Transaction())
                     ->setTxid('431c5231114ce2d00125ea4a88f4e4637b80fef1117a0b20606204e45cc3678f')
                     ->setIndex(1)
-                    ->addAddress(new Address())
+                    ->setAddress(new Address())
             )
             ->addWithdrawInput(
                 (new Transaction())
                     ->setTxid('be0f6dc2cd45c0fcfaaf2d7aa19190bc2fcb5481b0a21ac7f309cecd5e75db9f')
                     ->setIndex(0)
-                    ->addAddress(new Address())
+                    ->setAddress(new Address())
             )
             ->addWithdrawOutput(
                 (new WithdrawOutput())

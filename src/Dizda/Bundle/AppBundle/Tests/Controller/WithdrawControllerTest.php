@@ -65,11 +65,15 @@ class WithdrawControllerTest extends BaseFunctionalTestController
             $content->raw_signed_transaction
         );
         $this->assertEquals('be5282178cacb7a04696963de62f674bef9a4510f7577d21585442c1eb8e8f2f', $content->withdraw_inputs[0]->txid);
-        $this->assertFalse($content->withdraw_inputs[0]->addresses[0]->is_external);
-        $this->assertEquals(1, $content->withdraw_inputs[0]->addresses[0]->derivation);
+        $this->assertFalse($content->withdraw_inputs[0]->address->is_external);
+        $this->assertEquals(1, $content->withdraw_inputs[0]->address->derivation);
         $this->assertEquals(
             '522103ad50a5aa6e6210e00bcd95197cc318833f0016c769a7d291ba4fe49e43bed56621029dd61b0195ff5e69a6dbcc454f30fb55f0deeb34418de576830c674d33a0dbcb210210febba17348636dd1779ca2d86beea81ad065cfea924178bbc296d3c6ed372c53ae',
-            $content->withdraw_inputs[0]->addresses[0]->redeem_script
+            $content->withdraw_inputs[0]->address->redeem_script
+        );
+        $this->assertEquals(
+            '522103ad50a5aa6e6210e00bcd95197cc318833f0016c769a7d291ba4fe49e43bed56621029dd61b0195ff5e69a6dbcc454f30fb55f0deeb34418de576830c674d33a0dbcb210210febba17348636dd1779ca2d86beea81ad065cfea924178bbc296d3c6ed372c53ae',
+            $content->withdraw_inputs[0]->address->redeem_script
         );
         $this->assertEquals('0.0001', $content->withdraw_outputs[0]->amount);
         $this->assertEquals('1LGTbdVSEbD9C37qXcpvVJ1egdBu8jYSeV', $content->withdraw_outputs[0]->to_address);
