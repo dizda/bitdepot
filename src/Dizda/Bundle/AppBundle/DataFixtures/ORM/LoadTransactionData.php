@@ -22,23 +22,21 @@ class LoadTransactionData extends AbstractFixture implements OrderedFixtureInter
         // For withdraw #1
         $transaction1 = (new Transaction())
             ->setType(Transaction::TYPE_IN)
-            ->setAddress($this->getReference('address-4'))
+            ->addAddress($this->getReference('address-4'))
             ->setAmount('0.0003')
             ->setIndex(1)
             ->setIsSpent(false)
             ->setTxid('be5282178cacb7a04696963de62f674bef9a4510f7577d21585442c1eb8e8f2f')
-            ->setAddresses([ $this->getReference('address-4')->getValue() ])
         ;
 
         // For withdraw #2
         $transaction2 = (new Transaction())
             ->setType(Transaction::TYPE_IN)
-            ->setAddress($this->getReference('address-5'))
+            ->addAddress($this->getReference('address-5'))
             ->setAmount('0.0003')
             ->setIndex(0)
             ->setIsSpent(false)
             ->setTxid('997c80046cb35d37752d227d414e966e6e52af577bbd3b660f9a3a77071a928c')
-            ->setAddresses([ $this->getReference('address-5')->getValue() ])
         ;
 
         $manager->persist($transaction1);

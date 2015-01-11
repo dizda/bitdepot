@@ -106,7 +106,10 @@ class WithdrawListener
         // Mark all inputs as spent, and reset the balance of each related addresses
         foreach ($withdraw->getWithdrawInputs() as $input) {
             $input->setIsSpent(true);
-            $input->getAddress()->setBalance(0);
+
+            foreach ($input->getAddresses() as $address) {
+                $address->setBalance(0);
+            }
         }
 
         // Dispatch every outputs to rabbit, to launch a callback to all of them

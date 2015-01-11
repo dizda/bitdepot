@@ -91,12 +91,11 @@ class WithdrawCommandTest extends BaseFunctionalTestCommand
 
         $transaction = (new Transaction)
             ->setType(Transaction::TYPE_IN)
-            ->setAddress($address)
+            ->addAddress($address)
             ->setAmount('0.0003')
             ->setIndex(0)
             ->setIsSpent(false)
             ->setTxid('32fa591b82cae594b286cd1f638af947e22e9aee72bfd42c68c1a872197d42e5')
-            ->setAddresses([ $address->getValue() ])
         ;
 
         $withdrawOutput = (new WithdrawOutput())

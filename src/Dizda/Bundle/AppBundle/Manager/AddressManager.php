@@ -104,6 +104,8 @@ class AddressManager
 
         // for each transactions, check if we got each in our db
         foreach ($transactions as $transaction) {
+            $addressTransaction = new Transaction();
+
             // scan inputs to see if our address is the emitter
             foreach ($transaction->getInputs() as $input) {
                 if ($input->getAddress() !== $address->getValue()) {
@@ -119,20 +121,15 @@ class AddressManager
                     continue;
                 }
 
-                $addressTransaction = new Transaction();
-                $addressTransaction->setAddress($address)
+                $addressTransaction->addAddress($address)
                     ->setTxid($transaction->getTxid())
                     ->setType(Transaction::TYPE_OUT)
                     ->setAmount($input->getValue())
-                    ->setAddresses([ $input->getAddress() ])
                     ->setIndex($input->getIndex())
                 ;
 
-                $this->em->persist($addressTransaction);
-
                 $this->logger->notice('Transaction added', [ $transaction->getTxid(), $address->getValue() ]);
 
-                $this->dispatcher->dispatch(AppEvents::ADDRESS_TRANSACTION_CREATE, new TransactionEvent($addressTransaction));
             }
 
             // if not, we scan the outputs to see if our address is the receiver
@@ -150,20 +147,21 @@ class AddressManager
                     continue;
                 }
 
-                $addressTransaction = new Transaction();
-                $addressTransaction->setAddress($address)
+                $addressTransaction->addAddress($address)
                     ->setTxid($transaction->getTxid())
                     ->setType(Transaction::TYPE_IN)
                     ->setAmount($output->getValue())
-                    ->setAddresses($output->getAddresses())
                     ->setIndex($output->getIndex())
                 ;
 
-                $this->em->persist($addressTransaction);
-
-                $this->dispatcher->dispatch(AppEvents::ADDRESS_TRANSACTION_CREATE, new TransactionEvent($addressTransaction));
 
                 $transactionsInAdded[] = $addressTransaction;
+            }
+
+            // If some addresses has been added, we persist the transaction, and dispatch an event
+            if ($addressTransaction->getAddresses()->count()) {
+                $this->em->persist($addressTransaction);
+                $this->dispatcher->dispatch(AppEvents::ADDRESS_TRANSACTION_CREATE, new TransactionEvent($addressTransaction));
             }
         }
 
