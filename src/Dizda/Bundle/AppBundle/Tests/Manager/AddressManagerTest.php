@@ -44,24 +44,6 @@ class AddressManagerTest extends ProphecyTestCase
     /**
      * AddressManager::saveTransactions()
      */
-    public function testSaveTransactionsInputs()
-    {
-        $address = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Address');
-        $address->getValue()->shouldBeCalled()->willReturn('addressExpected');
-        $address->hasTransaction('transactionId', Transaction::TYPE_OUT, 5)
-            ->shouldBeCalled()
-            ->willReturn(false)
-        ; // check that doesn't match the input
-
-        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Transaction'))->shouldBeCalledTimes(1);
-
-        $return = $this->manager->saveTransactions($address->reveal(), new ArrayCollection($this->getDummyTransactionsInput()));
-        $this->assertCount(0, $return);
-    }
-
-    /**
-     * AddressManager::saveTransactions()
-     */
     public function testSaveTransactionsOutputs()
     {
         $address = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Address');
@@ -75,24 +57,6 @@ class AddressManagerTest extends ProphecyTestCase
 
         $return = $this->manager->saveTransactions($address->reveal(), new ArrayCollection($this->getDummyTransactionsOutput()));
         $this->assertCount(1, $return);
-    }
-
-    /**
-     * AddressManager::saveTransactions()
-     */
-    public function testSaveTransactionsHasTransactionsContinueInput()
-    {
-        $address = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Address');
-        $address->getValue()->shouldBeCalled()->willReturn('addressExpected');
-        $address->hasTransaction('transactionId', Transaction::TYPE_OUT, 5)
-            ->shouldBeCalled()
-            ->willReturn(true)
-        ; // check that match the input
-
-        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Transaction'))->shouldNotBeCalled();
-
-        $return = $this->manager->saveTransactions($address->reveal(), new ArrayCollection($this->getDummyTransactionsNone()));
-        $this->assertCount(0, $return);
     }
 
     /**

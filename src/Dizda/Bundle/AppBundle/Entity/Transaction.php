@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * DepositTransaction
+ * Transaction
  *
- * @ORM\Table(name="address_transaction")
+ * @ORM\Table(name="transaction")
  * @ORM\Entity(repositoryClass="Dizda\Bundle\AppBundle\Repository\TransactionRepository")
  *
  * @ORM\HasLifecycleCallbacks()
@@ -356,5 +356,17 @@ class Transaction
     public function getTxid()
     {
         return $this->txid;
+    }
+
+    /**
+     * Mark that the transaction is spent
+     *
+     * @return $this
+     */
+    public function markAsSpent()
+    {
+        $this->isSpent = true;
+
+        return $this;
     }
 }
