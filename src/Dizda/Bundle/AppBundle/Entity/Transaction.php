@@ -341,16 +341,4 @@ class Transaction
     {
         return $this->addresses;
     }
-
-    /**
-     * Mark that the transaction is spent
-     *
-     * @return $this
-     */
-    public function markAsSpent()
-    {
-        $this->isSpent = true;
-
-        return $this;
-    }
 }

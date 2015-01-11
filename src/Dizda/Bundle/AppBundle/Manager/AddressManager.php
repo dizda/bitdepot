@@ -8,7 +8,6 @@ use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Event\TransactionEvent;
 use Dizda\Bundle\AppBundle\Service\AddressService;
-use Dizda\Bundle\BlockchainBundle\Model\Insight\TransactionOutput;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
@@ -107,7 +106,33 @@ class AddressManager
         foreach ($transactions as $transaction) {
             $addressTransaction = new Transaction();
 
-            // We only scan the outputs to see if our address is the receiver of something
+            // scan inputs to see if our address is the emitter
+            foreach ($transaction->getInputs() as $input) {
+                if ($input->getAddress() !== $address->getValue()) {
+                    continue;
+                }
+
+                // Check if transaction already exist
+                if ($address->hasTransaction(
+                    $transaction->getTxid(),
+                    Transaction::TYPE_OUT,
+                    $input->getIndex()
+                )) {
+                    continue;
+                }
+
+                $addressTransaction->addAddress($address)
+                    ->setTxid($transaction->getTxid())
+                    ->setType(Transaction::TYPE_OUT)
+                    ->setAmount($input->getValue())
+                    ->setIndex($input->getIndex())
+                ;
+
+                $this->logger->notice('Transaction added', [ $transaction->getTxid(), $address->getValue() ]);
+
+            }
+
+            // if not, we scan the outputs to see if our address is the receiver
             foreach ($transaction->getOutputs() as $output) {
                 if (!in_array($address->getValue(), $output->getAddresses())) {
                     continue;
@@ -129,9 +154,6 @@ class AddressManager
                     ->setIndex($output->getIndex())
                 ;
 
-                $this->logger->notice('Transaction added', [ $transaction->getTxid(), $address->getValue() ]);
-
-                $this->isTransactionSpent($transactions, $transaction, $output, $addressTransaction);
 
                 $transactionsInAdded[] = $addressTransaction;
             }
@@ -144,26 +166,6 @@ class AddressManager
         }
 
         return $transactionsInAdded;
-    }
-
-    /**
-     * Check in all transactions if the input is already spent in another transaction
-     *
-     * @param array               $transactions       All transactions
-     * @param Transaction         $currentTransaction The current transaction reviewed
-     * @param TransactionOutput   $output             Output
-     * @param Transaction         $addressTransaction Transaction entity
-     */
-    private function isTransactionSpent($transactions, $currentTransaction, $output, $addressTransaction)
-    {
-        foreach ($transactions as $trans) {
-            foreach ($trans->getInputs() as $in) {
-                if ($currentTransaction->getTxid() === $in->getTxid() && $output->getIndex() === $in->getIndex()) {
-                    $addressTransaction->markAsSpent();
-                    $this->logger->notice('Transaction marked as spent', [ $currentTransaction->getTxid() ]);
-                }
-            }
-        }
     }
 
 }
