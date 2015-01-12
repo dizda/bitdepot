@@ -154,10 +154,6 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
      */
     function getPrivateKey(wallet, application, isExternal, address)
     {
-
-        console.log(application);
-        console.log(isExternal);
-        console.log(address);
         var privateKey = wallet
             .derive(44, true) // BIP44 constant
             .derive(0, true)  // bitcoin
