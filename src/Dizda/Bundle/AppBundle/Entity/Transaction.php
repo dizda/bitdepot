@@ -78,7 +78,7 @@ class Transaction
      *
      * @ORM\Column(name="transaction_index", type="smallint")
      *
-     * @Serializer\Exclude()
+     * @Serializer\Groups({"WithdrawDetail"})
      */
     private $index;
 

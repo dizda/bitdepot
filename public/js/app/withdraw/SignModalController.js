@@ -39,7 +39,7 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
         var identity = _.find($scope.withdraw.keychain.identities, {public_key: accountPubKey});
 
         if (!identity) {
-            $scope.signState.label = 'Unknown private key.';
+            $scope.signState.label = 'Unknown public key.';
             $scope.signState.error = true;
             $scope.signing         = false;
 
@@ -47,7 +47,7 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
         }
 
         $scope.signState.signed_by = identity.name;
-        $scope.signState.label = 'Signing with ' + identity.name + '...';
+        $scope.signState.label     = 'Signing with ' + identity.name + '...';
 
         $scope.withdraw.signed_by = identity.public_key;
 
@@ -71,11 +71,14 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
         var wallet = bitcore.HDPrivateKey.fromSeed(bitcoin.crypto.sha256(seed), bitcore.Networks.livenet);
 
         // Loop on each inputs
-        txb.tx.ins.forEach(function(input, index) {
+        txb.tx.ins.forEach(function(input, i) {
 
             // get the txid of the input
             var txid   = bitcoin.bufferutils.reverse(input.hash).toString('hex');
-            var wInput = _.find($scope.withdraw.withdraw_inputs, { txid: txid });
+            var wInput = _.find($scope.withdraw.withdraw_inputs, {
+                txid: txid,
+                index: input.index // match the correct input with <txid & index>
+            });
 
             // Finding the good private key according to the derivation
             var privKey = getPrivateKey(wallet, wInput.address.application.id, wInput.address.is_external, wInput.address.derivation);
@@ -83,8 +86,7 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
             console.log(privKey.toWIF());
 
             // Sign the input
-            txb.sign(index, privKey, bitcoin.Script.fromHex(wInput.address.redeem_script));
-
+            txb.sign(i, privKey, bitcoin.Script.fromHex(wInput.address.redeem_script));
 
             try {
                 $scope.withdraw.raw_signed_transaction = txb.build().toHex();
@@ -152,6 +154,10 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
      */
     function getPrivateKey(wallet, application, isExternal, address)
     {
+
+        console.log(application);
+        console.log(isExternal);
+        console.log(address);
         var privateKey = wallet
             .derive(44, true) // BIP44 constant
             .derive(0, true)  // bitcoin
