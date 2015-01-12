@@ -44,8 +44,6 @@ EOF
 
         $keychains = $em->getRepository('DizdaAppBundle:Keychain')->findAll();
 
-        // TODO: Fetch Keychains whereas Applications
-
         foreach ($keychains as $keychain) {
             $outputs = $manager->search($keychain);
 
