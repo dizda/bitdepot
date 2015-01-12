@@ -44,6 +44,13 @@ class Keychain
     private $signRequired;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="group_withdraws_by_quantity", type="smallint", nullable=true)
+     */
+    private $groupWithdrawsByQuantity;
+
+    /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\OneToMany(
@@ -251,5 +258,30 @@ class Keychain
     public function getIdentities()
     {
         return $this->identities;
+    }
+
+    /**
+     * Set groupWithdrawsByQuantity
+     * @codeCoverageIgnore
+     *
+     * @param integer $groupWithdrawsByQuantity
+     * @return Keychain
+     */
+    public function setGroupWithdrawsByQuantity($groupWithdrawsByQuantity)
+    {
+        $this->groupWithdrawsByQuantity = $groupWithdrawsByQuantity;
+
+        return $this;
+    }
+
+    /**
+     * Get groupWithdrawsByQuantity
+     * @codeCoverageIgnore
+     *
+     * @return integer
+     */
+    public function getGroupWithdrawsByQuantity()
+    {
+        return $this->groupWithdrawsByQuantity;
     }
 }

@@ -23,6 +23,7 @@ class LoadKeychainData extends AbstractFixture implements OrderedFixtureInterfac
         $keychain = (new Keychain())
             ->setName('Keychain Fixture')
             ->setSignRequired(2)
+            ->setGroupWithdrawsByQuantity(1)
         ;
 
         $manager->persist($keychain);

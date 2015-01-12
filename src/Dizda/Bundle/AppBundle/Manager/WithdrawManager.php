@@ -4,6 +4,7 @@ namespace Dizda\Bundle\AppBundle\Manager;
 
 use Dizda\Bundle\AppBundle\AppEvents;
 use Dizda\Bundle\AppBundle\Entity\Application;
+use Dizda\Bundle\AppBundle\Entity\Keychain;
 use Dizda\Bundle\AppBundle\Entity\Withdraw;
 use Dizda\Bundle\AppBundle\Event\WithdrawEvent;
 use Dizda\Bundle\AppBundle\Exception\UnknownSignatureException;
@@ -47,17 +48,15 @@ class WithdrawManager
     /**
      * Search if there are outputs available to group them into a withdraw.
      *
-     * @param Application $application
+     * @param Keychain $keychain
      *
      * @return bool|ArrayCollection
      */
-    public function search(Application $application)
+    public function search(Keychain $keychain)
     {
-        $outputs = $this->em->getRepository('DizdaAppBundle:WithdrawOutput')->getWhereWithdrawIsNull($application);
+        $outputs = $this->em->getRepository('DizdaAppBundle:WithdrawOutput')->getWhereWithdrawIsNull($keychain);
 
-        if ($application->getGroupWithdrawsByQuantity() === null
-            || count($outputs) < $application->getGroupWithdrawsByQuantity()) {
-
+        if ($keychain->getGroupWithdrawsByQuantity() === null || count($outputs) < $keychain->getGroupWithdrawsByQuantity()) {
             return false;
         }
 
@@ -69,15 +68,15 @@ class WithdrawManager
      * If sufficient money available, we can proceed to the creation of the withdraw.
      * Otherwise, the function will return null.
      *
-     * @param Application $application
-     * @param array       $outputs
+     * @param Keychain $keychain
+     * @param array    $outputs
      *
      * @return null|Withdraw
      */
-    public function create(Application $application, array $outputs)
+    public function create(Keychain $keychain, array $outputs)
     {
         $withdraw = new Withdraw();
-        $withdraw->setKeychain($application->getKeychain());
+        $withdraw->setKeychain($keychain);
         $withdraw->setFees('0.0001');
 
         // Setting outputs
@@ -117,6 +116,8 @@ class WithdrawManager
      *
      * @param Withdraw $withdraw          The original $withdraw fetched from DB
      * @param array    $withdrawSubmitted The json Withdraw data submitted by angular
+     *
+     * @throws UnknownSignatureException
      */
     public function save(Withdraw $withdraw, $withdrawSubmitted)
     {

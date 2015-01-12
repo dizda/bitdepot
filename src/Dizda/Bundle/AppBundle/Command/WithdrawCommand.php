@@ -42,16 +42,16 @@ EOF
         $em      = $this->getContainer()->get('doctrine.orm.default_entity_manager');
         $manager = $this->getContainer()->get('dizda_app.manager.withdraw');
 
-        $applications = $em->getRepository('DizdaAppBundle:Application')->findAll();
+        $keychains = $em->getRepository('DizdaAppBundle:Keychain')->findAll();
 
         // TODO: Fetch Keychains whereas Applications
-        foreach ($applications as $application) {
-            $outputs = $manager->search($application);
+
+        foreach ($keychains as $keychain) {
+            $outputs = $manager->search($keychain);
 
             if ($outputs) {
-                $manager->create($application, $outputs);
+                $manager->create($keychain, $outputs);
             }
         }
     }
-
 }

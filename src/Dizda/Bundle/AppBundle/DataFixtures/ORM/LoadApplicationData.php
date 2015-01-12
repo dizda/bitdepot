@@ -25,7 +25,6 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
             ->setAppSecret('Application-Fixture')
             ->setConfirmationsRequired(1)
             ->setCallbackEndpoint('http://callback-test.com')
-            ->setGroupWithdrawsByQuantity(1)
             ->setKeychain($this->getReference('keychain-1'))
         ;
 

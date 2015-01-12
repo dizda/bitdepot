@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Repository;
 
 use Dizda\Bundle\AppBundle\Entity\Application;
+use Dizda\Bundle\AppBundle\Entity\Keychain;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 
@@ -15,13 +16,38 @@ use Doctrine\ORM\EntityRepository;
 class WithdrawOutputRepository extends EntityRepository
 {
 
-    public function getWhereWithdrawIsNull(Application $application)
+    /**
+     * @param Application $application
+     *
+     * @return mixed
+     *
+     * @deprecated Use getWhereWithdrawIsNullByKeychain() instead
+     */
+    public function getWhereWithdrawIsNullByApplication(Application $application)
     {
         $qb = $this->createQueryBuilder('wo')
             ->andWhere('wo.application = :application')
             ->andWhere('wo.withdraw is NULL')
             ->andWhere('wo.isAccepted = true')
             ->setParameter('application', $application)
+        ;
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param Keychain $keychain
+     *
+     * @return array
+     */
+    public function getWhereWithdrawIsNull(Keychain $keychain)
+    {
+        $qb = $this->createQueryBuilder('wo')
+            ->innerJoin('wo.application', 'a')
+            ->andWhere('a.keychain = :keychain')
+            ->andWhere('wo.withdraw is NULL')
+            ->andWhere('wo.isAccepted = true')
+            ->setParameter('keychain', $keychain)
         ;
 
         return $qb->getQuery()->execute();

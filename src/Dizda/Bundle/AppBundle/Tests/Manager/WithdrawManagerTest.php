@@ -8,6 +8,7 @@ use Dizda\Bundle\AppBundle\Entity\Identity;
 use Dizda\Bundle\AppBundle\Entity\Keychain;
 use Dizda\Bundle\AppBundle\Entity\PubKey;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
+use Doctrine\Common\Collections\ArrayCollection;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTestCase;
 use Dizda\Bundle\AppBundle\Request\PostWithdrawRequest;
@@ -42,7 +43,7 @@ class WithdrawManagerTest extends ProphecyTestCase
      */
     public function testSearchWithGroupWithdrawsByQuantityIsNull()
     {
-        $app = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Application');
+        $keychain = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Keychain');
         $withdrawOutputRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\WithdrawOutputRepository');
 
         $this->em->getRepository('DizdaAppBundle:WithdrawOutput')
@@ -50,14 +51,14 @@ class WithdrawManagerTest extends ProphecyTestCase
             ->willReturn($withdrawOutputRepo->reveal())
         ;
 
-        $withdrawOutputRepo->getWhereWithdrawIsNull($app)
+        $withdrawOutputRepo->getWhereWithdrawIsNull($keychain)
             ->shouldBeCalled()
             ->willReturn(null)
         ;
 
-        $app->getGroupWithdrawsByQuantity()->shouldBeCalled()->willReturn(null);
+        $keychain->getGroupWithdrawsByQuantity()->shouldBeCalled()->willReturn(null);
 
-        $return = $this->manager->search($app->reveal());
+        $return = $this->manager->search($keychain->reveal());
 
         $this->assertFalse($return);
     }
@@ -67,7 +68,7 @@ class WithdrawManagerTest extends ProphecyTestCase
      */
     public function testSearchWhereOutputsIsLowerThanGroupWithdrawsByQuantity()
     {
-        $app = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Application');
+        $keychain = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Keychain');
         $withdrawOutputRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\WithdrawOutputRepository');
 
         $this->em->getRepository('DizdaAppBundle:WithdrawOutput')
@@ -75,14 +76,14 @@ class WithdrawManagerTest extends ProphecyTestCase
             ->willReturn($withdrawOutputRepo->reveal())
         ;
 
-        $withdrawOutputRepo->getWhereWithdrawIsNull($app)
+        $withdrawOutputRepo->getWhereWithdrawIsNull($keychain)
             ->shouldBeCalled()
             ->willReturn([true, true]) // 2 outputs
         ;
 
-        $app->getGroupWithdrawsByQuantity()->shouldBeCalled()->willReturn(3); // Waiting for 3 at minimum
+        $keychain->getGroupWithdrawsByQuantity()->shouldBeCalled()->willReturn(3); // Waiting for 3 at minimum
 
-        $return = $this->manager->search($app->reveal());
+        $return = $this->manager->search($keychain->reveal());
 
         $this->assertFalse($return);
     }
@@ -92,7 +93,7 @@ class WithdrawManagerTest extends ProphecyTestCase
      */
     public function testSearchSuccess()
     {
-        $app = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Application');
+        $keychain = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Keychain');
         $withdrawOutputRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\WithdrawOutputRepository');
 
         $this->em->getRepository('DizdaAppBundle:WithdrawOutput')
@@ -100,14 +101,14 @@ class WithdrawManagerTest extends ProphecyTestCase
             ->willReturn($withdrawOutputRepo->reveal())
         ;
 
-        $withdrawOutputRepo->getWhereWithdrawIsNull($app)
+        $withdrawOutputRepo->getWhereWithdrawIsNull($keychain)
             ->shouldBeCalled()
             ->willReturn([true, true, true]) // 3 outputs
         ;
 
-        $app->getGroupWithdrawsByQuantity()->shouldBeCalled()->willReturn(3); // Waiting for 3 at minimum
+        $keychain->getGroupWithdrawsByQuantity()->shouldBeCalled()->willReturn(3); // Waiting for 3 at minimum
 
-        $return = $this->manager->search($app->reveal());
+        $return = $this->manager->search($keychain->reveal());
 
         $this->assertCount(3, $return);
     }
@@ -132,7 +133,7 @@ class WithdrawManagerTest extends ProphecyTestCase
         $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Withdraw'))->shouldBeCalled();
         $this->em->flush()->shouldBeCalled();
 
-        $return = $this->manager->create($this->getApp()->reveal(), $this->getOutputs());
+        $return = $this->manager->create($this->getKeychain()->reveal(), $this->getOutputs());
         $this->assertEquals('0.00020000', $return->getTotalInputs());
         $this->assertEquals('0.00010000', $return->getTotalOutputs());
         $this->assertEquals('0.00010000', $return->getFees());
@@ -160,7 +161,7 @@ class WithdrawManagerTest extends ProphecyTestCase
         $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Withdraw'))->shouldNotBeCalled();
         $this->em->flush()->shouldNotBeCalled();
 
-        $return = $this->manager->create($this->getApp()->reveal(), $this->getOutputs());
+        $return = $this->manager->create($this->getKeychain()->reveal(), $this->getOutputs());
         $this->assertNull($return);
     }
 
@@ -218,22 +219,28 @@ class WithdrawManagerTest extends ProphecyTestCase
         return [
             (new WithdrawOutput())
                 ->setAmount('0.0001')
-                ->setApplication($this->getApp()->reveal())
+                ->setApplication($this->getApplication()->reveal())
                 ->setIsAccepted(true)
                 ->setToAddress('lol')
         ];
     }
 
     /**
-     * @return \Dizda\Bundle\AppBundle\Entity\Application
+     * @return \Dizda\Bundle\AppBundle\Entity\Keychain
      */
-    private function getApp()
+    private function getKeychain()
     {
-        $app = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Application');
         $keychain = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Keychain');
 
-        $app->reveal();
-        $app->getKeychain()->willReturn($keychain->reveal());
+        $keychain->getApplications()->willReturn([ $this->getApplication()->reveal() ]);
+        $keychain->reveal();
+
+        return $keychain;
+    }
+
+    private function getApplication()
+    {
+        $app = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Application');
 
         return $app;
     }
