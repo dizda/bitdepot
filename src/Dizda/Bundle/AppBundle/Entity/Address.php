@@ -43,7 +43,7 @@ class Address
      *
      * @ORM\Column(name="is_external", type="boolean")
      *
-     * @Serializer\Groups({"WithdrawDetail", "Addresses", "Deposits"})
+     * @Serializer\Groups({"WithdrawDetail", "Addresses"})
      */
     private $isExternal;
 
