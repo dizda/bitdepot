@@ -81,6 +81,16 @@
             <argument type="service" id="dizda_app.service.callback" />
         </service>
 
+        <!-- Repositories -->
+        <service id="dizda_app.repository.application" class="Doctrine\ORM\EntityRepository" factory-service="doctrine" factory-method="getRepository">
+            <argument>DizdaAppBundle:Application</argument>
+        </service>
+
+        <!-- Security -->
+        <service id="dizda_app.security.application_user_provider" class="Dizda\Bundle\AppBundle\Security\User\ApplicationUserProvider">
+            <argument type="service" id="dizda_app.repository.application"  />
+        </service>
+
         <!-- Services -->
         <service id="dizda_app.service.callback" class="Dizda\Bundle\AppBundle\Service\CallbackService">
             <argument type="service" id="jms_serializer" />

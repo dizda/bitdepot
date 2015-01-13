@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations as REST;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Class WithdrawController
@@ -20,6 +21,7 @@ class WithdrawController extends Controller
      * Get list of withdraws
      *
      * @REST\View(serializerGroups={"Withdraws"})
+     * @Security("has_role('WITHDRAW_LIST')")
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */

@@ -7,6 +7,7 @@ use Dizda\Bundle\AppBundle\Request\PostDepositsRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations as REST;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Class DepositController
@@ -19,6 +20,7 @@ class DepositController extends Controller
      * Get list of deposits
      *
      * @REST\View(serializerGroups={"Deposits"})
+     * @Security("has_role('DEPOSIT_LIST')")
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
@@ -34,6 +36,7 @@ class DepositController extends Controller
 
     /**
      * @REST\View(serializerGroups={"Deposits"})
+     * @Security("has_role('DEPOSIT_CREATE')")
      *
      * @param Request $request
      *

@@ -5,6 +5,7 @@ namespace Dizda\Bundle\AppBundle\Entity;
 use Dizda\Bundle\AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Application
@@ -13,7 +14,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  */
-class Application
+class Application implements UserInterface
 {
     use Timestampable;
 
@@ -388,5 +389,44 @@ class Application
         return $this->getPubKeys()->map(function ($item) {
             return $item->getExtendedPubKey();
         });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRoles()
+    {
+        return ['ROLE_WSSE'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPassword()
+    {
+        return $this->appSecret;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSalt()
+    {
+//        return $this->salt;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUsername()
+    {
+        return $this->appId;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function eraseCredentials()
+    {
     }
 }

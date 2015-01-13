@@ -1,4 +1,15 @@
 security:
+    role_hierarchy:
+        # When a user is logged via AngularJS
+        ROLE_USER:
+            - DEPOSIT_LIST
+            - DEPOSIT_CREATE
+            - WITHDRAW_LIST
+
+        # When an application is logged via WSSE
+        ROLE_WSSE:
+            - DEPOSIT_CREATE
+
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
 
@@ -7,11 +18,14 @@ security:
         fos_userbundle:
             id: fos_user.user_provider.username
 
+#        in_memory:
+#            memory:
+#                users:
+#                    application_1: { password: 'testpass', roles: 'ROLE_WSSE' }
+
         # Only for WSSE-Auth
-        in_memory:
-            memory:
-                users:
-                    application_1: { password: '04e7bc77ce0aeee6834f0400f0140f04c0474b383ffe43c9e37ee02c303cbfc94da95c6e7d59b6853c70b9b02600415391fbf771cad6a350c866c0f17b4479b0', roles: 'ROLE_WSSE' }
+        wsse_application:
+            id: dizda_app.security.application_user_provider
 
     firewalls:
         dev:
@@ -38,7 +52,7 @@ security:
 
             # WSSE-Auth, for application only
             wsse:
-                provider: in_memory
+                provider: wsse_application
                 realm: "Secured with WSSE" #identifies the set of resources to which the authentication information will apply (WWW-Authenticate)
                 profile: "UsernameToken" #WSSE profile (WWW-Authenticate)
 
