@@ -47,6 +47,7 @@ class CallbackService
     {
         $client = $this->initialize($deposit->getApplication()->getCallbackEndpoint());
 
+        dump($this->serializer->serialize($deposit, 'json'));
         $response = $client->post('deposit.json', [
             'json' => $this->serializer->serialize($deposit, 'json')
         ]);

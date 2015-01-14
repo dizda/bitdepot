@@ -30,7 +30,7 @@ class Deposit implements MessageQueuingInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @Serializer\Groups({"Deposits"})
+     * @Serializer\Groups({"Deposits", "DepositCallBack"})
      */
     private $id;
 
