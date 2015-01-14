@@ -10,6 +10,8 @@ use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 
 /**
+ * When a deposit is made, callback the Webservice of the application
+ *
  * Class DepositConsumer
  */
 class DepositConsumer implements ConsumerInterface

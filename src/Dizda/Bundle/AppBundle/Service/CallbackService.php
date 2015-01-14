@@ -16,26 +16,38 @@ use JMS\Serializer\SerializerInterface;
 class CallbackService
 {
     /**
-     * @var \GuzzleHttp\Client
-     */
-    private $client;
-
-    /**
      * @var \JMS\Serializer\SerializerInterface
      */
     private $serializer;
 
+    /**
+     * @param SerializerInterface $serializer
+     */
     public function __construct(SerializerInterface $serializer)
     {
         $this->serializer = $serializer;
-        $this->client     = new Client();
     }
 
+    /**
+     * @param $baseUrl
+     *
+     * @return Client
+     */
+    public function initialize($baseUrl)
+    {
+        return new Client(['base_url' => $baseUrl]);
+    }
+
+    /**
+     * @param Deposit $deposit
+     *
+     * @return bool
+     */
     public function depositExpectedFilling(Deposit $deposit)
     {
-        $baseUrl = $deposit->getApplication()->getCallbackEndpoint();
+        $client = $this->initialize($deposit->getApplication()->getCallbackEndpoint());
 
-        $response = $this->client->post(sprintf('%s/deposit.json', $baseUrl), [
+        $response = $client->post('deposit.json', [
             'json' => $this->serializer->serialize($deposit, 'json')
         ]);
 
@@ -49,9 +61,9 @@ class CallbackService
      */
     public function depositTopupFilling(DepositTopup $depositTopup)
     {
-        $baseUrl = $depositTopup->getDeposit()->getApplication()->getCallbackEndpoint();
+        $client = $this->initialize($depositTopup->getDeposit()->getApplication()->getCallbackEndpoint());
 
-        $response = $this->client->post(sprintf('%s/topup.json', $baseUrl), [
+        $response = $client->post('topup.json', [
             'json' => $this->serializer->serialize($depositTopup, 'json')
         ]);
 
@@ -67,9 +79,9 @@ class CallbackService
      */
     public function withdrawOutputWithdrawn(WithdrawOutput $withdrawOutput)
     {
-        $baseUrl = $withdrawOutput->getApplication()->getCallbackEndpoint();
+        $client = $this->initialize($withdrawOutput->getApplication()->getCallbackEndpoint());
 
-        $response = $this->client->post(sprintf('%s/withdraw_output.json', $baseUrl), [
+        $response = $client->post('withdraw_output.json', [
             'json' => $this->serializer->serialize($withdrawOutput, 'json')
         ]);
 
