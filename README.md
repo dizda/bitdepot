@@ -24,11 +24,27 @@ Main advantage :
 
     The private key will never be stored on the server, you can sleep tight.
 
+## Setup
+
+Install dependencies
+
+    bower install
+    composer install
+    cd node/ && npm install
+
+Then setup the MySQL schema
+
+    php app/console doctrine:database:create
+    php app/console doctrine:schema:update --force
+
 ## Creating your keychain and your first application
 
 The first step is to create your keychain via the node application:
 
     node ./node/create_wallet.js
+
+Your keychain handle your applications, so you can sign transactions with the same key across all of your applications.
+If you want different password for different applications,
 
 ## RabbitMQ consumers
 
@@ -44,16 +60,14 @@ Launch RabbitMQ consumers
 
 ## Crontabs
 
-Watching our addresses over the blockchain, and add new transactions incoming
+Watching our addresses over the blockchain, then add new transactions incoming
 
-    php app/console dizda:blockchain:watch -vvv
+    php app/console dizda:blockchain:monitor -vv
 
 Create withdraw from outputs requests
 
-    php app/console dizda:app:withdraw -vvv
+    php app/console dizda:app:withdraw -vv
 
-
-This repository is under intensive work, do not use yet.
 
 ## Tests
 
@@ -61,3 +75,5 @@ Launch tests suite
 
     make tests
 
+This repository is under intensive work, do not use in production yet.
+If you're interested be part of this project, you can contact me on twitter @dizzda.
