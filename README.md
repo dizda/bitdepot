@@ -24,6 +24,8 @@ Main advantage :
 
     The private key will never be stored on the server, you can sleep tight.
 
+There is also a Symfony2 bundle available for the "Client" part (Send API requests, receive callback hooks) [CoineggerClientBundle](https://github.com/dizda/CoineggerClientBundle).
+
 ## Setup
 
 Install dependencies
@@ -102,5 +104,10 @@ Launch tests suite
 
     make tests
 
+## License
+
+MIT Licensed, see LICENSE.
+
+
 This repository is under intensive work, do not use in production yet.
-If you're interested be part of this project, you can contact me on twitter @dizzda.
+If you're interested to be part of this project, you can contact me on twitter @dizzda.
