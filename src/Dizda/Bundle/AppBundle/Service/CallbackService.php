@@ -6,6 +6,7 @@ use Dizda\Bundle\AppBundle\Entity\Deposit;
 use Dizda\Bundle\AppBundle\Entity\DepositTopup;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
 use GuzzleHttp\Client;
+use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 
 /**
@@ -47,9 +48,8 @@ class CallbackService
     {
         $client = $this->initialize($deposit->getApplication()->getCallbackEndpoint());
 
-        dump($this->serializer->serialize($deposit, 'json'));
         $response = $client->post('deposit.json', [
-            'json' => $this->serializer->serialize($deposit, 'json')
+            'json' => $this->serialize($deposit, 'DepositCallback')
         ]);
 
         return (int) $response->getStatusCode() === 200;
@@ -87,5 +87,20 @@ class CallbackService
         ]);
 
         return (int) $response->getStatusCode() === 200;
+    }
+
+    /**
+     * @param \stdClass $subject Object to serialize
+     * @param string    $group   The JMS\Groups
+     *
+     * @return string
+     */
+    private function serialize($subject, $group)
+    {
+        $context = (new SerializationContext())
+            ->setGroups($group)
+        ;
+
+        return $this->serializer->serialize($subject, 'json', $context);
     }
 }

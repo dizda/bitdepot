@@ -34,7 +34,7 @@ class Address
      *
      * @ORM\Column(name="value", type="string", length=255, unique=true)
      *
-     * @Serializer\Groups({"Addresses", "Deposits"})
+     * @Serializer\Groups({"Addresses", "Deposits", "DepositCallback"})
      */
     private $value;
 
@@ -61,7 +61,7 @@ class Address
      *
      * @ORM\Column(name="balance", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
      *
-     * @Serializer\Groups({"Deposits", "Addresses"})
+     * @Serializer\Groups({"Deposits", "Addresses", "DepositCallback"})
      * @Serializer\Type("string")
      */
     private $balance = '0.00000000';
