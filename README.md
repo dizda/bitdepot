@@ -37,6 +37,33 @@ Then setup the MySQL schema
     php app/console doctrine:database:create
     php app/console doctrine:schema:update --force
 
+If you are using apache2, you should take this example to set your vhost
+
+    <VirtualHost *:80>
+        DocumentRoot /opt/www/coinegger/
+        ServerName coinegger.loc
+
+        Alias /api/ "/opt/www/coinegger/web/"       # Symfony2 backend
+        Alias /     "/opt/www/coinegger/public/"    # AngularJS frontend
+
+        # JWTToken - To fix a bug under apache2
+        RewriteEngine On
+        RewriteCond %{HTTP:Authorization} ^(.*)
+        RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+        <Directory /opt/www/coinegger/public/>
+            Options Indexes FollowSymLinks MultiViews
+            AllowOverride All
+            Require all granted
+        </Directory>
+
+        <Directory /opt/www/coinegger/web/>
+            Options Indexes FollowSymLinks MultiViews
+            AllowOverride All
+            Require all granted
+        </Directory>
+    </VirtualHost>
+
 ## Creating your keychain and your first application
 
 The first step is to create your keychain via the node application:
