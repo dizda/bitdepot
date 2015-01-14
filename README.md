@@ -24,6 +24,12 @@ Main advantage :
 
     The private key will never be stored on the server, you can sleep tight.
 
+## Creating your keychain and your fist application
+
+The first step is to create your keychain via the node application:
+
+    node ./node/create_wallet.js
+
 ## RabbitMQ consumers
 
 Setup RabbitMQ queues

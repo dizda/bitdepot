@@ -23,6 +23,7 @@ Database.prototype.addKeychain = function(name, requiredSignatures)
     var keychain = {
         name: name,
         sign_required: requiredSignatures,
+        group_withdraws_by_quantity:  1,
         created_at: new Date(),
         updated_at: new Date()
     };
@@ -47,7 +48,6 @@ Database.prototype.addApplication = function(keychainId, name)
         app_secret:  '1313131secret',   // generated value
         callback_endpoint:  'http://test.com',
         confirmations_required:  6,
-        group_withdraws_by_quantity:  1,
         created_at:     new Date(),
         updated_at:     new Date()
     };
@@ -61,22 +61,38 @@ Database.prototype.addApplication = function(keychainId, name)
     return deferred.promise;
 };
 
-Database.prototype.addPubkeys = function(applicationId, name, extendedPubKey)
+Database.prototype.addPubkeys = function(keychainId, applicationId, name, extendedPubKey, publicKey)
 {
     var deferred = Q.defer();
+    var self     = this;
 
-    var pubKey = {
-        name: name,
-        application_id: applicationId,
-        extended_pub_key: extendedPubKey,
-        created_at: new Date(),
-        updated_at: new Date()
+    var identity = {
+        keychain_id: keychainId,
+        name:        name,
+        public_key:  publicKey,
+        created_at:  new Date(),
+        updated_at:  new Date()
     };
 
-    this.client.query('INSERT INTO pub_key SET ?', pubKey, function(err, result) {
+    // Create an identity first
+    this.client.query('INSERT INTO identity SET ?', identity, function(err, result) {
         if (err) throw err;
 
-        deferred.resolve(result.insertId);
+        var pubKey = {
+            identity_id:    result.insertId,
+            application_id: applicationId,
+            extended_pub_key: extendedPubKey,
+            created_at: new Date(),
+            updated_at: new Date()
+        };
+
+        // Then create the attached pubKey with the extendedPubKey
+        self.client.query('INSERT INTO pub_key SET ?', pubKey, function(err, res) {
+            if (err) throw err;
+
+            deferred.resolve(res.insertId);
+        });
+//        deferred.resolve(result.insertId);
     });
 
     return deferred.promise;

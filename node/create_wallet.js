@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 'use strict';
 
 var inquirer  = require('inquirer')
@@ -152,10 +154,11 @@ function askConfirm()
 function process()
 {
     var deferred = Q.defer();
+    var keychain;
 
     database.addKeychain(keychainName, requiredSignatures)
     .then(function(keychainId) {
-
+        keychain = keychainId;
 
         return database.addApplication(keychainId, application);
     })
@@ -169,9 +172,21 @@ function process()
 
             promises.push(
                 database.addPubkeys(
+                    keychain,
                     applicationId,
                     '',
-                    walletCreated.derive(44 /* BIP44, constant */, true).derive(0 /* cointype: bitcoin */, true).derive(applicationId /* account */, true).hdPublicKey
+                    walletCreated
+                        .derive(44 /* BIP44, constant */, true)
+                        .derive(0 /* cointype: bitcoin */, true)
+                        .derive(applicationId /* account */, true).hdPublicKey, // extendedPubKey
+                    walletCreated
+                        .derive(44, true) // BIP44 constant
+                        .derive(0, true)  // bitcoin
+                        .derive(0, true)  // # application
+                        .derive(0)        // chain
+                        .derive(0)        // address
+                        .publicKey
+                    .toString()                                                 // publicKey
                 )
             );
         }
