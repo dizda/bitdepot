@@ -24,7 +24,7 @@ Main advantage :
 
     The private key will never be stored on the server, you can sleep tight.
 
-## Creating your keychain and your fist application
+## Creating your keychain and your first application
 
 The first step is to create your keychain via the node application:
 
