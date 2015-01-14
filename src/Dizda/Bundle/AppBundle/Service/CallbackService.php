@@ -48,8 +48,8 @@ class CallbackService
     {
         $client = $this->initialize($deposit->getApplication()->getCallbackEndpoint());
 
-        $response = $client->post('deposit.json', [
-            'json' => $this->serialize($deposit, 'DepositCallback')
+        $response = $client->post('callback/deposit/expected.json', [
+            'body' => $this->serialize($deposit, 'DepositCallback')
         ]);
 
         return (int) $response->getStatusCode() === 200;
