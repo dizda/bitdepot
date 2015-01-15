@@ -39,7 +39,7 @@ class Deposit implements MessageQueuingInterface
      *
      * @ORM\Column(name="type", type="smallint")
      *
-     * @Serializer\Groups({"Deposits", "DepositCallback"})
+     * @Serializer\Groups({"Deposits"})
      */
     private $type;
 
@@ -138,7 +138,7 @@ class Deposit implements MessageQueuingInterface
      * Get id
      * @codeCoverageIgnore
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -161,7 +161,7 @@ class Deposit implements MessageQueuingInterface
     /**
      * Get type
      *
-     * @return integer 
+     * @return integer
      */
     public function getType()
     {
@@ -184,7 +184,7 @@ class Deposit implements MessageQueuingInterface
     /**
      * Get amountExpected
      *
-     * @return string 
+     * @return string
      */
     public function getAmountExpected()
     {
@@ -209,7 +209,7 @@ class Deposit implements MessageQueuingInterface
      * Get amountFilled
      * @codeCoverageIgnore
      *
-     * @return string 
+     * @return string
      */
     public function getAmountFilled()
     {
@@ -234,7 +234,7 @@ class Deposit implements MessageQueuingInterface
      * Get isFulfilled
      * @codeCoverageIgnore
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsFulfilled()
     {
@@ -259,7 +259,7 @@ class Deposit implements MessageQueuingInterface
      * Get expiresAt
      * @codeCoverageIgnore
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getExpiresAt()
     {
@@ -307,7 +307,7 @@ class Deposit implements MessageQueuingInterface
      * Get application
      * @codeCoverageIgnore
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Application 
+     * @return \Dizda\Bundle\AppBundle\Entity\Application
      */
     public function getApplication()
     {
@@ -332,7 +332,7 @@ class Deposit implements MessageQueuingInterface
      * Get isOverfilled
      * @codeCoverageIgnore
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsOverfilled()
     {
@@ -368,7 +368,7 @@ class Deposit implements MessageQueuingInterface
      * Get topups
      * @codeCoverageIgnore
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTopups()
     {
