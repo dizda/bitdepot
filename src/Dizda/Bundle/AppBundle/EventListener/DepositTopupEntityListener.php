@@ -37,7 +37,7 @@ class DepositTopupEntityListener
         if ($entity instanceof DepositTopup) {
             // If RabbitMQ is not available, an Exception will be thrown, and a rollback of transactions will be made
             // so we will not loose any topup transactions if an error occur.
-            $this->topupProducer->publish(serialize($entity));
+            $this->topupProducer->publish(serialize($entity->getId()));
         }
     }
 

@@ -111,7 +111,7 @@ class WithdrawListener
 
         // Dispatch every outputs to rabbit, to launch a callback to all of them
         foreach ($withdraw->getWithdrawOutputs() as $output) {
-            $this->withdrawOutputProducer->publish($output->getId());
+            $this->withdrawOutputProducer->publish(serialize($output->getId()));
         }
 
 //        $this->withdrawProducer->publish(serialize([

@@ -121,36 +121,36 @@ old_sound_rabbit_mq:
             vhost:    '/'
             lazy:     true
     producers:
-        deposit:
+        deposit_callback:
             connection:       default
-            exchange_options: { name: deposit, type: direct }
-        deposit_topup:
+            exchange_options: { name: deposit-callback, type: direct }
+        deposit_topup_callback:
             connection:       default
-            exchange_options: { name: deposit-topup, type: direct }
+            exchange_options: { name: deposit-topup-callback, type: direct }
         # Withdrawed, then get informations on the blockchain, then dispatch withdraw_output_callback
-        withdraw:
+        withdraw_callback:
             connection:       default
-            exchange_options: { name: withdraw, type: direct }
+            exchange_options: { name: withdraw-callback, type: direct }
         withdraw_output_callback:
             connection:       default
             exchange_options: { name: withdraw-output-callback, type: direct }
 
     consumers:
-        deposit:
+        deposit_callback:
             connection:       default
-            exchange_options: { name: deposit, type: direct }
-            queue_options:    { name: deposit }
-            callback:         dizda_app.consumer.deposit
-        deposit_topup:
+            exchange_options: { name: deposit-callback, type: direct }
+            queue_options:    { name: deposit-callback }
+            callback:         dizda_app.consumer.callback
+        deposit_topup_callback:
             connection:       default
-            exchange_options: { name: deposit-topup, type: direct }
-            queue_options:    { name: deposit-topup }
-            callback:         dizda_app.consumer.deposit_topup
+            exchange_options: { name: deposit-topup-callback, type: direct }
+            queue_options:    { name: deposit-topup-callback }
+            callback:         dizda_app.consumer.callback
         withdraw_output_callback:
             connection:       default
             exchange_options: { name: withdraw-output-callback, type: direct }
             queue_options:    { name: withdraw-output-callback }
-            callback:         dizda_app.consumer.withdraw_output_callback
+            callback:         dizda_app.consumer.callback
 
 fos_user:
     db_driver: orm

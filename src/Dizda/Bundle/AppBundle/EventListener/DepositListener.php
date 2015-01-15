@@ -54,11 +54,9 @@ class DepositListener
         $this->address = $this->deposit->getAddressExternal();
 
         if ($this->deposit->getType() === Deposit::TYPE_AMOUNT_EXPECTED) {
-
             $this->processExpectedType($event);
 
         } elseif ($this->deposit->getType() === Deposit::TYPE_AMOUNT_TOPUP) {
-
             $this->processTopupType($event);
 
         }

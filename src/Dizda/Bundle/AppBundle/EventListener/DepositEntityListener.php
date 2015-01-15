@@ -42,11 +42,12 @@ class DepositEntityListener
             }
 
             // If the deposit is already processed, we don't push it a second time
+            // TODO: What if the Deposit is not fulfilled?
             if ($entity->getQueueStatus() !== Deposit::QUEUE_STATUS_QUEUED) {
                 return;
             }
 
-            $this->depositProducer->publish(serialize($entity));
+            $this->depositProducer->publish(serialize($entity->getId()));
         }
     }
 

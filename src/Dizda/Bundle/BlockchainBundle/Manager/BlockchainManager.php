@@ -85,6 +85,10 @@ class BlockchainManager
             // Save them
             $transactionsIncoming = $this->addressManager->saveTransactions($deposit->getAddressExternal(), $transactions);
 
+            if (!count($transactionsIncoming)) {
+                continue;
+            }
+
             // Update balance
             $deposit->getAddressExternal()->setBalance($address->getBalance());
 

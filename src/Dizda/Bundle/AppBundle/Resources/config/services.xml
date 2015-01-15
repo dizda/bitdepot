@@ -41,7 +41,6 @@
             <tag name="kernel.event_listener" event="app.deposit_updated" method="onUpdate" />
             <argument type="service" id="logger" />
             <argument type="service" id="doctrine.orm.default_entity_manager" />
-            <argument type="service" id="old_sound_rabbit_mq.deposit_topup_producer" />
         </service>
 
         <service id="dizda_app.listener.withdraw" class="Dizda\Bundle\AppBundle\EventListener\WithdrawListener">
@@ -51,7 +50,7 @@
             <argument type="service" id="bitcoind" />
             <argument type="service" id="dizda_app.manager.address" />
             <argument type="service" id="old_sound_rabbit_mq.withdraw_output_callback_producer" />
-            <argument type="service" id="old_sound_rabbit_mq.withdraw_producer" />
+            <argument type="service" id="old_sound_rabbit_mq.withdraw_callback_producer" />
         </service>
 
         <service id="dizda_app.listener.request" class="Dizda\Bundle\AppBundle\EventListener\RequestListener">
@@ -62,26 +61,16 @@
         <!-- Doctrine EventListener -->
         <service id="dizda_app.listener.deposit_entity" class="Dizda\Bundle\AppBundle\EventListener\DepositEntityListener">
             <tag name="doctrine.event_listener" event="postUpdate" />
-            <argument type="service" id="old_sound_rabbit_mq.deposit_producer" />
+            <argument type="service" id="old_sound_rabbit_mq.deposit_callback_producer" />
         </service>
 
         <service id="dizda_app.listener.deposit_topup_entity" class="Dizda\Bundle\AppBundle\EventListener\DepositTopupEntityListener">
             <tag name="doctrine.event_listener" event="postPersist" />
-            <argument type="service" id="old_sound_rabbit_mq.deposit_topup_producer" />
+            <argument type="service" id="old_sound_rabbit_mq.deposit_topup_callback_producer" />
         </service>
 
         <!-- Consumer -->
-        <service id="dizda_app.consumer.deposit" class="Dizda\Bundle\AppBundle\Consumer\DepositConsumer">
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
-            <argument type="service" id="dizda_app.service.callback" />
-        </service>
-
-        <service id="dizda_app.consumer.deposit_topup" class="Dizda\Bundle\AppBundle\Consumer\DepositTopupConsumer">
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
-            <argument type="service" id="dizda_app.service.callback" />
-        </service>
-
-        <service id="dizda_app.consumer.withdraw_output_callback" class="Dizda\Bundle\AppBundle\Consumer\WithdrawOutputCallbackConsumer">
+        <service id="dizda_app.consumer.callback" class="Dizda\Bundle\AppBundle\Consumer\CallbackConsumer">
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument type="service" id="dizda_app.service.callback" />
         </service>
