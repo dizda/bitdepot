@@ -139,11 +139,6 @@ class WithdrawManager
                 throw new UnknownSignatureException();
             }
 
-            // The case where the signature doesn't match with the keychain of the application
-            if ($pubKey->getKeychain() !== $withdraw->getKeychain()) {
-                throw new UnknownSignatureException();
-            }
-
             $withdraw->addSignature($pubKey);
 
             // dispatch event there, like PushOver through Rabbit ?
