@@ -23,6 +23,8 @@ interface BlockchainWatcherInterface
     public function getAddresses(array $addresses, $withTransactions);
 
     /**
+     * @param string $txid
+     *
      * @return TransactionAbstract
      */
     public function getTransaction($txid);

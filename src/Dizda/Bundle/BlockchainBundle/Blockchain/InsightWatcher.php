@@ -28,10 +28,7 @@ class InsightWatcher extends BlockchainBase implements BlockchainWatcherInterfac
     }
 
     /**
-     * @param string $address
-     * @param bool   $withTransactions
-     *
-     * @return \Dizda\Bundle\BlockchainBundle\Model\AddressAbstract
+     * {@inheritdoc}
      */
     public function getAddress($address, $withTransactions = false)
     {
@@ -48,11 +45,17 @@ class InsightWatcher extends BlockchainBase implements BlockchainWatcherInterfac
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getAddresses(array $addresses, $withTransactions)
     {
         throw new \Exception('Not implemented.');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getTransaction($txid)
     {
         $response = $this->client->get(sprintf('tx/%s', $txid));
@@ -69,21 +72,33 @@ class InsightWatcher extends BlockchainBase implements BlockchainWatcherInterfac
         return $transaction;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getAddressUnspentOutputs($address)
     {
         throw new \Exception('Not implemented.');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getAddressesUnspentOutputs(array $address)
     {
         throw new \Exception('Not implemented.');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getTransactionsByBlock($address)
     {
         throw new \Exception('Not implemented.');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getTransactionsByAddress($address, $confirmationsRequired)
     {
         $response = $this->client->get(sprintf('txs/?address=%s', $address));
