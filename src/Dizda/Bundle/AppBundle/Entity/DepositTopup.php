@@ -80,7 +80,7 @@ class DepositTopup implements MessageQueuingInterface
      * Get deposit
      * @codeCoverageIgnore
      *
-     * @return \Dizda\Bundle\AppBundle\Entity\Deposit 
+     * @return \Dizda\Bundle\AppBundle\Entity\Deposit
      */
     public function getDeposit()
     {

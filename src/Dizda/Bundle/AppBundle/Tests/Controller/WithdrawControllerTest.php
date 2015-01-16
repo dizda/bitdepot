@@ -122,6 +122,24 @@ class WithdrawControllerTest extends BaseFunctionalTestController
     }
 
     /**
+     * Try to sign the withdraw
+     *
+     * @group functional
+     */
+    public function testPostWithdrawActionThrowNotFoundHttpException()
+    {
+        $this->client->request('POST', sprintf('/withdraws/%d.json', /* withdraw */ 1), [
+            'id' => 2,
+            'raw_signed_transaction' => 'coucou',
+            'signed_by' => 'blabla',
+            'is_signed' => false
+        ]);
+
+        $content = $this->client->getResponse()->isNotFound();
+        $this->assertTrue($content);
+    }
+
+    /**
      * Delete a withdraw
      *
      * @group functional

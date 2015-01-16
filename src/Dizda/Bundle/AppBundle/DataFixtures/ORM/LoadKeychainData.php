@@ -10,6 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Class LoadKeychainData
+ * @codeCoverageIgnore
  *
  * @author Jonathan Dizdarevic <dizda@dizda.fr>
  */

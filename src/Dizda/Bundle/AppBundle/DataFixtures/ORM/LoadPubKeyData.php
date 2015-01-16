@@ -9,6 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Class LoadPubKeyData
+ * @codeCoverageIgnore
  *
  * @author Jonathan Dizdarevic <dizda@dizda.fr>
  */

@@ -9,6 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Class LoadIdentityData
+ * @codeCoverageIgnore
  *
  * @author Jonathan Dizdarevic <dizda@dizda.fr>
  */

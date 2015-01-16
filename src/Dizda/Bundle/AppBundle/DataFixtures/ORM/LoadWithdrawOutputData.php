@@ -10,6 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Class LoadWithdrawOutputData
+ * @codeCoverageIgnore
  *
  * @author Jonathan Dizdarevic <dizda@dizda.fr>
  */
