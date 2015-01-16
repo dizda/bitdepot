@@ -98,7 +98,6 @@ class DepositListener
 
         // Get amount of each transactions detected
         foreach ($transactions as $transaction) {
-
             // Add them to the continuous balance
             $this->deposit->setAmountFilled(
                 bcadd($this->deposit->getAmountFilled(), $transaction->getAmount(), 8)

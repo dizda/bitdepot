@@ -42,6 +42,33 @@ class AddressManagerTest extends ProphecyTestCase
     private $addressService;
 
     /**
+     * AddressManager::create()
+     */
+    public function testCreateWithNewAddress()
+    {
+        $app = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Application');
+        $addressRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\AddressRepository');
+
+        $this->em->getRepository('DizdaAppBundle:Address')->shouldBeCalled()->willReturn($addressRepo->reveal());
+        $addressRepo->getLastDerivation($app, true)->shouldBeCalled();
+
+        $this->addressService
+            ->generateHDMultisigAddress($app, true, 0)
+            ->shouldBeCalled()
+            ->willReturn([
+                'address'      => 'add3ssBitch',
+                'redeemScript' => 'redeemBitch',
+            ])
+        ;
+
+        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Address'))->shouldBeCalledTimes(1);
+
+        $return = $this->manager->create($app->reveal(), true);
+        $this->assertEquals('add3ssBitch', $return->getValue());
+        $this->assertEquals('redeemBitch', $return->getRedeemScript());
+    }
+
+    /**
      * AddressManager::saveTransactions()
      */
     public function testSaveTransactionsOutputs()

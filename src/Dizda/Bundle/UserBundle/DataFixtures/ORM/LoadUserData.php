@@ -7,6 +7,12 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Dizda\Bundle\UserBundle\Entity\User;
 
+/**
+ * Class LoadUserData
+ * @codeCoverageIgnore
+ *
+ * @author Jonathan Dizdarevic <dizda@dizda.fr>
+ */
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
