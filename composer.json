@@ -25,7 +25,8 @@
         "friendsofsymfony/rest-bundle": "~1.4",
         "escapestudios/wsse-authentication-bundle": "~2.0",
         "lexik/jwt-authentication-bundle": "~1.0",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "jms/serializer": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
@@ -36,6 +37,12 @@
         "liip/functional-test-bundle": "dev-master",
         "phing/phing": "~2.9"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Nadrieril/serializer"
+        }
+    ],
     "scripts": {
         "post-root-package-install": [
             "SymfonyStandard\\Composer::hookRootPackageInstall"

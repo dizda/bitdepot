@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cb98deea7e54c089cf8660ead74f9cc8",
+    "hash": "0ace5b9bc665e20655ea33faefd689f6",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1270,16 +1270,16 @@
         },
         {
             "name": "jms/serializer",
-            "version": "0.16.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "c8a171357ca92b6706e395c757f334902d430ea9"
+                "url": "https://github.com/Nadrieril/serializer.git",
+                "reference": "c296dd4052dc1f07bdb7c1db366c50a4e3ec39bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/c8a171357ca92b6706e395c757f334902d430ea9",
-                "reference": "c8a171357ca92b6706e395c757f334902d430ea9",
+                "url": "https://api.github.com/repos/Nadrieril/serializer/zipball/c296dd4052dc1f07bdb7c1db366c50a4e3ec39bf",
+                "reference": "c296dd4052dc1f07bdb7c1db366c50a4e3ec39bf",
                 "shasum": ""
             },
             "require": {
@@ -1315,16 +1315,13 @@
                     "JMS\\Serializer": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache2"
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
-                    "role": "Developer of wrapped JMSSerializerBundle"
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com"
                 }
             ],
             "description": "Library for (de-)serializing data of any complexity; supports XML, JSON, and YAML.",
@@ -1336,7 +1333,10 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2014-03-18 08:39:00"
+            "support": {
+                "source": "https://github.com/Nadrieril/serializer/tree/master"
+            },
+            "time": "2014-12-16 23:57:32"
         },
         {
             "name": "jms/serializer-bundle",
@@ -4099,6 +4099,7 @@
     "stability-flags": {
         "nbobtc/bitcoind-bundle": 20,
         "friendsofsymfony/user-bundle": 20,
+        "jms/serializer": 20,
         "satooshi/php-coveralls": 20,
         "liip/functional-test-bundle": 20
     },
