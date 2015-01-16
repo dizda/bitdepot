@@ -407,6 +407,7 @@ class Address
 
     /**
      * Get application
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Application
      */

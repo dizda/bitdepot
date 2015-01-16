@@ -315,6 +315,7 @@ class Application implements UserInterface
 
     /**
      * Add pubKeys
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\PubKey $pubKeys
      * @return Application
@@ -328,6 +329,7 @@ class Application implements UserInterface
 
     /**
      * Remove pubKeys
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\PubKey $pubKeys
      */
@@ -348,6 +350,7 @@ class Application implements UserInterface
 
     /**
      * Add addresses
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Address $addresses
      * @return Application
@@ -361,6 +364,7 @@ class Application implements UserInterface
 
     /**
      * Remove addresses
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Address $addresses
      */
@@ -371,6 +375,7 @@ class Application implements UserInterface
 
     /**
      * Get addresses
+     * @codeCoverageIgnore
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -392,7 +397,10 @@ class Application implements UserInterface
     }
 
     /**
+     * When loggin via WSSE-Auth, the ROLE_WSSE is attributed to the user/application
+     *
      * {@inheritdoc}
+     * @codeCoverageIgnore
      */
     public function getRoles()
     {
@@ -401,6 +409,7 @@ class Application implements UserInterface
 
     /**
      * {@inheritdoc}
+     * @codeCoverageIgnore
      */
     public function getPassword()
     {
@@ -409,6 +418,7 @@ class Application implements UserInterface
 
     /**
      * {@inheritdoc}
+     * @codeCoverageIgnore
      */
     public function getSalt()
     {
@@ -417,6 +427,7 @@ class Application implements UserInterface
 
     /**
      * {@inheritdoc}
+     * @codeCoverageIgnore
      */
     public function getUsername()
     {
@@ -425,6 +436,7 @@ class Application implements UserInterface
 
     /**
      * {@inheritdoc}
+     * @codeCoverageIgnore
      */
     public function eraseCredentials()
     {

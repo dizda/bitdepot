@@ -229,6 +229,7 @@ class Keychain
 
     /**
      * Add identities
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Identity $identities
      * @return Keychain
@@ -242,6 +243,7 @@ class Keychain
 
     /**
      * Remove identities
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Identity $identities
      */
@@ -252,6 +254,7 @@ class Keychain
 
     /**
      * Get identities
+     * @codeCoverageIgnore
      *
      * @return \Doctrine\Common\Collections\Collection
      */

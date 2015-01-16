@@ -77,6 +77,7 @@ class Identity
 
     /**
      * Get id
+     * @codeCoverageIgnore
      *
      * @return integer
      */
@@ -87,6 +88,7 @@ class Identity
 
     /**
      * Set name
+     * @codeCoverageIgnore
      *
      * @param string $name
      * @return Identity
@@ -100,6 +102,7 @@ class Identity
 
     /**
      * Get name
+     * @codeCoverageIgnore
      *
      * @return string
      */
@@ -110,6 +113,7 @@ class Identity
 
     /**
      * Set publicKey
+     * @codeCoverageIgnore
      *
      * @param string $publicKey
      * @return Identity
@@ -123,6 +127,7 @@ class Identity
 
     /**
      * Get publicKey
+     * @codeCoverageIgnore
      *
      * @return string
      */
@@ -157,6 +162,7 @@ class Identity
 
     /**
      * Add pubKeys
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\PubKey $pubKeys
      * @return Identity
@@ -170,6 +176,7 @@ class Identity
 
     /**
      * Remove pubKeys
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\PubKey $pubKeys
      */
@@ -180,6 +187,7 @@ class Identity
 
     /**
      * Get pubKeys
+     * @codeCoverageIgnore
      *
      * @return \Doctrine\Common\Collections\Collection
      */

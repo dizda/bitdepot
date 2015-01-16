@@ -63,6 +63,7 @@ class PubKey
 
     /**
      * Set extendedPubKey
+     * @codeCoverageIgnore
      *
      * @param string $extendedPubKey
      * @return PubKey
@@ -86,6 +87,7 @@ class PubKey
 
     /**
      * Set application
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Application $application
      * @return PubKey
@@ -99,6 +101,7 @@ class PubKey
 
     /**
      * Get application
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Application
      */
@@ -109,6 +112,7 @@ class PubKey
 
     /**
      * Set identity
+     * @codeCoverageIgnore
      *
      * @param \Dizda\Bundle\AppBundle\Entity\Identity $identity
      * @return PubKey
@@ -122,6 +126,7 @@ class PubKey
 
     /**
      * Get identity
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Identity
      */
