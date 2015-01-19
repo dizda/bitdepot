@@ -23,8 +23,9 @@
                         <th class="text-center">Balance</th>
                         <th class="text-center">Amount expected</th>
                         <th class="text-center">Amount filled</th>
-                        <th class="text-center">status</th>
-                        <th class="text-center">created_at</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Ref.</th>
+                        <th class="text-center">Created at</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,19 +44,30 @@
                         }">
                             <i class="fa fa-btc"></i> {{ deposit.amount_filled }}
                         </td>
+                        <td data-ng-if="deposit.type == 1">
+                            <span class="label label-default" data-ng-if="!deposit.is_fulfilled && deposit.amount_filled == 0">
+                                empty
+                            </span>
+                            <span class="label label-warning" data-ng-if="!deposit.is_fulfilled && deposit.amount_filled != 0">
+                                not fulfilled
+                            </span>
+                            <span class="label label-success" data-ng-if="deposit.is_fulfilled && !deposit.is_overfilled">
+                                fulfilled
+                            </span>
+                            <span class="label label-danger" data-ng-if="deposit.is_fulfilled && deposit.is_overfilled">
+                                overfilled
+                            </span>
+                        </td>
+                        <td data-ng-if="deposit.type == 2">
+                            <span class="label label-default" data-ng-if="deposit.amount_filled == 0">
+                                empty
+                            </span>
+                            <span class="label label-success" data-ng-if="deposit.amount_filled > 0">
+                                filling
+                            </span>
+                        </td>
                         <td>
-                            <!--<span class="label label-default" data-ng-if="!withdraw.is_signed && withdraw.signatures == 0">
-                                Unsigned
-                            </span>
-                            <span class="label label-warning" data-ng-if="!withdraw.is_signed && withdraw.signatures.length > 0">
-                                Partially signed
-                            </span>
-                            <span class="label label-info" data-ng-if="withdraw.is_signed && !withdraw.withdrawed_at">
-                                Fully signed
-                            </span>
-                            <span class="label label-success" data-ng-if="withdraw.is_signed && withdraw.withdrawed_at">
-                                Withdrawed
-                            </span>-->
+                            {{ deposit.reference }}
                         </td>
                         <td>{{ deposit.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
                     </tr>

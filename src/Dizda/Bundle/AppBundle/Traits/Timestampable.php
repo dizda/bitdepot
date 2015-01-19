@@ -16,7 +16,7 @@ trait Timestampable
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      *
-     * @Serializer\Groups({"Withdraws", "WithdrawOutputs"})
+     * @Serializer\Groups({"Deposits", "Withdraws", "WithdrawOutputs"})
      */
     protected $createdAt;
 

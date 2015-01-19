@@ -26,22 +26,19 @@ class PostDepositsRequest extends AbstractRequest
         ));
 
         $resolver->setOptional(array(
-            'amount_expected'
+            'amount_expected',
+            'reference'
         ));
 
         $resolver->setAllowedTypes(array(
             'application_id' =>  ['integer'],
             'type'           =>  ['integer'],
-            'amount_expected' => ['string']
+            'amount_expected' => ['string'],
+            'reference'       => ['string', 'null']
         ));
 
-        /*$resolver->setDefaults(array(
-            'typeOfContentSelected' => 'newspaper',
-            'network'=> 'all',
-        ));*/
-
-        /*$resolver->setAllowedValues(array(
-            'duration' => ['newspaper', 'author', 'post'] // different mysql ids ?
-        ));*/
+        $resolver->setDefaults(array(
+            'reference' => null
+        ));
     }
 }

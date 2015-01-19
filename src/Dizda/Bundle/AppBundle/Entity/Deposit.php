@@ -64,6 +64,18 @@ class Deposit implements MessageQueuingInterface
     private $amountFilled = '0.00000000';
 
     /**
+     * Store reference of the remote application
+     *
+     * @var string
+     *
+     * @ORM\Column(name="reference", type="string", length=255, nullable=true)
+     *
+     * @Serializer\Groups({"Deposits"})
+     * @Serializer\Type("string")
+     */
+    private $reference;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="is_fulfilled", type="boolean")
@@ -373,5 +385,30 @@ class Deposit implements MessageQueuingInterface
     public function getTopups()
     {
         return $this->topups;
+    }
+
+    /**
+     * Set reference
+     * @codeCoverageIgnore
+     *
+     * @param string $reference
+     * @return Deposit
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * Get reference
+     * @codeCoverageIgnore
+     *
+     * @return string
+     */
+    public function getReference()
+    {
+        return $this->reference;
     }
 }

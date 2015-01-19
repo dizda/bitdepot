@@ -65,6 +65,7 @@ class DepositManager
             ->setType($depositSubmitted['type'])
             ->setApplication($app) // TODO: verify that application id is owned by user
             ->setAddressExternal($address)
+            ->setReference($depositSubmitted['reference'])
         ;
 
         if ($depositSubmitted['type'] === 1) {
