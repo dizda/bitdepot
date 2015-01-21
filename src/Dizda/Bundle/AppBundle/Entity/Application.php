@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * Application
  *
  * @ORM\Table(name="application")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Dizda\Bundle\AppBundle\Repository\ApplicationRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Application implements UserInterface
@@ -33,6 +33,8 @@ class Application implements UserInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Serializer\Groups({"Applications"})
      */
     private $name;
 
@@ -54,6 +56,8 @@ class Application implements UserInterface
      * @var integer
      *
      * @ORM\Column(name="confirmations_required", type="smallint")
+     *
+     * @Serializer\Groups({"Applications"})
      */
     private $confirmationsRequired;
 
@@ -63,6 +67,8 @@ class Application implements UserInterface
      * @var string
      *
      * @ORM\Column(name="callback_endpoint", type="string", length=255)
+     *
+     * @Serializer\Groups({"Applications"})
      */
     private $callbackEndpoint;
 
@@ -73,6 +79,8 @@ class Application implements UserInterface
      *
      * @ORM\ManyToOne(targetEntity="Keychain", inversedBy="applications")
      * @ORM\JoinColumn(name="keychain_id", referencedColumnName="id", nullable=true)
+     *
+     * @Serializer\Groups({"Applications"})
      */
     private $keychain;
 

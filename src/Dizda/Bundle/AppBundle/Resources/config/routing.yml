@@ -17,3 +17,8 @@ dizda_app_address:
     type:           rest
     resource:       @DizdaAppBundle/Controller/AddressController.php
     prefix:         /
+
+dizda_app_application:
+    type:           rest
+    resource:       @DizdaAppBundle/Controller/ApplicationController.php
+    prefix:         /

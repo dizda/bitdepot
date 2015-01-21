@@ -30,7 +30,7 @@ class Keychain
      *
      * @ORM\Column(name="name", type="string", length=255)
      *
-     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
+     * @Serializer\Groups({"Applications", "Withdraws", "WithdrawDetail"})
      */
     private $name;
 
@@ -39,7 +39,7 @@ class Keychain
      *
      * @ORM\Column(name="sign_required", type="smallint")
      *
-     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
+     * @Serializer\Groups({"Applications", "Withdraws", "WithdrawDetail"})
      */
     private $signRequired;
 
@@ -82,7 +82,7 @@ class Keychain
      *      mappedBy        = "keychain"
      * )
      *
-     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Groups({"Applications", "WithdrawDetail"})
      */
     private $identities;
 

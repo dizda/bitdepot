@@ -30,7 +30,7 @@ class Identity
      *
      * @ORM\Column(name="name", type="string", length=255)
      *
-     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Groups({"Applications", "WithdrawDetail"})
      */
     private $name;
 
