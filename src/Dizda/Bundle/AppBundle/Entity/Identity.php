@@ -152,6 +152,7 @@ class Identity
 
     /**
      * Get keychain
+     * @codeCoverageIgnore
      *
      * @return \Dizda\Bundle\AppBundle\Entity\Keychain
      */
