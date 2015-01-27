@@ -75,10 +75,12 @@ class DepositListener
         // TODO: WARNING! BE SURE THAT WE WON'T USE THIS TRANSACTION INPUT UNTIL THE DEPOSIT IS FINISH, BECAUSE IF WE USE IT THE EXPECTED AMOUNT WILL NEVER BE COMPLETED
         $this->deposit->setAmountFilled($this->address->getBalance());
 
-        if ($this->address->getBalance() >= $this->deposit->getAmountExpected()) {
+        // >=
+        if (bccomp($this->address->getBalance(), $this->deposit->getAmountExpected(), 8) !== -1) {
             $this->deposit->setIsFulfilled(true);
 
-            if ($this->address->getBalance() > $this->deposit->getAmountExpected()) {
+            // >
+            if (bccomp($this->address->getBalance(), $this->deposit->getAmountExpected(), 8) === 1) {
                 $this->deposit->setIsOverfilled(true);
                 $this->logger->warning('Address balance is higher than the expected deposit amount.', [ $this->deposit->getId() ]);
             }

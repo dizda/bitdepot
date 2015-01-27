@@ -56,6 +56,30 @@ class DepositListenerTest extends ProphecyTestCase
     /**
      * DepositListener::onUpdate()
      */
+    public function testOnUpdateProcessExpectedTypeInsufficient()
+    {
+        $event = $this->prophesize('Dizda\Bundle\AppBundle\Event\DepositEvent');
+        $deposit = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Deposit');
+        $address = (new Address())
+            ->setBalance('1.77')
+        ;
+
+        $event->getDeposit()->shouldBeCalled()->willReturn($deposit->reveal());
+        $deposit->getAddressExternal()->shouldBeCalled()->willReturn($address);
+        $deposit->getType()->shouldBeCalled()->willReturn(Deposit::TYPE_AMOUNT_EXPECTED);
+
+        $deposit->setAmountFilled($address->getBalance())->shouldBeCalled();
+        $deposit->getAmountExpected()->shouldBeCalled()->willReturn('1.7800000');
+        $deposit->setIsFulfilled(true)->shouldNotBeCalled();
+        $deposit->setIsOverfilled(true)->shouldNotBeCalled();
+        $deposit->setQueueStatus(Deposit::QUEUE_STATUS_QUEUED)->shouldBeCalled();
+
+        $this->listener->onUpdate($event->reveal());
+    }
+
+    /**
+     * DepositListener::onUpdate()
+     */
     public function testOnUpdateProcessExpectedTypeIsOverfilled()
     {
         $event = $this->prophesize('Dizda\Bundle\AppBundle\Event\DepositEvent');
