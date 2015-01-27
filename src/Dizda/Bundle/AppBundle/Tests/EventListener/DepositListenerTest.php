@@ -4,6 +4,7 @@ namespace Dizda\Bundle\AppBundle\Tests\EventListener;
 
 use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\Deposit;
+use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\EventListener\DepositListener;
 use Doctrine\ORM\EntityManager;
 use Prophecy\Argument;
@@ -98,6 +99,33 @@ class DepositListenerTest extends ProphecyTestCase
         $deposit->setIsOverfilled(true)->shouldBeCalled();
         $deposit->getId()->shouldBeCalled();
         $deposit->setQueueStatus(Deposit::QUEUE_STATUS_QUEUED)->shouldBeCalled();
+
+        $this->listener->onUpdate($event->reveal());
+    }
+
+    /**
+     * DepositListener::onUpdate()
+     */
+    public function testOnUpdateProcessTopupType()
+    {
+        $event = $this->prophesize('Dizda\Bundle\AppBundle\Event\DepositEvent');
+        $deposit = $this->prophesize('Dizda\Bundle\AppBundle\Entity\Deposit');
+        $address = (new Address())
+            ->setBalance('1.78')
+        ;
+        $transactions = [
+            (new Transaction())->setAmount('0.00120000'),
+            (new Transaction())->setAmount('0.00440000')
+        ];
+
+        $event->getDeposit()->shouldBeCalled()->willReturn($deposit->reveal());
+        $deposit->getAddressExternal()->shouldBeCalled()->willReturn($address);
+        $deposit->getType()->shouldBeCalled()->willReturn(Deposit::TYPE_AMOUNT_TOPUP);
+        $event->getTransactionsInAdded()->shouldBeCalled()->willReturn($transactions);
+        $deposit->addAmountFilled('0.00120000')->shouldBeCalled();
+        $deposit->addAmountFilled('0.00440000')->shouldBeCalled();
+
+        $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\DepositTopup'))->shouldBeCalledTimes(2);
 
         $this->listener->onUpdate($event->reveal());
     }

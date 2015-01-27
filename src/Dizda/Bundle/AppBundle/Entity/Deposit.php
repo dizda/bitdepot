@@ -218,6 +218,19 @@ class Deposit implements MessageQueuingInterface
     }
 
     /**
+     * @param string $amount
+     *
+     * @return $this
+     */
+    public function addAmountFilled($amount)
+    {
+
+        $this->amountFilled = bcadd($this->amountFilled, $amount, 8);
+
+        return $this;
+    }
+
+    /**
      * Get amountFilled
      * @codeCoverageIgnore
      *
