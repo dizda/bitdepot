@@ -72,6 +72,7 @@ class DepositListener
      */
     private function processExpectedType(DepositEvent $event)
     {
+        // TODO: WARNING! BE SURE THAT WE WON'T USE THIS TRANSACTION INPUT UNTIL THE DEPOSIT IS FINISH, BECAUSE IF WE USE IT THE EXPECTED AMOUNT WILL NEVER BE COMPLETED
         $this->deposit->setAmountFilled($this->address->getBalance());
 
         if ($this->address->getBalance() >= $this->deposit->getAmountExpected()) {
