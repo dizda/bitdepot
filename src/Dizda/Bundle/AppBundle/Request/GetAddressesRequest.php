@@ -24,15 +24,21 @@ class GetAddressesRequest extends AbstractRequest
         ));
 
         $resolver->setOptional(array(
-            'show'
+            'show',
+            'currentPage',
+            'maxPerPage'
         ));
 
         $resolver->setAllowedTypes(array(
-            'show' =>  ['string']
+            'show'        => ['string'],
+            'currentPage' => ['integer'],
+            'maxPerPage'  => ['integer', 'null']
         ));
 
         $resolver->setDefaults(array(
             'show' => 'all',
+            'currentPage' => 1,
+            'maxPerPage'  => 50
         ));
 
         $resolver->setAllowedValues(array(

@@ -58,6 +58,10 @@
             <argument type="service" id="security.token_storage" />
         </service>
 
+        <service id="dizda_app.listener.range_header" class="Dizda\Bundle\AppBundle\EventListener\RangeHeaderListener">
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+        </service>
+
         <!-- Doctrine EventListener -->
         <service id="dizda_app.listener.deposit_entity" class="Dizda\Bundle\AppBundle\EventListener\DepositEntityListener">
             <tag name="doctrine.event_listener" event="postUpdate" />

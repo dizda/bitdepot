@@ -5,6 +5,8 @@ namespace Dizda\Bundle\AppBundle\Repository;
 use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Doctrine\ORM\EntityRepository;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
 /**
  * Class AddressRepository
@@ -39,7 +41,7 @@ class AddressRepository extends EntityRepository
     /**
      * @param array $filters
      *
-     * @return mixed
+     * @return Pagerfanta
      */
     public function getAddresses(array $filters)
     {
@@ -64,7 +66,12 @@ class AddressRepository extends EntityRepository
             $qb->andWhere('a.balance > 0');
         }
 
-        return $qb->getQuery()->execute();
+        $pagerfanta = (new Pagerfanta(new DoctrineORMAdapter($qb)))
+            ->setMaxPerPage($filters['maxPerPage'])
+            ->setCurrentPage($filters['currentPage'])
+        ;
+
+        return $pagerfanta;
     }
 
     /**

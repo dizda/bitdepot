@@ -5,13 +5,7 @@ app.controller('AddressCtrl', ['$scope', '$location', '$modal', 'Address', funct
     $scope.filters = {
         show: 'all'
     };
-    $scope.addresses = Address.query();
 
-    /**
-     * Filtering when changing filters
-     */
-    $scope.$watch('filters.show', function() {
-        $scope.addresses = Address.query($scope.filters);
-    });
+    $scope.url = 'api/addresses.json';
 
 }]);
