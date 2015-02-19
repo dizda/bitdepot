@@ -39,11 +39,18 @@ class RangeHeaderListener
             return;
         }
 
-        if ('json' !== $event->getRequest()->getRequestFormat() || !$event->getRequest()->headers->get('range')) {
+        if ('json' !== $event->getRequest()->getRequestFormat()) {
             return;
         }
 
-        list($offset, $limit) = explode('-', $event->getRequest()->headers->get('range'));
+        // We define default values
+        $offset = 0;
+        $limit  = 49;
+
+        // If the range is specified, we overwrite the values
+        if ($event->getRequest()->headers->get('range')) {
+            list($offset, $limit) = explode('-', $event->getRequest()->headers->get('range'));
+        }
 
         $event->getRequest()->query->add([
             'maxPerPage'  => (int) ($limit - $offset) + 1,
