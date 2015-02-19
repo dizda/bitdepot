@@ -12,7 +12,7 @@ install:
 script:
     - mkdir -p build/logs
 #    - ./vendor/phpunit/phpunit/phpunit -c app/
-    - whereis node
+    # /home/travis/.nvm/v0.10.36/bin/node
     - which node
     - cd node/ && npm install && cd ../
     - make tests
