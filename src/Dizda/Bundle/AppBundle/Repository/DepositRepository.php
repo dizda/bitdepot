@@ -4,6 +4,8 @@ namespace Dizda\Bundle\AppBundle\Repository;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
 /**
  * DepositRepository
@@ -31,9 +33,11 @@ class DepositRepository extends EntityRepository
     }
 
     /**
-     * @return ArrayCollection
+     * @param array $filters
+     *
+     * @return Pagerfanta
      */
-    public function getDeposits()
+    public function getDeposits(array $filters)
     {
         $qb = $this->createQueryBuilder('d')
             ->addSelect('a')
@@ -43,7 +47,12 @@ class DepositRepository extends EntityRepository
             ->orderBy('d.createdAt', 'DESC')
         ;
 
-        return $qb->getQuery()->execute();
+        $pagerfanta = (new Pagerfanta(new DoctrineORMAdapter($qb)))
+            ->setMaxPerPage($filters['maxPerPage'])
+            ->setCurrentPage($filters['currentPage'])
+        ;
+
+        return $pagerfanta;
     }
 
 }

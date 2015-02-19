@@ -3,6 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Controller;
 
 use Dizda\Bundle\AppBundle\Entity\Deposit;
+use Dizda\Bundle\AppBundle\Request\GetDepositsRequest;
 use Dizda\Bundle\AppBundle\Request\PostDepositsRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations as REST;
@@ -22,13 +23,17 @@ class DepositController extends Controller
      * @REST\View(serializerGroups={"Deposits"})
      * @Security("has_role('DEPOSIT_LIST')")
      *
+     * @param Request $request
+     *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function getDepositsAction()
+    public function getDepositsAction(Request $request)
     {
+        $filters = (new GetDepositsRequest($request->query->all()))->options;
+
         $deposits = $this->get('doctrine.orm.default_entity_manager')
             ->getRepository('DizdaAppBundle:Deposit')
-            ->getDeposits()
+            ->getDeposits($filters)
         ;
 
         return $deposits;

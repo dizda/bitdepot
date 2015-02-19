@@ -2,7 +2,7 @@
 
 app.controller('DepositCtrl', ['$scope', '$location', '$modal', 'Deposit', function($scope, $location, $modal, Deposit) {
 
-    $scope.deposits = Deposit.query();
+    $scope.url = 'api/deposits.json';
 
     $scope.openModalAddDeposit = function() {
 
@@ -16,7 +16,6 @@ app.controller('DepositCtrl', ['$scope', '$location', '$modal', 'Deposit', funct
         });
 
     };
-
 
     $scope.$on('deposit:create', function(e, deposit) {
         $scope.deposits.unshift(deposit);
