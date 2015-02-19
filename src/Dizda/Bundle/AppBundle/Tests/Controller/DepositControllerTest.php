@@ -46,7 +46,7 @@ class DepositControllerTest extends BaseFunctionalTestController
         ]);
 
         $content = json_decode($this->client->getResponse()->getContent());
-print_r($content);
+
         $this->assertEquals(1, $content->type);
         $this->assertEquals('0.00040000', $content->amount_expected);
         $this->assertEquals('0.00000000', $content->amount_filled);
