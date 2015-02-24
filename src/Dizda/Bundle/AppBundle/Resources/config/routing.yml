@@ -6,7 +6,7 @@ dizda_app_withdraw:
 dizda_app_withdraw_output:
     type:           rest
     resource:       @DizdaAppBundle/Controller/WithdrawOutputController.php
-    prefix:         /
+    prefix:         /withdraw
 
 dizda_app_deposit:
     type:           rest
