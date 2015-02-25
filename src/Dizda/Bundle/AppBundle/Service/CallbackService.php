@@ -22,21 +22,18 @@ class CallbackService
     private $serializer;
 
     /**
-     * @param SerializerInterface $serializer
+     * @var HttpService
      */
-    public function __construct(SerializerInterface $serializer)
-    {
-        $this->serializer = $serializer;
-    }
+    private $http;
 
     /**
-     * @param $baseUrl
-     *
-     * @return Client
+     * @param SerializerInterface $serializer
+     * @param HttpService         $http
      */
-    public function initialize($baseUrl)
+    public function __construct(SerializerInterface $serializer, HttpService $http)
     {
-        return new Client(['base_url' => $baseUrl]);
+        $this->serializer = $serializer;
+        $this->http       = $http;
     }
 
     /**
@@ -46,9 +43,9 @@ class CallbackService
      */
     public function depositExpectedFilling(Deposit $deposit)
     {
-        $client = $this->initialize($deposit->getApplication()->getCallbackEndpoint());
+        $url = sprintf('%s/callback/deposit/expected.json', $deposit->getApplication()->getCallbackEndpoint());
 
-        $response = $client->post('callback/deposit/expected.json', [
+        $response = $this->http->post($url, [
             'body' => $this->serialize($deposit, 'DepositCallback')
         ]);
 
@@ -57,6 +54,7 @@ class CallbackService
 
     /**
      * @param DepositTopup $depositTopup
+     * TODO: !!
      *
      * @return bool
      */
@@ -80,10 +78,10 @@ class CallbackService
      */
     public function withdrawOutputWithdrawn(WithdrawOutput $withdrawOutput)
     {
-        $client = $this->initialize($withdrawOutput->getApplication()->getCallbackEndpoint());
+        $url = sprintf('%s/callback/withdraw/output.json', $withdrawOutput->getApplication()->getCallbackEndpoint());
 
-        $response = $client->post('withdraw_output.json', [
-            'json' => $this->serializer->serialize($withdrawOutput, 'json')
+        $response = $this->http->post($url, [
+            'body' => $this->serialize($withdrawOutput, 'WithdrawOutputCallback')
         ]);
 
         return (int) $response->getStatusCode() === 200;

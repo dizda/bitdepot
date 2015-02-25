@@ -90,8 +90,12 @@
         </service>
 
         <!-- Services -->
+        <service id="dizda_app.service.http" class="Dizda\Bundle\AppBundle\Service\HttpService">
+        </service>
+
         <service id="dizda_app.service.callback" class="Dizda\Bundle\AppBundle\Service\CallbackService">
             <argument type="service" id="jms_serializer" />
+            <argument type="service" id="dizda_app.service.http" />
         </service>
 
         <service id="dizda_app.service.address" class="Dizda\Bundle\AppBundle\Service\AddressService">

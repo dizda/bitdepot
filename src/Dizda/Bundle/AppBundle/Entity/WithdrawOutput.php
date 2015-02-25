@@ -26,7 +26,7 @@ class WithdrawOutput implements MessageQueuingInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @Serializer\Groups({"WithdrawOutputs"})
+     * @Serializer\Groups({"WithdrawOutputs", "WithdrawOutputCallback"})
      */
     private $id;
 
@@ -35,7 +35,7 @@ class WithdrawOutput implements MessageQueuingInterface
      *
      * @ORM\Column(name="amount", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
      *
-     * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs"})
+     * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs", "WithdrawOutputCallback"})
      * @Serializer\Type("string")
      */
     private $amount;
@@ -45,7 +45,7 @@ class WithdrawOutput implements MessageQueuingInterface
      *
      * @ORM\Column(name="to_address", type="string", length=255)
      *
-     * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs"})
+     * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs", "WithdrawOutputCallback"})
      */
     private $toAddress;
 
@@ -54,7 +54,7 @@ class WithdrawOutput implements MessageQueuingInterface
      *
      * @ORM\Column(name="is_accepted", type="boolean")
      *
-     * @Serializer\Groups({"WithdrawOutputs"})
+     * @Serializer\Groups({"WithdrawOutputs", "WithdrawOutputCallback"})
      */
     private $isAccepted;
 
@@ -63,7 +63,7 @@ class WithdrawOutput implements MessageQueuingInterface
      *
      * @ORM\Column(name="reference", type="string", length=255, nullable=true)
      *
-     * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs"})
+     * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs", "WithdrawOutputCallback"})
      */
     private $reference;
 
@@ -86,7 +86,7 @@ class WithdrawOutput implements MessageQueuingInterface
      * @ORM\JoinColumn(name="withdraw_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      *
      * Serializer\Exclude
-     * @Serializer\Groups({"WithdrawOutputs"})
+     * @Serializer\Groups({"WithdrawOutputs", "WithdrawOutputCallback"})
      * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\Withdraw")
      */
     private $withdraw;

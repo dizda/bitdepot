@@ -110,7 +110,7 @@ class Withdraw
      *
      * @ORM\Column(name="txid", type="string", length=255, nullable=true)
      *
-     * @Serializer\Groups({"Withdraws", "WithdrawDetail"})
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail", "WithdrawOutputCallback"})
      */
     private $txid;
 
@@ -119,7 +119,7 @@ class Withdraw
      *
      * @ORM\Column(name="withdrawed_at", type="datetime", nullable=true)
      *
-     * @Serializer\Groups({"Withdraws", "WithdrawDetail", "WithdrawOutputs"})
+     * @Serializer\Groups({"Withdraws", "WithdrawDetail", "WithdrawOutputs", "WithdrawOutputCallback"})
      */
     private $withdrawedAt;
 
