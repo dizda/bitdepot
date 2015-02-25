@@ -34,7 +34,7 @@ class LoadWithdrawData extends AbstractFixture implements OrderedFixtureInterfac
         $withdraw1->setOutputs([ $this->getReference('withdraw-output-1') ]);
         $withdraw1->withdrawed('431c5231114ce2d00125ea4a88f4e4637b80fef1117a0b20606204e45cc3678f');
         // setting manually a date to use consistent data in tests
-        $withdraw1->setWithdrawedAt(new \DateTime('25 january 2015 11:11:11'));
+        $withdraw1->setWithdrawedAt((new \DateTime('25 january 2015 11:11:11'))->setTimezone(new \DateTimeZone('Europe/Paris')));
 
         $withdraw2 = (new Withdraw())
             ->setKeychain($this->getReference('keychain-1'))

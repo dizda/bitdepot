@@ -54,7 +54,7 @@ class WithdrawOutput implements MessageQueuingInterface
      *
      * @ORM\Column(name="is_accepted", type="boolean")
      *
-     * @Serializer\Groups({"WithdrawOutputs", "WithdrawOutputCallback"})
+     * @Serializer\Groups({"WithdrawOutputs"})
      */
     private $isAccepted;
 

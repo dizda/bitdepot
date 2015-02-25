@@ -50,7 +50,7 @@ class CallbackServiceTest extends BaseFunctionalTestController
     {
         $withdrawOutput = $this->em->getRepository('DizdaAppBundle:WithdrawOutput')->find(1);
 
-        $body = ['body' => '{"id":1,"amount":"0.00010000","to_address":"1LGTbdVSEbD9C37qXcpvVJ1egdBu8jYSeV","is_accepted":true,"withdraw":{"txid":"431c5231114ce2d00125ea4a88f4e4637b80fef1117a0b20606204e45cc3678f","withdrawed_at":"2015-01-25T11:11:11+0100"}}'];
+        $body = ['body' => '{"id":1,"amount":"0.00010000","to_address":"1LGTbdVSEbD9C37qXcpvVJ1egdBu8jYSeV","withdraw":{"txid":"431c5231114ce2d00125ea4a88f4e4637b80fef1117a0b20606204e45cc3678f","withdrawed_at":"2015-01-25T11:11:11+0100"}}'];
 
         $this->dummyResponse->expects($this->once())
             ->method('getStatusCode')
