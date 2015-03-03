@@ -11,6 +11,7 @@ install:
 
 script:
     - mkdir -p build/logs
+    - echo 'date.timezone = "Europe/Paris"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 #    - ./vendor/phpunit/phpunit/phpunit -c app/
     # /home/travis/.nvm/v0.10.36/bin/node
     - which node
