@@ -1,3 +1,6 @@
+/**
+ * Trying to sign 1 input
+ */
 var bitcoin = require('bitcoinjs-lib');
 
 var pubKeys = [
