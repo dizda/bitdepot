@@ -32,7 +32,7 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
             .derive(0)        // address
         .publicKey.toString();
 
-        console.log(accountPubKey);
+        console.log('Account pubKey: %s', accountPubKey);
 //        var accountPubKey = wallet.getExternalAccount().derive(0).pubKey.toHex();
 
         // search identity according to the public key submitted
@@ -83,7 +83,8 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
             // Finding the good private key according to the derivation
             var privKey = getPrivateKey(wallet, wInput.address.application.id, wInput.address.is_external, wInput.address.derivation);
 
-            console.log(privKey.toWIF());
+            console.log('[%d] Txid: %s (vout: %d)', i, txid, input.index);
+            console.log('[%d] Private key: %s', i, privKey.toWIF());
 
             // Sign the input
             txb.sign(i, privKey, bitcoin.Script.fromHex(wInput.address.redeem_script));
