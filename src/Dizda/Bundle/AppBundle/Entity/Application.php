@@ -80,7 +80,7 @@ class Application implements UserInterface
      * @ORM\ManyToOne(targetEntity="Keychain", inversedBy="applications")
      * @ORM\JoinColumn(name="keychain_id", referencedColumnName="id", nullable=true)
      *
-     * @Serializer\Groups({"Applications"})
+     * @Serializer\Groups({"Applications", "TransactionBuilder"})
      */
     private $keychain;
 

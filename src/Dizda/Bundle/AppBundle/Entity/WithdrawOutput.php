@@ -35,7 +35,7 @@ class WithdrawOutput implements MessageQueuingInterface
      *
      * @ORM\Column(name="amount", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
      *
-     * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs", "WithdrawOutputCallback"})
+     * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs", "WithdrawOutputCallback", "TransactionBuilder"})
      * @Serializer\Type("string")
      */
     private $amount;
@@ -45,7 +45,7 @@ class WithdrawOutput implements MessageQueuingInterface
      *
      * @ORM\Column(name="to_address", type="string", length=255)
      *
-     * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs", "WithdrawOutputCallback"})
+     * @Serializer\Groups({"WithdrawDetail", "WithdrawOutputs", "WithdrawOutputCallback", "TransactionBuilder"})
      */
     private $toAddress;
 

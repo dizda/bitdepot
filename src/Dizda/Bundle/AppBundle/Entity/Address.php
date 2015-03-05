@@ -34,7 +34,7 @@ class Address
      *
      * @ORM\Column(name="value", type="string", length=255, unique=true)
      *
-     * @Serializer\Groups({"Addresses", "Deposits", "DepositCallback"})
+     * @Serializer\Groups({"Addresses", "Deposits", "DepositCallback", "TransactionBuilder"})
      */
     private $value;
 
@@ -79,6 +79,8 @@ class Address
      * @var string
      *
      * @ORM\Column(name="pub_keys", type="json_array", nullable=true)
+     *
+     * @Serializer\Groups({"TransactionBuilder"})
      */
     private $pubKeys;
 
@@ -88,7 +90,7 @@ class Address
      * @ORM\ManyToOne(targetEntity="Application", inversedBy="addresses")
      * @ORM\JoinColumn(name="application_id", referencedColumnName="id", nullable=false)
      *
-     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Groups({"WithdrawDetail", "TransactionBuilder"})
      */
     private $application;
 
@@ -103,6 +105,7 @@ class Address
      * @ORM\OneToOne(targetEntity="Withdraw", mappedBy="changeAddress")
      *
      * @Serializer\Groups({"Addresses"})
+     * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\Withdraw")
      **/
     private $withdrawChangeAddress;
 

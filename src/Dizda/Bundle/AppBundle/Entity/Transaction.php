@@ -36,7 +36,7 @@ class Transaction
      *
      * @ORM\Column(name="txid", type="string", nullable=false)
      *
-     * @Serializer\Groups({"Deposit", "Withdraw", "WithdrawDetail"})
+     * @Serializer\Groups({"Deposit", "Withdraw", "WithdrawDetail", "TransactionBuilder"})
      * @Serializer\SerializedName("txid")
      */
     private $txid;
@@ -56,7 +56,7 @@ class Transaction
      *
      * @ORM\Column(name="amount", type="decimal", precision=16, scale=8, nullable=false)
      *
-     * @Serializer\Groups({"Deposit"})
+     * @Serializer\Groups({"Deposit", "TransactionBuilder"})
      * @Serializer\Type("string")
      */
     private $amount;
@@ -78,7 +78,8 @@ class Transaction
      *
      * @ORM\Column(name="transaction_index", type="smallint")
      *
-     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Groups({"WithdrawDetail", "TransactionBuilder"})
+     * @Serializer\Type("integer")
      */
     private $index;
 
@@ -98,7 +99,7 @@ class Transaction
      * @ORM\JoinColumn(name="address_id", referencedColumnName="id", nullable=false)
      *
      * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\Address")
-     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Groups({"WithdrawDetail", "TransactionBuilder"})
      */
     private $address;
 
