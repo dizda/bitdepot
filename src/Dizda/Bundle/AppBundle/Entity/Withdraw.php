@@ -94,6 +94,24 @@ class Withdraw
     private $rawSignedTransaction;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="json_transaction", type="text", length=65535, nullable=true)
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
+     */
+    private $jsonTransaction;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="json_signed_transaction", type="text", length=65535, nullable=true)
+     *
+     * @Serializer\Groups({"WithdrawDetail"})
+     */
+    private $jsonSignedTransaction;
+
+    /**
      * Same than above.
      *
      * @var string
@@ -740,5 +758,50 @@ class Withdraw
             }
         }
     }
-}
 
+    /**
+     * Set jsonTransaction
+     *
+     * @param string $jsonTransaction
+     * @return Withdraw
+     */
+    public function setJsonTransaction($jsonTransaction)
+    {
+        $this->jsonTransaction = $jsonTransaction;
+
+        return $this;
+    }
+
+    /**
+     * Get jsonTransaction
+     *
+     * @return string
+     */
+    public function getJsonTransaction()
+    {
+        return $this->jsonTransaction;
+    }
+
+    /**
+     * Set jsonSignedTransaction
+     *
+     * @param string $jsonSignedTransaction
+     * @return Withdraw
+     */
+    public function setJsonSignedTransaction($jsonSignedTransaction)
+    {
+        $this->jsonSignedTransaction = $jsonSignedTransaction;
+
+        return $this;
+    }
+
+    /**
+     * Get jsonSignedTransaction
+     *
+     * @return string
+     */
+    public function getJsonSignedTransaction()
+    {
+        return $this->jsonSignedTransaction;
+    }
+}

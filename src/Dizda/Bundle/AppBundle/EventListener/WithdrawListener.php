@@ -131,8 +131,10 @@ class WithdrawListener
             $withdraw->getWithdrawOutputs(),
             $withdraw->getChangeAddress()
         );
-die();
-//        $withdraw->setRawTransaction($rawTransaction);
+
+        $withdraw->setFees($transaction['fees'] / 100000000);
+        $withdraw->setRawTransaction($transaction['raw_transaction']);
+        $withdraw->setJsonTransaction($transaction['json_transaction']);
     }
 
     /**

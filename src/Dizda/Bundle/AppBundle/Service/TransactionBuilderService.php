@@ -55,18 +55,18 @@ class TransactionBuilderService
      *
      * @param ArrayCollection $inputs
      * @param ArrayCollection $outputs
-     * @param Address         $address
+     * @param Address         $changeAddress
      *
      * @throws \RuntimeException
      *
      * @return mixed|object
      */
-    public function build(ArrayCollection $inputs, ArrayCollection $outputs, Address $address = null)
+    public function build(ArrayCollection $inputs, ArrayCollection $outputs, Address $changeAddress = null)
     {
         $params = [
             'inputs'  => $inputs,
             'outputs' => $outputs,
-            'changeAddress' => $address
+            'changeAddress' => $changeAddress
         ];
 
         $context = (new SerializationContext())->setGroups('TransactionBuilder');
@@ -81,15 +81,13 @@ class TransactionBuilderService
         );
         $process->run();
 
-echo $process->getErrorOutput();
-
         if (!$process->isSuccessful()) {
             $this->logger->error('Can not generate transaction.', [ $process->getErrorOutput() ]);
 
             // Process failed
             throw new \RuntimeException($process->getErrorOutput());
         }
-die('lol');
+
         return $this->serializer->deserialize($process->getOutput(), 'array', 'json');
     }
 }

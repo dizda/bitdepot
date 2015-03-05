@@ -8,7 +8,9 @@ var params   = JSON.parse(process.argv[2]);
 //console.error(params.changeAddress);
 var transaction = new bitcore.Transaction();
 
-// Add all inputs
+/**
+ * Add all inputs
+ */
 params.inputs.forEach(function(input) {
     // Recover the address object
     var address = new bitcore.Address(input.address.pub_keys, input.address.application.keychain.sign_required);
@@ -25,18 +27,37 @@ params.inputs.forEach(function(input) {
     );
 });
 
-// Add all outputs
+/**
+ * Add all outputs
+ */
 params.outputs.forEach(function(output) {
     transaction.to(output.to_address, parseFloat(output.amount).toFixed(8) * 100000000); // Convert amount to satoshi
 });
 
-// Add change address if needed
+/**
+ * Add change address if needed
+ */
 if (params.changeAddress) {
     transaction.change(params.changeAddress.value);
     //transaction.to('3Cex1PTvqPzwm989zq8Q3xuqS2rTCnHFBC', 407000);
 }
 
-console.error(transaction);
+var stdout = {
+    fees: transaction.getFee(),
+    json_transaction: transaction.toJSON(),
+    raw_transaction: transaction.toBuffer().toString('hex')
+};
+
+if (transaction.verify()) {
+
+    // stdout
+    console.log(JSON.stringify(stdout));
+
+} else {
+
+    throw new Error('Unable to generate the transaction, ' + transaction.verify() + '.');
+
+}
 
         //.fee(10000)
         //.to('1CDFGQxhWFzghkXzv4uf9yCWxDPSvWudiH', 10000)
