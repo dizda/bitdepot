@@ -52,12 +52,19 @@ class AddressManagerTest extends ProphecyTestCase
         $this->em->getRepository('DizdaAppBundle:Address')->shouldBeCalled()->willReturn($addressRepo->reveal());
         $addressRepo->getLastDerivation($app, true)->shouldBeCalled();
 
+        $pubKeys = [
+            '032ed3783bb08f4f70299fe38e680637d6e1693f12f32891574dc08a0964481f0f',
+            '03592bf1c56e474d2a51ce7060a9c910ff5014f9c3723bd9997c5a08b1fe02f451',
+            '03f6ece630eb37c27e3f54e52d779db9f3f832621a1a6333489f88b09783d95d31'
+        ];
+
         $this->addressService
             ->generateHDMultisigAddress($app, true, 0)
             ->shouldBeCalled()
             ->willReturn([
                 'address'      => 'add3ssBitch',
                 'redeemScript' => 'redeemBitch',
+                'pubKeys'      => $pubKeys
             ])
         ;
 
@@ -66,6 +73,7 @@ class AddressManagerTest extends ProphecyTestCase
         $return = $this->manager->create($app->reveal(), true);
         $this->assertEquals('add3ssBitch', $return->getValue());
         $this->assertEquals('redeemBitch', $return->getRedeemScript());
+        $this->assertEquals($pubKeys, $return->getPubKeys());
     }
 
     /**
