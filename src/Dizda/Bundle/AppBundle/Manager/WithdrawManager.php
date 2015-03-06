@@ -103,7 +103,7 @@ class WithdrawManager
 
         $this->em->persist($withdraw);
 
-        // Create the rawtransaction
+        // Create the raw_transaction & json_transaction
         $this->dispatcher->dispatch(AppEvents::WITHDRAW_CREATE, new WithdrawEvent($withdraw));
 
         $this->em->flush();

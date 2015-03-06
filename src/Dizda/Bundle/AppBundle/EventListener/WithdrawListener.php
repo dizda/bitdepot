@@ -46,11 +46,12 @@ class WithdrawListener
     private $withdrawOutputProducer;
 
     /**
-     * @param LoggerInterface     $logger
-     * @param Bitcoind            $bitcoind
-     * @param AddressManager      $addressManager
-     * @param Producer            $withdrawOutputProducer
-     * @param Producer            $withdrawProducer
+     * @param LoggerInterface           $logger
+     * @param Bitcoind                  $bitcoind
+     * @param AddressManager            $addressManager
+     * @param TransactionBuilderService $transactionBuilder
+     * @param Producer                  $withdrawOutputProducer
+     * @param Producer                  $withdrawProducer
      */
     public function __construct(LoggerInterface $logger, Bitcoind $bitcoind, AddressManager $addressManager, TransactionBuilderService $transactionBuilder, Producer $withdrawOutputProducer, Producer $withdrawProducer)
     {

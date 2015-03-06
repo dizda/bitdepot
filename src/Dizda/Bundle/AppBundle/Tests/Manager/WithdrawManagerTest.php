@@ -183,8 +183,9 @@ class WithdrawManagerTest extends ProphecyTestCase
             'withdraw_outputs'       => [],
             // Important fields :
             'raw_signed_transaction' => 'rawSignedTransactionBITCH',
-            'signed_by'              => 'JESSEEPINKM4n',
-            'is_signed'              => true
+            'json_signed_transaction' => 'jsonSignedTransactionBITCH',
+            'signed_by'               => 'JESSEEPINKM4n',
+            'is_signed'               => true
         ];
         $withdrawSubmitted = (new PostWithdrawRequest($withdrawSubmitted))->options;
 
@@ -192,6 +193,7 @@ class WithdrawManagerTest extends ProphecyTestCase
         $identity = (new Identity())->setKeychain($keychain);
 
         $withdraw->setRawSignedTransaction(Argument::exact('rawSignedTransactionBITCH'))->shouldBeCalled();
+        $withdraw->setJsonSignedTransaction(Argument::exact('jsonSignedTransactionBITCH'))->shouldBeCalled();
         $withdraw->getKeychain()->shouldBeCalled()->willReturn($keychain);
 
         $this->em->getRepository('DizdaAppBundle:Identity')

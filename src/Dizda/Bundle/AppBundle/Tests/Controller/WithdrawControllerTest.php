@@ -90,6 +90,7 @@ class WithdrawControllerTest extends BaseFunctionalTestController
         $this->client->request('POST', sprintf('/withdraws/%d.json', /* withdraw */ 2), [
             'id' => 2,
             'raw_signed_transaction' => 'coucou',
+            'json_signed_transaction' => 'coucouJSON',
             'signed_by' => '03bdd087f7c9d6aac4857be62dc7d80f5f9435f57293a84ed50fe689d7ade58983', // PubKey #2
             'is_signed' => false
         ]);
@@ -97,6 +98,7 @@ class WithdrawControllerTest extends BaseFunctionalTestController
         $content = json_decode($this->client->getResponse()->getContent());
 
         $this->assertEquals('coucou', $content->raw_signed_transaction);
+        $this->assertEquals('coucouJSON', $content->json_signed_transaction);
 
         // verify that the signature is present
         $this->assertEquals('Identity2', $content->signatures[0]->name);
@@ -112,6 +114,7 @@ class WithdrawControllerTest extends BaseFunctionalTestController
         $this->client->request('POST', sprintf('/withdraws/%d.json', /* withdraw */ 2), [
             'id' => 2,
             'raw_signed_transaction' => 'coucou',
+            'json_signed_transaction' => 'coucouJSON',
             'signed_by' => '024929ebd103ddssdfsdfsdd19806b3a404de9dcb6231d86bf1f9dbec23cd6059b',
             'is_signed' => false
         ]);
@@ -131,6 +134,7 @@ class WithdrawControllerTest extends BaseFunctionalTestController
         $this->client->request('POST', sprintf('/withdraws/%d.json', /* withdraw */ 1), [
             'id' => 2,
             'raw_signed_transaction' => 'coucou',
+            'json_signed_transaction' => 'coucouJSON',
             'signed_by' => 'blabla',
             'is_signed' => false
         ]);

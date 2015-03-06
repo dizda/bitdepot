@@ -78,7 +78,7 @@ class Address
     /**
      * @var string
      *
-     * @ORM\Column(name="pub_keys", type="json_array", nullable=true)
+     * @ORM\Column(name="pub_keys", type="json_array", nullable=false)
      *
      * @Serializer\Groups({"TransactionBuilder"})
      */

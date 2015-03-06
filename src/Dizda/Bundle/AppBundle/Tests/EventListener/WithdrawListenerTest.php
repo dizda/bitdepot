@@ -32,6 +32,11 @@ class WithdrawListenerTest extends ProphecyTestCase
     private $bitcoind;
 
     /**
+     * @var \Dizda\Bundle\AppBundle\Service\TransactionBuilderService
+     */
+    private $transactionBuilder;
+
+    /**
      * @var \Dizda\Bundle\AppBundle\Event\WithdrawEvent
      */
     private $withdrawEvent;
@@ -55,13 +60,24 @@ class WithdrawListenerTest extends ProphecyTestCase
 
         $this->withdrawEvent->getWithdraw()->shouldBeCalled()->willReturn($withdraw);
 
-        $this->bitcoind->createrawtransaction(
-            Argument::exact($this->getExpectedInputs()),
-            Argument::exact($this->getExpectedOutputs())
-        )->shouldBeCalled()->willReturn('R4wTr4nsact!on');
+        $this->transactionBuilder->build(
+            Argument::exact($withdraw->getWithdrawInputs()),
+            Argument::exact($withdraw->getWithdrawOutputs()),
+            Argument::exact($withdraw->getChangeAddress())
+        )->shouldBeCalled()->willReturn([
+            'fees' => 90000,
+            'json_transaction' => 'jsonTransaction',
+            'raw_transaction'  => 'R4wTr4nsact!on'
+        ]);
 
         $this->manager->onCreate($this->withdrawEvent->reveal());
+        $this->assertEquals('jsonTransaction', $withdraw->getJsonTransaction());
         $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
+        $this->assertEquals('0.00090000', $withdraw->getFees());
+        $this->assertNull($withdraw->getJsonSignedTransaction());
+        $this->assertNull($withdraw->getRawSignedTransaction());
+        $this->assertNull($withdraw->getChangeAddress());
+        $this->assertEquals('0.00000000', $withdraw->getChangeAddressAmount());
     }
 
     /**
@@ -82,15 +98,23 @@ class WithdrawListenerTest extends ProphecyTestCase
             Argument::exact(false)
         )->shouldBeCalled()->willReturn($changeAddress);
 
-        $this->bitcoind->createrawtransaction(
-            Argument::exact($this->getExpectedInputs()),
-            Argument::exact($this->getExpectedOutputsWithChangeAddress())
-        )->shouldBeCalled()->willReturn('R4wTr4nsact!on');
+        $this->transactionBuilder->build(
+            Argument::exact($withdraw->getWithdrawInputs()),
+            Argument::exact($withdraw->getWithdrawOutputs()),
+            Argument::exact($changeAddress)
+        )->shouldBeCalled()->willReturn([
+            'fees' => 10000,
+            'json_transaction' => 'jsonTransaction',
+            'raw_transaction'  => 'R4wTr4nsact!on'
+        ]);
 
         $this->manager->onCreate($this->withdrawEvent->reveal());
+        $this->assertEquals('0.00010000', $withdraw->getFees());
         $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
+        $this->assertEquals('jsonTransaction', $withdraw->getJsonTransaction());
         $this->assertEquals($changeAddress, $withdraw->getChangeAddress());
         $this->assertEquals('0.00010000', $withdraw->getChangeAddressAmount());
+        $this->assertNotNull($withdraw->getChangeAddress());
     }
 
     /**
@@ -284,10 +308,12 @@ class WithdrawListenerTest extends ProphecyTestCase
         $this->withdrawEvent = $this->prophesize('Dizda\Bundle\AppBundle\Event\WithdrawEvent');
         $this->producer      = $this->prophesize('OldSound\RabbitMqBundle\RabbitMq\Producer');
         $this->producer2      = $this->prophesize('OldSound\RabbitMqBundle\RabbitMq\Producer');
+        $this->transactionBuilder = $this->prophesize('Dizda\Bundle\AppBundle\Service\TransactionBuilderService');
         $this->manager      = new WithdrawListener(
             $this->logger->reveal(),
             $this->bitcoind->reveal(),
             $this->addressManager->reveal(),
+            $this->transactionBuilder->reveal(),
             $this->producer->reveal(),
             $this->producer2->reveal()
         );
