@@ -2,6 +2,9 @@
 
 app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw) {
 
+    var bitcore = require('bitcore');
+    var Buffer = bitcore.deps.Buffer;
+
     $scope.signing   = false;
     $scope.signState = {
         label: 'Enter your private key',
@@ -20,8 +23,10 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
         $scope.initSignature();
 
         // Create a wallet from the seed submitted
-//        var wallet = new bitcoin.Wallet(bitcoin.crypto.sha256(seed), bitcoin.networks.bitcoin);
-        var wallet = bitcore.HDPrivateKey.fromSeed(bitcoin.crypto.sha256(seed), bitcore.Networks.livenet);
+        var wallet = bitcore.HDPrivateKey.fromSeed(
+            bitcore.crypto.Hash.sha256(new Buffer(seed)).toString('hex'),
+            bitcore.Networks.livenet
+        );
 
 //        wallet.derive("m/44'/0'/0'/0/0")
         var accountPubKey = wallet
@@ -61,56 +66,39 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
      */
     function sign(seed)
     {
-        // Recover transaction from raw_transaction created by bitcoind || or raw_signed_transaction
-        var tx  = bitcoin.Transaction.fromHex(getRawTransaction($scope.withdraw));
-
-        // Build it into Transaction Builder
-        var txb = bitcoin.TransactionBuilder.fromTransaction(tx);
+        // Recover transaction from json_transaction created by bitcore || or json_signed_transaction
+        var transaction = bitcore.Transaction($scope.withdraw.json_signed_transaction || $scope.withdraw.json_transaction);
 
         // Create a wallet from the seed submitted
         var wallet = bitcore.HDPrivateKey.fromSeed(bitcoin.crypto.sha256(seed), bitcore.Networks.livenet);
 
-        // Loop on each inputs
-        txb.tx.ins.forEach(function(input, i) {
+        // Sign all inputs
+        $scope.withdraw.withdraw_inputs.forEach(function(input, i) {
 
-            // get the txid of the input
-            var txid   = bitcoin.bufferutils.reverse(input.hash).toString('hex');
-            var wInput = _.find($scope.withdraw.withdraw_inputs, {
-                txid: txid,
-                index: input.index // match the correct input with <txid & index>
-            });
+            // Get the private key according to the derivation
+            var privKey = getPrivateKey(wallet, input.address.application.id, input.address.is_external, input.address.derivation);
 
-            // Finding the good private key according to the derivation
-            var privKey = getPrivateKey(wallet, wInput.address.application.id, wInput.address.is_external, wInput.address.derivation);
-
-            console.log('[%d] Txid: %s (vout: %d)', i, txid, input.index);
+            console.log('[%d] Txid: %s (vout: %d)', i, input.txid, input.index);
             console.log('[%d] Private key: %s', i, privKey.toWIF());
 
             // Sign the input
-            txb.sign(i, privKey, bitcoin.Script.fromHex(wInput.address.redeem_script));
+            transaction.sign(privKey);
 
-            try {
-                $scope.withdraw.raw_signed_transaction = txb.build().toHex();
-                $scope.withdraw.is_signed = true;
-                console.log('Successfully signed.');
-            } catch (e) {
-                if ('Transaction is missing signatures' === e.message) {
-                    // Normal, because every inputs not signed yet.
-
-                    $scope.withdraw.raw_signed_transaction = txb.buildIncomplete().toHex();
-                } else if ('Not enough signatures provided' === e.message) {
-                    console.log('Not enough signatures provided');
-
-                    $scope.withdraw.raw_signed_transaction = txb.buildIncomplete().toHex();
-                } else {
-                    console.log(e);
-                }
-            }
-
-            // print the signed transaction there
-            console.log($scope.withdraw.raw_signed_transaction);
         });
 
+        // save the signed transaction
+        $scope.withdraw.json_signed_transaction = transaction.toJSON();
+
+        if (transaction.isFullySigned()) {
+            $scope.withdraw.raw_signed_transaction = transaction.serialize(); // then send this to bitcoind
+            $scope.withdraw.is_signed = true; // Setting the signed flag
+            console.log('Successfully signed.');
+        } else {
+            console.log('Not successfully signed yet.');
+        }
+
+        // print the signed transaction there
+        console.log($scope.withdraw.raw_signed_transaction);
 
         $scope.withdraw.$save(function(response) {
             $scope.signState.label   = 'Signed by ' + $scope.signState.signed_by + '.';
@@ -136,16 +124,6 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
     };
 
     /**
-     * @param {Withdraw} withdraw
-     *
-     * @returns {String}
-     */
-    function getRawTransaction(withdraw)
-    {
-        return withdraw.raw_signed_transaction || withdraw.raw_transaction;
-    }
-
-    /**
      * @param {Wallet}  wallet
      * @param {Number}  application Application id
      * @param {Boolean} isExternal
@@ -163,8 +141,7 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
             .derive(address)        // address
         ;
 
-        // Convert bitcore privateKey to bitcoinjs-lib format
-        return bitcoin.ECKey.fromWIF(privateKey.privateKey.toWIF());
+        return privateKey.privateKey;
     }
 
 }]);

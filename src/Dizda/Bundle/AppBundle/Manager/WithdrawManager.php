@@ -103,7 +103,7 @@ class WithdrawManager
 
         $this->em->persist($withdraw);
 
-        // Create the rawtransaction
+        // Create the raw_transaction & json_transaction
         $this->dispatcher->dispatch(AppEvents::WITHDRAW_CREATE, new WithdrawEvent($withdraw));
 
         $this->em->flush();
@@ -121,6 +121,14 @@ class WithdrawManager
      */
     public function save(Withdraw $withdraw, $withdrawSubmitted)
     {
+        // When one signer, sign the transaction
+        if ($withdrawSubmitted['json_signed_transaction']) {
+            $withdraw->setJsonSignedTransaction($withdrawSubmitted['json_signed_transaction']);
+
+            // dispatch event here
+        }
+
+        // When the transaction is fully signed
         if ($withdrawSubmitted['raw_signed_transaction']) {
             $withdraw->setRawSignedTransaction($withdrawSubmitted['raw_signed_transaction']);
 

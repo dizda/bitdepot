@@ -49,6 +49,7 @@
             <argument type="service" id="logger" />
             <argument type="service" id="bitcoind" />
             <argument type="service" id="dizda_app.manager.address" />
+            <argument type="service" id="dizda_app.service.transaction_builder" />
             <argument type="service" id="old_sound_rabbit_mq.withdraw_output_callback_producer" />
             <argument type="service" id="old_sound_rabbit_mq.withdraw_callback_producer" />
         </service>
@@ -90,8 +91,7 @@
         </service>
 
         <!-- Services -->
-        <service id="dizda_app.service.http" class="Dizda\Bundle\AppBundle\Service\HttpService">
-        </service>
+        <service id="dizda_app.service.http" class="Dizda\Bundle\AppBundle\Service\HttpService"></service>
 
         <service id="dizda_app.service.callback" class="Dizda\Bundle\AppBundle\Service\CallbackService">
             <argument type="service" id="jms_serializer" />
@@ -99,6 +99,13 @@
         </service>
 
         <service id="dizda_app.service.address" class="Dizda\Bundle\AppBundle\Service\AddressService">
+            <argument type="service" id="serializer" />
+            <argument type="service" id="logger" />
+            <argument>%kernel.root_dir%/../</argument>
+            <argument>%nodejs_path%</argument>
+        </service>
+
+        <service id="dizda_app.service.transaction_builder" class="Dizda\Bundle\AppBundle\Service\TransactionBuilderService">
             <argument type="service" id="serializer" />
             <argument type="service" id="logger" />
             <argument>%kernel.root_dir%/../</argument>

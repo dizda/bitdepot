@@ -39,7 +39,7 @@ class Keychain
      *
      * @ORM\Column(name="sign_required", type="smallint")
      *
-     * @Serializer\Groups({"Applications", "Withdraws", "WithdrawDetail"})
+     * @Serializer\Groups({"Applications", "Withdraws", "WithdrawDetail", "TransactionBuilder"})
      */
     private $signRequired;
 

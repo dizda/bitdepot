@@ -83,7 +83,7 @@ class AddressManager
             ->setRedeemScript($multisigAddress['redeemScript'])
             ->setIsExternal($isExternal)
             ->setDerivation($derivation)
-            //->setScriptPubKey()
+            ->setPubKeys($multisigAddress['pubKeys'])
         ;
 
         $this->em->persist($address);

@@ -23,7 +23,8 @@ var multisigAddress = new bitcore.Address(redeemScript, bitcore.Networks.livenet
 
 var stdout = {
     redeemScript: redeemScript.toBuffer().toString('hex'), // serialize to Hex format the redeemScript
-    address:      multisigAddress.toString()
+    address:      multisigAddress.toString(),
+    pubKeys:      pubKeys.map(function(pubkey) { return pubkey.toString(); }).sort() // get pubKeys and sort them alphabetically
 };
 
 if (bitcore.Address.isValid(multisigAddress.toString(), bitcore.Networks.livenet, bitcore.Address.PayToScriptHash)) {

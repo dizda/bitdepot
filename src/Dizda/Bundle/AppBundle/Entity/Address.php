@@ -34,7 +34,7 @@ class Address
      *
      * @ORM\Column(name="value", type="string", length=255, unique=true)
      *
-     * @Serializer\Groups({"Addresses", "Deposits", "DepositCallback"})
+     * @Serializer\Groups({"Addresses", "Deposits", "DepositCallback", "TransactionBuilder"})
      */
     private $value;
 
@@ -78,11 +78,11 @@ class Address
     /**
      * @var string
      *
-     * @ORM\Column(name="script_pub_key", type="string", nullable=true)
+     * @ORM\Column(name="pub_keys", type="json_array", nullable=false)
      *
-     * @deprecated
+     * @Serializer\Groups({"TransactionBuilder"})
      */
-    private $scriptPubKey;
+    private $pubKeys;
 
     /**
      * @var \Dizda\Bundle\AppBundle\Entity\Application
@@ -90,7 +90,7 @@ class Address
      * @ORM\ManyToOne(targetEntity="Application", inversedBy="addresses")
      * @ORM\JoinColumn(name="application_id", referencedColumnName="id", nullable=false)
      *
-     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Groups({"WithdrawDetail", "TransactionBuilder"})
      */
     private $application;
 
@@ -105,6 +105,7 @@ class Address
      * @ORM\OneToOne(targetEntity="Withdraw", mappedBy="changeAddress")
      *
      * @Serializer\Groups({"Addresses"})
+     * @Serializer\Type("Dizda\Bundle\AppBundle\Entity\Withdraw")
      **/
     private $withdrawChangeAddress;
 
@@ -343,31 +344,6 @@ class Address
     }
 
     /**
-     * Set scriptPubKey
-     * @codeCoverageIgnore
-     *
-     * @param string $scriptPubKey
-     * @return Address
-     */
-    public function setScriptPubKey($scriptPubKey)
-    {
-        $this->scriptPubKey = $scriptPubKey;
-
-        return $this;
-    }
-
-    /**
-     * Get scriptPubKey
-     * @codeCoverageIgnore
-     *
-     * @return string
-     */
-    public function getScriptPubKey()
-    {
-        return $this->scriptPubKey;
-    }
-
-    /**
      * Set withdrawChangeAddress
      * @codeCoverageIgnore
      *
@@ -414,5 +390,28 @@ class Address
     public function getApplication()
     {
         return $this->application;
+    }
+
+    /**
+     * Set pubKeys
+     *
+     * @param array $pubKeys
+     * @return Address
+     */
+    public function setPubKeys($pubKeys)
+    {
+        $this->pubKeys = $pubKeys;
+
+        return $this;
+    }
+
+    /**
+     * Get pubKeys
+     *
+     * @return array
+     */
+    public function getPubKeys()
+    {
+        return $this->pubKeys;
     }
 }

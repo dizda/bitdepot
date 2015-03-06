@@ -55,12 +55,15 @@ var pubkeys = [
 ];
 var redeemScript = bitcore.Script.buildMultisigOut(pubkeys, 2);
 var script = redeemScript.toScriptHashOut();
+
+// New method
+var address = bitcore.Address(pubkeys, 2);
+
 console.log(redeemScript.toBuffer().toString('hex')); // serialize to Hex format the redeemScript
 
 var multisigAddress = new bitcore.Address(redeemScript, bitcore.Networks.livenet);
 console.log(multisigAddress);
-
-
+console.log('script ', address.toScriptHashOut());
 // TODO: add 'extended_public_key' field to 'Pubkey' entity
 
 
