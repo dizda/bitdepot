@@ -17,6 +17,8 @@ var pubkeys2 = [
     new bitcore.PublicKey('03d8610409add92f1d4917a08069ba38bf0b1c241109c1ebe9dc57fe33ff544dd1')
 ];
 
+//console.log(bitcore.crypto.Hash.sha256(new Buffer('Lol')).toString('hex'));
+
 var address1 = new bitcore.Address(pubkeys1, 2);
 var address2 = new bitcore.Address(pubkeys2, 2);
 

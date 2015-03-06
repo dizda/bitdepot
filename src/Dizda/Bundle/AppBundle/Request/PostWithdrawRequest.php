@@ -22,7 +22,7 @@ class PostWithdrawRequest extends AbstractRequest
 
         $resolver->setRequired(array(
             'id',
-            'raw_signed_transaction',
+            'json_signed_transaction',
             'signed_by',
             'is_signed'
         ));
@@ -39,6 +39,7 @@ class PostWithdrawRequest extends AbstractRequest
             'is_signed',
             'keychain',
             'raw_transaction',
+            'json_transaction',
             'total_inputs',
             'total_outputs',
             'withdraw_inputs',
@@ -49,16 +50,16 @@ class PostWithdrawRequest extends AbstractRequest
         $resolver->setAllowedTypes(array(
             'id'    => ['integer'],
             'txid'  => ['string'],
-            'raw_signed_transaction' => ['string'],
+            'raw_signed_transaction' => ['string', 'null'],
+            'json_signed_transaction' => ['string'],
             'is_signed'  => ['bool'],
             'signed_by'  => ['string'],
             'signatures' => ['array']
         ));
 
-        /*$resolver->setDefaults(array(
-            'typeOfContentSelected' => 'newspaper',
-            'network'=> 'all',
-        ));*/
+        $resolver->setDefaults(array(
+            'raw_signed_transaction' => null
+        ));
 
         /*$resolver->setAllowedValues(array(
             'duration' => ['newspaper', 'author', 'post'] // different mysql ids ?
