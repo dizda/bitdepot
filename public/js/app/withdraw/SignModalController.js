@@ -5,6 +5,7 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
     var bitcore = require('bitcore');
     var Buffer = bitcore.deps.Buffer;
 
+    $scope.seed      = null;
     $scope.signing   = false;
     $scope.signState = {
         label: 'Enter your private key',
@@ -16,15 +17,19 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
     /**
      * Verify the submitted seed before signing
      *
-     * @param seed
+     * @param {Object} e    event
      */
-    $scope.verify = function(seed)
+    $scope.verify = function(e)
     {
+        if (e && e.which !== 13) {
+            return;
+        }
+
         $scope.initSignature();
 
         // Create a wallet from the seed submitted
         var wallet = bitcore.HDPrivateKey.fromSeed(
-            bitcore.crypto.Hash.sha256(new Buffer(seed)).toString('hex'),
+            bitcore.crypto.Hash.sha256(new Buffer($scope.seed)).toString('hex'),
             bitcore.Networks.livenet
         );
 
@@ -56,7 +61,7 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
 
         $scope.withdraw.signed_by = identity.public_key;
 
-        sign(seed);
+        sign($scope.seed);
     };
 
     /**
@@ -70,7 +75,7 @@ app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw
         var transaction = bitcore.Transaction($scope.withdraw.json_signed_transaction || $scope.withdraw.json_transaction);
 
         // Create a wallet from the seed submitted
-        var wallet = bitcore.HDPrivateKey.fromSeed(bitcoin.crypto.sha256(seed), bitcore.Networks.livenet);
+        var wallet = bitcore.HDPrivateKey.fromSeed(bitcore.crypto.Hash.sha256(new Buffer(seed)).toString('hex'), bitcore.Networks.livenet);
 
         // Sign all inputs
         $scope.withdraw.withdraw_inputs.forEach(function(input, i) {

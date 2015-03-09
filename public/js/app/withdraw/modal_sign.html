@@ -30,7 +30,7 @@
                         {{ signState.label }}
                     </label>
 
-                    <input type="text" class="form-control" id="seed" placeholder="Your private key goes here" data-ng-model="seed">
+                    <input type="text" class="form-control" id="seed" placeholder="Your private key goes here" data-ng-model="seed" data-ng-keyup="verify($event)">
                 </div>
 
                 <h4>Outputs</h4>
@@ -45,7 +45,7 @@
 
 
             <div class="modal-footer">
-                <button class="btn btn-success" data-ng-click="verify(seed)" data-ng-disabled="signing || withdraw.keychain.sign_required == withdraw.signatures.length">
+                <button class="btn btn-success" data-ng-click="verify()" data-ng-disabled="signing || withdraw.keychain.sign_required == withdraw.signatures.length">
                     Sign for <i class="fa fa-bitcoin"></i> {{withdraw.total_outputs}}
                 </button>
 
