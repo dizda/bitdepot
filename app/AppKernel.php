@@ -39,6 +39,9 @@ class AppKernel extends Kernel
         }
 
         if (in_array($this->getEnvironment(), array('test'))) {
+            // Fix travis hhvm error
+            date_default_timezone_set('Europe/Paris');
+
             $bundles[] = new Liip\FunctionalTestBundle\LiipFunctionalTestBundle();
         }
 
