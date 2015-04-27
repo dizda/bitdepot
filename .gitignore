@@ -14,3 +14,4 @@
 .idea/
 node_modules/
 public/components/
+/app/config/coinegger_prod.yml
