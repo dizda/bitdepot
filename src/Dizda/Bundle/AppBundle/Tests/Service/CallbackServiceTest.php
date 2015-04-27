@@ -48,6 +48,9 @@ class CallbackServiceTest extends BaseFunctionalTestController
      */
     public function testWithdrawOutputWithdrawn()
     {
+        // Fix travis hhvm error
+        date_default_timezone_set('Europe/Paris');
+
         $withdrawOutput = $this->em->getRepository('DizdaAppBundle:WithdrawOutput')->find(1);
 
         $body = ['body' => '{"id":1,"amount":"0.00010000","to_address":"1LGTbdVSEbD9C37qXcpvVJ1egdBu8jYSeV","withdraw":{"txid":"431c5231114ce2d00125ea4a88f4e4637b80fef1117a0b20606204e45cc3678f","withdrawed_at":"2015-01-25T11:11:11+0100"}}'];
