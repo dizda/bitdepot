@@ -45,7 +45,6 @@ class DepositControllerTest extends BaseFunctionalTestController
             'reference'       => 'test_reference'
         ]);
 
-        var_dump($this->client->getResponse()->getContent());
         $content = json_decode($this->client->getResponse()->getContent());
 
         $this->assertEquals(1, $content->type);
