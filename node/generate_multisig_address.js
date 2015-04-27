@@ -19,7 +19,7 @@ params.extendedPubKeys.forEach(function(extendedPubKeyBase58) {
 var redeemScript = bitcore.Script.buildMultisigOut(pubKeys, params.signRequired);
 var script = redeemScript.toScriptHashOut();
 
-var multisigAddress = new bitcore.Address(redeemScript, bitcore.Networks.livenet);
+var multisigAddress = new bitcore.Address(script, bitcore.Networks.livenet);
 
 var stdout = {
     redeemScript: redeemScript.toBuffer().toString('hex'), // serialize to Hex format the redeemScript
