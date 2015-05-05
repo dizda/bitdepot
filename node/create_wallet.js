@@ -195,7 +195,7 @@ function process()
     })
     .then(function() {
 
-        console.log('\n\nFinish!');
+        console.log('\n\nFinished!');
 
         bootstrap.end();
 
