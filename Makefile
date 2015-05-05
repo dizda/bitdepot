@@ -3,7 +3,7 @@ install:
 	php ./app/check.php
 	cd node/ && npm install && cd ../
 	bower install
-	php app/console -e prod doctrine:database:create
+	php app/console doctrine:database:create -e prod
 	node ./node/create_wallet.js
 
 tests:
