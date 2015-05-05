@@ -4,13 +4,14 @@ var mysql = require('mysql')
   , Q     = require('q');
 
 
-function Database()
+function Database(host, port, dbName, user, password)
 {
     this.client = mysql.createConnection({
-        host     : 'localhost',
-        user     : 'root',
-        password : '',
-        database : 'bitwallet'
+        host     : host,
+        port     : port,
+        database : dbName,
+        user     : user,
+        password : password
     });
 
     return this;
