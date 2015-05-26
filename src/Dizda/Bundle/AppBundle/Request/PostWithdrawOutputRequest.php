@@ -36,7 +36,7 @@ class PostWithdrawOutputRequest extends AbstractRequest
             'to_address'     =>  ['string'],
             'amount'         =>  ['string'],
             'is_accepted'    =>  ['bool'],
-            'reference'      =>  ['string', 'null']
+            'reference'      =>  ['string', 'integer', 'null']
         ));
 
         $resolver->setDefaults(array(
