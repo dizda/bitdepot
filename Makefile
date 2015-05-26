@@ -1,4 +1,6 @@
 install:
+	openssl genrsa -out app/var/jwt/private.pem -aes256 4096
+	openssl rsa -pubout -in app/var/jwt/private.pem -out app/var/jwt/public.pem
 	composer install
 	php ./app/check.php
 	cd node/ && npm install && cd ../
