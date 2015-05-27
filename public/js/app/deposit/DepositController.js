@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('DepositCtrl', ['$scope', '$location', '$modal', 'Deposit', function($scope, $location, $modal, Deposit) {
+angular.module('app').controller('DepositCtrl', ['$scope', '$location', '$modal', 'Deposit', function($scope, $location, $modal, Deposit) {
 
     $scope.url = 'api/deposits.json';
 

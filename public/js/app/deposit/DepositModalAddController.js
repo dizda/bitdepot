@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('DepositModalAddCtrl', ['$scope', '$modal','Deposit', function($scope, $modal, Deposit) {
+angular.module('app').controller('DepositModalAddCtrl', ['$scope', '$modal','Deposit', function($scope, $modal, Deposit) {
 
     $scope.typeOptions = [
         { value: 1, text: 'Expected Amount' },

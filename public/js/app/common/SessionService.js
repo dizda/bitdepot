@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('Session', [function () {
+angular.module('app').factory('Session', [function () {
 
     this.create = function (tokenId, username) {
         this.token = tokenId;

@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('HomeCtrl', ['$scope', function($scope) {
+angular.module('app').controller('HomeCtrl', ['$scope', function($scope) {
 
     $scope.address = 'BOSH';
 

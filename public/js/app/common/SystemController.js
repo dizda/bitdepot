@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('SystemCtrl', ['$scope', '$location', 'AuthService', 'Session', 'AUTH_EVENTS', function($scope, $location, AuthService, Session, AUTH_EVENTS) {
+angular.module('app').controller('SystemCtrl', ['$scope', '$location', 'AuthService', 'Session', 'AUTH_EVENTS', function($scope, $location, AuthService, Session, AUTH_EVENTS) {
 
     $scope.credentials     = {
         username: '',

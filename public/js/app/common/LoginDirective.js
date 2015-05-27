@@ -3,7 +3,7 @@
 /**
  * Show or hide the Login dialog when we receive events
  */
-app.directive('loginDialog', function (AUTH_EVENTS) {
+angular.module('app').directive('loginDialog', ['AUTH_EVENTS', function (AUTH_EVENTS) {
     return {
         restrict: 'A',
         template: '<div ng-if="visible" ng-include="\'/js/app/login.html\'">',
@@ -21,4 +21,4 @@ app.directive('loginDialog', function (AUTH_EVENTS) {
             });
         }
     };
-});
+}]);

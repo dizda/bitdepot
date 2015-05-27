@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('WithdrawOutputModalAddCtrl', ['$scope', '$modal','WithdrawOutput', function($scope, $modal, WithdrawOutput) {
+angular.module('app').controller('WithdrawOutputModalAddCtrl', ['$scope', '$modal','WithdrawOutput', function($scope, $modal, WithdrawOutput) {
 
     $scope.withdrawOutput = {
         application_id: 1,

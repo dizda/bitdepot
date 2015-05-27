@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('ApplicationCtrl', ['$scope', '$location', 'Application', function($scope, $location, Application) {
+angular.module('app').controller('ApplicationCtrl', ['$scope', '$location', 'Application', function($scope, $location, Application) {
 
     $scope.applications = Application.query();
 

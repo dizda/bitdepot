@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw) {
+angular.module('app').controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw) {
 
     var bitcore = require('bitcore');
     var Buffer = bitcore.deps.Buffer;

@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory('AuthService', ['$rootScope', '$http', 'localStorageService', 'Session', 'AUTH_EVENTS', function ($rootScope, $http, localStorageService, Session, AUTH_EVENTS) {
+angular.module('app').factory('AuthService', ['$rootScope', '$http', 'localStorageService', 'Session', 'AUTH_EVENTS', function ($rootScope, $http, localStorageService, Session, AUTH_EVENTS) {
 
     var authService = {};
 

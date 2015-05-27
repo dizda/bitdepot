@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AddressCtrl', ['$scope', '$location', '$modal', 'Address', function($scope, $location, $modal, Address) {
+angular.module('app').controller('AddressCtrl', ['$scope', '$location', '$modal', 'Address', function($scope, $location, $modal, Address) {
 
     $scope.filters = {
         show: 'all'

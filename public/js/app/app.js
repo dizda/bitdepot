@@ -1,11 +1,11 @@
 'use strict';
 
-var app = angular.module('app', ['ngResource', 'ngRoute', 'ngSanitize', 'ngAnimate', 'mgcrea.ngStrap', 'LocalStorageModule', 'bgf.paginateAnything']);
+angular.module('app', ['ngResource', 'ngRoute', 'ngSanitize', 'ngAnimate', 'mgcrea.ngStrap', 'LocalStorageModule', 'bgf.paginateAnything']);
 
 /**
  * Constants
  */
-app.constant('AUTH_EVENTS', {
+angular.module('app').constant('AUTH_EVENTS', {
     loginSuccess:     'auth-login-success',
     loginFailed:      'auth-login-failed',
     logoutSuccess:    'auth-logout-success',
@@ -17,7 +17,7 @@ app.constant('AUTH_EVENTS', {
 /**
  * Routes
  */
-app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+angular.module('app').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
 
         .when('/', {
@@ -52,7 +52,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
  *
  * @see https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec
  */
-app.run(function ($rootScope, AUTH_EVENTS, AuthService) {
+angular.module('app').run(['$rootScope', 'AUTH_EVENTS', 'AuthService', function ($rootScope, AUTH_EVENTS, AuthService) {
 //    if (!AuthService.isAuthenticated()) {
 //        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
 //    }
@@ -73,4 +73,4 @@ app.run(function ($rootScope, AUTH_EVENTS, AuthService) {
             }
         }
     });
-});
+}]);
