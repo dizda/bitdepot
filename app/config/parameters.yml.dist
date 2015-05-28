@@ -38,3 +38,6 @@ parameters:
 
     #nodejs_path: /home/travis/.nvm/v0.10.33/bin/node
     nodejs_path: env node
+
+    # The prefix directory of all routes, use '' for apache, and '/api' for nginx
+    api_directory: ''

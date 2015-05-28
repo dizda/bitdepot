@@ -1,7 +1,8 @@
 dizda_app:
     resource: "@DizdaAppBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   %api_directory%
 
 
 dizda_user:
     resource: @DizdaUserBundle/Resources/config/routing.yml
+    prefix:   %api_directory%

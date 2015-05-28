@@ -42,3 +42,4 @@ lexik_jwt_authentication:
 
 parameters:
     test.client.class: Dizda\Bundle\AppBundle\Tests\Client
+    api_directory:     ''
