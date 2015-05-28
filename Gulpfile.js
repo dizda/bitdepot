@@ -8,13 +8,15 @@ var gulp          = require('gulp'),
     useref        = require('gulp-useref'),
     gulpif        = require('gulp-if'),
     templateCache = require('gulp-angular-templatecache'),
-    minifyHTML    = require('gulp-minify-html');
+    minifyHTML    = require('gulp-minify-html'),
+    concat        = require('gulp-concat');
+
 
 /**
  * Execute all taks
  */
 gulp.task('default', ['clean'], function() {
-    gulp.start('sass', 'html', 'angular-templates', 'copy-statics');
+    gulp.start('sass', 'html', 'angular-templates', 'concat-scripts', 'copy-statics');
 });
 
 /**
@@ -85,7 +87,7 @@ gulp.task('copy-statics', ['html'], function () {
 });
 
 /**
- * Concat all angular templates into JS angular-cache
+ * Extract all angular templates and inject them into JS angular-cache
  */
 gulp.task('angular-templates', function () {
     return gulp.src('public/js/**/*.html')
@@ -97,6 +99,15 @@ gulp.task('angular-templates', function () {
         }))
         .pipe(gulp.dest('dist'))
     ;
+});
+
+/**
+ * Concat build.js and angular-templates
+ */
+gulp.task('concat-scripts', ['html', 'angular-templates'], function() {
+    return gulp.src(['./dist/assets/build.js', './dist/assets/templates.js'])
+        .pipe(concat('build.js'))
+        .pipe(gulp.dest('./dist/assets/'));
 });
 
 //// Images
