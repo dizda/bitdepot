@@ -7,9 +7,9 @@ angular.module('app').controller('WithdrawCtrl', ['$scope', '$location', '$modal
 
     $scope.openModalSignature = function(withdraw) {
 
-        Withdraw.get({id: withdraw.id}, function(withdraw) {
+        Withdraw.get({id: withdraw.id}, function(withdrawFullDetail) {
 
-            $scope.withdraw = withdraw;
+            $scope.withdraw = withdrawFullDetail;
 
             $modal({
                 title:    'Withdraw detail',
