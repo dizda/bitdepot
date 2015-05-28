@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app', ['ngResource', 'ngRoute', 'ngSanitize', 'ngAnimate', 'mgcrea.ngStrap', 'LocalStorageModule', 'bgf.paginateAnything']);
+angular.module('app', ['ngResource', 'ngRoute', 'ngSanitize', 'ngAnimate', 'mgcrea.ngStrap.modal', 'LocalStorageModule', 'bgf.paginateAnything']);
 
 /**
  * Constants

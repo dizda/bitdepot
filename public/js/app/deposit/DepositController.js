@@ -8,7 +8,7 @@ angular.module('app').controller('DepositCtrl', ['$scope', '$location', '$modal'
 
         $modal({
             title:    'New deposit',
-            template: 'js/app/deposit/modal_add.html',
+            template: '/js/app/deposit/modal_add.html',
             animation:'am-fade-and-scale',
             placement:'center',
             show:     true,

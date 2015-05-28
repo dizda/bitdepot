@@ -13,7 +13,7 @@ angular.module('app').controller('WithdrawCtrl', ['$scope', '$location', '$modal
 
             $modal({
                 title:    'Withdraw detail',
-                template: 'js/app/withdraw/modal_sign.html',
+                template: '/js/app/withdraw/modal_sign.html',
                 animation:'am-fade-and-scale',
                 placement:'center',
                 show:     true,
@@ -38,7 +38,7 @@ angular.module('app').controller('WithdrawCtrl', ['$scope', '$location', '$modal
     {
         $modal({
             title:    'New withdraw output',
-            template: 'js/app/withdraw/modal_output_add.html',
+            template: '/js/app/withdraw/modal_output_add.html',
             animation:'am-fade-and-scale',
             placement:'center',
             show:     true,
