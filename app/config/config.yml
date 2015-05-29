@@ -114,10 +114,10 @@ dizda_blockchain:
 old_sound_rabbit_mq:
     connections:
         default:
-            host:     localhost
-            port:     5672
-            user:     guest
-            password: guest
+            host:     %rabbitmq_host%
+            port:     %rabbitmq_port%
+            user:     %rabbitmq_user%
+            password: %rabbitmq_password%
             vhost:    '/'
             lazy:     true
     producers:
