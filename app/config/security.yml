@@ -33,18 +33,18 @@ security:
             security: false
 
         login:
-            pattern:  ^/login
+            pattern:  ^%api_directory%/login
             stateless: true
             anonymous: true
             form_login:
                 provider: fos_userbundle
-                check_path:               /login_check
+                check_path:               %api_directory%/login_check
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
                 require_previous_session: false
 
         api:
-            pattern:   ^/
+            pattern:   ^%api_directory%/
             stateless: true
 
             # JWT-Auth, for users only
@@ -57,5 +57,5 @@ security:
                 profile: "UsernameToken" #WSSE profile (WWW-Authenticate)
 
     access_control:
-        - { path: ^/login,  roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^%api_directory%/login,  roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/,       roles: IS_AUTHENTICATED_FULLY }
