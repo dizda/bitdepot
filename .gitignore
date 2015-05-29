@@ -12,6 +12,8 @@
 /bin/
 /composer.phar
 .idea/
+.DS_Store
+/dist/
 node_modules/
 public/components/
 /app/config/coinegger_prod.yml
