@@ -79,23 +79,23 @@ If you want different password for different applications,
 
 Setup RabbitMQ queues
 
-    php app/console rabbitmq:setup-fabric
+    php app/console --env=prod rabbitmq:setup-fabric
 
 Launch RabbitMQ consumers
 
-    php app/console rabbitmq:consumer -w deposit
-    php app/console rabbitmq:consumer -w deposit_topup
+    php app/console --env=prod rabbitmq:consumer -w deposit_callback
+    php app/console --env=prod rabbitmq:consumer -w deposit_topup_callback
 
 
 ## Crontabs
 
 Watching our addresses over the blockchain, then add new transactions incoming
 
-    php app/console dizda:blockchain:monitor -vv
+    php app/console --env=prod dizda:blockchain:monitor -vv
 
 Create withdraw from outputs requests
 
-    php app/console dizda:app:withdraw -vv
+    php app/console --env=prod dizda:app:withdraw -vv
 
 
 ## Tests
