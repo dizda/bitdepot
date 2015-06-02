@@ -46,8 +46,11 @@ class CallbackService
         $url = sprintf('%s/callback/deposit/expected.json', $deposit->getApplication()->getCallbackEndpoint());
 
         $response = $this->http->post($url, [
-            'body' => $this->serialize($deposit, 'DepositCallback')
-        ]);
+            'body'    => $this->serialize($deposit, 'DepositCallback'),
+            'headers' => [
+                'content-type' => 'application/json'
+            ]
+        ]); // We switch to json content manually, because we serialize ourselves
 
         return (int) $response->getStatusCode() === 200;
     }
@@ -57,16 +60,17 @@ class CallbackService
      * TODO: !!
      *
      * @return bool
+     * @deprecated TO be updated
      */
     public function depositTopupFilling(DepositTopup $depositTopup)
     {
-        $client = $this->initialize($depositTopup->getDeposit()->getApplication()->getCallbackEndpoint());
-
-        $response = $client->post('topup.json', [
-            'json' => $this->serializer->serialize($depositTopup, 'json')
-        ]);
-
-        return (int) $response->getStatusCode() === 201;
+//        $client = $this->initialize($depositTopup->getDeposit()->getApplication()->getCallbackEndpoint());
+//
+//        $response = $client->post('topup.json', [
+//            'json' => $this->serializer->serialize($depositTopup, 'json')
+//        ]);
+//
+//        return (int) $response->getStatusCode() === 201;
     }
 
     /**
@@ -81,7 +85,10 @@ class CallbackService
         $url = sprintf('%s/callback/withdraw/output.json', $withdrawOutput->getApplication()->getCallbackEndpoint());
 
         $response = $this->http->post($url, [
-            'body' => $this->serialize($withdrawOutput, 'WithdrawOutputCallback')
+            'body' => $this->serialize($withdrawOutput, 'WithdrawOutputCallback'),
+            'headers' => [
+                'content-type' => 'application/json'
+            ]
         ]);
 
         return (int) $response->getStatusCode() === 200;
