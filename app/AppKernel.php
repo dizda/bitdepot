@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Nbobtc\Bundle\BitcoindBundle\BitcoindBundle(),
             new Escape\WSSEAuthenticationBundle\EscapeWSSEAuthenticationBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
+            new Catchamonkey\Bundle\ConsoleLoggerBundle\CatchamonkeyConsoleLoggerBundle(),
 
             new Dizda\Bundle\UserBundle\DizdaUserBundle(),
             new Dizda\Bundle\AppBundle\DizdaAppBundle(),
