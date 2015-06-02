@@ -1,11 +1,61 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "beed594101130f373a86b5c3d6f4f839",
+    "hash": "02106c8b249ba915c418c11b6e97ce03",
     "packages": [
+        {
+            "name": "catchamonkey/console-logger-bundle",
+            "version": "v1.0.0",
+            "target-dir": "Catchamonkey/Bundle/ConsoleLoggerBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/catchamonkey/CatchamonkeyConsoleLoggerBundle.git",
+                "reference": "f2127b18ffd647e377d8705cf21b84f8707c751e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/catchamonkey/CatchamonkeyConsoleLoggerBundle/zipball/f2127b18ffd647e377d8705cf21b84f8707c751e",
+                "reference": "f2127b18ffd647e377d8705cf21b84f8707c751e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/framework-bundle": "~2.3",
+                "symfony/monolog-bundle": "~2.3"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~2.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Catchamonkey\\Bundle\\ConsoleLoggerBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Sedlmayr",
+                    "email": "chris@sedlmayr.co.uk"
+                }
+            ],
+            "description": "Symfony2 bundles that adds logging of exceptions thrown in console commands.",
+            "homepage": "http://github.com/catchamonkey/CatchamonkeyConsoleLoggerBundle",
+            "keywords": [
+                "bundle",
+                "console",
+                "logger",
+                "logging",
+                "symfony"
+            ],
+            "time": "2014-08-20 09:57:22"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.3",
@@ -864,7 +914,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/4ceecb62f8bfbee56a5ec83f5ab6124710cf89d1",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/92d5624f2a29e74d8fd9d2a94d7ed7998a8c2809",
                 "reference": "4ceecb62f8bfbee56a5ec83f5ab6124710cf89d1",
                 "shasum": ""
             },
@@ -3102,7 +3152,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/ae44d2db9e8831adc3dae3b79c3e91e4628b445b",
+                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/c40ec57a065a29bb5da047a2397a46e342c0240d",
                 "reference": "ae44d2db9e8831adc3dae3b79c3e91e4628b445b",
                 "shasum": ""
             },
