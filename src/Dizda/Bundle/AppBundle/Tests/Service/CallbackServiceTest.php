@@ -23,7 +23,12 @@ class CallbackServiceTest extends BaseFunctionalTestController
     {
         $deposit = $this->em->getRepository('DizdaAppBundle:Deposit')->find(1);
 
-        $body = ['body' => '{"id":1,"amount_expected":"0.00020000","amount_filled":"0.00000000","is_fulfilled":false,"is_overfilled":false,"address_external":{"value":"3M2C54k8xit7oLAgSat5PbmAtbhCyp5EqU","balance":"0.00020000"}}'];
+        $body = [
+            'body' => '{"id":1,"amount_expected":"0.00020000","amount_filled":"0.00000000","is_fulfilled":false,"is_overfilled":false,"address_external":{"value":"3M2C54k8xit7oLAgSat5PbmAtbhCyp5EqU","balance":"0.00020000"}}',
+            'headers' => [
+                'content-type' => 'application/json'
+            ]
+        ];
 
         $this->dummyResponse->expects($this->once())
             ->method('getStatusCode')
@@ -50,7 +55,12 @@ class CallbackServiceTest extends BaseFunctionalTestController
     {
         $withdrawOutput = $this->em->getRepository('DizdaAppBundle:WithdrawOutput')->find(1);
 
-        $body = ['body' => '{"id":1,"amount":"0.00010000","to_address":"1LGTbdVSEbD9C37qXcpvVJ1egdBu8jYSeV","withdraw":{"txid":"431c5231114ce2d00125ea4a88f4e4637b80fef1117a0b20606204e45cc3678f","withdrawed_at":"2015-01-25T11:11:11+0100"}}'];
+        $body = [
+            'body' => '{"id":1,"amount":"0.00010000","to_address":"1LGTbdVSEbD9C37qXcpvVJ1egdBu8jYSeV","withdraw":{"txid":"431c5231114ce2d00125ea4a88f4e4637b80fef1117a0b20606204e45cc3678f","withdrawed_at":"2015-01-25T11:11:11+0100"}}',
+            'headers' => [
+                'content-type' => 'application/json'
+            ]
+        ];
 
         $this->dummyResponse->expects($this->once())
             ->method('getStatusCode')
