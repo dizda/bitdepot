@@ -17,6 +17,10 @@
     "lodash": "~2.4.1",
     "angular-local-storage": "~0.1.5",
     "angular-paginate-anything": "~4.0.1",
-    "bitcore": "~0.11.2"
+    "bitcore": "~0.11.2",
+    "angular-motion": "~0.4.2"
+  },
+  "resolutions": {
+    "angular-motion": "~0.4.2"
   }
 }
