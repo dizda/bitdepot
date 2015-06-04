@@ -5,8 +5,7 @@ namespace Dizda\Bundle\AppBundle\EventListener;
 use Dizda\Bundle\AppBundle\Event\WithdrawEvent;
 use Dizda\Bundle\AppBundle\Exception\InsufficientAmountException;
 use Dizda\Bundle\AppBundle\Manager\AddressManager;
-use Dizda\Bundle\AppBundle\Service\TransactionBuilderService;
-use Nbobtc\Bitcoind\Bitcoind;
+use Dizda\Bundle\AppBundle\Service\BitcoreService;
 use Psr\Log\LoggerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\Producer;
 
@@ -21,19 +20,14 @@ class WithdrawListener
     private $logger;
 
     /**
-     * @var \Nbobtc\Bitcoind\Bitcoind
-     */
-    private $bitcoind;
-
-    /**
      * @var \Dizda\Bundle\AppBundle\Manager\AddressManager
      */
     private $addressManager;
 
     /**
-     * @var TransactionBuilderService
+     * @var BitcoreService
      */
-    private $transactionBuilder;
+    private $bitcoreService;
 
     /**
      * @var \OldSound\RabbitMqBundle\RabbitMq\Producer
@@ -47,19 +41,17 @@ class WithdrawListener
 
     /**
      * @param LoggerInterface           $logger
-     * @param Bitcoind                  $bitcoind
      * @param AddressManager            $addressManager
-     * @param TransactionBuilderService $transactionBuilder
+     * @param BitcoreService            $bitcoreService
      * @param Producer                  $withdrawOutputProducer
      * @param Producer                  $withdrawProducer
      */
-    public function __construct(LoggerInterface $logger, Bitcoind $bitcoind, AddressManager $addressManager, TransactionBuilderService $transactionBuilder, Producer $withdrawOutputProducer, Producer $withdrawProducer)
+    public function __construct(LoggerInterface $logger, AddressManager $addressManager, BitcoreService $bitcoreService, Producer $withdrawOutputProducer, Producer $withdrawProducer)
     {
         $this->logger     = $logger;
-        $this->bitcoind   = $bitcoind;
         $this->addressManager = $addressManager;
-        $this->transactionBuilder = $transactionBuilder;
-        $this->withdrawProducer   = $withdrawProducer;
+        $this->bitcoreService = $bitcoreService;
+        $this->withdrawProducer       = $withdrawProducer;
         $this->withdrawOutputProducer = $withdrawOutputProducer;
     }
 
@@ -68,6 +60,7 @@ class WithdrawListener
      *
      * @throws InsufficientAmountException
      * @deprecated Use {@link WithdrawListener::onCreate()}
+     * @codeCoverageIgnore
      */
     public function onCreateWithBitcoind(WithdrawEvent $event)
     {
@@ -121,13 +114,14 @@ class WithdrawListener
             $withdraw->setChangeAddress($changeAddress);
         }
 
+        // deprecated:
 //        $rawTransaction = $this->bitcoind->createrawtransaction(
 //            $withdraw->getWithdrawInputsSerializable(),
 //            $withdraw->getWithdrawOutputsSerializable()
 //        );
 
         // prefer to send it via RabbitMQ due to terminal chars limit
-        $transaction = $this->transactionBuilder->build(
+        $transaction = $this->bitcoreService->buildTransaction(
             $withdraw->getWithdrawInputs(),
             $withdraw->getWithdrawOutputs(),
             $withdraw->getChangeAddress()
@@ -147,9 +141,10 @@ class WithdrawListener
     {
         $withdraw = $event->getWithdraw();
 
-        $transactionId = $this->bitcoind->sendrawtransaction(
-            $withdraw->getRawSignedTransaction()
-        );
+//        $transactionId = $this->bitcoind->sendrawtransaction(
+//            $withdraw->getRawSignedTransaction()
+//        );
+        $transactionId = $this->bitcoreService->broadcastTransaction($withdraw->getRawSignedTransaction());
 
         $withdraw->withdrawed($transactionId);
 

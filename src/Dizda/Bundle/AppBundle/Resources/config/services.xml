@@ -47,9 +47,8 @@
             <tag name="kernel.event_listener" event="app.withdraw_create" method="onCreate" />
             <tag name="kernel.event_listener" event="app.withdraw_send" method="onSend" />
             <argument type="service" id="logger" />
-            <argument type="service" id="bitcoind" />
             <argument type="service" id="dizda_app.manager.address" />
-            <argument type="service" id="dizda_app.service.transaction_builder" />
+            <argument type="service" id="dizda_app.service.bitcore" />
             <argument type="service" id="old_sound_rabbit_mq.withdraw_output_callback_producer" />
             <argument type="service" id="old_sound_rabbit_mq.withdraw_callback_producer" />
         </service>
@@ -105,7 +104,7 @@
             <argument>%nodejs_path%</argument>
         </service>
 
-        <service id="dizda_app.service.transaction_builder" class="Dizda\Bundle\AppBundle\Service\TransactionBuilderService">
+        <service id="dizda_app.service.bitcore" class="Dizda\Bundle\AppBundle\Service\BitcoreService">
             <argument type="service" id="serializer" />
             <argument type="service" id="logger" />
             <argument>%kernel.root_dir%/../</argument>

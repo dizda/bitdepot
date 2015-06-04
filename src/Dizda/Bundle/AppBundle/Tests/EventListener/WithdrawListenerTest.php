@@ -27,14 +27,9 @@ class WithdrawListenerTest extends ProphecyTestCase
     private $logger;
 
     /**
-     * @var \Nbobtc\Bitcoind\Bitcoind
+     * @var \Dizda\Bundle\AppBundle\Service\BitcoreService
      */
-    private $bitcoind;
-
-    /**
-     * @var \Dizda\Bundle\AppBundle\Service\TransactionBuilderService
-     */
-    private $transactionBuilder;
+    private $bitcoreService;
 
     /**
      * @var \Dizda\Bundle\AppBundle\Event\WithdrawEvent
@@ -60,7 +55,7 @@ class WithdrawListenerTest extends ProphecyTestCase
 
         $this->withdrawEvent->getWithdraw()->shouldBeCalled()->willReturn($withdraw);
 
-        $this->transactionBuilder->build(
+        $this->bitcoreService->buildTransaction(
             Argument::exact($withdraw->getWithdrawInputs()),
             Argument::exact($withdraw->getWithdrawOutputs()),
             Argument::exact($withdraw->getChangeAddress())
@@ -98,7 +93,7 @@ class WithdrawListenerTest extends ProphecyTestCase
             Argument::exact(false)
         )->shouldBeCalled()->willReturn($changeAddress);
 
-        $this->transactionBuilder->build(
+        $this->bitcoreService->buildTransaction(
             Argument::exact($withdraw->getWithdrawInputs()),
             Argument::exact($withdraw->getWithdrawOutputs()),
             Argument::exact($changeAddress)
@@ -141,7 +136,7 @@ class WithdrawListenerTest extends ProphecyTestCase
 
         $this->withdrawEvent->getWithdraw()->shouldBeCalled()->willReturn($withdraw);
 
-        $this->bitcoind->sendrawtransaction(
+        $this->bitcoreService->broadcastTransaction(
             Argument::exact('coucou')
         )->shouldBeCalled()->willReturn('tr4ns4ct!onId');
 
@@ -304,16 +299,14 @@ class WithdrawListenerTest extends ProphecyTestCase
     {
         $this->addressManager = $this->prophesize('Dizda\Bundle\AppBundle\Manager\AddressManager');
         $this->logger       = $this->prophesize('Psr\Log\LoggerInterface');
-        $this->bitcoind     = $this->prophesize('Nbobtc\Bitcoind\Bitcoind');
         $this->withdrawEvent = $this->prophesize('Dizda\Bundle\AppBundle\Event\WithdrawEvent');
         $this->producer      = $this->prophesize('OldSound\RabbitMqBundle\RabbitMq\Producer');
         $this->producer2      = $this->prophesize('OldSound\RabbitMqBundle\RabbitMq\Producer');
-        $this->transactionBuilder = $this->prophesize('Dizda\Bundle\AppBundle\Service\TransactionBuilderService');
+        $this->bitcoreService = $this->prophesize('Dizda\Bundle\AppBundle\Service\BitcoreService');
         $this->manager      = new WithdrawListener(
             $this->logger->reveal(),
-            $this->bitcoind->reveal(),
             $this->addressManager->reveal(),
-            $this->transactionBuilder->reveal(),
+            $this->bitcoreService->reveal(),
             $this->producer->reveal(),
             $this->producer2->reveal()
         );
