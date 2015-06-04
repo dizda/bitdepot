@@ -11,7 +11,9 @@ security:
             - DEPOSIT_CREATE
 
     encoders:
-        FOS\UserBundle\Model\UserInterface: sha512
+        FOS\UserBundle\Model\UserInterface:
+            algorithm: bcrypt
+            cost: 15
 
     providers:
         # Only for JWT-Auth
@@ -55,6 +57,10 @@ security:
                 provider: wsse_application
                 realm: "Secured with WSSE" #identifies the set of resources to which the authentication information will apply (WWW-Authenticate)
                 profile: "UsernameToken" #WSSE profile (WWW-Authenticate)
+                encoder: #digest algorithm
+                    algorithm:  bcrypt
+                    iterations: 15
+                    encodeHashAsBase64: true
 
     access_control:
         - { path: ^%api_directory%/login,  roles: IS_AUTHENTICATED_ANONYMOUSLY }
