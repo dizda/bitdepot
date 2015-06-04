@@ -12,7 +12,7 @@ security:
 
     encoders:
         FOS\UserBundle\Model\UserInterface:
-            algorithm: bcrypt
+            algorithm: sha512
             cost: 15
 
     providers:
@@ -58,8 +58,8 @@ security:
                 realm: "Secured with WSSE" #identifies the set of resources to which the authentication information will apply (WWW-Authenticate)
                 profile: "UsernameToken" #WSSE profile (WWW-Authenticate)
                 encoder: #digest algorithm
-                    algorithm:  bcrypt
-                    iterations: 15
+                    algorithm:  sha1   # TODO: Change this for the future!
+                    iterations: 1
                     encodeHashAsBase64: true
 
     access_control:
