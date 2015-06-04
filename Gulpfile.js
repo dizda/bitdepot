@@ -27,7 +27,7 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('sass', function () {
-    return sass('public/css', {sourcemap: true})
+    return sass('public/css', {sourcemap: false})
         .on('error', function (err) {
             console.error('Error!', err.message);
         })
