@@ -28,7 +28,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "jms/serializer": "dev-master",
         "pagerfanta/pagerfanta": "~1.0",
-        "catchamonkey/console-logger-bundle": "^1.0"
+        "catchamonkey/console-logger-bundle": "^1.0",
+        "doctrine/doctrine-cache-bundle": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

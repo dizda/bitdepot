@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "02106c8b249ba915c418c11b6e97ce03",
+    "hash": "bc69ef49f3248d573968e0ee6d2dc628",
     "packages": [
         {
             "name": "catchamonkey/console-logger-bundle",

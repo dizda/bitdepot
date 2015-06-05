@@ -157,6 +157,15 @@ fos_user:
     firewall_name: login
     user_class: Dizda\Bundle\UserBundle\Entity\User
 
+doctrine_cache:
+    aliases:
+        cache_nonces: apc_cache
+
+    providers:
+        apc_cache:
+            type: apc
+            namespace: apc_cache
+
 # Angular Authentification
 lexik_jwt_authentication:
     private_key_path: %jwt_private_key_path%   # ssh private key path

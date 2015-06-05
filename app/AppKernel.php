@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
             new Nbobtc\Bundle\BitcoindBundle\BitcoindBundle(),
+            new Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle(),
             new Escape\WSSEAuthenticationBundle\EscapeWSSEAuthenticationBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new Catchamonkey\Bundle\ConsoleLoggerBundle\CatchamonkeyConsoleLoggerBundle(),
