@@ -85,6 +85,7 @@ Launch RabbitMQ consumers
 
     php app/console --env=prod rabbitmq:consumer -w deposit_callback
     php app/console --env=prod rabbitmq:consumer -w deposit_topup_callback
+    php app/console --env=prod rabbitmq:consumer -w withdraw_output_callback
 
 
 ## Crontabs
