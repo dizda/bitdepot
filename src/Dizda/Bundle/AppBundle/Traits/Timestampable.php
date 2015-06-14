@@ -24,6 +24,8 @@ trait Timestampable
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     *
+     * @Serializer\Groups({"Addresses"})
      */
     protected $updatedAt;
 
