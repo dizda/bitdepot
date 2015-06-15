@@ -1,13 +1,12 @@
-[![Coverage Status](https://img.shields.io/coveralls/dizda/coinegger.svg)](https://coveralls.io/r/dizda/coinegger)
-[![Code Climate](https://codeclimate.com/github/dizda/coinegger/badges/gpa.svg)](https://codeclimate.com/github/dizda/coinegger)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dizda/coinegger/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dizda/coinegger/?branch=master)
-[![Build Status](https://travis-ci.org/dizda/coinegger.svg?branch=master)](https://travis-ci.org/dizda/coinegger)
+[![Coverage Status](https://img.shields.io/coveralls/dizda/bitdepot.svg)](https://coveralls.io/r/dizda/bitdepot)
+[![Code Climate](https://codeclimate.com/github/dizda/bitdepot/badges/gpa.svg)](https://codeclimate.com/github/dizda/bitdepot)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dizda/bitdepot/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dizda/bitdepot/?branch=master)
+[![Build Status](https://travis-ci.org/dizda/bitdepot.svg?branch=master)](https://travis-ci.org/dizda/bitdepot)
 
-Coinegger - Work In Progress
+Bitdepot - Work In Progress
 ========================
 
-When bitcoin meet Arnold Schwarzenegger.
-Coinegger is an application-oriented wallet designed for those who run bitcoin websites on their servers.
+Bitdepot is an application-oriented wallet designed for those who run bitcoin websites on their servers.
 
 Features :
 
@@ -24,7 +23,7 @@ Main advantage :
 
     The private key will never be stored on the server, you can sleep tight.
 
-There is also a Symfony2 bundle available for the "Client" part (Send API requests, receive callback hooks) [CoineggerClientBundle](https://github.com/dizda/CoineggerClientBundle).
+There is also a Symfony2 bundle available for the "Client" part (Send API requests, receive callback hooks) [BitdepotClientBundle](https://github.com/dizda/BitdepotClientBundle).
 
 ## Setup
 
@@ -42,24 +41,24 @@ Then setup the MySQL schema
 If you are using apache2, you should take this example to set your vhost
 
     <VirtualHost *:80>
-        DocumentRoot /opt/www/coinegger/
-        ServerName coinegger.loc
+        DocumentRoot /opt/www/bitdepot/
+        ServerName bitdepot.loc
 
-        Alias /api/ "/opt/www/coinegger/web/"       # Symfony2 backend
-        Alias /     "/opt/www/coinegger/public/"    # AngularJS frontend
+        Alias /api/ "/opt/www/bitdepot/web/"       # Symfony2 backend
+        Alias /     "/opt/www/bitdepot/public/"    # AngularJS frontend
 
         # JWTToken - To fix a bug under apache2
         RewriteEngine On
         RewriteCond %{HTTP:Authorization} ^(.*)
         RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
 
-        <Directory /opt/www/coinegger/public/>
+        <Directory /opt/www/bitdepot/public/>
             Options Indexes FollowSymLinks MultiViews
             AllowOverride All
             Require all granted
         </Directory>
 
-        <Directory /opt/www/coinegger/web/>
+        <Directory /opt/www/bitdepot/web/>
             Options Indexes FollowSymLinks MultiViews
             AllowOverride All
             Require all granted
