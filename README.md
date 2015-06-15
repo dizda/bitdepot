@@ -1,5 +1,4 @@
 [![Coverage Status](https://img.shields.io/coveralls/dizda/bitdepot.svg)](https://coveralls.io/r/dizda/bitdepot)
-[![Code Climate](https://codeclimate.com/github/dizda/bitdepot/badges/gpa.svg)](https://codeclimate.com/github/dizda/bitdepot)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dizda/bitdepot/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dizda/bitdepot/?branch=master)
 [![Build Status](https://travis-ci.org/dizda/bitdepot.svg?branch=master)](https://travis-ci.org/dizda/bitdepot)
 
