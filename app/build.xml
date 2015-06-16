@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<project name="coinegger" basedir="." default="build">
+<project name="bitdepot" basedir="." default="build">
     <target name="build">
         <phingcall target="database_drop" />
         <phingcall target="database_create" />

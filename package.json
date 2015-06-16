@@ -1,6 +1,6 @@
 {
-  "name": "coinegger",
-  "description": "coinegger",
+  "name": "bitdepot",
+  "description": "bitdepot",
   "version": "0.0.1",
   "dependencies": {
     "bitcoinjs-lib": "1.5.x",

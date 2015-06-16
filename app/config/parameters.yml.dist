@@ -3,11 +3,9 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     coinegger
+    database_name:     bitdepot
     database_user:     root
     database_password: ~
-    # You should uncomment this if you want use pdo_sqlite
-    # database_path: "%kernel.root_dir%/data.db3"
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -36,7 +34,6 @@ parameters:
     jwt_public_key_path:  %kernel.root_dir%/var/jwt/public_test.pem
     jwt_pass_phrase:      'bambou'
 
-    #nodejs_path: /home/travis/.nvm/v0.10.33/bin/node
     nodejs_path: env node
 
     # The prefix directory of all routes, use '' for apache, and '/api' for nginx

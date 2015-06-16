@@ -16,4 +16,4 @@
 /dist/
 node_modules/
 public/components/
-/app/config/coinegger_prod.yml
+/app/config/bitdepot_prod.yml

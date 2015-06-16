@@ -14,11 +14,11 @@ class ScriptHandler
     /**
      * Install the needed config files such
      *
-     *      - app/config/coinegger_prod.yml
+     *      - app/config/bitdepot_prod.yml
      */
     public static function installConfigFiles()
     {
-        $file       = __DIR__ . '/../../../../../app/config/coinegger_prod.yml';
+        $file       = __DIR__ . '/../../../../../app/config/bitdepot_prod.yml';
         $filesystem = new Filesystem();
 
         if ($filesystem->exists($file)) {
