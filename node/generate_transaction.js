@@ -31,7 +31,7 @@ params.inputs.forEach(function(input) {
  * Add all outputs
  */
 params.outputs.forEach(function(output) {
-    transaction.to(output.to_address, parseFloat(output.amount).toFixed(8) * 100000000); // Convert amount to satoshi
+    transaction.to(output.to_address, bitcore.Unit.fromBTC(output.amount).toSatoshis()); // Convert amount to satoshi
 });
 
 /**
