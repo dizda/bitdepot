@@ -39,6 +39,7 @@ class WithdrawRepository extends EntityRepository
             ->innerJoin('w.withdrawInputs', 'wi')
             ->innerJoin('w.withdrawOutputs', 'wo')
             ->andWhere('wo.isAccepted = true')
+            ->groupBy('w.id')
             ->orderBy('w.createdAt', 'DESC')
             ->setMaxResults(10)
         ;
