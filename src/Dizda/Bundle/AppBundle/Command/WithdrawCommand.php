@@ -48,7 +48,13 @@ EOF
             $outputs = $manager->search($keychain);
 
             if ($outputs) {
-                $manager->create($keychain, $outputs);
+                $withdraw = $manager->create($keychain, $outputs);
+
+                if ($withdraw) {
+                    $this->getContainer()->get('monolog.logger.bitdepot_notices')->notice(
+                        sprintf('A new withdraw of %s has been created.', $withdraw->getTotalOutputs())
+                    );
+                }
             }
         }
     }

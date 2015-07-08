@@ -114,12 +114,6 @@ class WithdrawListener
             $withdraw->setChangeAddress($changeAddress);
         }
 
-        // deprecated:
-//        $rawTransaction = $this->bitcoind->createrawtransaction(
-//            $withdraw->getWithdrawInputsSerializable(),
-//            $withdraw->getWithdrawOutputsSerializable()
-//        );
-
         // prefer to send it via RabbitMQ due to terminal chars limit
         $transaction = $this->bitcoreService->buildTransaction(
             $withdraw->getWithdrawInputs(),

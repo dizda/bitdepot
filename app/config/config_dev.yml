@@ -12,6 +12,7 @@ web_profiler:
     intercept_redirects: "%debug_redirects%"
 
 monolog:
+    channels: [bitdepot_notices]
     handlers:
         main:
             type:   stream
@@ -20,14 +21,6 @@ monolog:
         console:
             type:   console
             bubble: false
-        # uncomment to get logging in your browser
-        # you may have to allow bigger header sizes in your Web server configuration
-        #firephp:
-        #    type:   firephp
-        #    level:  info
-        #chromephp:
-        #    type:   chromephp
-        #    level:  info
 
 assetic:
     use_controller: "%use_assetic_controller%"
