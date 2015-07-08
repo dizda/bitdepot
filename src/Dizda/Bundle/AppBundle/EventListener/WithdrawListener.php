@@ -121,7 +121,10 @@ class WithdrawListener
             $withdraw->getChangeAddress()
         );
 
-        $withdraw->setFees($transaction['fees'] / 100000000);
+        // during the creation of the transaction, bitcore can propose a better fee to cover all outputs
+        $withdraw->setFees($transaction['fees']);
+        // so we have to update the change amount who'll be impacted as well
+        $withdraw->setChangeAddressAmount($transaction['change_amount']);
         $withdraw->setRawTransaction($transaction['raw_transaction']);
         $withdraw->setJsonTransaction($transaction['json_transaction']);
     }

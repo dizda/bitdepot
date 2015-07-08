@@ -60,19 +60,20 @@ class WithdrawListenerTest extends ProphecyTestCase
             Argument::exact($withdraw->getWithdrawOutputs()),
             Argument::exact($withdraw->getChangeAddress())
         )->shouldBeCalled()->willReturn([
-            'fees' => 90000,
+            'fees'             => '0.00090000',
             'json_transaction' => 'jsonTransaction',
-            'raw_transaction'  => 'R4wTr4nsact!on'
+            'raw_transaction'  => 'R4wTr4nsact!on',
+            'change_amount'    => '0.00000000'
         ]);
 
         $this->manager->onCreate($this->withdrawEvent->reveal());
         $this->assertEquals('jsonTransaction', $withdraw->getJsonTransaction());
         $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
         $this->assertEquals('0.00090000', $withdraw->getFees());
+        $this->assertEquals('0.00000000', $withdraw->getChangeAddressAmount());
         $this->assertNull($withdraw->getJsonSignedTransaction());
         $this->assertNull($withdraw->getRawSignedTransaction());
         $this->assertNull($withdraw->getChangeAddress());
-        $this->assertEquals('0.00000000', $withdraw->getChangeAddressAmount());
     }
 
     /**
@@ -98,9 +99,10 @@ class WithdrawListenerTest extends ProphecyTestCase
             Argument::exact($withdraw->getWithdrawOutputs()),
             Argument::exact($changeAddress)
         )->shouldBeCalled()->willReturn([
-            'fees' => 10000,
+            'fees'             => '0.00010000',
             'json_transaction' => 'jsonTransaction',
-            'raw_transaction'  => 'R4wTr4nsact!on'
+            'raw_transaction'  => 'R4wTr4nsact!on',
+            'change_amount'    => '0.00123400'
         ]);
 
         $this->manager->onCreate($this->withdrawEvent->reveal());
@@ -108,7 +110,7 @@ class WithdrawListenerTest extends ProphecyTestCase
         $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
         $this->assertEquals('jsonTransaction', $withdraw->getJsonTransaction());
         $this->assertEquals($changeAddress, $withdraw->getChangeAddress());
-        $this->assertEquals('0.00010000', $withdraw->getChangeAddressAmount());
+        $this->assertEquals('0.00123400', $withdraw->getChangeAddressAmount());
         $this->assertNotNull($withdraw->getChangeAddress());
     }
 

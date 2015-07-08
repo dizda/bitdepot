@@ -7,6 +7,7 @@ var bitcore = require('bitcore');
 var params   = JSON.parse(process.argv[2]);
 //console.error(params.changeAddress);
 var transaction = new bitcore.Transaction();
+var changeAmount = 0;
 
 /**
  * Add all inputs
@@ -40,10 +41,12 @@ params.outputs.forEach(function(output) {
 if (params.changeAddress) {
     transaction.change(params.changeAddress.value);
     //transaction.to('3Cex1PTvqPzwm989zq8Q3xuqS2rTCnHFBC', 407000);
+    changeAmount = transaction.getChangeOutput().satoshis;
 }
 
 var stdout = {
-    fees: transaction.getFee(),
+    fees: bitcore.Unit.fromSatoshis(transaction.getFee()).toBTC(),
+    change_amount: bitcore.Unit.fromSatoshis(changeAmount).toBTC(),
     json_transaction: transaction.toJSON(),
     raw_transaction: transaction.toBuffer().toString('hex')
 };
