@@ -52,7 +52,11 @@ EOF
 
                 if ($withdraw) {
                     $this->getContainer()->get('monolog.logger.bitdepot_notices')->notice(
-                        sprintf('A new withdraw of %s has been created.', $withdraw->getTotalOutputs())
+                        sprintf(
+                            '%s: A new withdraw of %s has been created.',
+                            $keychain->getName(),
+                            $withdraw->getTotalOutputs()
+                        )
                     );
                 }
             }
