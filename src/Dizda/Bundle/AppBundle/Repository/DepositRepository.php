@@ -27,6 +27,8 @@ class DepositRepository extends EntityRepository
             ->innerJoin('d.addressExternal', 'a')
             ->leftJoin('a.transactions', 't')
             ->andWhere('d.isFulfilled = 0')
+            ->andWhere('d.expiresAt >= :now')
+            ->setParameter('now', new \DateTime())
         ;
 
         return $qb->getQuery()->execute();

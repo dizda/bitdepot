@@ -72,7 +72,31 @@ class Application implements UserInterface
      */
     private $callbackEndpoint;
 
+    /**
+     * Strings accepted by \DateTime
+     *  eg. "+12 hours"
+     *  eg. "+2 days"
+     *
+     * @var string
+     *
+     * @ORM\Column(name="deposits_expires_after", type="string", length=20, options={"default" = "+360 days"})
+     *
+     * @Serializer\Groups({"Applications"})
+     */
+    private $depositsExpiresAfter;
 
+    /**
+     * Strings accepted by \DateTime
+     *  eg. "+12 hours"
+     *  eg. "+2 days"
+     *
+     * @var string
+     *
+     * @ORM\Column(name="deposits_topups_expires_after", type="string", length=20, options={"default" = "+360 days"})
+     *
+     * @Serializer\Groups({"Applications"})
+     */
+    private $depositsTopupsExpiresAfter;
 
     /**
      * @var \Dizda\Bundle\AppBundle\Entity\Application
@@ -462,5 +486,51 @@ class Application implements UserInterface
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * Set depositsExpiresAfter
+     *
+     * @param string $depositsExpiresAfter
+     * @return Application
+     */
+    public function setDepositsExpiresAfter($depositsExpiresAfter)
+    {
+        $this->depositsExpiresAfter = $depositsExpiresAfter;
+
+        return $this;
+    }
+
+    /**
+     * Get depositsExpiresAfter
+     *
+     * @return string
+     */
+    public function getDepositsExpiresAfter()
+    {
+        return $this->depositsExpiresAfter;
+    }
+
+    /**
+     * Set depositsTopupsExpiresAfter
+     *
+     * @param string $depositsTopupsExpiresAfter
+     * @return Application
+     */
+    public function setDepositsTopupsExpiresAfter($depositsTopupsExpiresAfter)
+    {
+        $this->depositsTopupsExpiresAfter = $depositsTopupsExpiresAfter;
+
+        return $this;
+    }
+
+    /**
+     * Get depositsTopupsExpiresAfter
+     *
+     * @return string
+     */
+    public function getDepositsTopupsExpiresAfter()
+    {
+        return $this->depositsTopupsExpiresAfter;
     }
 }

@@ -66,10 +66,14 @@ class DepositManager
             ->setApplication($app) // TODO: verify that application id is owned by user
             ->setAddressExternal($address)
             ->setReference($depositSubmitted['reference'])
+            ->setExpiresAt(new \DateTime($app->getDepositsTopupsExpiresAfter()))
         ;
 
         if ($depositSubmitted['type'] === 1) {
-            $deposit->setAmountExpected($depositSubmitted['amount_expected']);
+            $deposit
+                ->setAmountExpected($depositSubmitted['amount_expected'])
+                ->setExpiresAt(new \DateTime($app->getDepositsExpiresAfter()))
+            ;
         }
 
         $this->em->persist($deposit);
