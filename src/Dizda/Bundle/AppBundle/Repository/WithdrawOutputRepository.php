@@ -62,6 +62,7 @@ class WithdrawOutputRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('wo')
             ->orderBy('wo.createdAt', 'DESC')
+            ->setMaxResults(50)
         ;
 
         if ($application) {
