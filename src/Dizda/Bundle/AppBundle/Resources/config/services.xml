@@ -49,7 +49,6 @@
             <argument type="service" id="logger" />
             <argument type="service" id="dizda_app.manager.address" />
             <argument type="service" id="dizda_app.service.bitcore" />
-            <argument type="service" id="old_sound_rabbit_mq.withdraw_output_callback_producer" />
             <argument type="service" id="old_sound_rabbit_mq.withdraw_callback_producer" />
         </service>
 
@@ -71,6 +70,11 @@
         <service id="dizda_app.listener.deposit_topup_entity" class="Dizda\Bundle\AppBundle\EventListener\DepositTopupEntityListener">
             <tag name="doctrine.event_listener" event="postPersist" />
             <argument type="service" id="old_sound_rabbit_mq.deposit_topup_callback_producer" />
+        </service>
+
+        <service id="dizda_app.listener.withdraw_entity" class="Dizda\Bundle\AppBundle\EventListener\WithdrawEntityListener">
+            <tag name="doctrine.event_listener" event="postUpdate" />
+            <argument type="service" id="old_sound_rabbit_mq.withdraw_output_callback_producer" />
         </service>
 
         <!-- Consumer -->

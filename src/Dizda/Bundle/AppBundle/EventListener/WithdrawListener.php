@@ -35,24 +35,17 @@ class WithdrawListener
     private $withdrawProducer;
 
     /**
-     * @var \OldSound\RabbitMqBundle\RabbitMq\Producer
-     */
-    private $withdrawOutputProducer;
-
-    /**
      * @param LoggerInterface           $logger
      * @param AddressManager            $addressManager
      * @param BitcoreService            $bitcoreService
-     * @param Producer                  $withdrawOutputProducer
      * @param Producer                  $withdrawProducer
      */
-    public function __construct(LoggerInterface $logger, AddressManager $addressManager, BitcoreService $bitcoreService, Producer $withdrawOutputProducer, Producer $withdrawProducer)
+    public function __construct(LoggerInterface $logger, AddressManager $addressManager, BitcoreService $bitcoreService, Producer $withdrawProducer)
     {
         $this->logger     = $logger;
         $this->addressManager = $addressManager;
         $this->bitcoreService = $bitcoreService;
         $this->withdrawProducer       = $withdrawProducer;
-        $this->withdrawOutputProducer = $withdrawOutputProducer;
     }
 
     /**
@@ -151,13 +144,6 @@ class WithdrawListener
             $input->getAddress()->setBalance(0);
         }
 
-        // Dispatch every outputs to rabbit, to launch a callback to all of them
-        foreach ($withdraw->getWithdrawOutputs() as $output) {
-            $this->withdrawOutputProducer->publish(serialize($output->getId()));
-        }
-
-//        $this->withdrawProducer->publish(serialize([
-//            'txid' => $transactionId
-//        ]));
+        // On flush(), WithdrawEntityListener will be triggered to send all withdrawOutputs to RabbitMQ
     }
 }
