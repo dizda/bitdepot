@@ -38,9 +38,12 @@ class WithdrawEntityListener
         if ($entity instanceof Withdraw) {
             // If RabbitMQ is not available, an Exception will be thrown, and a rollback of transactions will be made
             // so we will not loose any topup transactions if an error occur.
+            if ($entity->getWithdrawedAt() === null) {
+                return;
+            }
 
             // If the withdraw was already processed, we don't push it a second time
-            if ($entity->getWithdrawOutputs()->first() !== WithdrawOutput::QUEUE_STATUS_QUEUED) {
+            if ($entity->getWithdrawOutputs()->first()->getQueueStatus() !== WithdrawOutput::QUEUE_STATUS_QUEUED) {
                 return;
             }
 

@@ -6,6 +6,7 @@ use Dizda\Bundle\AppBundle\Event\WithdrawEvent;
 use Dizda\Bundle\AppBundle\Exception\InsufficientAmountException;
 use Dizda\Bundle\AppBundle\Manager\AddressManager;
 use Dizda\Bundle\AppBundle\Service\BitcoreService;
+use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
 use Psr\Log\LoggerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\Producer;
 
@@ -145,5 +146,8 @@ class WithdrawListener
         }
 
         // On flush(), WithdrawEntityListener will be triggered to send all withdrawOutputs to RabbitMQ
+        foreach ($withdraw->getWithdrawOutputs() as $output) {
+            $output->setQueueStatus(WithdrawOutput::QUEUE_STATUS_QUEUED);
+        }
     }
 }
