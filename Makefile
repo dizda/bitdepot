@@ -10,5 +10,5 @@ install:
 	node ./node/create_wallet.js
 
 tests:
-	./bin/phing -f app/build.xml
+	./bin/phing -f build.xml
 	./bin/phpunit -c app/
