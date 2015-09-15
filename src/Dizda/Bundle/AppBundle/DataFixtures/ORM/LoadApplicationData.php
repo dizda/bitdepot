@@ -27,6 +27,8 @@ class LoadApplicationData extends AbstractFixture implements OrderedFixtureInter
             ->setConfirmationsRequired(1)
             ->setCallbackEndpoint('http://callback-test.com')
             ->setKeychain($this->getReference('keychain-1'))
+            ->setDepositsExpiresAfter('+360 days')
+            ->setDepositsTopupsExpiresAfter('+360 days')
         ;
 
         $manager->persist($app1);
