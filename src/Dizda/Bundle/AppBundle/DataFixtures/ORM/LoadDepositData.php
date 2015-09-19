@@ -27,6 +27,7 @@ class LoadDepositData extends AbstractFixture implements OrderedFixtureInterface
             ->setAmountExpected('0.0002')
             ->setAmountFilled('0')
             ->setIsFulfilled(false)
+            ->setExpiresAt(new \DateTime('+1 day'))
         ;
 
         $manager->persist($deposit1);
