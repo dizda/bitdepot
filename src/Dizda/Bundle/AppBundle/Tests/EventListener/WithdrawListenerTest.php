@@ -67,7 +67,7 @@ class WithdrawListenerTest extends ProphecyTestCase
         ]);
 
         $this->manager->onCreate($this->withdrawEvent->reveal());
-        $this->assertEquals('jsonTransaction', $withdraw->getJsonTransaction());
+        $this->assertEquals('"jsonTransaction"', $withdraw->getJsonTransaction());
         $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
         $this->assertEquals('0.00090000', $withdraw->getFees());
         $this->assertEquals('0.00000000', $withdraw->getChangeAddressAmount());
@@ -108,7 +108,7 @@ class WithdrawListenerTest extends ProphecyTestCase
         $this->manager->onCreate($this->withdrawEvent->reveal());
         $this->assertEquals('0.00010000', $withdraw->getFees());
         $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
-        $this->assertEquals('jsonTransaction', $withdraw->getJsonTransaction());
+        $this->assertEquals('"jsonTransaction"', $withdraw->getJsonTransaction());
         $this->assertEquals($changeAddress, $withdraw->getChangeAddress());
         $this->assertEquals('0.00123400', $withdraw->getChangeAddressAmount());
         $this->assertNotNull($withdraw->getChangeAddress());

@@ -1,4 +1,4 @@
-var bitcore = require('bitcore')
+var bitcore = require('bitcore-lib')
   , bitcoin = require('bitcoinjs-lib')
   , Hash = bitcore.crypto.Hash;
 

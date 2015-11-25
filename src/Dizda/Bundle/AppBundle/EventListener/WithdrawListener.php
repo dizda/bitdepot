@@ -120,7 +120,7 @@ class WithdrawListener
         // so we have to update the change amount who'll be impacted as well
         $withdraw->setChangeAddressAmount($transaction['change_amount']);
         $withdraw->setRawTransaction($transaction['raw_transaction']);
-        $withdraw->setJsonTransaction($transaction['json_transaction']);
+        $withdraw->setJsonTransaction(json_encode($transaction['json_transaction']));
     }
 
     /**

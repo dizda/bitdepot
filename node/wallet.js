@@ -1,7 +1,7 @@
 'use strict';
 
 var bitcoin = require('bitcoinjs-lib')
-  , bitcore = require('bitcore');
+  , bitcore = require('bitcore-lib');
 
 
 function Wallet()

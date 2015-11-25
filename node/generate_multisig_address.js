@@ -2,7 +2,7 @@
 
 'use strict';
 
-var bitcore = require('bitcore');
+var bitcore = require('bitcore-lib');
 
 var params   = JSON.parse(process.argv[2]);
 var pubKeys  = [];

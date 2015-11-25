@@ -2,7 +2,7 @@
  * Work !!
  */
 
-var bitcore = require('bitcore')
+var bitcore = require('bitcore-lib')
   , Hash = bitcore.crypto.Hash;
 
 
