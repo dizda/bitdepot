@@ -2,7 +2,7 @@
 
 angular.module('app').controller('SignModalCtrl', ['$scope', 'Withdraw', function($scope, Withdraw) {
 
-    var bitcore = require('bitcore');
+    var bitcore = require('bitcore-lib');
     var Buffer = bitcore.deps.Buffer;
 
     $scope.seed      = null;
@@ -71,8 +71,10 @@ angular.module('app').controller('SignModalCtrl', ['$scope', 'Withdraw', functio
      */
     function sign(seed)
     {
+        console.log($scope.withdraw.json_transaction);
+        console.log($scope.withdraw.json_signed_transaction);
         // Recover transaction from json_transaction created by bitcore || or json_signed_transaction
-        var transaction = bitcore.Transaction($scope.withdraw.json_signed_transaction || $scope.withdraw.json_transaction);
+        var transaction = bitcore.Transaction(JSON.parse($scope.withdraw.json_signed_transaction || $scope.withdraw.json_transaction));
 
         // Create a wallet from the seed submitted
         var wallet = bitcore.HDPrivateKey.fromSeed(bitcore.crypto.Hash.sha256(new Buffer(seed)).toString('hex'), bitcore.Networks.livenet);
@@ -92,7 +94,7 @@ angular.module('app').controller('SignModalCtrl', ['$scope', 'Withdraw', functio
         });
 
         // save the signed transaction
-        $scope.withdraw.json_signed_transaction = transaction.toJSON();
+        $scope.withdraw.json_signed_transaction = JSON.stringify(transaction);
 
         if (transaction.isFullySigned()) {
             $scope.withdraw.raw_signed_transaction = transaction.serialize(); // then send this to bitcoind
