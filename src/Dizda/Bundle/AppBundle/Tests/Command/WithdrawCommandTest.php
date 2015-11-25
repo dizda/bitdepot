@@ -42,14 +42,31 @@ class WithdrawCommandTest extends BaseFunctionalTestCommand
         $this->assertEquals('0.00020000', $withdraw->getTotalOutputs());
         $this->assertEquals('0.00010000', $withdraw->getFees());
         $this->assertEquals('0.00030000', $withdraw->getTotalOutputsWithFees());
+
+        // Verify Raw Transaction
         $this->assertEquals(
             '0100000001e5427d1972a8c1682cd4bf72ee9a2ee247f98a631fcd86b294e5ca821b59fa320000000000ffffffff01204e0000000000001976a914e5e2ad271ceea56299d2965cf8222fcb65d5bb8e88ac00000000',
             $withdraw->getRawTransaction()
         );
+
+        // Verify the JSON Transaction
+        $jsonTx = json_decode($withdraw->getJsonTransaction());
+        $this->assertEquals('32fa591b82cae594b286cd1f638af947e22e9aee72bfd42c68c1a872197d42e5', $jsonTx->inputs[0]->prevTxId);
+        $this->assertEquals(0, $jsonTx->inputs[0]->outputIndex);
+        $this->assertEquals(4294967295, $jsonTx->inputs[0]->sequenceNumber);
+        $this->assertEquals('', $jsonTx->inputs[0]->script);
+        $this->assertEquals(30000, $jsonTx->inputs[0]->output->satoshis);
+        $this->assertEquals(2, $jsonTx->inputs[0]->threshold);
         $this->assertEquals(
-            '{"version":1,"inputs":[{"prevTxId":"32fa591b82cae594b286cd1f638af947e22e9aee72bfd42c68c1a872197d42e5","outputIndex":0,"sequenceNumber":4294967295,"script":"","output":{"satoshis":30000,"script":"OP_HASH160 20 0x7a963a9997572c5f05efcb84bde9c1e8bcb809c3 OP_EQUAL"},"threshold":2,"publicKeys":["02087a30059abeb82ceb8b0a0413c16307a0d29cec97073bbc8d4a584e60f19f23","029bfbac8f2bfca762df3ecd1500bdf291a9dad7c7491533a8b6d8925c9039432f","02a3ce2f9b90ac59d6cd5a2a01b3c1d5e9e379627ae9c9e1b2a3542f8cf80f7ae7"],"signatures":[null,null,null]}],"outputs":[{"satoshis":20000,"script":"OP_DUP OP_HASH160 20 0xe5e2ad271ceea56299d2965cf8222fcb65d5bb8e OP_EQUALVERIFY OP_CHECKSIG"}],"nLockTime":0}',
-            $withdraw->getJsonTransaction()
+            ["02087a30059abeb82ceb8b0a0413c16307a0d29cec97073bbc8d4a584e60f19f23", "029bfbac8f2bfca762df3ecd1500bdf291a9dad7c7491533a8b6d8925c9039432f", "02a3ce2f9b90ac59d6cd5a2a01b3c1d5e9e379627ae9c9e1b2a3542f8cf80f7ae7"],
+            $jsonTx->inputs[0]->publicKeys
         );
+        $this->assertEquals([null, null, null], $jsonTx->inputs[0]->signatures);
+        $this->assertCount(1, $jsonTx->inputs);
+        $this->assertCount(1, $jsonTx->outputs);
+        $this->assertEquals(20000, $jsonTx->outputs[0]->satoshis);
+        $this->assertEquals(0, $jsonTx->nLockTime);
+
         $this->assertNull($withdraw->getRawSignedTransaction());
         $this->assertNull($withdraw->getJsonSignedTransaction());
         $this->assertEquals('32fa591b82cae594b286cd1f638af947e22e9aee72bfd42c68c1a872197d42e5', $withdraw->getWithdrawInputs()->first()->getTxid());
