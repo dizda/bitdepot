@@ -2,18 +2,18 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\EventListener;
 
+use AppBundle\Tests\BasicUnitTest;
 use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\Deposit;
 use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\EventListener\DepositListener;
 use Doctrine\ORM\EntityManager;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTestCase;
 
 /**
  * Class DepositListenerTest
  */
-class DepositListenerTest extends ProphecyTestCase
+class DepositListenerTest extends BasicUnitTest
 {
     /**
      * @var \Psr\Log\LoggerInterface

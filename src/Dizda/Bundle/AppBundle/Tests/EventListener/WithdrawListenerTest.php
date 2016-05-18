@@ -2,19 +2,19 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\EventListener;
 
+use AppBundle\Tests\BasicUnitTest;
 use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Entity\Withdraw;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTestCase;
 use Dizda\Bundle\AppBundle\EventListener\WithdrawListener;
 
 /**
  * Class WithdrawListenerTest
  */
-class WithdrawListenerTest extends ProphecyTestCase
+class WithdrawListenerTest extends BasicUnitTest
 {
     /**
      * @var \Dizda\Bundle\AppBundle\Manager\AddressManager

@@ -2,17 +2,17 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Manager;
 
+use AppBundle\Tests\BasicUnitTest;
 use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Manager\DepositManager;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTestCase;
 use Dizda\Bundle\AppBundle\Request\PostDepositsRequest;
 
 /**
  * Class DepositManagerTest
  */
-class DepositManagerTest extends ProphecyTestCase
+class DepositManagerTest extends BasicUnitTest
 {
 
     /**

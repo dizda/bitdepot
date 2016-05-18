@@ -2,14 +2,14 @@
 
 namespace Dizda\Bundle\BlockchainBundle\Tests\Blockchain;
 
+use AppBundle\Tests\BasicUnitTest;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTestCase;
 use Dizda\Bundle\BlockchainBundle\Blockchain\BlockchainProvider;
 
 /**
  * Class BlockchainProviderTest
  */
-class BlockchainProviderTest extends ProphecyTestCase
+class BlockchainProviderTest extends BasicUnitTest
 {
     /**
      * @var \Dizda\Bundle\BlockchainBundle\Blockchain\BlockchainWatcherInterface

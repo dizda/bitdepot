@@ -2,14 +2,14 @@
 
 namespace Dizda\Bundle\BlockchainBundle\Tests\Manager;
 
+use AppBundle\Tests\BasicUnitTest;
 use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Doctrine\Common\Collections\ArrayCollection;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTestCase;
 
-class BlockchainManagerTest extends ProphecyTestCase
+class BlockchainManagerTest extends BasicUnitTest
 {
     /**
      * @var \Dizda\Bundle\BlockchainBundle\Blockchain\BlockchainProvider

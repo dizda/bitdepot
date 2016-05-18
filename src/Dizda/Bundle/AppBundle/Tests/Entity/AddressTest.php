@@ -2,11 +2,11 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Entity;
 
+use AppBundle\Tests\BasicUnitTest;
 use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\Transaction;
-use Prophecy\PhpUnit\ProphecyTestCase;
 
-class AddressTest extends ProphecyTestCase
+class AddressTest extends BasicUnitTest
 {
 
     /**

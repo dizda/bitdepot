@@ -2,13 +2,13 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Entity;
 
+use AppBundle\Tests\BasicUnitTest;
 use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\Entity\Withdraw;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
-use Prophecy\PhpUnit\ProphecyTestCase;
 
-class WithdrawTest extends ProphecyTestCase
+class WithdrawTest extends BasicUnitTest
 {
 
     /**

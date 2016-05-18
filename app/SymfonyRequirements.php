@@ -77,7 +77,7 @@ class Requirement
     }
 
     /**
-     * Returns the help text for resolving the problem
+     * Returns the help text for resolving the problem.
      *
      * @return string The help text
      */
@@ -119,10 +119,10 @@ class PhpIniRequirement extends Requirement
      *
      * @param string        $cfgName           The configuration name used for ini_get()
      * @param bool|callback $evaluation        Either a boolean indicating whether the configuration should evaluate to true or false,
-                                               or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
+     *                                         or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
      * @param bool          $approveCfgAbsence If true the Requirement will be fulfilled even if the configuration option does not exist, i.e. ini_get() returns false.
-                                               This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
-                                               Example: You require a config to be true but PHP later removes this config and defaults it to true internally.
+     *                                         This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
+     *                                         Example: You require a config to be true but PHP later removes this config and defaults it to true internally.
      * @param string|null   $testMessage       The message for testing the requirement (when null and $evaluation is a boolean a default message is derived)
      * @param string|null   $helpHtml          The help text formatted in HTML for resolving the problem (when null and $evaluation is a boolean a default help is derived)
      * @param string|null   $helpText          The help text (when null, it will be inferred from $helpHtml, i.e. stripped from HTML tags)
@@ -221,10 +221,10 @@ class RequirementCollection implements IteratorAggregate
      *
      * @param string        $cfgName           The configuration name used for ini_get()
      * @param bool|callback $evaluation        Either a boolean indicating whether the configuration should evaluate to true or false,
-                                               or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
+     *                                         or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
      * @param bool          $approveCfgAbsence If true the Requirement will be fulfilled even if the configuration option does not exist, i.e. ini_get() returns false.
-                                               This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
-                                               Example: You require a config to be true but PHP later removes this config and defaults it to true internally.
+     *                                         This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
+     *                                         Example: You require a config to be true but PHP later removes this config and defaults it to true internally.
      * @param string        $testMessage       The message for testing the requirement (when null and $evaluation is a boolean a default message is derived)
      * @param string        $helpHtml          The help text formatted in HTML for resolving the problem (when null and $evaluation is a boolean a default help is derived)
      * @param string|null   $helpText          The help text (when null, it will be inferred from $helpHtml, i.e. stripped from HTML tags)
@@ -239,10 +239,10 @@ class RequirementCollection implements IteratorAggregate
      *
      * @param string        $cfgName           The configuration name used for ini_get()
      * @param bool|callback $evaluation        Either a boolean indicating whether the configuration should evaluate to true or false,
-                                               or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
+     *                                         or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
      * @param bool          $approveCfgAbsence If true the Requirement will be fulfilled even if the configuration option does not exist, i.e. ini_get() returns false.
-                                               This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
-                                               Example: You require a config to be true but PHP later removes this config and defaults it to true internally.
+     *                                         This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
+     *                                         Example: You require a config to be true but PHP later removes this config and defaults it to true internally.
      * @param string        $testMessage       The message for testing the requirement (when null and $evaluation is a boolean a default message is derived)
      * @param string        $helpHtml          The help text formatted in HTML for resolving the problem (when null and $evaluation is a boolean a default help is derived)
      * @param string|null   $helpText          The help text (when null, it will be inferred from $helpHtml, i.e. stripped from HTML tags)
@@ -425,11 +425,13 @@ class SymfonyRequirements extends RequirementCollection
             'Change the permissions of either "<strong>app/logs/</strong>" or  "<strong>var/logs/</strong>" directory so that the web server can write into it.'
         );
 
-        $this->addPhpIniRequirement(
-            'date.timezone', true, false,
-            'date.timezone setting must be set',
-            'Set the "<strong>date.timezone</strong>" setting in php.ini<a href="#phpini">*</a> (like Europe/Paris).'
-        );
+        if (version_compare($installedPhpVersion, '7.0.0', '<')) {
+            $this->addPhpIniRequirement(
+                'date.timezone', true, false,
+                'date.timezone setting must be set',
+                'Set the "<strong>date.timezone</strong>" setting in php.ini<a href="#phpini">*</a> (like Europe/Paris).'
+            );
+        }
 
         if (version_compare($installedPhpVersion, self::REQUIRED_PHP_VERSION, '>=')) {
             $timezones = array();
@@ -445,6 +447,12 @@ class SymfonyRequirements extends RequirementCollection
                 'Your default timezone is not supported by PHP. Check for typos in your <strong>php.ini</strong> file and have a look at the list of deprecated timezones at <a href="http://php.net/manual/en/timezones.others.php">http://php.net/manual/en/timezones.others.php</a>.'
             );
         }
+
+        $this->addRequirement(
+            function_exists('iconv'),
+            'iconv() must be available',
+            'Install and enable the <strong>iconv</strong> extension.'
+        );
 
         $this->addRequirement(
             function_exists('json_encode'),
@@ -542,11 +550,22 @@ class SymfonyRequirements extends RequirementCollection
 
         /* optional recommendations follow */
 
-        $this->addRecommendation(
-            file_get_contents(__FILE__) === file_get_contents(__DIR__.'/../vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/skeleton/app/SymfonyRequirements.php'),
-            'Requirements file should be up-to-date',
-            'Your requirements file is outdated. Run composer install and re-check your configuration.'
-        );
+        if (file_exists(__DIR__.'/../vendor/composer')) {
+            require_once __DIR__.'/../vendor/autoload.php';
+
+            try {
+                $r = new ReflectionClass('Sensio\Bundle\DistributionBundle\SensioDistributionBundle');
+
+                $contents = file_get_contents(dirname($r->getFileName()).'/Resources/skeleton/app/SymfonyRequirements.php');
+            } catch (ReflectionException $e) {
+                $contents = '';
+            }
+            $this->addRecommendation(
+                file_get_contents(__FILE__) === $contents,
+                'Requirements file should be up-to-date',
+                'Your requirements file is outdated. Run composer install and re-check your configuration.'
+            );
+        }
 
         $this->addRecommendation(
             version_compare($installedPhpVersion, '5.3.4', '>='),
@@ -627,20 +646,20 @@ class SymfonyRequirements extends RequirementCollection
         }
 
         $this->addRecommendation(
-            class_exists('Locale'),
+            extension_loaded('intl'),
             'intl extension should be available',
             'Install and enable the <strong>intl</strong> extension (used for validators).'
         );
 
-        if (class_exists('Collator')) {
+        if (extension_loaded('intl')) {
+            // in some WAMP server installations, new Collator() returns null
             $this->addRecommendation(
                 null !== new Collator('fr_FR'),
                 'intl extension should be correctly configured',
                 'The intl extension does not behave properly. This problem is typical on PHP 5.3.X x64 WIN builds.'
             );
-        }
 
-        if (class_exists('Locale')) {
+            // check for compatible ICU versions (only done when you have the intl extension)
             if (defined('INTL_ICU_VERSION')) {
                 $version = INTL_ICU_VERSION;
             } else {
@@ -658,6 +677,22 @@ class SymfonyRequirements extends RequirementCollection
                 version_compare($version, '4.0', '>='),
                 'intl ICU version should be at least 4+',
                 'Upgrade your <strong>intl</strong> extension with a newer ICU version (4+).'
+            );
+
+            if (class_exists('Symfony\Component\Intl\Intl')) {
+                $this->addRecommendation(
+                    \Symfony\Component\Intl\Intl::getIcuDataVersion() === \Symfony\Component\Intl\Intl::getIcuVersion(),
+                    sprintf('intl ICU version installed on your system (%s) should match the ICU data bundled with Symfony (%s)', \Symfony\Component\Intl\Intl::getIcuVersion(), \Symfony\Component\Intl\Intl::getIcuDataVersion()),
+                    'In most cases you should be fine, but please verify there is no inconsistencies between data provided by Symfony and the intl extension. See https://github.com/symfony/symfony/issues/15007 for an example of inconsistencies you might run into.'
+                );
+            }
+
+            $this->addPhpIniRecommendation(
+                'intl.error_level',
+                create_function('$cfgValue', 'return (int) $cfgValue === 0;'),
+                true,
+                'intl.error_level should be 0 in php.ini',
+                'Set "<strong>intl.error_level</strong>" to "<strong>0</strong>" in php.ini<a href="#phpini">*</a> to inhibit the messages when an error occurs in ICU functions.'
             );
         }
 

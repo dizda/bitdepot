@@ -16,6 +16,8 @@
             <tag name="kernel.event_listener" event="lexik_jwt_authentication.on_authentication_success" method="onAuthenticationSuccessResponse" />
         </service>
 
+        <service id="fos_user.doctrine_registry" alias="doctrine"></service>
+
     </services>
 
 </container>

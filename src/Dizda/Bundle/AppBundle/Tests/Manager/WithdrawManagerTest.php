@@ -2,6 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Manager;
 
+use AppBundle\Tests\BasicUnitTest;
 use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Entity\Identity;
@@ -10,13 +11,12 @@ use Dizda\Bundle\AppBundle\Entity\PubKey;
 use Dizda\Bundle\AppBundle\Entity\WithdrawOutput;
 use Doctrine\Common\Collections\ArrayCollection;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTestCase;
 use Dizda\Bundle\AppBundle\Request\PostWithdrawRequest;
 
 /**
  * Class WithdrawManagerTest
  */
-class WithdrawManagerTest extends ProphecyTestCase
+class WithdrawManagerTest extends BasicUnitTest
 {
     /**
      * @var \Doctrine\ORM\EntityManager

@@ -2,16 +2,16 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Manager;
 
+use AppBundle\Tests\BasicUnitTest;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Manager\WithdrawOutputManager;
 use Dizda\Bundle\AppBundle\Request\PostWithdrawOutputRequest;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTestCase;
 
 /**
  * Class WithdrawOutputManagerTest
  */
-class WithdrawOutputManagerTest extends ProphecyTestCase
+class WithdrawOutputManagerTest extends BasicUnitTest
 {
     /**
      * @var \Doctrine\ORM\EntityManager

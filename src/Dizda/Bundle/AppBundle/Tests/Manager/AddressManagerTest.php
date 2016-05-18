@@ -2,19 +2,19 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Manager;
 
+use AppBundle\Tests\BasicUnitTest;
 use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\BlockchainBundle\Model\Insight\Transaction as InsightTransaction;
 use Dizda\Bundle\BlockchainBundle\Model\Insight\TransactionInput;
 use Dizda\Bundle\BlockchainBundle\Model\Insight\TransactionOutput;
 use Doctrine\Common\Collections\ArrayCollection;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTestCase;
 use Dizda\Bundle\AppBundle\Manager\AddressManager;
 
 /**
  * Class AddressManagerTest
  */
-class AddressManagerTest extends ProphecyTestCase
+class AddressManagerTest extends BasicUnitTest
 {
     /**
      * @var \Doctrine\ORM\EntityManager

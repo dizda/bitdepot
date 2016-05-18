@@ -2,16 +2,16 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\EventListener;
 
+use AppBundle\Tests\BasicUnitTest;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTestCase;
 use Dizda\Bundle\AppBundle\EventListener\RequestListener;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class RequestListenerTest
  */
-class RequestListenerTest extends ProphecyTestCase
+class RequestListenerTest extends BasicUnitTest
 {
     /**
      * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
