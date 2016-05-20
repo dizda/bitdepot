@@ -24,12 +24,8 @@ class WithdrawCommandTest extends BaseFunctionalTestCommand
         // Assert we got 2
         $this->assertCount(2, $this->em->getRepository('DizdaAppBundle:Withdraw')->findAll());
 
-        // Mock bitcoind because of travis
-//        $this->mockBitcoind();
-
         // Run the Command!
         $this->runCommand('dizda:app:withdraw', ['-vv'], true);
-        // TODO: install bitcoind on travisci
 
         // Now we got 3 withdraws
         $this->assertCount(3, $this->em->getRepository('DizdaAppBundle:Withdraw')->findAll());

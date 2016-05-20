@@ -20,6 +20,8 @@ class BaseFunctionalTestCommand extends WebTestCase
      */
     public function setUp()
     {
+        parent::setUp();
+
         $this->em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
         $this->getContainer()->get('doctrine.dbal.default_connection')->beginTransaction();
     }
@@ -30,5 +32,7 @@ class BaseFunctionalTestCommand extends WebTestCase
     public function tearDown()
     {
         $this->getContainer()->get('doctrine.dbal.default_connection')->rollBack();
+
+        parent::tearDown();
     }
 }

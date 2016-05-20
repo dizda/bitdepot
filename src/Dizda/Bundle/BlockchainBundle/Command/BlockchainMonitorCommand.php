@@ -41,9 +41,5 @@ EOF
     {
         $blockchain = $this->getContainer()->get('dizda_blockchain.blockchain.manager');
         $blockchain->monitor();
-        var_dump('AZSAZDAZ');
-        var_dump('AZSAZDAZ');
-        var_dump('AZSAZDAZ');
-        var_dump('AZSAZDAZ');
     }
 }
