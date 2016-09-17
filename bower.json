@@ -18,7 +18,7 @@
     "angular-local-storage": "~0.1.5",
     "angular-paginate-anything": "~4.0.1",
     "angular-motion": "~0.4.2",
-    "bitcore-lib": "~0.13.10"
+    "bitcore-lib": "~0.13.19"
   },
   "resolutions": {
     "angular-motion": "~0.4.2"
