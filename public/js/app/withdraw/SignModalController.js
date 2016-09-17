@@ -89,7 +89,6 @@ angular.module('app').controller('SignModalCtrl', ['$scope', 'Withdraw', functio
             console.log('[%d] Txid: %s (vout: %d)', i, input.txid, input.index);
             console.log('[%d] Private key: %s', i, privKey.toWIF());
 
-            privKeys.push(privKey.toWIF());
 
             // Be sure the address has not been already signed
             if (privKeys.indexOf(privKey.toWIF()) !== -1) {
@@ -98,6 +97,9 @@ angular.module('app').controller('SignModalCtrl', ['$scope', 'Withdraw', functio
             } else {
                 // Sign the input
                 transaction.sign(privKey);
+
+                // Don't sign this address twice for the next loop
+                privKeys.push(privKey.toWIF());
             }
         });
 
