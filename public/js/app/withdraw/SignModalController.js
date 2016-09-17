@@ -89,7 +89,16 @@ angular.module('app').controller('SignModalCtrl', ['$scope', 'Withdraw', functio
             console.log('[%d] Private key: %s', i, privKey.toWIF());
 
             // Sign the input
-            transaction.sign(privKey);
+            try {
+                transaction.sign(privKey);
+            } catch (e) {
+                if ('Invalid state: All needed signatures have already been added' === e.message) {
+                    // Ignore
+                    console.warn('This address has already been signed.');
+                } else {
+                    throw e;
+                }
+            }
 
         });
 
