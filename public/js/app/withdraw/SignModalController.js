@@ -78,6 +78,7 @@ angular.module('app').controller('SignModalCtrl', ['$scope', 'Withdraw', functio
 
         // Create a wallet from the seed submitted
         var wallet = bitcore.HDPrivateKey.fromSeed(bitcore.crypto.Hash.sha256(new Buffer(seed)).toString('hex'), bitcore.Networks.livenet);
+        var privKeys = []; // Just being sure to not sign the same address twice, otherwise it'll throw an error
 
         // Sign all inputs
         $scope.withdraw.withdraw_inputs.forEach(function(input, i) {
@@ -88,19 +89,19 @@ angular.module('app').controller('SignModalCtrl', ['$scope', 'Withdraw', functio
             console.log('[%d] Txid: %s (vout: %d)', i, input.txid, input.index);
             console.log('[%d] Private key: %s', i, privKey.toWIF());
 
-            // Sign the input
-            try {
-                transaction.sign(privKey);
-            } catch (e) {
-                if ('Invalid state: All needed signatures have already been added' === e.message) {
-                    // Ignore
-                    console.warn('This address has already been signed.');
-                } else {
-                    throw e;
-                }
-            }
+            privKeys.push(privKey.toWIF());
 
+            // Be sure the address has not been already signed
+            if (privKeys.indexOf(privKey.toWIF()) !== -1) {
+
+                console.warn('This address\'s derivation "'+input.address.derivation+'" has already been signed.');
+            } else {
+                // Sign the input
+                transaction.sign(privKey);
+            }
         });
+
+        privKeys = null; // freeing private keys from the memory
 
         // save the signed transaction
         $scope.withdraw.json_signed_transaction = JSON.stringify(transaction);
