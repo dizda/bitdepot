@@ -24,6 +24,7 @@
             <argument type="service" id="logger" />
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="dizda_app.manager.address" />
+            <argument type="service" id="dizda_app.service.http" />
         </service>
 
         <service id="dizda_app.manager.withdraw_output" class="Dizda\Bundle\AppBundle\Manager\WithdrawOutputManager">

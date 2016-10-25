@@ -86,4 +86,33 @@ class DepositControllerTest extends BaseFunctionalTestController
         );
     }
 
+    /**
+     * @group functional
+     */
+    public function testPostDepositsFiatAmountAction()
+    {
+        // Get a deposit with an expected amount
+        $this->client->request('POST', '/deposits.json', [
+            'application_id'  => 1,
+            'type'            => 1, // Expected
+            'amount_expected_fiat' => [
+                'amount' => '3999',
+                'currency' => 'EUR'
+            ],
+            'reference'       => 'test_reference'
+        ]);
+
+        $content = json_decode($this->client->getResponse()->getContent());
+
+        $this->assertEquals(1, $content->type);
+        $this->assertTrue(bccomp($content->amount_expected, '0.01', 8) === 1); // Verify that blockchain.info return a result larger than 0.01 btc for 39€
+        $this->assertEquals('0.00000000', $content->amount_filled);
+        $this->assertFalse($content->is_fulfilled);
+        $this->assertFalse($content->is_overfilled);
+        $this->assertEquals('3CzQosnjC24GBezPyP2v1fGBN1DM39LmBT', $content->address_external->value);
+        $this->assertEquals('0.00000000', $content->address_external->balance);
+        $this->assertNotNull($content->address_external->created_at);
+        $this->assertNotNull($content->created_at);
+    }
+
 }

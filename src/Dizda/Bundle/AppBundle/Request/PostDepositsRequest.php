@@ -3,7 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Request;
 
 use Dizda\Bundle\AppBundle\Request\AbstractRequest;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class PostDepositsRequest
@@ -16,7 +16,7 @@ class PostDepositsRequest extends AbstractRequest
         parent::__construct($options);
     }
 
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         parent::setDefaultOptions($resolver);
 
@@ -25,8 +25,9 @@ class PostDepositsRequest extends AbstractRequest
             'type'
         ));
 
-        $resolver->setOptional(array(
+        $resolver->setDefined(array(
             'amount_expected',
+            'amount_expected_fiat',
             'reference'
         ));
 
@@ -34,11 +35,20 @@ class PostDepositsRequest extends AbstractRequest
             'application_id' =>  ['integer'],
             'type'           =>  ['integer'],
             'amount_expected' => ['string'],
+            'amount_expected_fiat' => ['array'],
             'reference'       => ['string', 'null']
         ));
 
         $resolver->setDefaults(array(
             'reference' => null
         ));
+
+        $resolver->setAllowedValues('amount_expected_fiat', function ($value)  {
+            if (isset($value['currency']) && isset($value['amount'])) {
+                return true;
+            }
+
+            return false;
+        });
     }
 }

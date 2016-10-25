@@ -3,7 +3,6 @@
 namespace Dizda\Bundle\AppBundle\Request;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Class AbstractRequest
@@ -28,9 +27,9 @@ abstract class AbstractRequest
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
 
     }

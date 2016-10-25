@@ -48,6 +48,7 @@ class DepositController extends Controller
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return Deposit
+     * @throws \Exception
      */
     public function postDepositsAction(Request $request)
     {

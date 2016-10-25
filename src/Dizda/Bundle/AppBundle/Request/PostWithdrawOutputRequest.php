@@ -3,7 +3,7 @@
 namespace Dizda\Bundle\AppBundle\Request;
 
 use Dizda\Bundle\AppBundle\Request\AbstractRequest;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class PostWithdrawOutputRequest
@@ -16,7 +16,7 @@ class PostWithdrawOutputRequest extends AbstractRequest
         parent::__construct($options);
     }
 
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         parent::setDefaultOptions($resolver);
 
