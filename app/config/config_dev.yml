@@ -22,5 +22,14 @@ monolog:
             type:   console
             bubble: false
 
+doctrine_cache:
+    aliases:
+        cache_nonces: apc_cache
+
+    providers:
+        apc_cache:
+            type: apcu # set apcu only on config_dev.yml, because the remote server is on PHP5, and my local (dev) env is on PHP7
+            namespace: apc_cache
+
 #swiftmailer:
 #    delivery_address: me@example.com
