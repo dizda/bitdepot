@@ -5,7 +5,7 @@
   "dependencies": {
     "bitcoinjs-lib": "1.5.x",
     "bitcore-explorers": "^1.0.1",
-    "bitcore-lib": "^0.13.10",
+    "bitcore-lib": "^0.13.19",
     "del": "^1.1.1",
     "gulp": "^3.9.0",
     "gulp-angular-templatecache": "^1.6.0",
