@@ -9,14 +9,13 @@ var Insight      = require('bitcore-explorers').Insight,
     config       = null;
 
 // Load de Symfony config
-/** @deprecated **/
-//try {
-//
-//    config = yaml.safeLoad(require('fs').readFileSync(__dirname + '/../app/config/parameters.yml', 'utf8')).parameters;
-//} catch (e) {
-//
-//    throw new Error(e);
-//}
+try {
+
+    config = yaml.safeLoad(require('fs').readFileSync(__dirname + '/../app/config/parameters.yml', 'utf8')).parameters;
+} catch (e) {
+
+    throw new Error(e);
+}
 
 
 //var endpoint = config.api_endpoint.replace('/api/', '');
