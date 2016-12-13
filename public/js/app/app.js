@@ -17,7 +17,7 @@ angular.module('app').constant('AUTH_EVENTS', {
 /**
  * Routes
  */
-angular.module('app').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+angular.module('app').config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
 
         .when('/', {
@@ -44,7 +44,25 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
     ;
 
     $locationProvider.html5Mode(true);
+    $httpProvider.interceptors.push('authInterceptor');
+}]);
 
+angular.module('app').factory('authInterceptor', ['$rootScope', '$q', 'AUTH_EVENTS', function($rootScope, $q, AUTH_EVENTS) {
+    return {
+        // Intercept 401s and redirect you to login
+        responseError: function(response) {
+            if(response.status === 401 || response.status === 403) {
+                // Remove the localStorage and redirect!
+                $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+
+                // remove any stale tokens
+                return $q.reject(response);
+            }
+            else {
+                return $q.reject(response);
+            }
+        }
+    };
 }]);
 
 /**
@@ -52,25 +70,8 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
  *
  * @see https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec
  */
-angular.module('app').run(['$rootScope', 'AUTH_EVENTS', 'AuthService', function ($rootScope, AUTH_EVENTS, AuthService) {
-//    if (!AuthService.isAuthenticated()) {
-//        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-//    }
+angular.module('app').run(['AuthService', function (AuthService) {
+
     AuthService.retrieveSession();
 
-    $rootScope.$on('$routeChangeStart', function (event, next) {
-//        var authorizedRoles = next.data.authorizedRoles;
-        var authorizedRoles = null;
-//        if (!AuthService.isAuthorized(authorizedRoles)) {
-        if (!AuthService.isAuthorized(authorizedRoles)) {
-            event.preventDefault();
-            if (AuthService.isAuthenticated()) {
-                // user is not allowed
-                $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-            } else {
-                // user is not logged in
-                $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-            }
-        }
-    });
 }]);

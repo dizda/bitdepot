@@ -4,25 +4,35 @@ angular.module('app').factory('AuthService', ['$rootScope', '$http', 'localStora
 
     var authService = {};
 
+    authService.getCredentials = function() {
+        return localStorageService.get('credentials');
+    };
+
     authService.retrieveSession = function() {
-        var credentials = localStorageService.get('credentials');
+        var credentials = authService.getCredentials();
 
         if (credentials) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + credentials.token;  // Step 1
-            Session.create(credentials.token, credentials.data.username);
-            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+
+            this.ping(function(credentials) {
+                // Recreate session
+                Session.create(credentials.token, credentials.data.username);
+
+                // Dispatch event to all services
+                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+            });
         }
     };
 
     authService.login = function (credentials) {
+        var self = this;
+
         $http
             .post('/api/login_check', credentials, { ignoreAuthModule: true })
             .success(function (response, status, headers, config) {
-                localStorageService.set('credentials', response); // save into localStorage
-                $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;  // Step 1
 
                 // Create session
-                Session.create(response.token, response.data.username);
+                self.createSession(response);
 
                 // Dispatch event to all services
                 $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
@@ -32,6 +42,14 @@ angular.module('app').factory('AuthService', ['$rootScope', '$http', 'localStora
                 $rootScope.$broadcast('login:auth-login-failed', status);
             })
         ;
+    };
+
+    authService.createSession = function(response) {
+        localStorageService.set('credentials', response); // save into localStorage
+        $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;  // Step 1
+
+        // Create session
+        Session.create(response.token, response.data.username);
     };
 
     authService.isAuthenticated = function () {
@@ -65,13 +83,20 @@ angular.module('app').factory('AuthService', ['$rootScope', '$http', 'localStora
         $http
             .get('/api/ping', {})
             .success(function (response) {
+                var credentials = authService.getCredentials();
+                credentials.data = {}; // clean old data
                 angular.extend(credentials.data, response);
                 localStorageService.set('credentials', credentials);
 
                 // Return username, balance, etc.
-                callback(credentials.data);
+                callback(credentials);
             })
             .error(function (data, status) {
+                // If we got 401 Unauthorized, so the token is invalid
+                if (status === 401) {
+                    localStorageService.remove('credentials');
+                }
+
                 $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
             })
         ;

@@ -23,6 +23,10 @@ angular.module('app').controller('SystemCtrl', ['$scope', '$location', 'AuthServ
         $location.path('/');
     });
 
+    $scope.$on(AUTH_EVENTS.notAuthorized, function() {
+        AuthService.logout();
+    });
+
     /**
      * Trigger a login
      */
