@@ -181,6 +181,7 @@ class WithdrawManagerTest extends BasicUnitTest
             'total_outputs'          => '0.0001',
             'withdraw_inputs'        => [],
             'withdraw_outputs'       => [],
+            'application_id'         => 1,
             // Important fields :
             'raw_signed_transaction' => 'rawSignedTransactionBITCH',
             'json_signed_transaction' => 'jsonSignedTransactionBITCH',

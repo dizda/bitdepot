@@ -18,6 +18,8 @@ class Application implements UserInterface
 {
     use Timestampable;
 
+    const ROLE_DEFAULT = 'ROLE_WSSE';
+
     /**
      * @var integer
      *
@@ -139,6 +141,13 @@ class Application implements UserInterface
      * @Serializer\Exclude
      */
     private $addresses;
+
+    /**
+     * Generated on the fly
+     *
+     * @var array
+     */
+    private $roles = [];
 
     /**
      * Constructor
@@ -443,14 +452,38 @@ class Application implements UserInterface
     }
 
     /**
-     * When loggin via WSSE-Auth, the ROLE_WSSE is attributed to the user/application
      *
-     * {@inheritdoc}
-     * @codeCoverageIgnore
+     * Returns the user roles
+     *
+     * @return array The roles
      */
     public function getRoles()
     {
-        return ['ROLE_WSSE'];
+        $roles = $this->roles;
+
+        // we need to make sure to have at least one role
+        $roles[] = static::ROLE_DEFAULT;
+
+        return array_unique($roles);
+    }
+
+    public function addRole($role)
+    {
+        $role = strtoupper($role);
+        if ($role === static::ROLE_DEFAULT) {
+            return $this;
+        }
+
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
+    }
+
+    public function hasRole($role)
+    {
+        return in_array(strtoupper($role), $this->getRoles(), true);
     }
 
     /**

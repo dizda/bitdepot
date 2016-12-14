@@ -45,6 +45,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', '$httpProvi
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
+    $httpProvider.interceptors.push('httpRequestInterceptor');
 }]);
 
 angular.module('app').factory('authInterceptor', ['$rootScope', '$q', 'AUTH_EVENTS', function($rootScope, $q, AUTH_EVENTS) {
@@ -61,6 +62,36 @@ angular.module('app').factory('authInterceptor', ['$rootScope', '$q', 'AUTH_EVEN
             else {
                 return $q.reject(response);
             }
+        }
+    };
+}]);
+
+angular.module('app').factory('httpRequestInterceptor', ['$rootScope', function ($rootScope) {
+    var appId = null;
+
+    $rootScope.$on('app:changed', function(e, app) {
+        appId = app.application.id;
+    });
+
+    return {
+        request: function(config) {
+
+            if (appId === null) {
+                return config;
+            }
+
+            // Add the applicationId of the app we want to interact with
+            if (config.url.indexOf('.html') !== -1 || config.url.indexOf('application_id') !== -1) {
+                return config;
+            }
+
+            if (config.url.indexOf('?') !== -1) {
+                config.url = config.url + '&application_id=1';
+            } else {
+                config.url = config.url + '?application_id=1';
+            }
+
+            return config;
         }
     };
 }]);

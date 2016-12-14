@@ -32,8 +32,8 @@ class PostDepositsRequest extends AbstractRequest
         ));
 
         $resolver->setAllowedTypes(array(
-            'application_id' =>  ['integer'],
-            'type'           =>  ['integer'],
+            'application_id'  => ['numeric'],
+            'type'            => ['integer'],
             'amount_expected' => ['string'],
             'amount_expected_fiat' => ['array'],
             'reference'       => ['string', 'null']

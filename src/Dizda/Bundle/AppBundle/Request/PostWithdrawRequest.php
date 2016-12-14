@@ -22,6 +22,7 @@ class PostWithdrawRequest extends AbstractRequest
 
         $resolver->setRequired(array(
             'id',
+            'application_id',
             'json_signed_transaction',
             'signed_by',
             'is_signed'
@@ -48,6 +49,7 @@ class PostWithdrawRequest extends AbstractRequest
         ));
 
         $resolver->setAllowedTypes(array(
+            'application_id' =>  ['numeric'],
             'id'    => ['integer'],
             'txid'  => ['string'],
             'raw_signed_transaction' => ['string', 'null'],

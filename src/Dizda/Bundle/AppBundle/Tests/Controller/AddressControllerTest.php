@@ -16,14 +16,9 @@ class AddressControllerTest extends BaseFunctionalTestController
      */
     public function testGetAddressesAction()
     {
-        $this->client->request('GET', '/addresses.json');
+        $this->client->request('GET', '/addresses.json?application_id=1');
 
         $json = json_decode($this->client->getResponse()->getContent());
-
-//        $this->assertEquals(
-//            '[{"id":1,"value":"3M2C54k8xit7oLAgSat5PbmAtbhCyp5EqU","is_external":true,"balance":"0.00020000","deposit":{},"transactions":[]},{"id":2,"value":"3QYr3UHFsTbEKVheCRx5CMJSiEECS4ZWX4","is_external":true,"balance":"0.00000000","transactions":[]},{"id":3,"value":"3MxR1yHVpfB7cXULzpetoyNVvUeqhoaJhE","is_external":true,"balance":"0.00000000","transactions":[]},{"id":4,"value":"3L2ryDvAAS4db6GxdMhyTNWhqE9KznxpyC","is_external":false,"balance":"0.00030000","transactions":[{}]},{"id":5,"value":"373sZt2kkNZgaVamtRMmevkRk3NUX98kqV","is_external":false,"balance":"0.00010000","withdraw_change_address":{},"transactions":[{}]}]',
-//            $content
-//        );
 
         $this->assertEquals('3M2C54k8xit7oLAgSat5PbmAtbhCyp5EqU', $json[0]->value);
         $this->assertTrue($json[0]->is_external);
@@ -55,5 +50,26 @@ class AddressControllerTest extends BaseFunctionalTestController
         $this->assertCount(1, $json[4]->transactions);
         $this->assertNotNull($json[4]->updated_at);
         $this->assertNotNull($json[4]->withdraw_change_address->updated_at);
+    }
+
+    /**
+     * @group functional
+     */
+    public function testGetAddressesActionWithNonAllowedUser()
+    {
+        $em = $this->client->getContainer()->get('doctrine.orm.default_entity_manager');
+        $user = $em->getRepository('DizdaUserBundle:User')->findOneByUsername('dizda');
+        $user->removeRole('APP_ACCESS_1'); // Remove access to the current app
+        $user->addRole('APP_ACCESS_2'); // Add just a role for another app, it should do nothing
+        $em->flush();
+
+        $this->client->request('GET', '/addresses.json?application_id=1');
+
+        $response = $this->client->getResponse();
+        $json = json_decode($response->getContent());
+
+        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals('Forbidden', $json->error->message);
+        $this->assertEquals('You do not have the necessary permissions', $json->error->exception[0]->message);
     }
 }

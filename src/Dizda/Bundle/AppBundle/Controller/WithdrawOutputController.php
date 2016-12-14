@@ -24,8 +24,10 @@ class WithdrawOutputController extends Controller
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function getOutputsAction()
+    public function getOutputsAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('access', $request->get('application_id'));
+
         $withdrawOutputs = $this->get('doctrine.orm.default_entity_manager')
             ->getRepository('DizdaAppBundle:WithdrawOutput')
 //            ->getWithdrawOutputs($application)
@@ -42,8 +44,9 @@ class WithdrawOutputController extends Controller
      *
      * @return Withdraw
      */
-    public function getOutputAction(Withdraw $withdrawOutput)
+    public function getOutputAction(Request $request, Withdraw $withdrawOutput)
     {
+        $this->denyAccessUnlessGranted('access', $request->get('application_id'));
 
         return $withdrawOutput;
     }
@@ -60,6 +63,8 @@ class WithdrawOutputController extends Controller
     public function postOutputsAction(Request $request)
     {
         $withdrawOutputSubmitted = (new PostWithdrawOutputRequest($request->request->all()))->options;
+
+        $this->denyAccessUnlessGranted('access', $withdrawOutputSubmitted['application_id']);
 
         $withdrawOutput = $this->get('dizda_app.manager.withdraw_output')->create($withdrawOutputSubmitted);
 

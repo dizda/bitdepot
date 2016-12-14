@@ -31,6 +31,8 @@ class DepositController extends Controller
     {
         $filters = (new GetDepositsRequest($request->query->all()))->options;
 
+        $this->denyAccessUnlessGranted('access', $filters['application_id']);
+
         $deposits = $this->get('doctrine.orm.default_entity_manager')
             ->getRepository('DizdaAppBundle:Deposit')
             ->getDeposits($filters)
@@ -53,6 +55,8 @@ class DepositController extends Controller
     public function postDepositsAction(Request $request)
     {
         $depositSubmitted = (new PostDepositsRequest($request->request->all()))->options;
+
+        $this->denyAccessUnlessGranted('access', $depositSubmitted['application_id']);
 
         $deposit = $this->get('dizda_app.manager.deposit')->create($depositSubmitted);
 

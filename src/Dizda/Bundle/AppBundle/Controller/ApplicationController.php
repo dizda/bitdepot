@@ -28,6 +28,13 @@ class ApplicationController extends Controller
             ->getApplicationsDashboard()
         ;
 
+        // Only show apps that the user has access to
+        foreach ($applications as $key => $app) {
+            if (!$this->getUser()->hasRole('APP_ACCESS_'.$app['application']->getId())) {
+                unset($applications[$key]);
+            }
+        }
+
         return $applications;
     }
 }

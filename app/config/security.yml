@@ -31,7 +31,7 @@ security:
 
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^%api_directory%/(_(profiler|wdt)|css|images|js)/
             security: false
 
         login:
@@ -64,5 +64,5 @@ security:
                     encodeHashAsBase64: true
 
     access_control:
-        - { path: ^%api_directory%/login,  roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^%api_directory%/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/,       roles: IS_AUTHENTICATED_FULLY }

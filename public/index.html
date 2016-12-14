@@ -304,14 +304,13 @@
                     <!-- search form -->
                     <div class="btn-group margin sidebar-form">
                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                            Application #10 <span class="caret"></span>
+                            {{ applicationSelected.application.name }} <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
+                            <li ng-repeat="app in applications"><a href="#">{{ app.application.name }}</a></li>
+                            <li ng-if="applications.length == 0"><a href="#">You don't have access to any app, yet.</a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">List all</a></li>
                         </ul>
                     </div>
 
@@ -323,19 +322,19 @@
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
-                        <li>
+                        <li ng-if="applicationSelected">
                             <a href="/addresses">
                                 <i class="fa fa-cubes"></i> <span>Addresses</span>
                                 <small class="badge pull-right bg-red">3</small>
                             </a>
                         </li>
-                        <li>
+                        <li ng-if="applicationSelected">
                             <a href="/deposits">
                                 <i class="fa fa-long-arrow-right"></i> <span>Deposits</span>
                                 <small class="badge pull-right bg-red">3</small>
                             </a>
                         </li>
-                        <li>
+                        <li ng-if="applicationSelected">
                             <a href="/withdraws">
                                 <i class="fa fa-long-arrow-left"></i> <span>Withdraws</span>
                                 <small class="badge pull-right bg-green">1</small>

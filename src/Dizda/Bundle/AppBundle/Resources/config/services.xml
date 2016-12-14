@@ -94,6 +94,11 @@
             <argument type="service" id="dizda_app.repository.application"  />
         </service>
 
+        <service id="dizda_app.security.app_voter" class="Dizda\Bundle\AppBundle\Security\AppVoter" public="false">
+            <argument type="service" id="doctrine.orm.default_entity_manager"  />
+            <tag name="security.voter" />
+        </service>
+
         <!-- Services -->
         <service id="dizda_app.service.http" class="Dizda\Bundle\AppBundle\Service\HttpService"></service>
 

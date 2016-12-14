@@ -17,7 +17,7 @@ class WithdrawControllerTest extends BaseFunctionalTestController
      */
     public function testGetWithdrawsAction()
     {
-        $this->client->request('GET', '/withdraws.json');
+        $this->client->request('GET', '/withdraws.json?application_id=1');
 
         $content = json_decode($this->client->getResponse()->getContent());
 
@@ -39,7 +39,7 @@ class WithdrawControllerTest extends BaseFunctionalTestController
      */
     public function testGetWithdrawAction()
     {
-        $this->client->request('GET', sprintf('/withdraws/%d.json', /* withdraw */ 1));
+        $this->client->request('GET', sprintf('/withdraws/%d.json?application_id=1', /* withdraw */ 1));
 
         $content = json_decode($this->client->getResponse()->getContent());
 
@@ -92,7 +92,8 @@ class WithdrawControllerTest extends BaseFunctionalTestController
             'raw_signed_transaction' => 'coucou',
             'json_signed_transaction' => 'coucouJSON',
             'signed_by' => '03bdd087f7c9d6aac4857be62dc7d80f5f9435f57293a84ed50fe689d7ade58983', // PubKey #2
-            'is_signed' => false
+            'is_signed' => false,
+            'application_id' => 1
         ]);
 
         $content = json_decode($this->client->getResponse()->getContent());
@@ -116,7 +117,8 @@ class WithdrawControllerTest extends BaseFunctionalTestController
             'raw_signed_transaction' => 'coucou',
             'json_signed_transaction' => 'coucouJSON',
             'signed_by' => '024929ebd103ddssdfsdfsdd19806b3a404de9dcb6231d86bf1f9dbec23cd6059b',
-            'is_signed' => false
+            'is_signed' => false,
+            'application_id' => 1
         ]);
 
         $content = $this->client->getResponse()->isServerError();
@@ -136,7 +138,8 @@ class WithdrawControllerTest extends BaseFunctionalTestController
             'raw_signed_transaction' => 'coucou',
             'json_signed_transaction' => 'coucouJSON',
             'signed_by' => 'blabla',
-            'is_signed' => false
+            'is_signed' => false,
+            'application_id' => 1
         ]);
 
         $content = $this->client->getResponse()->isNotFound();
@@ -155,7 +158,7 @@ class WithdrawControllerTest extends BaseFunctionalTestController
         $this->assertCount(2, $count);
 
         // perform request
-        $this->client->request('DELETE', sprintf('/withdraws/%d.json', /* withdraw */ 2));
+        $this->client->request('DELETE', sprintf('/withdraws/%d.json?application_id=1', /* withdraw */ 2));
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
 

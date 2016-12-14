@@ -21,6 +21,7 @@ class GetAddressesRequest extends AbstractRequest
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(array(
+            'application_id'
         ));
 
         $resolver->setOptional(array(
@@ -30,9 +31,10 @@ class GetAddressesRequest extends AbstractRequest
         ));
 
         $resolver->setAllowedTypes(array(
-            'show'        => ['string'],
-            'currentPage' => ['integer'],
-            'maxPerPage'  => ['integer', 'null']
+            'application_id' => ['numeric'],
+            'show'           => ['string'],
+            'currentPage'    => ['integer'],
+            'maxPerPage'     => ['integer', 'null']
         ));
 
         $resolver->setDefaults(array(

@@ -17,7 +17,7 @@ class DepositControllerTest extends BaseFunctionalTestController
      */
     public function testGetDepositsAction()
     {
-        $this->client->request('GET', '/deposits.json');
+        $this->client->request('GET', '/deposits.json?application_id=1');
 
         $content = json_decode($this->client->getResponse()->getContent());
 
@@ -76,7 +76,7 @@ class DepositControllerTest extends BaseFunctionalTestController
         $this->assertNotNull($content->created_at);
 
         // Get number of deposits, to see if they was incremented
-        $this->client->request('GET', '/deposits.json');
+        $this->client->request('GET', '/deposits.json?application_id=1');
 
         $content = json_decode($this->client->getResponse()->getContent());
 
@@ -96,7 +96,7 @@ class DepositControllerTest extends BaseFunctionalTestController
             'application_id'  => 1,
             'type'            => 1, // Expected
             'amount_expected_fiat' => [
-                'amount' => '3999',
+                'amount'   => '3999',
                 'currency' => 'EUR'
             ],
             'reference'       => 'test_reference'
@@ -115,4 +115,46 @@ class DepositControllerTest extends BaseFunctionalTestController
         $this->assertNotNull($content->created_at);
     }
 
+
+    /**
+     * @group functional
+     */
+    public function testPostDepositsActionWithNoAppIdShouldFail()
+    {
+        // Get a deposit with an expected amount
+        $this->client->request('POST', '/deposits.json', [
+//            'application_id' => 1,
+            'type' => 1, // Expected
+            'amount_expected' => '0.00040000',
+            'reference' => 'test_reference'
+        ]);
+
+        $this->assertFalse($this->client->getResponse()->isSuccessful());
+    }
+
+    /**
+     * @group functional
+     */
+    public function testPostDepositsActionWithNoAllowedUserShouldFail()
+    {
+        $em = $this->client->getContainer()->get('doctrine.orm.default_entity_manager');
+        $user = $em->getRepository('DizdaUserBundle:User')->findOneByUsername('dizda');
+        $user->removeRole('APP_ACCESS_1'); // Remove access to the current app
+        $em->flush();
+
+        // Get a deposit with an expected amount
+        $this->client->request('POST', '/deposits.json', [
+            'application_id' => 1,
+            'type' => 1, // Expected
+            'amount_expected' => '0.00040000',
+            'reference' => 'test_reference'
+        ]);
+
+        $response = $this->client->getResponse();
+        $json = json_decode($response->getContent());
+
+        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertEquals('Forbidden', $json->error->message);
+        $this->assertEquals('You do not have the necessary permissions', $json->error->exception[0]->message);
+    }
 }

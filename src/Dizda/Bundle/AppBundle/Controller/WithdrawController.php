@@ -25,8 +25,10 @@ class WithdrawController extends Controller
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function getWithdrawsAction()
+    public function getWithdrawsAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('access', $request->get('application_id'));
+
         $withdraws = $this->get('doctrine.orm.default_entity_manager')
             ->getRepository('DizdaAppBundle:Withdraw')
             ->getWithdraws()
@@ -42,8 +44,9 @@ class WithdrawController extends Controller
      *
      * @return Withdraw
      */
-    public function getWithdrawAction(Withdraw $withdraw)
+    public function getWithdrawAction(Request $request, Withdraw $withdraw)
     {
+        $this->denyAccessUnlessGranted('access', $request->get('application_id'));
 
         return $withdraw;
     }
@@ -62,6 +65,8 @@ class WithdrawController extends Controller
     {
         $withdrawSubmitted = (new PostWithdrawRequest($request->request->all()))->options;
 
+        $this->denyAccessUnlessGranted('access', $withdrawSubmitted['application_id']);
+
         if ($withdraw->getId() !== $withdrawSubmitted['id']) {
             throw new NotFoundHttpException();
         }
@@ -74,12 +79,15 @@ class WithdrawController extends Controller
     }
 
     /**
+     * @param Request  $request
      * @param Withdraw $withdraw
      *
      * @return \StdClass
      */
-    public function deleteWithdrawAction(Withdraw $withdraw)
+    public function deleteWithdrawAction(Request $request, Withdraw $withdraw)
     {
+        $this->denyAccessUnlessGranted('access', $request->get('application_id'));
+
         $em = $this->get('doctrine.orm.default_entity_manager');
         $em->remove($withdraw);
         $em->flush();

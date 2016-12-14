@@ -39,20 +39,29 @@ class RequestListener
             return;
         }
 
-        if ('json' !== $event->getRequest()->getRequestFormat() || !$this->tokenStorage->getToken()->isAuthenticated()) {
+        if ('json' !== $event->getRequest()->getRequestFormat() || $this->tokenStorage->getToken() === null || !$this->tokenStorage->getToken()->isAuthenticated()) {
             return;
         }
 
-        // Only match when the user is logged in through an application
+        // Only match when the user is logged in through an application (WSSE)
         if (get_class($this->tokenStorage->getToken()->getUser()) !== 'Dizda\Bundle\AppBundle\Entity\Application') {
             return;
         }
 
+//        if (!$this->tokenStorage->getToken()->getUser()->hasRole('ROLE_WSSE')) {
+//            return;
+//        }
+
         // Setting automatically the application id
         if ($event->getRequest()->isMethod('POST')) {
             $event->getRequest()->request->add([
+                // Get the application ID linked to the application used
                 'application_id' => $this->tokenStorage->getToken()->getUser()->getId()
             ]);
+
+            $this->tokenStorage->getToken()->getUser()->addRole(sprintf(
+                'APP_ACCESS_%d', $this->tokenStorage->getToken()->getUser()->getId()
+            ));
         }
     }
 }

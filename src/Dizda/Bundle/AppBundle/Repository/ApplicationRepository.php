@@ -28,6 +28,6 @@ class ApplicationRepository extends EntityRepository
             ->orderBy('app.id', 'ASC')
         ;
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery()->getResult();
     }
 }

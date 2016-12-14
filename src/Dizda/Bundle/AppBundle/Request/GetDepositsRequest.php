@@ -21,6 +21,7 @@ class GetDepositsRequest extends AbstractRequest
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(array(
+            'application_id'
         ));
 
         $resolver->setOptional(array(
@@ -29,8 +30,9 @@ class GetDepositsRequest extends AbstractRequest
         ));
 
         $resolver->setAllowedTypes(array(
-            'currentPage' => ['integer'],
-            'maxPerPage'  => ['integer', 'null']
+            'application_id' => ['numeric'],
+            'currentPage'    => ['integer'],
+            'maxPerPage'     => ['integer', 'null']
         ));
 
         $resolver->setDefaults(array(

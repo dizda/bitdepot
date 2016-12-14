@@ -27,6 +27,8 @@ class AddressController extends Controller
     {
         $filters = (new GetAddressesRequest($request->query->all()))->options;
 
+        $this->denyAccessUnlessGranted('access', $filters['application_id']);
+
         $addresses = $this->get('doctrine.orm.default_entity_manager')
             ->getRepository('DizdaAppBundle:Address')
             ->getAddresses($filters)

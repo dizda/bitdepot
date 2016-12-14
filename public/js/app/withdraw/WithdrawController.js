@@ -3,7 +3,7 @@
 angular.module('app').controller('WithdrawCtrl', ['$scope', '$location', '$modal', 'Withdraw', 'WithdrawOutput', function($scope, $location, $modal, Withdraw, WithdrawOutput) {
 
     $scope.withdraws = Withdraw.query();
-    $scope.withdrawOutputs = WithdrawOutput.query({application_id: 1});
+    $scope.withdrawOutputs = WithdrawOutput.query();
 
     $scope.openModalSignature = function(withdraw) {
 

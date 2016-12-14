@@ -32,7 +32,7 @@ class PostWithdrawOutputRequest extends AbstractRequest
         ));
 
         $resolver->setAllowedTypes(array(
-            'application_id' =>  ['integer'],
+            'application_id' =>  ['numeric'],
             'to_address'     =>  ['string'],
             'amount'         =>  ['string'],
             'is_accepted'    =>  ['bool'],

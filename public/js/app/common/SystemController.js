@@ -1,13 +1,25 @@
 'use strict';
 
-angular.module('app').controller('SystemCtrl', ['$scope', '$location', 'AuthService', 'Session', 'AUTH_EVENTS', function($scope, $location, AuthService, Session, AUTH_EVENTS) {
+angular.module('app').controller('SystemCtrl', ['$scope', '$location', 'AuthService', 'Session', 'AUTH_EVENTS', 'Application', function($scope, $location, AuthService, Session, AUTH_EVENTS, Application) {
 
     $scope.credentials     = {
         username: '',
         password: ''
     };
-    $scope.isAuthenticated = AuthService.isAuthenticated;
-    $scope.currentUser     = Session;
+    $scope.isAuthenticated     = AuthService.isAuthenticated;
+    $scope.currentUser         = Session;
+    $scope.applicationSelected = {};
+
+    /**
+     * Will be used on the $httpRequestInterceptor side, will add the id of the app in each $http Requests to the backend.
+     */
+    $scope.applications = Application.query(function(apps) {
+        if (apps.length > 0) {
+            $scope.applicationSelected = apps[0];
+
+            $scope.$emit('app:changed', apps[0]);
+        }
+    });
 
     /**
      * Redirect after login
