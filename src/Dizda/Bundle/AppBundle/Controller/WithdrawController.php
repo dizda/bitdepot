@@ -63,6 +63,8 @@ class WithdrawController extends Controller
      */
     public function postWithdrawAction(Request $request, Withdraw $withdraw)
     {
+        $request->request->add(['application_id' => $request->get('application_id')]);
+
         $withdrawSubmitted = (new PostWithdrawRequest($request->request->all()))->options;
 
         $this->denyAccessUnlessGranted('access', $withdrawSubmitted['application_id']);
