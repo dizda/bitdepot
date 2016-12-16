@@ -70,7 +70,7 @@ class Deposit implements MessageQueuingInterface
      *
      * @ORM\Column(name="reference", type="string", length=255, nullable=true)
      *
-     * @Serializer\Groups({"Deposits"})
+     * @Serializer\Groups({"Deposits", "DepositCallback"})
      * @Serializer\Type("string")
      */
     private $reference;
