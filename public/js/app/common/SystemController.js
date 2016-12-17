@@ -9,23 +9,19 @@ angular.module('app').controller('SystemCtrl', ['$scope', '$location', 'AuthServ
     $scope.isAuthenticated     = AuthService.isAuthenticated;
     $scope.currentUser         = Session;
     $scope.applicationSelected = {};
+    $scope.applications        = [];
 
-    /**
-     * Will be used on the $httpRequestInterceptor side, will add the id of the app in each $http Requests to the backend.
-     */
-    $scope.applications = Application.query(function(apps) {
-        if (apps.length > 0) {
-            $scope.applicationSelected = apps[0];
-
-            $scope.$emit('app:changed', apps[0]);
-        }
-    });
+    $scope.changeApplication = function(index) {
+        $scope.applicationSelected = $scope.applications[index];
+        $scope.$emit('app:changed', $scope.applications[index]);
+    };
 
     /**
      * Redirect after login
      */
     $scope.$on(AUTH_EVENTS.loginSuccess, function() {
         $location.path('/');
+        fetchApplications();
     });
 
     /**
@@ -57,5 +53,19 @@ angular.module('app').controller('SystemCtrl', ['$scope', '$location', 'AuthServ
     {
         AuthService.logout();
     };
+
+    /**
+     * Will be used on the $httpRequestInterceptor side, will add the id of the app in each $http Requests to the backend.
+     */
+    function fetchApplications() {
+        $scope.applications = Application.query(function(apps) {
+            if (apps.length > 0) {
+                $scope.applicationSelected = apps[0];
+
+                $scope.$emit('app:changed', apps[0]);
+            }
+        });
+    }
+    fetchApplications();
 
 }]);

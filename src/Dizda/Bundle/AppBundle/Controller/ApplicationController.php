@@ -35,6 +35,6 @@ class ApplicationController extends Controller
             }
         }
 
-        return $applications;
+        return array_values($applications); // reorder array to avoid "{"1":{"application":{"id":2 [...]"
     }
 }

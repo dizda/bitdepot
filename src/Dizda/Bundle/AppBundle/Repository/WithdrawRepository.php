@@ -33,14 +33,17 @@ class WithdrawRepository extends EntityRepository
     /**
      * @return ArrayCollection
      */
-    public function getWithdraws()
+    public function getWithdraws(array $filters)
     {
         $qb = $this->createQueryBuilder('w')
+//            ->innerJoin('w.keychain', 'k')
             ->innerJoin('w.withdrawInputs', 'wi')
             ->innerJoin('w.withdrawOutputs', 'wo')
             ->andWhere('wo.isAccepted = true')
+            ->andWhere('wo.application = :application')
             ->groupBy('w.id')
             ->orderBy('w.createdAt', 'DESC')
+            ->setParameter('application', $filters['application_id'])
             ->setMaxResults(10)
         ;
 

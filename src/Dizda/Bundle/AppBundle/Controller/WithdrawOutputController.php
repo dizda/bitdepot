@@ -31,7 +31,7 @@ class WithdrawOutputController extends Controller
         $withdrawOutputs = $this->get('doctrine.orm.default_entity_manager')
             ->getRepository('DizdaAppBundle:WithdrawOutput')
 //            ->getWithdrawOutputs($application)
-            ->getWithdrawOutputs()
+            ->getWithdrawOutputs($request->query->all())
         ;
 
         return $withdrawOutputs;

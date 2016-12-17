@@ -25,6 +25,7 @@ class ApplicationRepository extends EntityRepository
             )
             ->join('app.addresses', 'adr')
             ->leftJoin('adr.deposit', 'd')
+            ->groupBy('app.id')
             ->orderBy('app.id', 'ASC')
         ;
 

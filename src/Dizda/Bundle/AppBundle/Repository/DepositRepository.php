@@ -46,7 +46,9 @@ class DepositRepository extends EntityRepository
             ->addSelect('t')
             ->innerJoin('d.addressExternal', 'a')
             ->leftJoin('a.transactions', 't')
+            ->andWhere('a.application = :application')
             ->orderBy('d.createdAt', 'DESC')
+            ->setParameter('application', $filters['application_id'])
         ;
 
         $pagerfanta = (new Pagerfanta(new DoctrineORMAdapter($qb)))

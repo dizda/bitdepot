@@ -49,7 +49,9 @@ class AddressRepository extends EntityRepository
             ->leftJoin('a.deposit', 'd')
             ->leftJoin('a.withdrawChangeAddress', 'wca')
             ->leftJoin('a.transactions', 't')
+            ->andWhere('a.application = :application')
             ->orderBy('a.createdAt', 'desc')
+            ->setParameter('application', $filters['application_id'])
             // TODO: where application id || keychain
 //            ->setMaxResults(25)
         ;

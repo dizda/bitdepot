@@ -54,20 +54,20 @@ class WithdrawOutputRepository extends EntityRepository
     }
 
     /**
-     * @param Application $application
+     * @param array $filters
      *
      * @return mixed
      */
-    public function getWithdrawOutputs(Application $application = null)
+    public function getWithdrawOutputs(array $filters)
     {
         $qb = $this->createQueryBuilder('wo')
             ->orderBy('wo.createdAt', 'DESC')
             ->setMaxResults(50)
         ;
 
-        if ($application) {
+        if ($filters['application_id']) {
             $qb->andWhere('wo.application = :application');
-            $qb->setParameter('application', $application);
+            $qb->setParameter('application', $filters['application_id']);
         }
 
         return $qb->getQuery()->execute();

@@ -307,7 +307,7 @@
                             {{ applicationSelected.application.name }} <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="app in applications"><a href="#">{{ app.application.name }}</a></li>
+                            <li ng-repeat="app in applications" ng-click="changeApplication($index)"><a href="#">{{ app.application.name }}</a></li>
                             <li ng-if="applications.length == 0"><a href="#">You don't have access to any app, yet.</a></li>
                             <li class="divider"></li>
                             <li><a href="#">List all</a></li>

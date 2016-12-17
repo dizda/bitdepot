@@ -27,7 +27,7 @@ class Application implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @Serializer\Groups({"WithdrawDetail"})
+     * @Serializer\Groups({"Applications", "WithdrawDetail"})
      */
     private $id;
 

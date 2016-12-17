@@ -86,9 +86,9 @@ angular.module('app').factory('httpRequestInterceptor', ['$rootScope', function 
             }
 
             if (config.url.indexOf('?') !== -1) {
-                config.url = config.url + '&application_id=1';
+                config.url = config.url + '&application_id='+appId;
             } else {
-                config.url = config.url + '?application_id=1';
+                config.url = config.url + '?application_id='+appId;
             }
 
             return config;
