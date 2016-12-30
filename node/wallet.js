@@ -1,7 +1,6 @@
 'use strict';
 
-var bitcoin = require('bitcoinjs-lib')
-  , bitcore = require('bitcore-lib');
+var bitcore = require('bitcore-lib');
 
 
 function Wallet()
@@ -19,7 +18,7 @@ function Wallet()
 Wallet.prototype.create = function(seed, network)
 {
 
-    return bitcore.HDPrivateKey.fromSeed(bitcoin.crypto.sha256(seed), bitcore.Networks[network]);
+    return bitcore.HDPrivateKey.fromSeed(bitcore.crypto.Hash.sha256(bitcore.deps.Buffer(seed)), bitcore.Networks[network]);
 };
 
 //Wallet.prototype.getMultisigAddress = function(requiredSignatures, pubkeys)
