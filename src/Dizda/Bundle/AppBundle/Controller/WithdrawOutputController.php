@@ -62,6 +62,8 @@ class WithdrawOutputController extends Controller
      */
     public function postOutputsAction(Request $request)
     {
+        $request->request->add(['application_id' => $request->get('application_id')]);
+
         $withdrawOutputSubmitted = (new PostWithdrawOutputRequest($request->request->all()))->options;
 
         $this->denyAccessUnlessGranted('access', $withdrawOutputSubmitted['application_id']);
