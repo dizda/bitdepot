@@ -2,7 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Manager;
 
-use AppBundle\Tests\BasicUnitTest;
+use Dizda\Bundle\AppBundle\Tests\BasicUnitTest;
 use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\BlockchainBundle\Model\Insight\Transaction as InsightTransaction;
 use Dizda\Bundle\BlockchainBundle\Model\Insight\TransactionInput;

@@ -2,6 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Repository;
 
+use Dizda\Bundle\AppBundle\Entity\Keychain;
 use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
@@ -17,12 +18,16 @@ class TransactionRepository extends EntityRepository
     /**
      * @return mixed
      */
-    public function getSpendableTransactions()
+    public function getSpendableTransactions(Keychain $keychain)
     {
         $qb = $this->createQueryBuilder('at')
+            ->join('at.address', 'a')
+            ->join('a.application', 'app')
+            ->andWhere('app.keychain = :keychain')
             ->andWhere('at.type = :type')
             ->andWhere('at.withdraw is NULL')
             ->andWhere('at.isSpent = false')
+            ->setParameter('keychain', $keychain)
             ->setParameter('type', Transaction::TYPE_IN)
         ;
 

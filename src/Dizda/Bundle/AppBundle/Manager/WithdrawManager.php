@@ -83,7 +83,7 @@ class WithdrawManager
         $withdraw->setOutputs($outputs);
 
         $transactions = $this->em->getRepository('DizdaAppBundle:Transaction')
-            ->getSpendableTransactions()
+            ->getSpendableTransactions($keychain)
 //            ->getSpendableTransactions($application, $withdraw->getTotalOutputs())
         ;
 

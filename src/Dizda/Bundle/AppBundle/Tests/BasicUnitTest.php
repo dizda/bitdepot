@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests;
+namespace Dizda\Bundle\AppBundle\Tests;
 
 abstract class BasicUnitTest extends \PHPUnit_Framework_TestCase
 {

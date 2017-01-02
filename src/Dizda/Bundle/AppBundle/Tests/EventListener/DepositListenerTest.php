@@ -2,7 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\EventListener;
 
-use AppBundle\Tests\BasicUnitTest;
+use Dizda\Bundle\AppBundle\Tests\BasicUnitTest;
 use Dizda\Bundle\AppBundle\Entity\Address;
 use Dizda\Bundle\AppBundle\Entity\Deposit;
 use Dizda\Bundle\AppBundle\Entity\Transaction;

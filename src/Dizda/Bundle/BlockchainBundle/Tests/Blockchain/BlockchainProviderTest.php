@@ -2,7 +2,7 @@
 
 namespace Dizda\Bundle\BlockchainBundle\Tests\Blockchain;
 
-use AppBundle\Tests\BasicUnitTest;
+use Dizda\Bundle\AppBundle\Tests\BasicUnitTest;
 use Prophecy\Argument;
 use Dizda\Bundle\BlockchainBundle\Blockchain\BlockchainProvider;
 

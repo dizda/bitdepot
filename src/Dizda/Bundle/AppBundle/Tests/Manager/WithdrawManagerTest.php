@@ -2,7 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Tests\Manager;
 
-use AppBundle\Tests\BasicUnitTest;
+use Dizda\Bundle\AppBundle\Tests\BasicUnitTest;
 use Dizda\Bundle\AppBundle\Entity\Transaction;
 use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Entity\Identity;
@@ -119,13 +119,14 @@ class WithdrawManagerTest extends BasicUnitTest
     public function testCreateSuccessWithNoChangeAddress()
     {
         $addressTransRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\TransactionRepository');
+        $keychain = $this->getKeychain()->reveal();
 
         $this->em->getRepository('DizdaAppBundle:Transaction')
             ->shouldBeCalled()
             ->willReturn($addressTransRepo->reveal())
         ;
 
-        $addressTransRepo->getSpendableTransactions()
+        $addressTransRepo->getSpendableTransactions($keychain)
             ->shouldBeCalled()
             ->willReturn([(new Transaction())->setAmount('0.0002')])
         ;
@@ -133,7 +134,7 @@ class WithdrawManagerTest extends BasicUnitTest
         $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Withdraw'))->shouldBeCalled();
         $this->em->flush()->shouldBeCalled();
 
-        $return = $this->manager->create($this->getKeychain()->reveal(), $this->getOutputs());
+        $return = $this->manager->create($keychain, $this->getOutputs());
         $this->assertEquals('0.00020000', $return->getTotalInputs());
         $this->assertEquals('0.00010000', $return->getTotalOutputs());
         $this->assertEquals('0.00010000', $return->getFees());
@@ -147,13 +148,14 @@ class WithdrawManagerTest extends BasicUnitTest
     public function testCreateSuccessInsufficientAmountAvailable()
     {
         $addressTransRepo = $this->prophesize('Dizda\Bundle\AppBundle\Repository\TransactionRepository');
+        $keychain = $this->getKeychain()->reveal();
 
         $this->em->getRepository('DizdaAppBundle:Transaction')
             ->shouldBeCalled()
             ->willReturn($addressTransRepo->reveal())
         ;
 
-        $addressTransRepo->getSpendableTransactions()
+        $addressTransRepo->getSpendableTransactions($keychain)
             ->shouldBeCalled()
             ->willReturn([(new Transaction())->setAmount('0.0001')])
         ;
@@ -161,7 +163,7 @@ class WithdrawManagerTest extends BasicUnitTest
         $this->em->persist(Argument::type('Dizda\Bundle\AppBundle\Entity\Withdraw'))->shouldNotBeCalled();
         $this->em->flush()->shouldNotBeCalled();
 
-        $return = $this->manager->create($this->getKeychain()->reveal(), $this->getOutputs());
+        $return = $this->manager->create($keychain, $this->getOutputs());
         $this->assertNull($return);
     }
 
