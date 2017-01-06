@@ -49,7 +49,9 @@ class WithdrawEntityListener
 
             // Dispatch every outputs related to the withdraw to rabbit, to launch a callback to all of them
             foreach ($entity->getWithdrawOutputs() as $output) {
-                $this->withdrawOutputProducer->publish(serialize($output->getId()));
+                if ($output->getReference()) {
+                    $this->withdrawOutputProducer->publish(serialize($output->getId()));
+                }
             }
         }
     }
