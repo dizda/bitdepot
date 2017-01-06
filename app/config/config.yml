@@ -152,3 +152,6 @@ lexik_jwt_authentication:
     public_key_path:  %jwt_public_key_path%    # ssh public key path
     pass_phrase:      %jwt_pass_phrase%        # ssh key pass phrase
     token_ttl:        86400                    # token ttl - defaults to 86400
+
+escape_wsse_authentication:
+    authentication_provider_class: Dizda\Bundle\AppBundle\Security\Core\Authentication\Provider\WSSEProvider
