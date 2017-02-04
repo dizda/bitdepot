@@ -18,6 +18,7 @@
                     <th>#</th>
                     <th>Amount</th>
                     <th>inputs</th>
+                    <th>fees</th>
                     <th># of recipient</th>
                     <th>Signed</th>
                     <th>date</th>
@@ -37,6 +38,7 @@
                         {{ withdraw.total_inputs }}
                         <i class="fa fa-times"></i>{{ withdraw.withdraw_inputs.length }}
                     </td>
+                    <td class="text-muted"><i class="fa fa-btc"></i> {{ withdraw.fees }}</td>
                     <td>{{ withdraw.withdraw_outputs.length }}</td>
                     <td data-ng-click="openModalSignature(withdraw)">
                         <span class="label label-default" data-ng-if="!withdraw.is_signed && withdraw.signatures == 0">

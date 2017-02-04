@@ -101,6 +101,13 @@ class Application implements UserInterface
     private $depositsTopupsExpiresAfter;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="extra_fees", type="decimal", precision=16, scale=8, nullable=false, options={"default"=0})
+     */
+    private $extraFees = '0.00000000';
+
+    /**
      * @var \Dizda\Bundle\AppBundle\Entity\Application
      *
      * @ORM\ManyToOne(targetEntity="Keychain", inversedBy="applications")
@@ -565,5 +572,29 @@ class Application implements UserInterface
     public function getDepositsTopupsExpiresAfter()
     {
         return $this->depositsTopupsExpiresAfter;
+    }
+
+    /**
+     * Set extraFees
+     *
+     * @param string $extraFees
+     *
+     * @return Application
+     */
+    public function setExtraFees($extraFees)
+    {
+        $this->extraFees = $extraFees;
+
+        return $this;
+    }
+
+    /**
+     * Get extraFees
+     *
+     * @return string
+     */
+    public function getExtraFees()
+    {
+        return $this->extraFees;
     }
 }

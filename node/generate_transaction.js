@@ -5,7 +5,6 @@
 var bitcore = require('bitcore-lib');
 
 var params   = JSON.parse(process.argv[2]);
-//console.error(params.changeAddress);
 var transaction = new bitcore.Transaction();
 var changeAmount = 0;
 
@@ -38,10 +37,21 @@ params.outputs.forEach(function(output) {
 /**
  * Add change address if needed
  */
-if (params.changeAddress) {
-    transaction.change(params.changeAddress.value);
+if (params.change_address) {
+    transaction.change(params.change_address.value);
     //transaction.to('3Cex1PTvqPzwm989zq8Q3xuqS2rTCnHFBC', 407000);
     changeAmount = transaction.getChangeOutput().satoshis;
+}
+
+var extraFees = bitcore.Unit.fromBTC(params.extra_fees).toSatoshis();
+
+/**
+ * If extra fees are specified, we add them on top of the estimated fees
+ * This would help to get transactions accepted by miners with ease.
+ */
+if (extraFees) {
+    extraFees += transaction.getFee();
+    transaction.fee(extraFees);
 }
 
 var stdout = {

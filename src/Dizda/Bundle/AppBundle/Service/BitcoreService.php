@@ -66,7 +66,8 @@ class BitcoreService
         $params = [
             'inputs'  => $inputs,
             'outputs' => $outputs,
-            'changeAddress' => $changeAddress
+            'change_address' => $changeAddress,
+            'extra_fees' => $inputs->first()->getAddress()->getApplication()->getExtraFees()
         ];
 
         $context = (new SerializationContext())->setGroups('TransactionBuilder');
