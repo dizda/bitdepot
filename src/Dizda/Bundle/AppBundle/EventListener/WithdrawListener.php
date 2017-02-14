@@ -121,6 +121,10 @@ class WithdrawListener
         $withdraw->setChangeAddressAmount($transaction['change_amount']);
         $withdraw->setRawTransaction($transaction['raw_transaction']);
         $withdraw->setJsonTransaction(json_encode($transaction['json_transaction']));
+
+        if (!$withdraw->isSpendable()) {
+            throw new InsufficientAmountException();
+        }
     }
 
     /**
