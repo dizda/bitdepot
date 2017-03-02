@@ -43,7 +43,7 @@ class CallbackService
      */
     public function depositExpectedFilling(Deposit $deposit)
     {
-        sleep(2);
+//        sleep(2);
 
         $url = sprintf('%s/callback/deposit/expected.json', $deposit->getApplication()->getCallbackEndpoint());
 
