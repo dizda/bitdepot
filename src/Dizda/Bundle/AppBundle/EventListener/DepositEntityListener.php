@@ -21,9 +21,9 @@ class DepositEntityListener
     private $depositProducer;
 
     /**
-     * @var Deposit
+     * @var Deposit[]
      */
-    private $deposit;
+    private $deposits = [];
 
     /**
      * @param Producer $depositProducer
@@ -57,16 +57,21 @@ class DepositEntityListener
             return;
         }
 
-        $this->deposit = $deposit;
+        $this->deposits[] = $deposit;
 
         $event->getEntityManager()->getEventManager()->addEventListener(array(Events::postFlush), $this);
     }
 
     /**
+     * This listener is called only once, even if there are few deposits made at the same time.
+     * That's why we insert each of them in a array.
+     *
      * @param PostFlushEventArgs $event
     */
     public function postFlush(PostFlushEventArgs $event)
     {
-        $this->depositProducer->publish(serialize($this->deposit->getId()));
+        foreach ($this->deposits as $deposit) {
+            $this->depositProducer->publish(serialize($deposit->getId()));
+        }
     }
 }
