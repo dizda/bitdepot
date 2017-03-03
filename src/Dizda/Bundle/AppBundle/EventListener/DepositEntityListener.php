@@ -74,4 +74,12 @@ class DepositEntityListener
             $this->depositProducer->publish(serialize($deposit->getId()));
         }
     }
+
+    /**
+     * For mocking purpose only
+     */
+    public function setDepositProducer(\OldSound\RabbitMqBundle\RabbitMq\Producer $producer)
+    {
+        $this->depositProducer = $producer;
+    }
 }
