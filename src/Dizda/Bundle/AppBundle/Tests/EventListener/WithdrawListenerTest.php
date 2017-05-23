@@ -60,7 +60,7 @@ class WithdrawListenerTest extends BasicUnitTest
             Argument::exact($withdraw->getWithdrawOutputs()),
             Argument::exact($withdraw->getChangeAddress())
         )->shouldBeCalled()->willReturn([
-            'fees'             => '0.00090000',
+            'fees'             => '0.00010000',
             'json_transaction' => 'jsonTransaction',
             'raw_transaction'  => 'R4wTr4nsact!on',
             'change_amount'    => '0.00000000'
@@ -69,8 +69,11 @@ class WithdrawListenerTest extends BasicUnitTest
         $this->manager->onCreate($this->withdrawEvent->reveal());
         $this->assertEquals('"jsonTransaction"', $withdraw->getJsonTransaction());
         $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
-        $this->assertEquals('0.00090000', $withdraw->getFees());
+        $this->assertEquals('0.00010000', $withdraw->getFees());
         $this->assertEquals('0.00000000', $withdraw->getChangeAddressAmount());
+        $this->assertEquals('0.00040000', $withdraw->getTotalInputs());
+        $this->assertEquals('0.00030000', $withdraw->getTotalOutputs());
+        $this->assertEquals('0.00040000', $withdraw->getTotalOutputsWithFees());
         $this->assertNull($withdraw->getJsonSignedTransaction());
         $this->assertNull($withdraw->getRawSignedTransaction());
         $this->assertNull($withdraw->getChangeAddress());
