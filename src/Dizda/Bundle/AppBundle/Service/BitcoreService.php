@@ -61,13 +61,13 @@ class BitcoreService
      *
      * @return mixed|object
      */
-    public function buildTransaction(ArrayCollection $inputs, ArrayCollection $outputs, Address $changeAddress = null)
+    public function buildTransaction(ArrayCollection $inputs, ArrayCollection $outputs, Address $changeAddress = null, $extraFees = 0)
     {
         $params = [
             'inputs'  => $inputs,
             'outputs' => $outputs,
             'change_address' => $changeAddress,
-            'extra_fees' => $inputs->first()->getAddress()->getApplication()->getExtraFees()
+            'extra_fees' => $extraFees
         ];
 
         $context = (new SerializationContext())->setGroups('TransactionBuilder');

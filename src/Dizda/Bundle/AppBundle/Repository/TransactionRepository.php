@@ -21,6 +21,8 @@ class TransactionRepository extends EntityRepository
     public function getSpendableTransactions(Keychain $keychain)
     {
         $qb = $this->createQueryBuilder('at')
+            ->addSelect('a')
+            ->addSelect('app')
             ->join('at.address', 'a')
             ->join('a.application', 'app')
             ->andWhere('app.keychain = :keychain')

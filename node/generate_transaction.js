@@ -39,8 +39,6 @@ params.outputs.forEach(function(output) {
  */
 if (params.change_address) {
     transaction.change(params.change_address.value);
-    //transaction.to('3Cex1PTvqPzwm989zq8Q3xuqS2rTCnHFBC', 407000);
-    changeAmount = transaction.getChangeOutput().satoshis;
 }
 
 var extraFees = bitcore.Unit.fromBTC(params.extra_fees).toSatoshis();
@@ -52,6 +50,15 @@ var extraFees = bitcore.Unit.fromBTC(params.extra_fees).toSatoshis();
 if (extraFees) {
     extraFees += transaction.getFee();
     transaction.fee(extraFees);
+}
+
+if (params.change_address) {
+    // The change amount is calculated after adding extra fees to avoid to mix everything up
+    if (null === transaction.getChangeOutput()) {
+        changeAmount = 0;
+    } else {
+        changeAmount = transaction.getChangeOutput().satoshis;
+    }
 }
 
 var stdout = {

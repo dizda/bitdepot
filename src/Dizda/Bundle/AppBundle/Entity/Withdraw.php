@@ -743,13 +743,12 @@ class Withdraw
     /**
      * Setting input transactions from Transaction entities
      *
-     * @param array $inputs
+     * @param Transaction[] $inputs
      */
     public function setInputs(array $inputs)
     {
         foreach ($inputs as $transaction) {
-            $this->addTotalInputs($transaction->getAmount());
-            $this->addWithdrawInput($transaction);
+            $this->addInput($transaction);
 
             // $withdraw->getTotalInputs() >= $withdraw->getTotalOutputs()
             if (bccomp($this->getTotalInputs(), $this->getTotalOutputsWithFees(), 8) !== -1) {
@@ -757,6 +756,12 @@ class Withdraw
                 break;
             }
         }
+    }
+
+    public function addInput(Transaction $transaction)
+    {
+        $this->addTotalInputs($transaction->getAmount());
+        $this->addWithdrawInput($transaction);
     }
 
     /**
@@ -803,5 +808,17 @@ class Withdraw
     public function getJsonSignedTransaction()
     {
         return $this->jsonSignedTransaction;
+    }
+
+    public function importFromBitcore(array $transaction)
+    {
+        // during the creation of the transaction, bitcore can propose a better fee to cover all outputs
+        $this->setFees($transaction['fees']);
+        // so we have to update the change amount who'll be impacted as well
+        $this->setChangeAddressAmount($transaction['change_amount']);
+        $this->setRawTransaction($transaction['raw_transaction']);
+        $this->setJsonTransaction(json_encode($transaction['json_transaction']));
+
+        return $this;
     }
 }

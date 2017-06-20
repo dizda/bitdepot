@@ -17,6 +17,8 @@
             <argument type="service" id="doctrine.orm.default_entity_manager" />
             <argument type="service" id="logger" />
             <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="dizda_app.manager.address" />
+            <argument type="service" id="dizda_app.service.bitcore" />
         </service>
 
         <service id="dizda_app.manager.deposit" class="Dizda\Bundle\AppBundle\Manager\DepositManager">

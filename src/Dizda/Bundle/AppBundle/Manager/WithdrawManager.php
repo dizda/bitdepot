@@ -7,7 +7,9 @@ use Dizda\Bundle\AppBundle\Entity\Application;
 use Dizda\Bundle\AppBundle\Entity\Keychain;
 use Dizda\Bundle\AppBundle\Entity\Withdraw;
 use Dizda\Bundle\AppBundle\Event\WithdrawEvent;
+use Dizda\Bundle\AppBundle\Exception\InsufficientAmountException;
 use Dizda\Bundle\AppBundle\Exception\UnknownSignatureException;
+use Dizda\Bundle\AppBundle\Service\BitcoreService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
@@ -34,15 +36,27 @@ class WithdrawManager
     private $dispatcher;
 
     /**
+     * @var AddressManager
+     */
+    private $addressManager;
+
+    /**
+     * @var BitcoreService
+     */
+    private $bitcoreService;
+
+    /**
      * @param EntityManager            $em
      * @param LoggerInterface          $logger
      * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct(EntityManager $em, LoggerInterface $logger, EventDispatcherInterface $dispatcher)
+    public function __construct(EntityManager $em, LoggerInterface $logger, EventDispatcherInterface $dispatcher, AddressManager $addressManager, BitcoreService $bitcoreService)
     {
         $this->em         = $em;
         $this->logger     = $logger;
         $this->dispatcher = $dispatcher;
+        $this->addressManager = $addressManager;
+        $this->bitcoreService = $bitcoreService;
     }
 
     /**
@@ -77,21 +91,37 @@ class WithdrawManager
     {
         $withdraw = new Withdraw();
         $withdraw->setKeychain($keychain);
-        $withdraw->setFees('0.0001');
-
-        // Setting outputs
         $withdraw->setOutputs($outputs);
+        // Always get a change address, but we might not use it.
+        $changeAddress = $this->addressManager->create($withdraw->getWithdrawOutputs()[0]->getApplication(), false);
+        $withdraw->setChangeAddress($changeAddress);
 
         $transactions = $this->em->getRepository('DizdaAppBundle:Transaction')
             ->getSpendableTransactions($keychain)
-//            ->getSpendableTransactions($application, $withdraw->getTotalOutputs())
         ;
 
-        // Setting inputs
-        $withdraw->setInputs($transactions);
 
-        // $withdraw->getTotalInputs() < $withdraw->getTotalOutputsWithFees()
-        if (bccomp($withdraw->getTotalInputs(), $withdraw->getTotalOutputsWithFees(), 8) === -1) {
+        foreach ($transactions as $transaction) {
+            // Add input one by one to the transaction, and when it's enough we can move on and save the transaction
+            $withdraw->addInput($transaction);
+
+            // Let bitcore to determine if the fees are enough or not
+            $bitcoreTransaction = $this->bitcoreService->buildTransaction(
+                $withdraw->getWithdrawInputs(),
+                $withdraw->getWithdrawOutputs(),
+                $withdraw->getChangeAddress(),
+                $withdraw->getWithdrawOutputs()[0]->getApplication()->getExtraFees()
+            );
+
+            $withdraw->importFromBitcore($bitcoreTransaction);
+
+            if ($withdraw->isSpendable()) {
+                // if the amount collected is enough, we quit the foreach
+                break;
+            }
+        }
+
+        if (!$withdraw->isSpendable()) {
             // if the amount of inputs is insufficient, we give up the creation of the withdraw
             $this->logger->warning(
                 'WithdrawManager: Insufficient amount available to create a new withdraw as requested. Available/Requested',
@@ -101,11 +131,13 @@ class WithdrawManager
             return null;
         }
 
+        if (!$withdraw->getChangeAddressAmount()) {
+            // Remove the change address if the amount is null, it'd avoid to monitor X unused addresses
+            $withdraw->setChangeAddress(null);
+            $this->em->detach($changeAddress);
+        }
+
         $this->em->persist($withdraw);
-
-        // Create the raw_transaction & json_transaction
-        $this->dispatcher->dispatch(AppEvents::WITHDRAW_CREATE, new WithdrawEvent($withdraw));
-
         $this->em->flush();
 
         return $withdraw;
