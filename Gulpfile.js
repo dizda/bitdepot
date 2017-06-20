@@ -49,6 +49,7 @@ gulp.task('html', ['sass'], function () {
     return gulp.src('./public/index.html')
         .pipe(assets)
         .pipe(gulpif('*.js', uglify()))
+        .on('error', function (err) { console.error('[Error]', err.toString()); })
         .pipe(gulpif('*.css', minifycss()))
         .pipe(assets.restore())
         .pipe(useref())
