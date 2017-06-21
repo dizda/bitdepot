@@ -2,6 +2,10 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
+if (extension_loaded('newrelic')) {
+    newrelic_set_appname($_SERVER['SERVER_NAME']);
+}
+
 /**
  * @var Composer\Autoload\ClassLoader
  */
