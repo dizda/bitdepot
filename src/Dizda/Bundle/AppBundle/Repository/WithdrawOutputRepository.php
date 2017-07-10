@@ -17,25 +17,6 @@ class WithdrawOutputRepository extends EntityRepository
 {
 
     /**
-     * @param Application $application
-     *
-     * @return mixed
-     *
-     * @deprecated Use getWhereWithdrawIsNullByKeychain() instead
-     */
-    public function getWhereWithdrawIsNullByApplication(Application $application)
-    {
-        $qb = $this->createQueryBuilder('wo')
-            ->andWhere('wo.application = :application')
-            ->andWhere('wo.withdraw is NULL')
-            ->andWhere('wo.isAccepted = true')
-            ->setParameter('application', $application)
-        ;
-
-        return $qb->getQuery()->execute();
-    }
-
-    /**
      * @param Keychain $keychain
      *
      * @return array
@@ -47,8 +28,14 @@ class WithdrawOutputRepository extends EntityRepository
             ->andWhere('a.keychain = :keychain')
             ->andWhere('wo.withdraw is NULL')
             ->andWhere('wo.isAccepted = true')
+            ->orderBy('wo.id', 'asc')
             ->setParameter('keychain', $keychain)
         ;
+
+        if ($maxOutputs = $keychain->getGroupWithdrawsByQuantity()) {
+            // Group the withdraw with the amount of output specified
+            $qb->setMaxResults($maxOutputs);
+        }
 
         return $qb->getQuery()->execute();
     }
