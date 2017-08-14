@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "dependencies": {
     "bitcoinjs-lib": "1.5.x",
-    "bitcore-explorers": "^1.0.1",
+    "bitcore-explorers": "git://github.com/bitpay/bitcore-explorers.git#1f1334f7ea7f75ed80f62d379613a961a66403f2",
     "bitcore-lib": "^0.14.0",
     "del": "^1.1.1",
     "gulp": "^3.9.0",

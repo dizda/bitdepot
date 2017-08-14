@@ -109,7 +109,7 @@ class BitcoreService
 
         $process = new Process(
             sprintf(
-                '%s ./node/broadcast_transaction_blockr.js \'%s\'',
+                '%s ./node/broadcast_transaction.js \'%s\'',
                 $this->nodejsPath, // we specify the path of nodejs
                 $serializedTransaction
             ),
