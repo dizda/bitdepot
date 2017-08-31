@@ -105,6 +105,11 @@ class WithdrawManager
             // Add input one by one to the transaction, and when it's enough we can move on and save the transaction
             $withdraw->addInput($transaction);
 
+            if (!$withdraw->isSpendable()) {
+                // if the inputs amount is not enough to cover the total output, then we add more of them
+                continue;
+            }
+
             // Let bitcore to determine if the fees are enough or not
             $bitcoreTransaction = $this->bitcoreService->buildTransaction(
                 $withdraw->getWithdrawInputs(),
@@ -116,7 +121,7 @@ class WithdrawManager
             $withdraw->importFromBitcore($bitcoreTransaction);
 
             if ($withdraw->isSpendable()) {
-                // if the amount collected is enough, we quit the foreach
+                // if the inputs amount is enough to cover the total output + fees, then we're good to send the transaction
                 break;
             }
         }
