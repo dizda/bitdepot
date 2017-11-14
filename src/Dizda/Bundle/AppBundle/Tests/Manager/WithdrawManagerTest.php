@@ -39,6 +39,16 @@ class WithdrawManagerTest extends BasicUnitTest
     private $manager;
 
     /**
+     * @var \Dizda\Bundle\AppBundle\Manager\AddressManager
+     */
+    private $addressManager;
+
+    /**
+     * @var \Dizda\Bundle\AppBundle\Service\BitcoreService
+     */
+    private $bitcoreService;
+
+    /**
      * WithdrawManager::search()
      */
     public function testSearchWithGroupWithdrawsByQuantityIsNull()
@@ -260,10 +270,14 @@ class WithdrawManagerTest extends BasicUnitTest
         $this->em           = $this->prophesize('Doctrine\ORM\EntityManager');
         $this->logger       = $this->prophesize('Psr\Log\LoggerInterface');
         $this->dispatcher   = $this->prophesize('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $this->addressManager = $this->prophesize('Dizda\Bundle\AppBundle\Manager\AddressManager');
+        $this->bitcoreService = $this->prophesize('Dizda\Bundle\AppBundle\Service\BitcoreService');
         $this->manager      = new \Dizda\Bundle\AppBundle\Manager\WithdrawManager(
             $this->em->reveal(),
             $this->logger->reveal(),
-            $this->dispatcher->reveal()
+            $this->dispatcher->reveal(),
+            $this->addressManager->reveal(),
+            $this->bitcoreService->reveal()
         );
     }
 }

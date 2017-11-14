@@ -2,7 +2,7 @@
 
 namespace Dizda\Bundle\AppBundle\Tests;
 
-abstract class BasicUnitTest extends \PHPUnit_Framework_TestCase
+abstract class BasicUnitTest extends \PHPUnit\Framework\TestCase
 {
     protected $prophet;
 

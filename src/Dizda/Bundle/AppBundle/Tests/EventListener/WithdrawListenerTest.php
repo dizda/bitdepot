@@ -46,90 +46,92 @@ class WithdrawListenerTest extends BasicUnitTest
      */
     private $manager;
 
-    /**
-     * WithdrawListener::create()
-     */
-    public function testOnCreate()
-    {
-        $withdraw = $this->getSpendableWithdraw();
-
-        $this->withdrawEvent->getWithdraw()->shouldBeCalled()->willReturn($withdraw);
-
-        $this->bitcoreService->buildTransaction(
-            Argument::exact($withdraw->getWithdrawInputs()),
-            Argument::exact($withdraw->getWithdrawOutputs()),
-            Argument::exact($withdraw->getChangeAddress())
-        )->shouldBeCalled()->willReturn([
-            'fees'             => '0.00010000',
-            'json_transaction' => 'jsonTransaction',
-            'raw_transaction'  => 'R4wTr4nsact!on',
-            'change_amount'    => '0.00000000'
-        ]);
-
-        $this->manager->onCreate($this->withdrawEvent->reveal());
-        $this->assertEquals('"jsonTransaction"', $withdraw->getJsonTransaction());
-        $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
-        $this->assertEquals('0.00010000', $withdraw->getFees());
-        $this->assertEquals('0.00000000', $withdraw->getChangeAddressAmount());
-        $this->assertEquals('0.00040000', $withdraw->getTotalInputs());
-        $this->assertEquals('0.00030000', $withdraw->getTotalOutputs());
-        $this->assertEquals('0.00040000', $withdraw->getTotalOutputsWithFees());
-        $this->assertNull($withdraw->getJsonSignedTransaction());
-        $this->assertNull($withdraw->getRawSignedTransaction());
-        $this->assertNull($withdraw->getChangeAddress());
-    }
-
-    /**
-     * WithdrawListener::create()
-     */
-    public function testOnCreateWithChangeAddress()
-    {
-        $repo     = $this->prophesize('Dizda\Bundle\AppBundle\Repository\AddressRepository');
-        $withdraw = $this->getSpentWithdrawWithChangeAddress();
-        $changeAddress = (new Address())
-            ->setValue('1MxXHgScDGaA7GaJY8bGa9MsCKU6iXaiRh')
-        ;
-
-        $this->withdrawEvent->getWithdraw()->shouldBeCalled()->willReturn($withdraw);
-
-        $this->addressManager->create(
-            Argument::type('Dizda\Bundle\AppBundle\Entity\Application'),
-            Argument::exact(false)
-        )->shouldBeCalled()->willReturn($changeAddress);
-
-        $this->bitcoreService->buildTransaction(
-            Argument::exact($withdraw->getWithdrawInputs()),
-            Argument::exact($withdraw->getWithdrawOutputs()),
-            Argument::exact($changeAddress)
-        )->shouldBeCalled()->willReturn([
-            'fees'             => '0.00010000',
-            'json_transaction' => 'jsonTransaction',
-            'raw_transaction'  => 'R4wTr4nsact!on',
-            'change_amount'    => '0.00123400'
-        ]);
-
-        $this->manager->onCreate($this->withdrawEvent->reveal());
-        $this->assertEquals('0.00010000', $withdraw->getFees());
-        $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
-        $this->assertEquals('"jsonTransaction"', $withdraw->getJsonTransaction());
-        $this->assertEquals($changeAddress, $withdraw->getChangeAddress());
-        $this->assertEquals('0.00123400', $withdraw->getChangeAddressAmount());
-        $this->assertNotNull($withdraw->getChangeAddress());
-    }
-
-    /**
-     * WithdrawListener::create()
-     *
-     * @expectedException \Dizda\Bundle\AppBundle\Exception\InsufficientAmountException
-     */
-    public function testOnCreateThrowException()
-    {
-        $withdraw = $this->getCantSpentWithdraw();
-
-        $this->withdrawEvent->getWithdraw()->shouldBeCalled()->willReturn($withdraw);
-
-        $this->manager->onCreate($this->withdrawEvent->reveal());
-    }
+//    @deprecated
+//
+//    /**
+//     * WithdrawListener::create()
+//     */
+//    public function testOnCreate()
+//    {
+//        $withdraw = $this->getSpendableWithdraw();
+//
+//        $this->withdrawEvent->getWithdraw()->shouldBeCalled()->willReturn($withdraw);
+//
+//        $this->bitcoreService->buildTransaction(
+//            Argument::exact($withdraw->getWithdrawInputs()),
+//            Argument::exact($withdraw->getWithdrawOutputs()),
+//            Argument::exact($withdraw->getChangeAddress())
+//        )->shouldBeCalled()->willReturn([
+//            'fees'             => '0.00010000',
+//            'json_transaction' => 'jsonTransaction',
+//            'raw_transaction'  => 'R4wTr4nsact!on',
+//            'change_amount'    => '0.00000000'
+//        ]);
+//
+//        $this->manager->onCreate($this->withdrawEvent->reveal());
+//        $this->assertEquals('"jsonTransaction"', $withdraw->getJsonTransaction());
+//        $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
+//        $this->assertEquals('0.00010000', $withdraw->getFees());
+//        $this->assertEquals('0.00000000', $withdraw->getChangeAddressAmount());
+//        $this->assertEquals('0.00040000', $withdraw->getTotalInputs());
+//        $this->assertEquals('0.00030000', $withdraw->getTotalOutputs());
+//        $this->assertEquals('0.00040000', $withdraw->getTotalOutputsWithFees());
+//        $this->assertNull($withdraw->getJsonSignedTransaction());
+//        $this->assertNull($withdraw->getRawSignedTransaction());
+//        $this->assertNull($withdraw->getChangeAddress());
+//    }
+//
+//    /**
+//     * WithdrawListener::create()
+//     */
+//    public function testOnCreateWithChangeAddress()
+//    {
+//        $repo     = $this->prophesize('Dizda\Bundle\AppBundle\Repository\AddressRepository');
+//        $withdraw = $this->getSpentWithdrawWithChangeAddress();
+//        $changeAddress = (new Address())
+//            ->setValue('1MxXHgScDGaA7GaJY8bGa9MsCKU6iXaiRh')
+//        ;
+//
+//        $this->withdrawEvent->getWithdraw()->shouldBeCalled()->willReturn($withdraw);
+//
+//        $this->addressManager->create(
+//            Argument::type('Dizda\Bundle\AppBundle\Entity\Application'),
+//            Argument::exact(false)
+//        )->shouldBeCalled()->willReturn($changeAddress);
+//
+//        $this->bitcoreService->buildTransaction(
+//            Argument::exact($withdraw->getWithdrawInputs()),
+//            Argument::exact($withdraw->getWithdrawOutputs()),
+//            Argument::exact($changeAddress)
+//        )->shouldBeCalled()->willReturn([
+//            'fees'             => '0.00010000',
+//            'json_transaction' => 'jsonTransaction',
+//            'raw_transaction'  => 'R4wTr4nsact!on',
+//            'change_amount'    => '0.00123400'
+//        ]);
+//
+//        $this->manager->onCreate($this->withdrawEvent->reveal());
+//        $this->assertEquals('0.00010000', $withdraw->getFees());
+//        $this->assertEquals('R4wTr4nsact!on', $withdraw->getRawTransaction());
+//        $this->assertEquals('"jsonTransaction"', $withdraw->getJsonTransaction());
+//        $this->assertEquals($changeAddress, $withdraw->getChangeAddress());
+//        $this->assertEquals('0.00123400', $withdraw->getChangeAddressAmount());
+//        $this->assertNotNull($withdraw->getChangeAddress());
+//    }
+//
+//    /**
+//     * WithdrawListener::create()
+//     *
+//     * @expectedException \Dizda\Bundle\AppBundle\Exception\InsufficientAmountException
+//     */
+//    public function testOnCreateThrowException()
+//    {
+//        $withdraw = $this->getCantSpentWithdraw();
+//
+//        $this->withdrawEvent->getWithdraw()->shouldBeCalled()->willReturn($withdraw);
+//
+//        $this->manager->onCreate($this->withdrawEvent->reveal());
+//    }
 
     /**
      * WithdrawListener::send()
