@@ -12,14 +12,17 @@ class HttpClient
     private $client;
 
     /**
-     * @param array $config
+     * @param array $endpoints
      */
-    public function __construct(array $config)
+    public function __construct(array $endpoints)
     {
-        $config = array_merge($config, [
+        $config = [
             'connect_timeout' => 5,
             'timeout'         => 5
-        ]);
+        ];
+
+        // make endpoint's rotation
+        $config['base_url'] = $endpoints[rand(0, count($endpoints) - 1)];
 
         $this->client = new Client($config);
     }

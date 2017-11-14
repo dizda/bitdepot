@@ -22,8 +22,14 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('provider')->defaultValue('chain')->end()
-                ->scalarNode('endpoint')->defaultNull()->end()
+                ->scalarNode('provider')
+                    ->defaultValue('chain')
+                ->end()
+                ->arrayNode('endpoints')
+                    ->treatNullLike(array())
+                    ->prototype('scalar')->end()
+                    ->defaultValue(['https://insight.bitpay.com/api/'])
+                ->end()
             ->end();
 
         return $treeBuilder;

@@ -21,7 +21,8 @@ parameters:
     debug_redirects:        false
     use_assetic_controller: true
 
-    api_endpoint: https://insight.bitpay.com/api/
+    api_endpoints:
+        - 'https://insight.bitpay.com/api/'
 
     # Replace by your keys
     jwt_private_key_path: %kernel.root_dir%/var/jwt/private_test.pem

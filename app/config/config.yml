@@ -89,7 +89,7 @@ fos_rest:
 
 dizda_blockchain:
     provider: insight
-    endpoint: %api_endpoint%
+    endpoints: '%api_endpoints%'
 
 old_sound_rabbit_mq:
     connections:
